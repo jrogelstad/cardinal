@@ -1,0 +1,14 @@
+{
+    "version": "0.0.1",
+    "files": [
+        {
+            "type": "model",
+            "path": "models.json"
+        },
+        {
+            "type": "batch",
+            "path": "data.json"
+        }
+    ]
+}
+

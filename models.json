@@ -1,0 +1,299 @@
+[
+    {
+        "name": "Note",
+        "description": "Note",
+        "properties": {
+            "text": {
+                "description": "Note text",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "DocumentNote",
+        "description": "Note on document",
+        "inherits": "Note",
+        "properties": {
+            "parent": {
+                "description": "Parent document",
+                "type": {
+                    "relation": "Document",
+                    "childOf": "notes"
+                }
+            }
+        }
+    },
+    {
+        "name": "Contact",
+        "plural": "Contacts",
+        "description": "Information about a person",
+        "inherits": "Document",
+        "properties": {
+            "name": {
+                "description": "Name",
+                "type": "string"
+            },
+            "email": {
+                "description": "email",
+                "type": "string"
+            },
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
+            },
+            "birthDate": {
+                "description": "Active status",
+                "type": "string",
+                "format": "date",
+                "default": null
+            },
+            "workPhone": {
+                "description": "Work phone",
+                "type": "string"
+            },
+            "homePhone": {
+                "description": "Work phone",
+                "type": "string"
+            },
+            "creditScore": {
+                "description": "Credit Score",
+                "type": "integer",
+                "min": 0,
+                "max": 800
+            },
+            "role": {
+                "description": "Role",
+                "type": {
+                    "relation": "Role"
+                }
+            }
+        }
+    },
+    {
+        "name": "Address",
+        "plural": "Addresses",
+        "description": "Physical location",
+        "properties": {
+            "type": {
+                "description": "Home, work, other",
+                "type": "string"
+            },
+            "line1": {
+                "description": "Street3",
+                "type": "string"
+            },
+            "line2": {
+                "description": "Street2",
+                "type": "string"
+            },
+            "city": {
+                "description": "City",
+                "type": "string"
+            },
+            "state": {
+                "description": "State",
+                "type": "string"
+            },
+            "postalCode": {
+                "description": "Postal code",
+                "type": "string"
+            },
+            "country": {
+                "description": "Country",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "ContactAddress",
+        "description": "Contact address",
+        "properties": {
+            "parent": {
+                "description": "Parent",
+                "type": {
+                    "relation": "Contact",
+                    "childOf": "addresses"
+                }
+            },
+            "address": {
+                "description": "Address",
+                "type": {
+                    "relation": "Address"
+                }
+            }
+        }
+    },
+    {
+        "name": "Lead",
+        "plural": "Leads",
+        "description": "A sales contact",
+        "inherits": "Contact",
+        "properties": {
+            "company": {
+                "description": "Company",
+                "type": "string"
+            },
+            "remarks": {
+                "description": "Misc. text",
+                "type": "string"
+            },
+            "probability": {
+                "description": "Probability of closing",
+                "type": "number"
+            }
+        }
+    },
+    {
+        "name": "Activity",
+        "plural": "Activities",
+        "description": "Activity",
+        "inherits": "Object",
+        "properties": {
+            "name": {
+                "description": "Name",
+                "type": "string"
+            },
+            "description": {
+                "description": "Description",
+                "type": "string"
+            },
+            "startDate": {
+                "description": "Start date",
+                "type": "string",
+                "format": "date",
+                "default": "now()"
+            },
+            "dueDate": {
+                "description": "Due date",
+                "type": "string",
+                "format": "date",
+                "default": "maxDate()"
+            },
+            "priority": {
+                "description": "Priority",
+                "type": "integer",
+                "default": 10
+            },
+            "isCompleted": {
+                "description": "Completion status",
+                "type": "boolean"
+            },
+            "activityType": {
+                "description": "Discriminator",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "ActivityNote",
+        "description": "Note on Activity",
+        "inherits": "Note",
+        "properties": {
+            "parent": {
+                "description": "Parent activity",
+                "type": {
+                    "relation": "Activity",
+                    "childOf": "notes"
+                }
+            }
+        }
+    },
+    {
+        "name": "Task",
+        "description": "User task",
+        "inherits": "Activity"
+    },
+    {
+        "name": "Opportunity",
+        "plural": "Opportunities",
+        "description": "Opportunity",
+        "inherits": "Task",
+        "properties": {
+            "amount": {
+                "description": "Estimated sales amount",
+                "type": "number"
+            },
+            "stage": {
+                "description": "Pipeline stage",
+                "type": "string"
+            },
+            "contact": {
+                "description": "Primary Contact",
+                "type": {
+                    "relation": "Contact",
+                    "properties": [
+                        "name",
+                        "email"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "name": "OpportunityTask",
+        "description": "Opportunity Task",
+        "inherits": "Activity",
+        "properties": {
+            "parent": {
+                "description": "Parent Opportunity",
+                "type": {
+                    "relation": "Opportunity",
+                    "childOf": "tasks"
+                }
+            }
+        }
+    },
+    {
+        "name": "TestTypes",
+        "description": "Testa all types and formats",
+        "properties": {
+            "integer": {
+                "description": "Integer",
+                "type": "integer"
+            },
+            "number": {
+                "description": "Number",
+                "type": "number"
+            },
+            "money": {
+                "description": "Custom number",
+                "type": "number",
+                "precision": 14,
+                "scale": 2
+            },
+            "float": {
+                "description": "Floating number",
+                "type": "number",
+                "format": "float"
+            },
+            "double": {
+                "description": "Double precision",
+                "type": "number",
+                "format": "double"
+            },
+            "long": {
+                "description": "Big integer",
+                "type": "number",
+                "format": "long"
+            },
+            "date": {
+                "description": "Date",
+                "type": "string",
+                "format": "date",
+                "default": "now()"
+            },
+            "dateTime": {
+                "description": "Timestamp with timezone",
+                "type": "string",
+                "format": "dateTime",
+                "default": "now()"
+            },
+            "password": {
+                "description": "Text",
+                "type": "string",
+                "format": "password"
+            }
+        }
+    }
+]
