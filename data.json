@@ -168,7 +168,7 @@
         "method": "PUT",
         "name": "saveAuthorization",
         "data": {
-            "model": "Lead",
+            "feather": "Lead",
             "role": "everyone",
             "actions": {
                 "canCreate": false,
@@ -182,7 +182,7 @@
         "method": "PUT",
         "name": "saveAuthorization",
         "data": {
-            "model": "Lead",
+            "feather": "Lead",
             "role": "sales",
             "actions": {
                 "canCreate": true,

@@ -50,11 +50,18 @@
             },
             "workPhone": {
                 "description": "Work phone",
-                "type": "string"
+                "type": "string",
+                "format": "tel"
             },
             "homePhone": {
                 "description": "Work phone",
-                "type": "string"
+                "type": "string",
+                "format": "tel"
+            },
+            "annualIncome": {
+                "description": "Work phone",
+                "type": "number",
+                "scale": 2
             },
             "creditScore": {
                 "description": "Credit Score",
@@ -246,7 +253,7 @@
     },
     {
         "name": "TestTypes",
-        "description": "Testa all types and formats",
+        "description": "Test all types and formats",
         "properties": {
             "integer": {
                 "description": "Integer",
@@ -261,21 +268,6 @@
                 "type": "number",
                 "precision": 14,
                 "scale": 2
-            },
-            "float": {
-                "description": "Floating number",
-                "type": "number",
-                "format": "float"
-            },
-            "double": {
-                "description": "Double precision",
-                "type": "number",
-                "format": "double"
-            },
-            "long": {
-                "description": "Big integer",
-                "type": "number",
-                "format": "long"
             },
             "date": {
                 "description": "Date",
