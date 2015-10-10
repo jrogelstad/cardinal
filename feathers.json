@@ -208,6 +208,7 @@
     },
     {
         "name": "Task",
+        "plural": "Tasks",
         "description": "User task",
         "inherits": "Activity"
     },

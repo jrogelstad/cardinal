@@ -8,6 +8,10 @@
         {
             "type": "batch",
             "path": "data.json"
+        },
+        {
+            "type": "module",
+            "path": "cardinal.json"
         }
     ]
 }
