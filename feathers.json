@@ -132,26 +132,6 @@
         }
     },
     {
-        "name": "Lead",
-        "plural": "Leads",
-        "description": "A sales contact",
-        "inherits": "Contact",
-        "properties": {
-            "company": {
-                "description": "Company",
-                "type": "string"
-            },
-            "remarks": {
-                "description": "Misc. text",
-                "type": "string"
-            },
-            "probability": {
-                "description": "Probability of closing",
-                "type": "number"
-            }
-        }
-    },
-    {
         "name": "Activity",
         "plural": "Activities",
         "description": "Activity",
@@ -159,7 +139,8 @@
         "properties": {
             "name": {
                 "description": "Name",
-                "type": "string"
+                "type": "string",
+                "default": null
             },
             "description": {
                 "description": "Description",
@@ -169,13 +150,14 @@
                 "description": "Start date",
                 "type": "string",
                 "format": "date",
-                "default": "now()"
+                "isRequired": true
             },
             "dueDate": {
                 "description": "Due date",
                 "type": "string",
                 "format": "date",
-                "default": "maxDate()"
+                "isRequired": true,
+                "default": null
             },
             "priority": {
                 "description": "Priority",
@@ -218,9 +200,22 @@
         "description": "Opportunity",
         "inherits": "Task",
         "properties": {
+            "number": {
+                "description": "Unique identifier",
+                "type": "string",
+                "autonumber": {
+                    "prefix": "PRE",
+                    "sequence": "opportunity_seq_num",
+                    "length": 4,
+                    "suffix": "SFX"
+                },
+                "isReadOnly": true,
+                "isUnique": true
+            },
             "amount": {
                 "description": "Estimated sales amount",
-                "type": "number"
+                "type": "number",
+                "isRequired": true
             },
             "stage": {
                 "description": "Pipeline stage",
@@ -248,6 +243,32 @@
                 "type": {
                     "relation": "Opportunity",
                     "childOf": "tasks"
+                }
+            }
+        }
+    },
+    {
+        "name": "Lead",
+        "plural": "Leads",
+        "description": "A sales contact",
+        "inherits": "Contact",
+        "properties": {
+            "company": {
+                "description": "Company",
+                "type": "string"
+            },
+            "remarks": {
+                "description": "Misc. text",
+                "type": "string"
+            },
+            "probability": {
+                "description": "Probability of closing",
+                "type": "number"
+            },
+            "opportunity": {
+                "description": "Related Opportunity",
+                "type": {
+                    "relation": "Opportunity"
                 }
             }
         }

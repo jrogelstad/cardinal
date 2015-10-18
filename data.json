@@ -35,7 +35,6 @@
     {
         "name": "Contact",
         "method": "POST",
-        "folder": "fld1",
         "data": {
             "id": "hello",
             "email": "jill@gmail.com",
@@ -45,7 +44,6 @@
     {
         "name": "Contact",
         "method": "POST",
-        "folder": "fld1",
         "data": {
             "id": "hello1",
             "email": "jn89911@gmail.com",
@@ -63,39 +61,8 @@
         }
     },
     {
-        "method": "PUT",
-        "name": "saveAuthorization",
-        "data": {
-            "id": "fld2",
-            "role": "everyone",
-            "isMember": true,
-            "actions": {
-                "canCreate": false,
-                "canRead": false,
-                "canUpdate": false,
-                "canDelete": false
-            }
-        }
-    },
-    {
-        "method": "PUT",
-        "name": "saveAuthorization",
-        "data": {
-            "id": "fld2",
-            "role": "sales",
-            "isMember": true,
-            "actions": {
-                "canCreate": true,
-                "canRead": true,
-                "canUpdate": true,
-                "canDelete": true
-            }
-        }
-    },
-    {
         "name": "Contact",
         "method": "POST",
-        "folder": "fld2",
         "data": {
             "id": "msn1",
             "email": "blackbandit@yahoo.com",
@@ -105,7 +72,6 @@
     {
         "name": "Contact",
         "method": "POST",
-        "folder": "fld2",
         "data": {
             "id": "msn2",
             "email": "scarface@gmail.com",
@@ -115,7 +81,6 @@
     {
         "name": "Lead",
         "method": "POST",
-        "folder": "fld1",
         "data": {
             "id": "lead1",
             "email": "ag8912@gmail.com",

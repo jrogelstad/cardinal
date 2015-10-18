@@ -6,12 +6,17 @@
             "path": "feathers.json"
         },
         {
-            "type": "batch",
-            "path": "data.json"
+            "type": "module",
+            "name": "Cardinal",
+            "path": "module.js"
         },
         {
-            "type": "module",
-            "path": "cardinal.json"
+            "type": "workbook",
+            "path": "workbooks.json"
+        },
+        {
+            "type": "batch",
+            "path": "data.json"
         }
     ]
 }
