@@ -1,6 +1,6 @@
 [
   {
-    "name": "MyWorkbook",
+    "name": "Setup",
     "module": "Cardinal",
     "defaultConfig": {
       "Role": {
@@ -9,12 +9,14 @@
         },
         "list": {
           "attrs": ["name", "description", "createdBy", "updated", "updatedBy"]
-        },
-        "relation": {
-          "valueProperty": "name",
-          "labelProperty": "description"
         }
-      },
+      }
+    }
+  },
+  {
+    "name": "BackOffice",
+    "module": "Cardinal",
+    "defaultConfig": {
       "Contact": {
         "form": {
           "attrs": ["name", "isActive", "email", "birthDate", "workPhone",
@@ -24,18 +26,6 @@
         "list": {
           "attrs": ["name", "email", "isActive", "birthDate", "workPhone",
             "homePhone", "creditScore", "objectType"]
-        }
-      },
-      "Lead": {
-        "form": {
-          "attrs": ["company", "name", "isActive", "email", "birthDate",
-            "workPhone", "homePhone", "annualIncome", "creditScore", "role",
-            "probability", "opportunity", "remarks", "created", "createdBy",
-            "updated", "updatedBy"]
-        },
-        "list": {
-          "attrs": ["company", "name", "email", "isActive", "birthDate",
-            "workPhone", "probability", "homePhone", "creditScore"]
         }
       },
       "Activity": {
@@ -61,6 +51,35 @@
             "priority", "isCompleted",
             "created", "createdBy", "updated", "updatedBy"]
         }
+      }
+    }
+  },
+  {
+    "name": "Sales",
+    "module": "Cardinal",
+    "defaultConfig": {
+      "Contact": {
+        "form": {
+          "attrs": ["name", "isActive", "email", "birthDate", "workPhone",
+            "homePhone", "annualIncome", "creditScore", "role", "created",
+            "createdBy", "updated", "updatedBy", "objectType"]
+        },
+        "list": {
+          "attrs": ["name", "email", "isActive", "birthDate", "workPhone",
+            "homePhone", "creditScore", "objectType"]
+        }
+      },
+      "Lead": {
+        "form": {
+          "attrs": ["company", "name", "isActive", "email", "birthDate",
+            "workPhone", "homePhone", "annualIncome", "creditScore", "role",
+            "probability", "opportunity", "remarks", "created", "createdBy",
+            "updated", "updatedBy"]
+        },
+        "list": {
+          "attrs": ["company", "name", "email", "isActive", "birthDate",
+            "workPhone", "probability", "homePhone", "creditScore"]
+        }
       },
       "Opportunity": {
         "form": {
@@ -72,10 +91,6 @@
           "attrs": ["number", "name", "description", "startDate", "dueDate",
             "amount", "stage", "priority", "isCompleted",
             "created", "createdBy", "updated", "updatedBy"]
-        },
-        "relation": {
-          "valueProperty": "number",
-          "labelProperty": "name"
         }
       }
     }
