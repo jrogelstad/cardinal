@@ -3,7 +3,8 @@
     "name": "Setup",
     "module": "Cardinal",
     "defaultConfig": {
-      "Role": {
+      "Roles": {
+        "feather": "Role",
         "form": {
           "attrs": ["name", "description", "createdBy", "updated", "updatedBy"]
         },
@@ -17,7 +18,8 @@
     "name": "BackOffice",
     "module": "Cardinal",
     "defaultConfig": {
-      "Contact": {
+      "Contacts": {
+        "feather": "Contact",
         "form": {
           "attrs": ["name", "isActive", "email", "birthDate", "workPhone",
             "homePhone", "annualIncome", "creditScore", "role", "created",
@@ -28,7 +30,8 @@
             "homePhone", "creditScore", "objectType"]
         }
       },
-      "Activity": {
+      "Activities": {
+        "feather": "Activity",
         "form": {
           "attrs": ["name", "description", "startDate", "dueDate",
             "priority", "isCompleted", "objectType",
@@ -41,6 +44,7 @@
         }
       },
       "Task": {
+        "feather": "Task",
         "form": {
           "attrs": ["name", "description", "startDate", "dueDate",
             "priority", "isCompleted",
@@ -58,7 +62,8 @@
     "name": "Sales",
     "module": "Cardinal",
     "defaultConfig": {
-      "Contact": {
+      "Contacts": {
+        "feather": "Contact",
         "form": {
           "attrs": ["name", "isActive", "email", "birthDate", "workPhone",
             "homePhone", "annualIncome", "creditScore", "role", "created",
@@ -69,7 +74,8 @@
             "homePhone", "creditScore", "objectType"]
         }
       },
-      "Lead": {
+      "Leads": {
+        "feather": "Lead",
         "form": {
           "attrs": ["company", "name", "isActive", "email", "birthDate",
             "workPhone", "homePhone", "annualIncome", "creditScore", "role",
@@ -81,7 +87,8 @@
             "workPhone", "probability", "homePhone", "creditScore"]
         }
       },
-      "Opportunity": {
+      "Opportunities": {
+        "feather": "Opportunity",
         "form": {
           "attrs": ["number", "name", "description", "startDate", "dueDate",
             "amount", "stage", "priority", "isCompleted",
