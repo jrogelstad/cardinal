@@ -6,6 +6,7 @@
       "Roles": {
         "feather": "Role",
         "form": {
+          "name": "Role",
           "attrs": ["name", "description", "createdBy", "updated", "updatedBy"]
         },
         "list": {
@@ -21,6 +22,7 @@
       "Contacts": {
         "feather": "Contact",
         "form": {
+          "name": "Contact",
           "attrs": ["name", "isActive", "email", "birthDate", "workPhone",
             "homePhone", "annualIncome", "creditScore", "role", "created",
             "createdBy", "updated", "updatedBy", "objectType"]
@@ -33,6 +35,7 @@
       "Activities": {
         "feather": "Activity",
         "form": {
+          "name": "Activity",
           "attrs": ["name", "description", "startDate", "dueDate",
             "priority", "isCompleted", "objectType",
             "created", "createdBy", "updated", "updatedBy"]
@@ -43,9 +46,10 @@
             "created", "createdBy", "updated", "updatedBy"]
         }
       },
-      "Task": {
+      "Tasks": {
         "feather": "Task",
         "form": {
+          "name": "Task",
           "attrs": ["name", "description", "startDate", "dueDate",
             "priority", "isCompleted",
             "created", "createdBy", "updated", "updatedBy"]
@@ -65,6 +69,7 @@
       "Contacts": {
         "feather": "Contact",
         "form": {
+          "name": "Contact",
           "attrs": ["name", "isActive", "email", "birthDate", "workPhone",
             "homePhone", "annualIncome", "creditScore", "role", "created",
             "createdBy", "updated", "updatedBy", "objectType"]
@@ -77,6 +82,7 @@
       "Leads": {
         "feather": "Lead",
         "form": {
+          "name": "Lead",
           "attrs": ["company", "name", "isActive", "email", "birthDate",
             "workPhone", "homePhone", "annualIncome", "creditScore", "role",
             "probability", "opportunity", "remarks", "created", "createdBy",
@@ -90,6 +96,7 @@
       "Opportunities": {
         "feather": "Opportunity",
         "form": {
+          "name": "Opportunity",
           "attrs": ["number", "name", "description", "startDate", "dueDate",
             "amount", "stage", "priority", "isCompleted",
             "created", "createdBy", "updated", "updatedBy"]
