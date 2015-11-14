@@ -32,31 +32,6 @@
       }
     ];
 
-  relations.forEach(function (relopts) {
-    var that,
-      name = relopts.feather.toCamelCase() + "Relation";
-
-    that = function (options) {
-      options = options || {};
-      var w = f.components.relationWidget({
-        parentProperty: options.parentProperty || relopts.parentProperty,
-        valueProperty: options.valueProperty || relopts.valueProperty,
-        labelProperty: options.labelProperty || relopts.labelProperty,
-        isCell: options.isCell === undefined ?
-          relopts.isCell : options.isCell
-      });
-
-      return w;
-    };
-
-    that.labelProperty = function () {
-      return relopts.labelProperty;
-    };
-    that.valueProperty = function () {
-      return relopts.valueProperty;
-    };
-    f.components[name] = that;
-
-  });
+  relations.forEach(f.buildRelationWidget);
 
 }());
