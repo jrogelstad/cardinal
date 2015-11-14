@@ -29,7 +29,7 @@
         },
         "list": {
           "attrs": ["name", "email", "isActive", "birthDate", "workPhone",
-            "homePhone", "creditScore", "objectType"]
+            "homePhone", "creditScore", "role", "role.description", "objectType"]
         }
       },
       "Activities": {
