@@ -72,7 +72,8 @@
             "role": {
                 "description": "Role",
                 "type": {
-                    "relation": "Role"
+                    "relation": "Role",
+                    "properties": ["name", "description"]
                 }
             }
         }
