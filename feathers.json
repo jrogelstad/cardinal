@@ -127,7 +127,8 @@
             "address": {
                 "description": "Address",
                 "type": {
-                    "relation": "Address"
+                    "relation": "Address",
+                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
                 }
             }
         }
@@ -269,7 +270,8 @@
             "opportunity": {
                 "description": "Related Opportunity",
                 "type": {
-                    "relation": "Opportunity"
+                    "relation": "Opportunity",
+                    "properties": ["number", "name", "description"]
                 }
             }
         }
