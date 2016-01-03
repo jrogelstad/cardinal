@@ -58,40 +58,49 @@
         "feather": "Contact",
         "form": {
           "name": "Contact",
-          "panes": ["Personal", "Audit"],
+          "panes": ["Created", "Updated"],
           "attrs": [{
               "attr": "name",
-              "pane": 0
+              "pane": 0,
+              "column": 0
             }, {
               "attr": "email",
-              "pane": 0
+              "pane": 0,
+              "column": 0
             }, {
               "attr": "isActive",
-              "pane": 0
+              "pane": 0,
+              "column": 0
             }, {
               "attr": "workPhone",
-              "pane": 0
+              "pane": 0,
+              "column": 0
             }, {
               "attr": "homePhone",
-              "pane": 0
+              "pane": 0,
+              "column": 0
             }, {
               "attr": "birthDate",
-              "pane": 1
+              "pane": 0,
+              "column": 1
             }, {
               "attr": "annualIncome",
-              "pane": 1
+              "pane": 0,
+              "column": 1
             }, {
               "attr": "creditScore",
-              "pane": 1
+              "pane": 0,
+              "column": 1
             }, {
               "attr": "role",
-              "pane": 1
+              "pane": 0,
+              "column": 1
             }, {
               "attr": "created",
-              "pane": 2
+              "pane": 1
             }, {
               "attr": "createdBy",
-              "pane": 2
+              "pane": 1
             }, {
               "attr": "updated",
               "pane": 2
