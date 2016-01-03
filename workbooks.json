@@ -61,55 +61,55 @@
           "panes": ["Created", "Updated"],
           "attrs": [{
               "attr": "name",
-              "pane": 0,
-              "column": 0
+              "grid": 0,
+              "unit": 0
             }, {
               "attr": "email",
-              "pane": 0,
-              "column": 0
+              "grid": 0,
+              "unit": 0
             }, {
               "attr": "isActive",
-              "pane": 0,
-              "column": 0
+              "grid": 0,
+              "unit": 0
             }, {
               "attr": "workPhone",
-              "pane": 0,
-              "column": 0
+              "grid": 0,
+              "unit": 0
             }, {
               "attr": "homePhone",
-              "pane": 0,
-              "column": 0
+              "grid": 0,
+              "unit": 0
             }, {
               "attr": "birthDate",
-              "pane": 0,
-              "column": 1
+              "grid": 0,
+              "unit": 1
             }, {
               "attr": "annualIncome",
-              "pane": 0,
-              "column": 1
+              "grid": 0,
+              "unit": 1
             }, {
               "attr": "creditScore",
-              "pane": 0,
-              "column": 1
+              "grid": 0,
+              "unit": 1
             }, {
               "attr": "role",
-              "pane": 0,
-              "column": 1
+              "grid": 0,
+              "unit": 1
             }, {
               "attr": "created",
-              "pane": 1
+              "grid": 1
             }, {
               "attr": "createdBy",
-              "pane": 1
+              "grid": 1
             }, {
               "attr": "updated",
-              "pane": 2
+              "grid": 2
             }, {
               "attr": "updatedBy",
-              "pane": 2
+              "grid": 2
             }, {
               "attr": "objectType",
-              "pane": 2
+              "grid": 2
             }
           ]
         },
@@ -395,32 +395,59 @@
         "feather": "Opportunity",
         "form": {
           "name": "Opportunity",
+          "panes": ["Tasks", "Audit"],
           "attrs": [{
-              "attr": "number"
+              "attr": "number",
+              "grid": 0,
+              "unit": 0
             }, {
-              "attr": "name"
+              "attr": "name",
+              "grid": 0,
+              "unit": 0
             }, {
-              "attr": "description"
+              "attr": "description",
+              "grid": 0,
+              "unit": 0
             }, {
-              "attr": "amount"
+              "attr": "amount",
+              "grid": 0,
+              "unit": 0
             }, {
-              "attr": "stage"
+              "attr": "stage",
+              "grid": 0,
+              "unit": 0
             }, {
-              "attr": "startDate"
+              "attr": "startDate",
+              "grid": 0,
+              "unit": 1
             }, {
-              "attr": "dueDate"
+              "attr": "dueDate",
+              "grid": 0,
+              "unit": 1
             }, {
-              "attr": "priority"
+              "attr": "priority",
+              "grid": 1,
+              "unit": 1
             }, {
-              "attr": "isCompleted"
+              "attr": "isCompleted",
+              "grid": 0,
+              "unit": 1
             }, {
-             "attr": "created"
+             "attr": "created",
+              "grid": 2,
+              "unit": 1
             }, {
-             "attr": "createdBy"
+             "attr": "createdBy",
+              "grid": 2,
+              "unit": 1
             }, {
-             "attr": "updated"
+             "attr": "updated",
+              "grid": 2,
+              "unit": 1
             }, {
-             "attr": "updatedBy"
+             "attr": "updatedBy",
+              "grid": 2,
+              "unit": 1
             }
           ]
         },
