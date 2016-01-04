@@ -58,7 +58,7 @@
         "feather": "Contact",
         "form": {
           "name": "Contact",
-          "panes": ["Created", "Updated"],
+          "tabs": ["Created", "Updated"],
           "attrs": [{
               "attr": "name",
               "grid": 0,
@@ -395,7 +395,7 @@
         "feather": "Opportunity",
         "form": {
           "name": "Opportunity",
-          "panes": ["Tasks", "Audit"],
+          "tabs": ["Tasks", "Audit"],
           "attrs": [{
               "attr": "number",
               "grid": 0,
@@ -426,8 +426,22 @@
               "unit": 1
             }, {
               "attr": "priority",
-              "grid": 1,
+              "grid": 0,
               "unit": 1
+            }, {
+              "attr": "tasks",
+              "grid": 1,
+              "unit": 1,
+              "columns": [{
+                  "attr": "name"
+                }, {
+                  "attr": "description"
+                }, {
+                  "attr": "startDate"
+                }, {
+                  "attr": "dueDate"
+                }
+              ]
             }, {
               "attr": "isCompleted",
               "grid": 0,
