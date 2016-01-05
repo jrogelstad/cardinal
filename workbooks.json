@@ -430,8 +430,9 @@
               "unit": 1
             }, {
               "attr": "tasks",
+              "label": false,
               "grid": 1,
-              "unit": 1,
+              "unit": 0,
               "columns": [{
                   "attr": "name"
                 }, {
