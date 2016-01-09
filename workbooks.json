@@ -13,7 +13,11 @@
         "feather": "Contact",
         "form": {
           "name": "Contact",
-          "tabs": ["Created", "Updated"],
+          "tabs": [{
+            "name": "Created"
+            }, {
+            "name": "Updated"
+          }],
           "attrs": [{
               "attr": "name",
               "grid": 0,
@@ -350,7 +354,11 @@
         "feather": "Opportunity",
         "form": {
           "name": "Opportunity",
-          "tabs": ["Tasks", "Audit"],
+          "tabs": [{
+            "name": "Tasks"
+            }, {
+            "name": "Audit"
+          }],
           "attrs": [{
               "attr": "number",
               "grid": 0,
@@ -385,7 +393,7 @@
               "unit": 1
             }, {
               "attr": "tasks",
-              "label": false,
+              "showLabel": false,
               "grid": 1,
               "unit": 0,
               "columns": [{
