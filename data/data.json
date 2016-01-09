@@ -23,16 +23,6 @@
         ]
     },
     {
-        "name": "Folder",
-        "method": "POST",
-        "folder": "global",
-        "data": {
-            "id": "fld1",
-            "name": "People",
-            "description": "People folder"
-        }
-    },
-    {
         "name": "Contact",
         "method": "POST",
         "data": {
@@ -48,16 +38,6 @@
             "id": "hello1",
             "email": "jn89911@gmail.com",
             "name": "Jane Smith"
-        }
-    },
-    {
-        "name": "Folder",
-        "method": "POST",
-        "folder": "global",
-        "data": {
-            "id": "fld2",
-            "name": "Illuminati",
-            "description": "Secret People folder"
         }
     },
     {
