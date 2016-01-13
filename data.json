@@ -6,6 +6,7 @@
         "name": "Contact",
         "description": "Contact form",
         "module": "Cardinal",
+        "feather": "Contact",
         "tabs": [{
             "name": "Created"
         }, {
@@ -71,6 +72,7 @@
     "data": {
         "name": "Activity",
         "description": "Activity form",
+        "feather": "Activity",
         "module": "Cardinal",
         "attrs": [{
             "attr": "name"
@@ -101,6 +103,7 @@
     "data": {
         "name": "Task",
         "description": "Task form",
+        "feather": "Feather",
         "module": "Cardinal",
         "attrs": [{
             "attr": "name"
@@ -132,6 +135,7 @@
         "name": "Lead",
         "description": "Lead form",
         "module": "Cardinal",
+        "feather": "Lead",
         "attrs": [{
             "attr": "company"
         }, {
@@ -178,6 +182,7 @@
         "name": "Opportunity",
         "description": "Opportunity form",
         "module": "Cardinal",
+        "feather": "Opportunity",
         "tabs": [{
             "name": "Tasks"
         }, {
@@ -250,5 +255,32 @@
             "grid": 2,
             "unit": 1
         }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "ivr8ubrl0au3",
+    "data": {
+        "name": "Opportunity",
+        "description": "Opportunity relation wdiget",
+        "isActive": true,
+        "feather": "Opportunity",
+        "valueProperty": "name",
+        "labelProperty": "description",
+        "form": {
+            "id": "syva8q1zh98d"
+        },
+        "searchColumns": [{
+                "attr": "name"
+            }, {
+                "attr": "description"
+            }, {
+                "attr": "createdBy"
+            }, {
+                "attr": "updated"
+            }, {
+                "attr": "updatedBy"
+            }
+        ]
     }
 }]
