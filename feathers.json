@@ -1,6 +1,7 @@
 [
     {
         "name": "Note",
+        "module": "Cardinal",
         "description": "Note",
         "properties": {
             "text": {
@@ -11,6 +12,7 @@
     },
     {
         "name": "DocumentNote",
+        "module": "Cardinal",
         "description": "Note on document",
         "inherits": "Note",
         "properties": {
@@ -26,6 +28,7 @@
     {
         "name": "Contact",
         "plural": "Contacts",
+        "module": "Cardinal",
         "description": "Information about a person",
         "inherits": "Document",
         "properties": {
@@ -81,6 +84,7 @@
     {
         "name": "Address",
         "plural": "Addresses",
+        "module": "Cardinal",
         "description": "Physical location",
         "properties": {
             "type": {
@@ -115,6 +119,7 @@
     },
     {
         "name": "ContactAddress",
+        "module": "Cardinal",
         "description": "Contact address",
         "properties": {
             "parent": {
@@ -136,6 +141,7 @@
     {
         "name": "Activity",
         "plural": "Activities",
+        "module": "Cardinal",
         "description": "Activity",
         "inherits": "Object",
         "properties": {
@@ -178,6 +184,7 @@
     },
     {
         "name": "ActivityNote",
+        "module": "Cardinal",
         "description": "Note on Activity",
         "inherits": "Note",
         "properties": {
@@ -193,12 +200,14 @@
     {
         "name": "Task",
         "plural": "Tasks",
+        "module": "Cardinal",
         "description": "User task",
         "inherits": "Activity"
     },
     {
         "name": "Opportunity",
         "plural": "Opportunities",
+        "module": "Cardinal",
         "description": "Opportunity",
         "inherits": "Task",
         "properties": {
@@ -238,6 +247,7 @@
     {
         "name": "OpportunityTask",
         "description": "Opportunity Task",
+        "module": "Cardinal",
         "inherits": "Activity",
         "properties": {
             "parent": {
@@ -252,6 +262,7 @@
     {
         "name": "Lead",
         "plural": "Leads",
+        "module": "Cardinal",
         "description": "A sales contact",
         "inherits": "Contact",
         "properties": {
@@ -278,6 +289,7 @@
     },
     {
         "name": "TestTypes",
+        "module": "Cardinal",
         "description": "Test all types and formats",
         "properties": {
             "integer": {
