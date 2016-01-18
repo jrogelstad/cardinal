@@ -11,7 +11,7 @@ Clone this repository adjacent to your featherbone repository and from the feath
 
 ```text
 $ node configure ..\cardinal
-$ node condifure ..\cardinal\data
+$ node configure ..\cardinal\data
 $ node server
 ```
 
