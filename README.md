@@ -7,7 +7,7 @@ A sample module for the featherbone application framework.
   
 # Install
 
-Clone this repository adjacent to your featherbone directory and from the featherbone repository:
+Clone this repository adjacent to your featherbone repository and from the featherbone directory:
 
 ```text
 $ node configure ..\cardinal
