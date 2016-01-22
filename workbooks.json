@@ -22,6 +22,8 @@
           }, {
               "attr": "isSold"
           }, {
+              "attr": "objectType"
+          }, {
               "attr": "manufacturer"
           }, {
               "attr": "cost"
@@ -39,27 +41,15 @@
           }, {
               "attr": "description"
           }, {
-              "attr": "isActive"
-          }, {
-              "attr": "isSold"
-          }, {
-              "attr": "barcode"
-          }, {
               "attr": "manufacturer"
           }, {
               "attr": "cost"
-          }, {
-              "attr": "unit"
           }, {
               "attr": "color"
           }, {
               "attr": "size"
           }, {
-              "attr": "hub"
-          }, {
               "attr": "gearSet"
-          }, {
-              "attr": "style"
           }, {
               "attr": "weight"
           }]
@@ -74,17 +64,9 @@
           }, {
               "attr": "description"
           }, {
-              "attr": "isActive"
-          }, {
-              "attr": "isSold"
-          }, {
-              "attr": "barcode"
-          }, {
               "attr": "manufacturer"
           }, {
               "attr": "cost"
-          }, {
-              "attr": "unit"
           }, {
               "attr": "material"
           }, {
@@ -109,27 +91,13 @@
           }, {
               "attr": "description"
           }, {
-              "attr": "isActive"
-          }, {
-              "attr": "isSold"
-          }, {
-              "attr": "barcode"
-          }, {
               "attr": "manufacturer"
           }, {
               "attr": "cost"
           }, {
-              "attr": "unit"
-          }, {
               "attr": "material"
           }, {
               "attr": "diameter"
-          }, {
-              "attr": "width"
-          }, {
-              "attr": "hub"
-          }, {
-              "attr": "style"
           }, {
               "attr": "weight"
           }

@@ -431,6 +431,10 @@
                 "description": "Material",
                 "type": "string"
             },
+            "color": {
+                "description": "Color",
+                "type": "string"
+            },           
             "bottomBracket": {
                 "description": "Bottom bracket types",
                 "type": "string"
@@ -478,8 +482,8 @@
         "name": "Wheel",
         "plural": "Wheels",
         "module": "Cardinal",
-        "description": "AmazonProduct",
-        "inherits": "Item",
+        "description": "Bicycle wheel",
+        "inherits": "AmazonProduct",
         "properties": {
             "material": {
                 "description": "Material",

@@ -139,6 +139,7 @@
             "number": "RM100A",
             "description": "Road Master Adventures, Men's, Dark Blue",
             "frameMaterial": "Cromoly steel",
+            "color": "Silver",
             "weight": 20,
             "size": 20,
             "cost": 88.00,
@@ -149,6 +150,198 @@
             "isActive": true,
             "isSold": true,
             "manufacturer": "Road Master",
+            "unit": {
+                "id": "k8qi7ba21j6z"
+            }
+        }
+    }, {
+        "name": "Bicycle",
+        "method": "POST",
+        "id": "8aeq5trpib9v",
+        "data": {
+            "number": "KZ2600",
+            "description": "Thruster KZ2600 Dual Suspension Mountain Bike (19 Inch Frame)",
+            "frameMaterial": "Aluminum",
+            "color": "Black",
+            "weight": 40,
+            "size": 19,
+            "cost": 102.00,
+            "price": 204.99,
+            "sellerRank": 22183,
+            "asin": "B00OW1PMTW",
+            "shippingWeight": 45.3,
+            "isActive": true,
+            "isSold": true,
+            "gearSet": "21 speed, derailleur",
+            "manufacturer": "Thruster",
+            "unit": {
+                "id": "k8qi7ba21j6z"
+            }
+        }
+    }, {
+        "name": "Bicycle",
+        "method": "POST",
+        "id": "ltvky3wok3tu",
+        "data": {
+            "number": "D7S-1010-55",
+            "description": "Critical Cycles Diamond Frame 7Speed Shimano Hybrid Urban Commuter Road Bicycle",
+            "frameMaterial": "Chromoly steel",
+            "color": "Cream",
+            "weight": 40,
+            "size": 21,
+            "cost": 162.00,
+            "price": 299.99,
+            "sellerRank": 22183,
+            "asin": "B00BMM0TGA",
+            "shippingWeight": 45.3,
+            "isActive": true,
+            "isSold": true,
+            "gearSet": "7 speed, hub",
+            "manufacturer": "Thruster",
+            "unit": {
+                "id": "k8qi7ba21j6z"
+            }
+        }
+    }, {
+        "name": "Wheel",
+        "method": "POST",
+        "id": "jn4ntkf89a40",
+        "data": {
+            "number": "34-32-631",
+            "description": "Diamondback Singlewall Mountain Bike Rear Wheel fits 6/7 Speed Free Wheel, 26-Inch ",
+            "material": "Aluminum",
+            "diameter": 26,
+            "weight": 2.8,
+            "cost": 31.54,
+            "price": 44.00,
+            "sellerRank": 80278,
+            "asin": "B00PCFCN1C",
+            "shippingWeight": 3.8,
+            "isActive": true,
+            "isSold": true,
+            "manufacturer": "Diamondback",
+            "unit": {
+                "id": "k8qi7ba21j6z"
+            }
+        }
+    }, {
+        "name": "Wheel",
+        "method": "POST",
+        "id": "1ecj3vtequdc",
+        "data": {
+            "number": "FWS7035QR",
+            "description": "Sta-Tru Quick Release Silver ST735 36H Rim Front Wheel (700X35)",
+            "material": "Composite",
+            "diameter": 26,
+            "weight": 2.2,
+            "cost": 12.54,
+            "price": 28.96,
+            "sellerRank": 95001,
+            "asin": "B004YJ2N0S",
+            "shippingWeight": 2.2,
+            "isActive": true,
+            "isSold": true,
+            "manufacturer": "Sta-true",
+            "unit": {
+                "id": "k8qi7ba21j6z"
+            }
+        }
+    }, {
+        "name": "Wheel",
+        "method": "POST",
+        "id": "azcgd44uoox5",
+        "data": {
+            "number": "FWS7035QZ",
+            "description": "Avenir 36H Nutted Cruiser Style Rear Wheel with Coaster Brake (Silver, 24 x 1.75 Inch)",
+            "material": "Aluminum",
+            "diameter": 24,
+            "weight": 2.2,
+            "cost": 12.94,
+            "price": 32.99,
+            "sellerRank": 95001,
+            "asin": "B004YJ2N0Z",
+            "shippingWeight": 2.2,
+            "isActive": true,
+            "isSold": true,
+            "manufacturer": "Avenir",
+            "unit": {
+                "id": "k8qi7ba21j6z"
+            }
+        }
+    }, {
+        "name": "Frame",
+        "method": "POST",
+        "id": "a9pr5jckd01r",
+        "data": {
+            "number": "FHIACX1CFF",
+            "description": "Fuji Altamira CX 1.0 Cyclocross Frame and Fork",
+            "material": "High Modulus D-6 carbon with integrated tapered head tube",
+            "color": "White",
+            "bottomBracket": "BB-86",
+            "front": "Braze on",
+            "fork": "FC-330 Cross carbon monocoque with tapered steerer and carbon dropout ",
+            "seatPost": "31.6mm",
+            "weight": 16.2,
+            "cost": 655.00,
+            "price": 990.00,
+            "sellerRank": 56101,
+            "asin": "B004YOCNC12",
+            "shippingWeight": 20,
+            "isActive": true,
+            "isSold": true,
+            "manufacturer": "Fuji",
+            "unit": {
+                "id": "k8qi7ba21j6z"
+            }
+        }
+    }, {
+        "name": "Frame",
+        "method": "POST",
+        "id": "i2j7bedw35h2",
+        "data": {
+            "number": "RIDFCF2015",
+            "description": "Ridley Fenix Carbon Frameset - 2015",
+            "material": "Carbon fiber",
+            "color": "Black",
+            "bottomBracket": "PF30",
+            "front": "Braze on",
+            "fork": "Carbon fiber",
+            "seatPost": "31.6mm",
+            "weight": 18.2,
+            "cost": 780.00,
+            "price": 1500.00,
+            "sellerRank": 56101,
+            "asin": "B004Y9OR12",
+            "shippingWeight": 19,
+            "isActive": true,
+            "isSold": true,
+            "manufacturer": "Ridley",
+            "unit": {
+                "id": "k8qi7ba21j6z"
+            }
+        }
+    }, {
+        "name": "Frame",
+        "method": "POST",
+        "id": "y52uj6x49ham",
+        "data": {
+            "number": "RIDIC92016",
+            "description": "Ridley Ignite C9 29 Inch Carbon Frameset",
+            "material": "Carbon fiber",
+            "color": "Black",
+            "bottomBracket": "PF30",
+            "front": "34.9mm",
+            "fork": "N/A",
+            "seatPost": "31.6mm",
+            "weight": 12.2,
+            "cost": 305.00,
+            "price": 499.00,
+            "sellerRank": 56744,
+            "asin": "B004Y76U9A",
+            "shippingWeight": 16,
+            "isActive": true,
+            "isSold": true,
+            "manufacturer": "Ridley",
             "unit": {
                 "id": "k8qi7ba21j6z"
             }
