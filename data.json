@@ -405,7 +405,7 @@
         }, {
             "attr": "unit"
         }, {
-            "attr": "aisn"
+            "attr": "asin"
         }, {
             "attr": "sellerRank"
         }, {
@@ -454,7 +454,7 @@
         }, {
             "attr": "unit"
         }, {
-            "attr": "aisn"
+            "attr": "asin"
         }, {
             "attr": "sellerRank"
         }, {
@@ -503,7 +503,7 @@
         }, {
             "attr": "unit"
         }, {
-            "attr": "aisn"
+            "attr": "asin"
         }, {
             "attr": "sellerRank"
         }, {
@@ -546,7 +546,7 @@
         }, {
             "attr": "unit"
         }, {
-            "attr": "aisn"
+            "attr": "asin"
         }, {
             "attr": "sellerRank"
         }, {
@@ -597,7 +597,7 @@
         }, {
             "attr": "unit"
         }, {
-            "attr": "aisn"
+            "attr": "asin"
         }, {
             "attr": "sellerRank"
         }, {
@@ -707,5 +707,86 @@
                 "attr": "status"
             }]
         }]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "wwbkh4u9nd4s",
+    "data": {
+        "name": "Address",
+        "description": "Address form",
+        "feather": "Address",
+        "module": "Cardinal",
+        "attrs": [{
+            "attr": "line1"
+        }, {
+            "attr": "line2"
+        }, {
+            "attr": "city"
+        }, {
+            "attr": "state"
+        }, {
+            "attr": "postalCode"
+        }, {
+            "attr": "country"
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "1g0xaicx1c8a",
+    "data": {
+        "name": "Address",
+        "description": "Address relation wdiget",
+        "isActive": true,
+        "feather": "Address",
+        "valueProperty": "line1",
+        "labelProperty": "city",
+        "form": {
+            "id": "wwbkh4u9nd4s"
+        },
+        "searchColumns": [{
+                "attr": "line1"
+            }, {
+                "attr": "line2"
+            }, {
+                "attr": "city"
+            }, {
+                "attr": "state"
+            }, {
+                "attr": "postalCode"
+            }, {
+                "attr": "country"
+            }
+        ]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "e7u0jgh1c6gm",
+    "data": {
+        "name": "Contact",
+        "description": "Contact relation wdiget",
+        "isActive": true,
+        "feather": "Contact",
+        "valueProperty": "name",
+        "labelProperty": "homePhone",
+        "form": {
+            "id": "cvt2t75sl90s"
+        },
+        "searchColumns": [{
+                "attr": "name"
+            }, {
+                "attr": "homePhone"
+            }, {
+                "attr": "workPhone"
+            }, {
+                "attr": "address.state"
+            }, {
+                "attr": "address.postalCode"
+            }, {
+                "attr": "address.ountry"
+            }
+        ]
     }
 }]

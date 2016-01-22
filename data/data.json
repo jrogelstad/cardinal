@@ -131,5 +131,27 @@
             "name": "EA",
             "description": "Each"
         }
+    }, {
+        "name": "Bicycle",
+        "method": "POST",
+        "id": "rx5mzee83c5l",
+        "data": {
+            "number": "RM100A",
+            "description": "Road Master Adventures, Men's, Dark Blue",
+            "frameMaterial": "Cromoly steel",
+            "weight": 20,
+            "size": 20,
+            "cost": 88.00,
+            "price": 158.0,
+            "sellerRank": 17648,
+            "asin": "B00UQ7IMNY",
+            "shippingWeight": 26,
+            "isActive": true,
+            "isSold": true,
+            "manufacturer": "Road Master",
+            "unit": {
+                "id": "k8qi7ba21j6z"
+            }
+        }
     }
 ]

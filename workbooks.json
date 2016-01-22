@@ -3,7 +3,7 @@
     "name": "Products",
     "module": "Cardinal",
     "launchConfig": {
-      "icon": "dollar",
+      "icon": "bicycle",
       "color": "white",
       "backgroundColor": "red"
     },
@@ -392,7 +392,7 @@
           }, {
               "attr": "unit"
           }, {
-              "attr": "aisn"
+              "attr": "asin"
           }, {
               "attr": "sellerRank"
           }, {

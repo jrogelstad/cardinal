@@ -619,22 +619,16 @@
                 "description": "Customer",
                 "type": {
                     "relation": "Customer",
-                    "properties": ["number", "Name"]
+                    "properties": ["number", "name"]
                 } 
             },
             "billToAddress": {
-                "description": "billToAddress",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
-                }
+                "description": "Bill to address",
+                "type": "string"
             },
             "shipToAddress": {
-                "description": "shipToAddress",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
-                }
+                "description": "Ship to address",
+                "type": "string"
             },
             "contact": {
                 "description": "Contact",
