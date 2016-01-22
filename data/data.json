@@ -2,31 +2,20 @@
     {
         "name": "Role",
         "method": "POST",
-        "data": {
-            "id": "sales",
-            "name": "Sales",
-            "description": "Sales team"
-        }
-    },
-    {
-        "name": "Role",
-        "method": "PATCH",
         "id": "sales",
-        "data": [
-            {
-                "op": "add",
-                "path": "/members/0",
-                "value": {
-                    "member": "postgres"
-                }
-            }
-        ]
+        "data": {
+            "name": "Sales",
+            "description": "Sales team",
+            "members": [{
+                "member": "postgres"
+            }]
+        }
     },
     {
         "name": "Contact",
         "method": "POST",
+        "id": "hello",
         "data": {
-            "id": "hello",
             "email": "jill@gmail.com",
             "name": "Jill Doe"
         }
@@ -34,8 +23,8 @@
     {
         "name": "Contact",
         "method": "POST",
+        "id": "hello1",
         "data": {
-            "id": "hello1",
             "email": "jn89911@gmail.com",
             "name": "Jane Smith"
         }
@@ -43,8 +32,8 @@
     {
         "name": "Contact",
         "method": "POST",
+        "id": "msn1",
         "data": {
-            "id": "msn1",
             "email": "blackbandit@yahoo.com",
             "name": "Orin Blackwell"
         }
@@ -52,8 +41,8 @@
     {
         "name": "Contact",
         "method": "POST",
+        "id": "msn2",
         "data": {
-            "id": "msn2",
             "email": "scarface@gmail.com",
             "name": "Antoin Scarborough"
         }
@@ -61,25 +50,23 @@
     {
         "name": "Lead",
         "method": "POST",
+        "id": "lead1",
         "data": {
-            "id": "lead1",
             "email": "ag8912@gmail.com",
             "name": "Armin Ghia"
         }
     },
     {
         "name": "Role",
-        "method": "PATCH",
+        "method": "POST",
         "id": "everyone",
-        "data": [
-            {
-                "op": "add",
-                "path": "/members/1",
-                "value": {
-                    "member": "wren"
-                }
-            }
-        ]
+        "data": {
+          "members": [{
+            "member": "postgres"
+          }, {
+            "member": "wren"
+          }]
+        }
     },
     {
         "method": "PUT",
@@ -135,6 +122,14 @@
                 "canUpdate": true,
                 "canDelete": true
             }
+        }
+    }, {
+        "name": "Unit",
+        "method": "POST",
+        "id": "k8qi7ba21j6z",
+        "data": {
+            "name": "EA",
+            "description": "Each"
         }
     }
 ]

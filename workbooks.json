@@ -1,5 +1,179 @@
 [
   {
+    "name": "Products",
+    "module": "Cardinal",
+    "launchConfig": {
+      "icon": "dollar",
+      "color": "white",
+      "backgroundColor": "red"
+    },
+    "defaultConfig": [
+      {
+        "name": "Items",
+        "feather": "Item",
+        "form": "3b5i7biisqbw",
+        "list": {
+          "columns": [{
+              "attr": "number"
+          }, {
+              "attr": "description"
+          }, {
+              "attr": "isActive"
+          }, {
+              "attr": "isSold"
+          }, {
+              "attr": "manufacturer"
+          }, {
+              "attr": "cost"
+          }, {
+              "attr": "unit"
+          }]
+        }
+      }, {
+        "name": "Frames",
+        "feather": "Frame",
+        "form": "cn37poq1shk4",
+        "list": {
+          "columns": [{
+              "attr": "number"
+          }, {
+              "attr": "description"
+          }, {
+              "attr": "isActive"
+          }, {
+              "attr": "isSold"
+          }, {
+              "attr": "barcode"
+          }, {
+              "attr": "manufacturer"
+          }, {
+              "attr": "cost"
+          }, {
+              "attr": "unit"
+          }, {
+              "attr": "material"
+          }, {
+              "attr": "bottomBracket"
+          }, {
+              "attr": "fork"
+          }, {
+              "attr": "front"
+          }, {
+              "attr": "seatPost"
+          }, {
+              "attr": "weight"
+          }]
+        }
+      }, {
+        "name": "Opportunities",
+        "feather": "Opportunity",
+        "form": {
+          "name": "Opportunity",
+          "tabs": [{
+            "name": "Tasks"
+            }, {
+            "name": "Audit"
+          }],
+          "attrs": [{
+              "attr": "number",
+              "grid": 0,
+              "unit": 0
+            }, {
+              "attr": "name",
+              "grid": 0,
+              "unit": 0
+            }, {
+              "attr": "description",
+              "grid": 0,
+              "unit": 0
+            }, {
+              "attr": "amount",
+              "grid": 0,
+              "unit": 0
+            }, {
+              "attr": "stage",
+              "grid": 0,
+              "unit": 0
+            }, {
+              "attr": "startDate",
+              "grid": 0,
+              "unit": 1
+            }, {
+              "attr": "dueDate",
+              "grid": 0,
+              "unit": 1
+            }, {
+              "attr": "priority",
+              "grid": 0,
+              "unit": 1
+            }, {
+              "attr": "tasks",
+              "showLabel": false,
+              "grid": 1,
+              "unit": 0,
+              "columns": [{
+                  "attr": "name"
+                }, {
+                  "attr": "description"
+                }, {
+                  "attr": "startDate"
+                }, {
+                  "attr": "dueDate"
+                }
+              ]
+            }, {
+              "attr": "isCompleted",
+              "grid": 0,
+              "unit": 1
+            }, {
+             "attr": "created",
+              "grid": 2,
+              "unit": 1
+            }, {
+             "attr": "createdBy",
+              "grid": 2,
+              "unit": 1
+            }, {
+             "attr": "updated",
+              "grid": 2,
+              "unit": 1
+            }, {
+             "attr": "updatedBy",
+              "grid": 2,
+              "unit": 1
+            }
+          ]
+        },
+        "list": {
+          "columns": [{
+              "attr": "name"
+            }, {
+              "attr": "description"
+            }, {
+              "attr": "startDate"
+            }, {
+              "attr": "dueDate"
+            }, {
+              "attr": "amount"
+            }, {
+              "attr": "isCompleted"
+            }, {
+              "attr": "stage"
+            }, {
+             "attr": "created"
+            }, {
+             "attr": "createdBy"
+            }, {
+             "attr": "updated"
+            }, {
+             "attr": "updatedBy"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
     "name": "BackOffice",
     "module": "Cardinal",
     "launchConfig": {

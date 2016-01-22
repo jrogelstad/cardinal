@@ -53,13 +53,11 @@
             },
             "workPhone": {
                 "description": "Work phone",
-                "type": "string",
-                "format": "tel"
+                "type": "string"
             },
             "homePhone": {
                 "description": "Work phone",
-                "type": "string",
-                "format": "tel"
+                "type": "string"
             },
             "annualIncome": {
                 "description": "Work phone",
@@ -181,7 +179,7 @@
                 "type": "string"
             }
         }
-    },
+    }, 
     {
         "name": "ActivityNote",
         "module": "Cardinal",
@@ -322,6 +320,382 @@
                 "description": "Text",
                 "type": "string",
                 "format": "password"
+            }
+        }
+    },
+    {
+        "name": "Unit",
+        "plural": "Units",
+        "module": "Cardinal",
+        "description": "Unit of measure",
+        "properties": {
+            "name": {
+                "description": "Material",
+                "type": "string",
+                "isUnique": true,
+                "isRequired": true
+            },
+            "description": {
+                "description": "Description",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "Item",
+        "plural": "Items",
+        "module": "Cardinal",
+        "description": "Information about a product or service",
+        "inherits": "Document",
+        "properties": {
+            "number": {
+                "description": "Number",
+                "type": "string",
+                "isUnique": true,
+                "isRequired": true
+            },
+            "description": {
+                "description": "Description",
+                "type": "string"
+            },
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true,
+                "isRequired": true
+            },
+            "isSold": {
+                "description": "Selling status",
+                "type": "boolean",
+                "default": false
+            },
+            "barcode": {
+                "description": "Bar code number",
+                "type": "string"
+            },
+            "manufacturer": {
+                "description": "Manufacturer",
+                "type": "string"
+            },
+            "cost": {
+                "description": "Cost",
+                "type": "number"
+            },
+            "unit":  {
+              "description": "Unit of measure",
+              "type": {
+                "relation": "Unit",
+                "properties": ["name", "description"]
+              }
+            }
+        }
+    },
+    {
+        "name": "AmazonProduct",
+        "plural": "AmazonProducts",
+        "module": "Cardinal",
+        "description": "Amazon products",
+        "inherits": "Item",
+        "properties": {
+            "asin": {
+                "description": "Material",
+                "type": "string"
+            },
+            "sellerRank": {
+                "description": "Best seller rank",
+                "type": "number"
+            },
+            "shippingWeight": {
+                "description": "Shipping weight, pounds",
+                "type": "number"
+            },
+            "productDescription": {
+                "description": "Published product description",
+                "type": "string"
+            },
+            "price": {
+                "description": "Selling price",
+                "type": "number",
+                "scale": 4
+            }
+        }
+    },
+    {
+        "name": "Frame",
+        "plural": "Frames",
+        "module": "Cardinal",
+        "description": "Bicycle frames",
+        "inherits": "AmazonProduct",
+        "properties": {
+            "material": {
+                "description": "Material",
+                "type": "string"
+            },
+            "bottomBracket": {
+                "description": "Bottom bracket types",
+                "type": "string"
+            },
+            "fork": {
+                "description": "Frame fork type",
+                "type": "string"
+            },
+            "front": {
+                "description": "Front type",
+                "type": "string"
+            },
+            "seatPost": {
+                "description": "Seat post size",
+                "type": "string"
+            },
+            "weight": {
+                "description": "Weight, grams",
+                "type": "number"
+            }
+        }
+    }, 
+    {
+        "name": "Seat",
+        "plural": "Seats",
+        "module": "Cardinal",
+        "description": "Bicycle seats",
+        "inherits": "AmazonProduct",
+        "properties": {
+            "color": {
+                "description": "Color",
+                "type": "string"
+            },
+            "style": {
+                "description": "Seat style",
+                "type": "string"
+            },
+            "weight": {
+                "description": "Weight, grams",
+                "type": "number"
+            }
+        }
+    }, 
+    {
+        "name": "Wheel",
+        "plural": "Wheels",
+        "module": "Cardinal",
+        "description": "AmazonProduct",
+        "inherits": "Item",
+        "properties": {
+            "material": {
+                "description": "Material",
+                "type": "string"
+            },
+            "diameter": {
+                "description": "Diameter, inches",
+                "type": "number"
+            },
+            "width": {
+                "description": "Width",
+                "type": "number"
+            },
+            "hub": {
+                "description": "Hub type",
+                "type": "string"
+            },
+            "style": {
+                "description": "Wheel style",
+                "type": "string"
+            },
+            "weight": {
+                "description": "Weight, grams",
+                "type": "number"
+            }
+        }
+    },
+    {
+        "name": "Bicycle",
+        "plural": "Bicycles",
+        "module": "Cardinal",
+        "description": "Bicycles",
+        "inherits": "AmazonProduct",
+        "properties": {
+            "frameMaterial": {
+                "description": "Material",
+                "type": "string"
+            },
+            "color": {
+                "description": "Color",
+                "type": "string"
+            },
+            "size": {
+                "description": "Downtube length, inches",
+                "type": "number"
+            },
+            "hub": {
+                "description": "Hub type",
+                "type": "string"
+            },
+            "gearSet": {
+                "description": "Gear set",
+                "type": "string"
+            },
+            "style": {
+                "description": "Style",
+                "type": "string"
+            },
+            "weight": {
+                "description": "Weight, pounds",
+                "type": "number"
+            }
+        }
+    },
+    {
+        "name": "Customer",
+        "plural": "Customers",
+        "module": "Cardinal",
+        "description": "Customer",
+        "properties": {
+            "number": {
+                "description": "Customer number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "C",
+                    "sequence": "customer_seq_num",
+                    "length": 5
+                },
+                "isUnique": true
+            },
+            "name": {
+                "description": "Customer name",
+                "type": "string"
+            },
+            "billToAddress": {
+                "description": "Bill to Address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
+                }
+            },
+            "shipToAddress": {
+                "description": "Ship to Address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
+                }
+            },
+            "contact": {
+                "description": "Contact",
+                "type": {
+                  "relation": "Contact",
+                  "properties": ["name", "email", "homePhone", "workPhone"]
+                }
+            },
+            "creditStatus": {
+                "description": "creditStatus",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "SalesOrder",
+        "plural": "SalesOrders",
+        "module": "Cardinal",
+        "inherits": "Document",
+        "description": "Sales order",
+        "properties": {
+            "number": {
+                "description": "Sales order number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "S",
+                    "sequence": "salesorder_seq_num",
+                    "length": 5
+                },
+                "isUnique": true
+            },
+            "customer": {
+                "description": "Customer",
+                "type": {
+                    "relation": "Customer",
+                    "properties": ["number", "Name"]
+                } 
+            },
+            "billToAddress": {
+                "description": "billToAddress",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
+                }
+            },
+            "shipToAddress": {
+                "description": "shipToAddress",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
+                }
+            },
+            "contact": {
+                "description": "Contact",
+                "type": {
+                    "relation": "Contact",
+                    "properties": ["name", "email", "homePhone", "workPhone"]
+                }
+            },
+            "shipMethod": {
+                "description": "Ship method",
+                "type": "string"
+            },
+            "status": {
+                "description": "Order status",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "SalesOrderLine",
+        "module": "Cardinal",
+        "description": "Sales order line",
+        "properties": {
+            "parent": {
+              "description": "Parent sales order",
+              "type": {
+                    "relation": "SalesOrder",
+                    "childOf": "lines"
+                }
+            },
+            "number": {
+                "description": "Line number",
+                "isReadOnly": true,
+                "type": "integer"
+            },
+            "item": {
+                "description": "Item",
+                "type": {
+                    "relation": "Item",
+                    "properties": ["number", "description"]
+                }
+            },
+            "quantityOrdered": {
+                "description": "Quantity ordered",
+                "type": "number"
+            },
+            "quantityShipped": {
+                "description": "Quantity shipped",
+                "type": "number"
+            },
+            "unitPrice": {
+                "description": "Unit price",
+                "type": "number",
+                "scale": 4
+            },
+            "remarks": {
+                "description": "Order remarks",
+                "type": "string"
+            },
+            "shipInstructions": {
+                "description": "Shipment Instructions",
+                "type": "string"
+            },
+            "status": {
+                "description": "Status",
+                "type": "string"
             }
         }
     }
