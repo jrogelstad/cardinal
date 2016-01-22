@@ -571,4 +571,141 @@
             "attr": "weight"
         }]
     }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "bqip09ptmlx6",
+    "data": {
+        "name": "Amazon Product",
+        "description": "Amazon Product form",
+        "feather": "AmazonProduct",
+        "module": "Cardinal",
+        "attrs": [{
+            "attr": "number"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "isActive"
+        }, {
+            "attr": "isSold"
+        }, {
+            "attr": "barcode"
+        }, {
+            "attr": "manufacturer"
+        }, {
+            "attr": "cost"
+        }, {
+            "attr": "unit"
+        }, {
+            "attr": "aisn"
+        }, {
+            "attr": "sellerRank"
+        }, {
+            "attr": "shippingWeight"
+        }, {
+            "attr": "productDescription"
+        }, {
+            "attr": "price"
+        }]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "ug5vvt3zho03",
+    "data": {
+        "name": "Customer",
+        "description": "Customer form",
+        "feather": "Customer",
+        "module": "Cardinal",
+        "attrs": [{
+            "attr": "number"
+        }, {
+            "attr": "name"
+        }, {
+            "attr": "creditStatus"
+        }, {
+            "attr": "isActive"
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "5za0lefbzqmc",
+    "data": {
+        "name": "Customer",
+        "description": "Unit relation wdiget",
+        "isActive": true,
+        "feather": "Customer",
+        "valueProperty": "number",
+        "labelProperty": "name",
+        "form": {
+            "id": "ug5vvt3zho03"
+        },
+        "searchColumns": [{
+                "attr": "number"
+            }, {
+                "attr": "name"
+            }, {
+                "attr": "createdBy"
+            }, {
+                "attr": "updated"
+            }, {
+                "attr": "updatedBy"
+            }
+        ]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "bt7da1jdyxw9",
+    "data": {
+        "name": "Sales Order",
+        "description": "Sales order form",
+        "module": "Cardinal",
+        "feather": "SalesOrder",
+        "tabs": [{
+            "name": "Lines"
+        }, {
+            "name": "Audit"
+        }],
+        "attrs": [{
+            "attr": "number",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "customer",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "orderDate",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "shipMethod",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "status",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "lines",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "item"
+            }, {
+                "attr": "item.description"
+            }, {
+                "attr": "quantityOrdered",
+                "label": "Ordered"
+            }, {
+                "attr": "quantityShipped",
+                "label": "Shipped"
+            }, {
+                "attr": "status"
+            }]
+        }]
+    }
 }]

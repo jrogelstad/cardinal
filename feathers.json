@@ -589,6 +589,11 @@
             "creditStatus": {
                 "description": "creditStatus",
                 "type": "string"
+            },
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
             }
         }
     },
@@ -645,6 +650,11 @@
             "status": {
                 "description": "Order status",
                 "type": "string"
+            },
+            "orderDate": {
+                "description": "Order date",
+                "type": "string",
+                "format": "date"
             }
         }
     },
