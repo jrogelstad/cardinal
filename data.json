@@ -673,11 +673,11 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "customer",
+            "attr": "orderDate",
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "orderDate",
+            "attr": "customer",
             "grid": 0,
             "unit": 0
         }, {
