@@ -369,7 +369,7 @@
         "method": "POST",
         "id": "tip3j0u9g58l",
         "data": {
-            "number": "C00001",
+            "code": "C00001",
             "name": "Anglo Thompson",
             "creditStatus": "Good"
         }
@@ -378,7 +378,7 @@
         "method": "POST",
         "id": "jfj635axkhbb",
         "data": {
-            "number": "C00002",
+            "code": "C00002",
             "name": "Freida Flannigan",
             "creditStatus": "Good"
         }
@@ -387,7 +387,7 @@
         "method": "POST",
         "id": "brwlmg5fnsl",
         "data": {
-            "number": "C00003",
+            "code": "C00003",
             "name": "Courtney Casper",
             "creditStatus": "Good"
         }

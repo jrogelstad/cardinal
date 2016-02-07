@@ -563,9 +563,10 @@
         "plural": "Customers",
         "module": "Cardinal",
         "description": "Customer",
+        "inherits": "Node",
         "properties": {
-            "number": {
-                "description": "Customer number",
+            "code": {
+                "description": "Customer code",
                 "isReadOnly": true,
                 "type": "string",
                 "autonumber": {
@@ -573,7 +574,8 @@
                     "sequence": "customer_seq_num",
                     "length": 5
                 },
-                "isUnique": true
+                "isUnique": true,
+                "inheritedFrom": "Node"
             },
             "name": {
                 "description": "Customer name",
@@ -627,7 +629,7 @@
                 "description": "Customer",
                 "type": {
                     "relation": "Customer",
-                    "properties": ["number", "name"]
+                    "properties": ["code", "name"]
                 } 
             },
             "billToAddress": {

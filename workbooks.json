@@ -377,7 +377,7 @@
         "form": "ug5vvt3zho03",
         "list": {
           "columns": [{
-              "attr": "number"
+              "attr": "code"
           }, {
               "attr": "name"
           }, {

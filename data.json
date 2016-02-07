@@ -618,7 +618,7 @@
         "feather": "Customer",
         "module": "Cardinal",
         "attrs": [{
-            "attr": "number"
+            "attr": "code"
         }, {
             "attr": "name"
         }, {
@@ -636,13 +636,13 @@
         "description": "Unit relation wdiget",
         "isActive": true,
         "feather": "Customer",
-        "valueProperty": "number",
+        "valueProperty": "code",
         "labelProperty": "name",
         "form": {
             "id": "ug5vvt3zho03"
         },
         "searchColumns": [{
-                "attr": "number"
+                "attr": "code"
             }, {
                 "attr": "name"
             }, {
