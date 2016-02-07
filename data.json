@@ -265,8 +265,8 @@
         "description": "Opportunity relation wdiget",
         "isActive": true,
         "feather": "Opportunity",
-        "valueProperty": "name",
-        "labelProperty": "description",
+        "valueProperty": "number",
+        "labelProperty": "name",
         "form": {
             "id": "syva8q1zh98d"
         },
@@ -293,7 +293,7 @@
         "feather": "Unit",
         "module": "Cardinal",
         "attrs": [{
-            "attr": "name"
+            "attr": "code"
         }, {
             "attr": "description"
         }]
@@ -307,13 +307,13 @@
         "description": "Unit relation wdiget",
         "isActive": true,
         "feather": "Unit",
-        "valueProperty": "name",
+        "valueProperty": "code",
         "labelProperty": "description",
         "form": {
             "id": "2natrk2ze6ts"
         },
         "searchColumns": [{
-                "attr": "name"
+                "attr": "code"
             }, {
                 "attr": "description"
             }, {
@@ -335,7 +335,7 @@
         "feather": "Item",
         "module": "Cardinal",
         "attrs": [{
-            "attr": "number"
+            "attr": "code"
         }, {
             "attr": "description"
         }, {
@@ -361,13 +361,13 @@
         "description": "Item relation wdiget",
         "isActive": true,
         "feather": "Item",
-        "valueProperty": "number",
+        "valueProperty": "code",
         "labelProperty": "description",
         "form": {
             "id": "3b5i7biisqbw"
         },
         "searchColumns": [{
-                "attr": "name"
+                "attr": "number"
             }, {
                 "attr": "description"
             }, {
@@ -389,7 +389,7 @@
         "feather": "Frame",
         "module": "Cardinal",
         "attrs": [{
-            "attr": "number"
+            "attr": "code"
         }, {
             "attr": "description"
         }, {
@@ -438,7 +438,7 @@
         "feather": "Wheel",
         "module": "Cardinal",
         "attrs": [{
-            "attr": "number"
+            "attr": "code"
         }, {
             "attr": "description"
         }, {
@@ -487,7 +487,7 @@
         "feather": "Seat",
         "module": "Cardinal",
         "attrs": [{
-            "attr": "number"
+            "attr": "code"
         }, {
             "attr": "description"
         }, {
@@ -530,7 +530,7 @@
         "feather": "Bicycle",
         "module": "Cardinal",
         "attrs": [{
-            "attr": "number"
+            "attr": "code"
         }, {
             "attr": "description"
         }, {
@@ -581,7 +581,7 @@
         "feather": "AmazonProduct",
         "module": "Cardinal",
         "attrs": [{
-            "attr": "number"
+            "attr": "code"
         }, {
             "attr": "description"
         }, {
@@ -788,5 +788,26 @@
                 "attr": "address.ountry"
             }
         ]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "o6qktnxyz4dk",
+    "data": {
+        "name": "MyContact",
+        "description": "My Contact form",
+        "feather": "MyContact",
+        "module": "Cardinal",
+        "attrs": [{
+            "attr": "name"
+        }, {
+            "attr": "email"
+        }, {
+            "attr": "homePhone"
+        }, {
+            "attr": "workPhone"
+        }, {
+            "attr": "isActive"
+        }]
     }
 }]

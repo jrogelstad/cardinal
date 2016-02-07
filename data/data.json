@@ -128,15 +128,33 @@
         "method": "POST",
         "id": "k8qi7ba21j6z",
         "data": {
-            "name": "EA",
+            "code": "EA",
             "description": "Each"
+        }
+    }, {
+        "name": "Currency",
+        "method": "POST",
+        "id": "4y9dtthuen7z",
+        "data": {
+            "code": "USD",
+            "description": "U.S. Dollar",
+            "symbol": "$"
+        }
+    }, {
+        "name": "Currency",
+        "method": "POST",
+        "id": "twugl4nqeodj",
+        "data": {
+            "code": "EUR",
+            "description": "Euro",
+            "symbol": "€"
         }
     }, {
         "name": "Bicycle",
         "method": "POST",
         "id": "rx5mzee83c5l",
         "data": {
-            "number": "RM100A",
+            "code": "RM100A",
             "description": "Road Master Adventures, Men's, Dark Blue",
             "frameMaterial": "Cromoly steel",
             "color": "Silver",
@@ -159,7 +177,7 @@
         "method": "POST",
         "id": "8aeq5trpib9v",
         "data": {
-            "number": "KZ2600",
+            "code": "KZ2600",
             "description": "Thruster KZ2600 Dual Suspension Mountain Bike (19 Inch Frame)",
             "frameMaterial": "Aluminum",
             "color": "Black",
@@ -183,7 +201,7 @@
         "method": "POST",
         "id": "ltvky3wok3tu",
         "data": {
-            "number": "D7S-1010-55",
+            "code": "D7S-1010-55",
             "description": "Critical Cycles Diamond Frame 7Speed Shimano Hybrid Urban Commuter Road Bicycle",
             "frameMaterial": "Chromoly steel",
             "color": "Cream",
@@ -207,7 +225,7 @@
         "method": "POST",
         "id": "jn4ntkf89a40",
         "data": {
-            "number": "34-32-631",
+            "code": "34-32-631",
             "description": "Diamondback Singlewall Mountain Bike Rear Wheel fits 6/7 Speed Free Wheel, 26-Inch ",
             "material": "Aluminum",
             "diameter": 26,
@@ -229,7 +247,7 @@
         "method": "POST",
         "id": "1ecj3vtequdc",
         "data": {
-            "number": "FWS7035QR",
+            "code": "FWS7035QR",
             "description": "Sta-Tru Quick Release Silver ST735 36H Rim Front Wheel (700X35)",
             "material": "Composite",
             "diameter": 26,
@@ -251,7 +269,7 @@
         "method": "POST",
         "id": "azcgd44uoox5",
         "data": {
-            "number": "FWS7035QZ",
+            "code": "FWS7035QZ",
             "description": "Avenir 36H Nutted Cruiser Style Rear Wheel with Coaster Brake (Silver, 24 x 1.75 Inch)",
             "material": "Aluminum",
             "diameter": 24,
@@ -273,7 +291,7 @@
         "method": "POST",
         "id": "a9pr5jckd01r",
         "data": {
-            "number": "FHIACX1CFF",
+            "code": "FHIACX1CFF",
             "description": "Fuji Altamira CX 1.0 Cyclocross Frame and Fork",
             "material": "High Modulus D-6 carbon with integrated tapered head tube",
             "color": "White",
@@ -299,7 +317,7 @@
         "method": "POST",
         "id": "i2j7bedw35h2",
         "data": {
-            "number": "RIDFCF2015",
+            "code": "RIDFCF2015",
             "description": "Ridley Fenix Carbon Frameset - 2015",
             "material": "Carbon fiber",
             "color": "Black",
@@ -325,7 +343,7 @@
         "method": "POST",
         "id": "y52uj6x49ham",
         "data": {
-            "number": "RIDIC92016",
+            "code": "RIDIC92016",
             "description": "Ridley Ignite C9 29 Inch Carbon Frameset",
             "material": "Carbon fiber",
             "color": "Black",
@@ -345,6 +363,33 @@
             "unit": {
                 "id": "k8qi7ba21j6z"
             }
+        }
+    }, {
+        "name": "Customer",
+        "method": "POST",
+        "id": "tip3j0u9g58l",
+        "data": {
+            "number": "C00001",
+            "name": "Anglo Thompson",
+            "creditStatus": "Good"
+        }
+    }, {
+        "name": "Customer",
+        "method": "POST",
+        "id": "jfj635axkhbb",
+        "data": {
+            "number": "C00002",
+            "name": "Freida Flannigan",
+            "creditStatus": "Good"
+        }
+    }, {
+        "name": "Customer",
+        "method": "POST",
+        "id": "brwlmg5fnsl",
+        "data": {
+            "number": "C00003",
+            "name": "Courtney Casper",
+            "creditStatus": "Good"
         }
     }
 ]

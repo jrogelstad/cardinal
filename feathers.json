@@ -210,7 +210,7 @@
         "inherits": "Task",
         "properties": {
             "number": {
-                "description": "Unique identifier",
+                "description": "Natural key",
                 "type": "string",
                 "autonumber": {
                     "prefix": "PRE",
@@ -324,13 +324,13 @@
         }
     },
     {
-        "name": "Unit",
-        "plural": "Units",
+        "name": "Node",
+        "plural": "Nodes",
         "module": "Cardinal",
-        "description": "Unit of measure",
+        "description": "Base class for hiearchy support",
         "properties": {
-            "name": {
-                "description": "Material",
+            "code": {
+                "description": "Natural key",
                 "type": "string",
                 "isUnique": true,
                 "isRequired": true
@@ -342,22 +342,32 @@
         }
     },
     {
+        "name": "Unit",
+        "plural": "Units",
+        "module": "Cardinal",
+        "description": "Unit of measure",
+        "inherits": "Node"
+    },
+    {
+        "name": "Currency",
+        "plural": "Currencies",
+        "module": "Cardinal",
+        "description": "Currency",
+        "inherits": "Node",
+        "properties": {
+            "symbol": {
+                "description": "Symbol",
+                "type": "string"
+            }
+        }
+    },
+    {
         "name": "Item",
         "plural": "Items",
         "module": "Cardinal",
         "description": "Information about a product or service",
-        "inherits": "Document",
+        "inherits": "Node",
         "properties": {
-            "number": {
-                "description": "Number",
-                "type": "string",
-                "isUnique": true,
-                "isRequired": true
-            },
-            "description": {
-                "description": "Description",
-                "type": "string"
-            },
             "isActive": {
                 "description": "Active status",
                 "type": "boolean",
@@ -385,7 +395,7 @@
               "description": "Unit of measure",
               "type": {
                 "relation": "Unit",
-                "properties": ["name", "description"]
+                "properties": ["code", "description"]
               }
             }
         }
@@ -571,17 +581,11 @@
             },
             "billToAddress": {
                 "description": "Bill to Address",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
-                }
+                "type": "string"
             },
             "shipToAddress": {
                 "description": "Ship to Address",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
-                }
+                "type": "string"
             },
             "contact": {
                 "description": "Contact",
@@ -677,7 +681,7 @@
                 "description": "Item",
                 "type": {
                     "relation": "Item",
-                    "properties": ["number", "description"]
+                    "properties": ["code", "description"]
                 }
             },
             "quantityOrdered": {
@@ -704,6 +708,172 @@
             "status": {
                 "description": "Status",
                 "type": "string"
+            }
+        }
+    },
+    {
+        "name": "MyContact",
+        "plural": "MyContacts",
+        "module": "Cardinal",
+        "inherits": "Contact",
+        "description": "My private contacts",
+        "properties": {}
+    },
+    {
+        "name": "LocationNode",
+        "plural": "LocationNodes",
+        "module": "Cardinal",
+        "description": "Physical location nodes",
+        "inherits": "Node"
+    },
+    {
+        "name": "Location",
+        "plural": "Locations",
+        "module": "Cardinal",
+        "description": "Physical locations",
+        "inherits": "LocationNode",
+        "properties": {
+            "parent": {
+                "description": "Parent location",
+                "type": {
+                    "relation": "LocationNode",
+                    "properties": ["code", "description"]
+                }
+            }
+        }
+    },
+    {
+        "name": "Site",
+        "plural": "Sites",
+        "module": "Cardinal",
+        "description": "Physical site",
+        "inherits": "Location",
+        "properties": {
+            "address": {
+                "description": "Physical address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
+                }
+            }
+        }
+    },
+    {
+        "name": "LedgerNode",
+        "plural": "LedgerNodes",
+        "module": "Cardinal",
+        "description": "Ledger nodes",
+        "inherits": "Node"
+    },
+    {
+        "name": "LedgerAccount",
+        "plural": "LedgerAccounts",
+        "module": "Cardinal",
+        "description": "Ledger accounts",
+        "inherits": "LedgerNode",
+        "properties": {
+            "parent": {
+                "description": "Parent account",
+                "type": {
+                    "relation": "LedgerNode",
+                    "properties": ["code", "description"]
+                }
+            }
+        }
+    },
+    {
+        "name": "Request",
+        "plural": "Requests",
+        "module": "Cardinal",
+        "description": "Transaction request",
+        "properties": {
+            "object": {
+                "description": "Node to transact",
+                "type": {
+                    "relation": "Node",
+                    "properties": ["code", "description"]
+                }
+            },
+            "from": {
+                "description": "From node",
+                "type": {
+                    "relation": "Node",
+                    "properties": ["code", "description"]
+                }
+            },
+            "to": {
+                "description": "To node",
+                "type": {
+                    "relation": "Node",
+                    "properties": ["code", "description"]
+                }
+            },
+            "time": {
+                "description": "Requested transaction time",
+                "type": "string",
+                "format": "dateTime"
+            },
+            "quantityRequested": {
+                "description": "Quantity",
+                "type": "number"
+            },
+            "quantityTransacted": {
+                "description": "Quantity",
+                "type": "number"
+            }
+        }
+    },
+    {
+        "name": "TransactionNode",
+        "plural": "TransactionNodes",
+        "module": "Cardinal",
+        "description": "Transaction",
+        "inherits": "Node",
+        "properties": {
+            "object": {
+                "description": "Object transacted",
+                "type": {
+                    "relation": "Node",
+                    "properties": ["code", "description"]
+                }
+            },
+            "from": {
+                "description": "From object",
+                "type": {
+                    "relation": "Node",
+                    "properties": ["code", "description"]
+                }
+            },
+            "to": {
+                "description": "To object",
+                "type": {
+                    "relation": "Node",
+                    "properties": ["code", "description"]
+                }
+            }
+        }
+    },
+    {
+        "name": "Transaction",
+        "plural": "Transactions",
+        "module": "Cardinal",
+        "description": "Transaction",
+        "properties": {
+            "time": {
+                "description": "Transaction time",
+                "type": "string",
+                "format": "dateTime"
+            },
+            "quantity": {
+                "description": "Quantity",
+                "type": "number"
+            },
+            "parent": {
+                "description": "Parent transaction",
+                "type": {
+                    "relation": "TransactionNode",
+                    "properties": ["code", "description"]
+                }
             }
         }
     }

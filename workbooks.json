@@ -14,7 +14,7 @@
         "form": "3b5i7biisqbw",
         "list": {
           "columns": [{
-              "attr": "number"
+              "attr": "code"
           }, {
               "attr": "description"
           }, {
@@ -37,7 +37,7 @@
         "form": "mwg0gspc2sjj",
         "list": {
           "columns": [{
-              "attr": "number"
+              "attr": "code"
           }, {
               "attr": "description"
           }, {
@@ -60,7 +60,7 @@
         "form": "cn37poq1shk4",
         "list": {
           "columns": [{
-              "attr": "number"
+              "attr": "code"
           }, {
               "attr": "description"
           }, {
@@ -87,7 +87,7 @@
         "form": "uh6m1sizf2ni",
         "list": {
           "columns": [{
-              "attr": "number"
+              "attr": "code"
           }, {
               "attr": "description"
           }, {
@@ -348,7 +348,7 @@
         "form": "bqip09ptmlx6",
         "list": {
           "columns": [{
-              "attr": "number"
+              "attr": "code"
           }, {
               "attr": "description"
           }, {
@@ -369,6 +369,19 @@
               "attr": "productDescription"
           }, {
               "attr": "price"
+          }]
+        }
+      }, {
+        "name": "Customers",
+        "feather": "Customer",
+        "form": "ug5vvt3zho03",
+        "list": {
+          "columns": [{
+              "attr": "number"
+          }, {
+              "attr": "name"
+          }, {
+              "attr": "isActive"
           }]
         }
       }, {
