@@ -1,0 +1,333 @@
+[
+    {
+        "name": "Note",
+        "module": "Cardinal",
+        "description": "Note",
+        "properties": {
+            "text": {
+                "description": "Note text",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "DocumentNote",
+        "module": "Cardinal",
+        "description": "Note on document",
+        "inherits": "Note",
+        "properties": {
+            "parent": {
+                "description": "Parent document",
+                "type": {
+                    "relation": "Document",
+                    "childOf": "notes"
+                }
+            }
+        }
+    },
+    {
+        "name": "Contact",
+        "plural": "Contacts",
+        "module": "Cardinal",
+        "description": "Information about a person",
+        "inherits": "Document",
+        "properties": {
+            "name": {
+                "description": "Name",
+                "type": "string"
+            },
+            "email": {
+                "description": "email",
+                "type": "string"
+            },
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
+            },
+            "birthDate": {
+                "description": "Active status",
+                "type": "string",
+                "format": "date",
+                "default": null
+            },
+            "workPhone": {
+                "description": "Work phone",
+                "type": "string"
+            },
+            "homePhone": {
+                "description": "Work phone",
+                "type": "string"
+            },
+            "annualIncome": {
+                "description": "Work phone",
+                "type": "number",
+                "scale": 2
+            },
+            "creditScore": {
+                "description": "Credit Score",
+                "type": "integer",
+                "min": 0,
+                "max": 800
+            },
+            "role": {
+                "description": "Role",
+                "type": {
+                    "relation": "Role",
+                    "properties": ["name", "description"]
+                }
+            }
+        }
+    },
+    {
+        "name": "MyContact",
+        "plural": "MyContacts",
+        "module": "Cardinal",
+        "inherits": "Contact",
+        "description": "My private contacts"
+    },
+    {
+        "name": "Address",
+        "plural": "Addresses",
+        "module": "Cardinal",
+        "description": "Physical location",
+        "properties": {
+            "type": {
+                "description": "Home, work, other",
+                "type": "string"
+            },
+            "line1": {
+                "description": "Street3",
+                "type": "string"
+            },
+            "line2": {
+                "description": "Street2",
+                "type": "string"
+            },
+            "city": {
+                "description": "City",
+                "type": "string"
+            },
+            "state": {
+                "description": "State",
+                "type": "string"
+            },
+            "postalCode": {
+                "description": "Postal code",
+                "type": "string"
+            },
+            "country": {
+                "description": "Country",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "ContactAddress",
+        "module": "Cardinal",
+        "description": "Contact address",
+        "properties": {
+            "parent": {
+                "description": "Parent",
+                "type": {
+                    "relation": "Contact",
+                    "childOf": "addresses"
+                }
+            },
+            "address": {
+                "description": "Address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
+                }
+            }
+        }
+    },
+    {
+        "name": "Activity",
+        "plural": "Activities",
+        "module": "Cardinal",
+        "description": "Activity",
+        "inherits": "Object",
+        "properties": {
+            "name": {
+                "description": "Name",
+                "type": "string",
+                "default": null
+            },
+            "description": {
+                "description": "Description",
+                "type": "string"
+            },
+            "startDate": {
+                "description": "Start date",
+                "type": "string",
+                "format": "date",
+                "isRequired": true
+            },
+            "dueDate": {
+                "description": "Due date",
+                "type": "string",
+                "format": "date",
+                "isRequired": true,
+                "default": null
+            },
+            "priority": {
+                "description": "Priority",
+                "type": "integer",
+                "default": 10
+            },
+            "isCompleted": {
+                "description": "Completion status",
+                "type": "boolean"
+            },
+            "activityType": {
+                "description": "Discriminator",
+                "type": "string"
+            }
+        }
+    }, 
+    {
+        "name": "ActivityNote",
+        "module": "Cardinal",
+        "description": "Note on Activity",
+        "inherits": "Note",
+        "properties": {
+            "parent": {
+                "description": "Parent activity",
+                "type": {
+                    "relation": "Activity",
+                    "childOf": "notes"
+                }
+            }
+        }
+    },
+    {
+        "name": "Task",
+        "plural": "Tasks",
+        "module": "Cardinal",
+        "description": "User task",
+        "inherits": "Activity"
+    },
+    {
+        "name": "Opportunity",
+        "plural": "Opportunities",
+        "module": "Cardinal",
+        "description": "Opportunity",
+        "inherits": "Task",
+        "properties": {
+            "number": {
+                "description": "Natural key",
+                "type": "string",
+                "autonumber": {
+                    "prefix": "PRE",
+                    "sequence": "opportunity_seq_num",
+                    "length": 4,
+                    "suffix": "SFX"
+                },
+                "isReadOnly": true,
+                "isUnique": true
+            },
+            "amount": {
+                "description": "Estimated sales amount",
+                "type": "number",
+                "isRequired": true
+            },
+            "stage": {
+                "description": "Pipeline stage",
+                "type": "string"
+            },
+            "contact": {
+                "description": "Primary Contact",
+                "type": {
+                    "relation": "Contact",
+                    "properties": [
+                        "name",
+                        "email"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "name": "OpportunityTask",
+        "description": "Opportunity Task",
+        "module": "Cardinal",
+        "inherits": "Activity",
+        "properties": {
+            "parent": {
+                "description": "Parent Opportunity",
+                "type": {
+                    "relation": "Opportunity",
+                    "childOf": "tasks"
+                }
+            }
+        }
+    },
+    {
+        "name": "Lead",
+        "plural": "Leads",
+        "module": "Cardinal",
+        "description": "A sales contact",
+        "inherits": "Contact",
+        "properties": {
+            "company": {
+                "description": "Company",
+                "type": "string"
+            },
+            "remarks": {
+                "description": "Misc. text",
+                "type": "string"
+            },
+            "probability": {
+                "description": "Probability of closing",
+                "type": "number"
+            },
+            "opportunity": {
+                "description": "Related Opportunity",
+                "type": {
+                    "relation": "Opportunity",
+                    "properties": ["number", "name", "description"]
+                }
+            }
+        }
+    },
+    {
+        "name": "TestTypes",
+        "module": "Cardinal",
+        "description": "Test all types and formats",
+        "properties": {
+            "integer": {
+                "description": "Integer",
+                "type": "integer"
+            },
+            "number": {
+                "description": "Number",
+                "type": "number"
+            },
+            "money": {
+                "description": "Custom number",
+                "type": "number",
+                "precision": 14,
+                "scale": 2
+            },
+            "date": {
+                "description": "Date",
+                "type": "string",
+                "format": "date",
+                "default": "now()"
+            },
+            "dateTime": {
+                "description": "Timestamp with timezone",
+                "type": "string",
+                "format": "dateTime",
+                "default": "now()"
+            },
+            "password": {
+                "description": "Text",
+                "type": "string",
+                "format": "password"
+            }
+        }
+    }
+]

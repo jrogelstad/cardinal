@@ -391,5 +391,163 @@
             "name": "Courtney Casper",
             "creditStatus": "Good"
         }
+    }, {
+        "name": "Site",
+        "method": "POST",
+        "id": "c0f47f26zb60",
+        "data": {
+            "code": "WH1",
+            "description": "Warehouse 1"
+        }
+    }, {
+        "name": "Location",
+        "method": "POST",
+        "id": "hhxvcdowwn38",
+        "data": {
+            "code": "A1",
+            "description": "Aisle 1",
+            "parent": {
+                "id": "c0f47f26zb60"
+            }
+        }
+    }, {
+        "name": "Location",
+        "method": "POST",
+        "id": "tllyrf7kheuw",
+        "data": {
+            "code": "A2",
+            "description": "Aisle 2",
+            "parent": {
+                "id": "c0f47f26zb60"
+            }
+        }
+    }, {
+        "name": "Location",
+        "method": "POST",
+        "id": "z2ydzqcc5hgj",
+        "data": {
+            "code": "A3",
+            "description": "Aisle 3",
+            "parent": {
+                "id": "c0f47f26zb60"
+            }
+        }
+    }, {
+        "name": "Location",
+        "method": "POST",
+        "id": "z2ydzqcc5hgj",
+        "data": {
+            "code": "A3",
+            "description": "Aisle 3",
+            "parent": {
+                "id": "c0f47f26zb60"
+            }
+        }
+    }, {
+        "name": "Location",
+        "method": "POST",
+        "id": "u69aj7cgtkmf",
+        "data": {
+            "code": "Adjustment",
+            "description": "Adjustment"
+        }
+    }, {
+        "name": "Request",
+        "method": "POST",
+        "id": "mz7jb6xx66x5",
+        "data": {
+            "node": {
+                "id": "y52uj6x49ham"
+            },
+            "comments": "Adjust frame in",
+            "isPosted": true,
+            "distributions": [
+                {
+                   "container": {
+                      "id": "u69aj7cgtkmf"
+                   },
+                   "quantity": -10
+                },
+                {
+                   "container": {
+                      "id": "c0f47f26zb60"
+                   },
+                   "quantity": 10
+                }
+            ]
+        }
+    }, {
+        "name": "Transaction",
+        "method": "POST",
+        "id": "u2zjx49ag4ew",
+        "data": {
+            "node": {
+                "id": "y52uj6x49ham"
+            },
+            "parent": {
+                "id": "mz7jb6xx66x5"
+            },
+            "comments": "Adjust frame in",
+            "distributions": [
+                {
+                   "container": {
+                      "id": "u69aj7cgtkmf"
+                   },
+                   "quantity": -10
+                },
+                {
+                   "container": {
+                      "id": "hhxvcdowwn38"
+                   },
+                   "quantity": 10
+                },
+                {
+                   "container": {
+                      "id": "c0f47f26zb60"
+                   },
+                   "quantity": 10,
+                   "isPropagation": true
+                }
+            ]
+        }
+    }, {
+        "name": "NodeBalance",
+        "method": "POST",
+        "id": "odkyup9m3pc4",
+        "data": {
+            "node": {
+                "id": "y52uj6x49ham"
+            },
+            "container": {
+                "id": "u69aj7cgtkmf"
+            },
+            "balance": -10
+        }
+    }, {
+        "name": "NodeBalance",
+        "method": "POST",
+        "id": "83jx5dbj6n7e",
+        "data": {
+            "node": {
+                "id": "y52uj6x49ham"
+            },
+            "container": {
+                "id": "hhxvcdowwn38"
+            },
+            "balance": 10
+        }
+    }, {
+        "name": "NodeBalance",
+        "method": "POST",
+        "id": "u2zjx49ag4ew",
+        "data": {
+            "node": {
+                "id": "y52uj6x49ham"
+            },
+            "container": {
+                "id": "c0f47f26zb60"
+            },
+            "balance": 10
+        }
     }
 ]

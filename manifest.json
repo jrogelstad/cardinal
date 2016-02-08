@@ -3,7 +3,15 @@
     "files": [
         {
             "type": "feather",
-            "path": "feathers.json"
+            "path": "feathers-crm.json"
+        },
+        {
+            "type": "feather",
+            "path": "feathers-node.json"
+        },
+        {
+            "type": "feather",
+            "path": "feathers-product.json"
         },
         {
             "type": "module",
