@@ -39,7 +39,7 @@
             },
             "balance": {
                 "description": "Current quantity",
-                "type": "string"
+                "type": "number"
             }
         }
     },
@@ -279,6 +279,13 @@
                 }
             }
         }
+    },
+    {
+        "name": "LocationBalance",
+        "plural": "LocationBalance",
+        "module": "Cardinal",
+        "description": "Physical location balance",
+        "inherits": "NodeBalance"
     },
     {
         "name": "Site",

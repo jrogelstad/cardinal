@@ -2,6 +2,12 @@
 (function () {
   "strict";
 
-  // Placeholder for future functionality
+  var catalog = require("catalog"),
+    item = catalog.store().models().item;
+
+  // Adjustment transaction
+  item.adjust = function (item, location, quantity) {
+  	
+  };
 
 }());

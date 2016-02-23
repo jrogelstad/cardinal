@@ -1,4 +1,5 @@
 {
+    "module": "Cardinal",
     "version": "0.0.1",
     "files": [
         {
@@ -15,8 +16,12 @@
         },
         {
             "type": "module",
-            "name": "Cardinal",
             "path": "module.js"
+        },
+        {
+            "type": "route",
+            "name": "Inventory",
+            "path": "inventory-route.js"
         },
         {
             "type": "workbook",

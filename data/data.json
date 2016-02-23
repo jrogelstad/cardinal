@@ -511,7 +511,7 @@
             ]
         }
     }, {
-        "name": "NodeBalance",
+        "name": "LocationBalance",
         "method": "POST",
         "id": "odkyup9m3pc4",
         "data": {
@@ -524,7 +524,7 @@
             "balance": -10
         }
     }, {
-        "name": "NodeBalance",
+        "name": "LocationBalance",
         "method": "POST",
         "id": "83jx5dbj6n7e",
         "data": {
@@ -537,7 +537,7 @@
             "balance": 10
         }
     }, {
-        "name": "NodeBalance",
+        "name": "LocationBalance",
         "method": "POST",
         "id": "u2zjx49ag4ew",
         "data": {
