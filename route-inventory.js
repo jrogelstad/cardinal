@@ -16,11 +16,13 @@
       requestId,
       COMPLETE = 5,
       POSTED = 3,
-      item = {id: "y52uj6x49ham"},
-      debitLocation = {id: "hhxvcdowwn38"},
+      data = obj.specs,
+      item = data.item,
+      debitLocation = data.location,
       creditLocation = {id: "u69aj7cgtkmf"},
-      comments = "Testing adjustment",
-      quantity = 10,
+      time = data.time || f.now(),
+      comments = data.comments,
+      quantity = data.quantity,
       n = 0;
 
     afterItem = function (err, resp) {
@@ -61,13 +63,13 @@
       n += 1;
       if (resp.length) {
         creditLocationBalance = resp[0];
-        creditLocationBalance.balance = math.subtract(creditLocationBalance.balance, quantity);
+        creditLocationBalance.balance = math.add(creditLocationBalance.balance, quantity);
       } else {
         creditLocationBalance = {
           id: f.createId(),
           node: item,
           container: creditLocation,
-          balance: quantity * -1
+          balance: quantity
         };
       }
       if (n === COMPLETE) { postRequest(); }
@@ -81,13 +83,13 @@
       n += 1;
       if (resp.length) {
         debitLocationBalance = resp[0];
-        debitLocationBalance.balance = math.add(debitLocationBalance.balance, quantity);
+        debitLocationBalance.balance = math.subtract(debitLocationBalance.balance, quantity);
       } else {
         debitLocationBalance = {
           id: f.createId(),
           node: item,
           container: debitLocation,
-          balance: quantity
+          balance: quantity * -1
         };
       }
       if (n === COMPLETE) { postRequest(); }
@@ -104,7 +106,7 @@
         data: {
           id: requestId,
           node: item,
-          time: f.now(),
+          time: time,
           comments: comments,
           distributions: [{
             container: debitLocation,
@@ -127,7 +129,7 @@
       transaction = {
         node: item,
         parent: {id: requestId},
-        time: f.now(),
+        time: time,
         comments: comments,
         distributions: [{
           container: debitLocation,

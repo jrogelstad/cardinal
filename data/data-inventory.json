@@ -1,129 +1,5 @@
 [
     {
-        "name": "Role",
-        "method": "POST",
-        "id": "sales",
-        "data": {
-            "name": "Sales",
-            "description": "Sales team",
-            "members": [{
-                "member": "postgres"
-            }]
-        }
-    },
-    {
-        "name": "Contact",
-        "method": "POST",
-        "id": "hello",
-        "data": {
-            "email": "jill@gmail.com",
-            "name": "Jill Doe"
-        }
-    },
-    {
-        "name": "Contact",
-        "method": "POST",
-        "id": "hello1",
-        "data": {
-            "email": "jn89911@gmail.com",
-            "name": "Jane Smith"
-        }
-    },
-    {
-        "name": "Contact",
-        "method": "POST",
-        "id": "msn1",
-        "data": {
-            "email": "blackbandit@yahoo.com",
-            "name": "Orin Blackwell"
-        }
-    },
-    {
-        "name": "Contact",
-        "method": "POST",
-        "id": "msn2",
-        "data": {
-            "email": "scarface@gmail.com",
-            "name": "Antoin Scarborough"
-        }
-    },
-    {
-        "name": "Lead",
-        "method": "POST",
-        "id": "lead1",
-        "data": {
-            "email": "ag8912@gmail.com",
-            "name": "Armin Ghia"
-        }
-    },
-    {
-        "name": "Role",
-        "method": "POST",
-        "id": "everyone",
-        "data": {
-          "members": [{
-            "member": "postgres"
-          }, {
-            "member": "wren"
-          }]
-        }
-    },
-    {
-        "method": "PUT",
-        "name": "saveAuthorization",
-        "data": {
-            "id": "hello",
-            "role": "everyone",
-            "actions": {
-                "canCreate": false,
-                "canRead": false,
-                "canUpdate": false,
-                "canDelete": false
-            }
-        }
-    },
-    {
-        "method": "PUT",
-        "name": "saveAuthorization",
-        "data": {
-            "id": "hello",
-            "role": "sales",
-            "actions": {
-                "canCreate": true,
-                "canRead": true,
-                "canUpdate": true,
-                "canDelete": true
-            }
-        }
-    },
-    {
-        "method": "PUT",
-        "name": "saveAuthorization",
-        "data": {
-            "feather": "Lead",
-            "role": "everyone",
-            "actions": {
-                "canCreate": false,
-                "canRead": false,
-                "canUpdate": false,
-                "canDelete": false
-            }
-        }
-    },
-    {
-        "method": "PUT",
-        "name": "saveAuthorization",
-        "data": {
-            "feather": "Lead",
-            "role": "sales",
-            "actions": {
-                "canCreate": true,
-                "canRead": true,
-                "canUpdate": true,
-                "canDelete": true
-            }
-        }
-    }, {
         "name": "Unit",
         "method": "POST",
         "id": "k8qi7ba21j6z",
@@ -449,7 +325,8 @@
         "id": "u69aj7cgtkmf",
         "data": {
             "code": "Adjustment",
-            "description": "Adjustment"
+            "description": "Adjustment",
+            "type": "Expense"
         }
     }, {
         "name": "Request",
@@ -466,13 +343,13 @@
                    "container": {
                       "id": "u69aj7cgtkmf"
                    },
-                   "quantity": -10
+                   "quantity": 10
                 },
                 {
                    "container": {
                       "id": "c0f47f26zb60"
                    },
-                   "quantity": 10
+                   "quantity": -10
                 }
             ]
         }
@@ -493,19 +370,19 @@
                    "container": {
                       "id": "u69aj7cgtkmf"
                    },
-                   "quantity": -10
+                   "quantity": 10
                 },
                 {
                    "container": {
                       "id": "hhxvcdowwn38"
                    },
-                   "quantity": 10
+                   "quantity": -10
                 },
                 {
                    "container": {
                       "id": "c0f47f26zb60"
                    },
-                   "quantity": 10,
+                   "quantity": -10,
                    "isPropagation": true
                 }
             ]
@@ -521,7 +398,7 @@
             "container": {
                 "id": "u69aj7cgtkmf"
             },
-            "balance": -10
+            "balance": 10
         }
     }, {
         "name": "LocationBalance",
@@ -534,7 +411,7 @@
             "container": {
                 "id": "hhxvcdowwn38"
             },
-            "balance": 10
+            "balance": -10
         }
     }, {
         "name": "LocationBalance",
@@ -547,7 +424,7 @@
             "container": {
                 "id": "c0f47f26zb60"
             },
-            "balance": 10
+            "balance": -10
         }
     }
 ]

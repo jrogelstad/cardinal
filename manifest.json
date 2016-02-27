@@ -21,7 +21,12 @@
         {
             "type": "route",
             "name": "Inventory",
-            "path": "inventory-route.js"
+            "path": "route-inventory.js"
+        },
+        {
+            "type": "route",
+            "name": "Ledger",
+            "path": "route-ledger.js"
         },
         {
             "type": "workbook",

@@ -3,7 +3,15 @@
     "files": [
         {
             "type": "batch",
-            "path": "data.json"
+            "path": "data-crm.json"
+        },
+        {
+            "type": "batch",
+            "path": "data-inventory.json"
+        },
+        {
+            "type": "batch",
+            "path": "data-ledger.json"
         }
     ]
 }

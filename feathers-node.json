@@ -14,6 +14,15 @@
             "description": {
                 "description": "Description",
                 "type": "string"
+            },
+            "comments": {
+                "description": "Comments",
+                "type": "string"
+            },
+            "type": {
+                "description": "Node type",
+                "type": "string",
+                "default": "Asset"
             }
         }
     },
@@ -325,6 +334,13 @@
                 }
             }
         }
+    },
+    {
+        "name": "LedgerBalance",
+        "plural": "LedgerBalance",
+        "module": "Cardinal",
+        "description": "Ledger account balance",
+        "inherits": "NodeBalance"
     },
     {
         "name": "Action",
