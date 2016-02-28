@@ -10,7 +10,7 @@
   // Register database procedure on datasource
   var journalEntry = function (obj) {
     var afterAccount, afterCurrency, afterLedgerBalance,
-      postRequest, postTransaction,
+      createJournal, postJournal,
       afterPostBalance, afterPostTransaction,
       count, request, transaction, raiseError,
       data = obj.specs,
@@ -32,7 +32,7 @@
         return;
       }
       n += 1;
-      if (n === count) { postRequest(); }
+      if (n === count) { createJournal(); }
     };
 
     afterAccount = function (err, resp) {
@@ -45,7 +45,7 @@
         return;
       }
       n += 1;
-      if (n === count) { postRequest(); }
+      if (n === count) { createJournal(); }
     };
 
     afterLedgerBalance = function (err, resp) {
@@ -65,10 +65,10 @@
           balance: 0
         };
       }
-      if (n === count) { postRequest(); }
+      if (n === count) { createJournal(); }
     };
 
-    postRequest = function () {
+    createJournal = function () {
       var sumcheck = 0,
         quantity = 0;
 
@@ -77,7 +77,8 @@
         id: f.createId(),
         node: data.currency,
         time: data.time || f.now(),
-        comments: data.comments,
+        note: data.note,
+        reference: data.reference,
         isPosted: true,
         distributions: []
       };
@@ -119,14 +120,14 @@
       // Post request
       datasource.request({
         method: "POST",
-        name: "Request",
+        name: "GeneralJournal",
         client: obj.client,
-        callback: postTransaction,
+        callback: postJournal,
         data: request     
       }, true);
     };
 
-    postTransaction = function (err) {
+    postJournal = function (err) {
       if (err) {
         obj.callback(err);
         return;
@@ -138,7 +139,7 @@
         node: data.currency,
         parent: request,
         time: f.now(),
-        comments: data.comments,
+        note: data.note,
         distributions: request.distributions
       };
 
@@ -170,6 +171,8 @@
       }
       n += 1;
       if (n === count) {
+        // Raise error only after to all requests
+        // completed to ensure complete rollback
         if (raiseError) {
           obj.callback(raiseError);
           return;

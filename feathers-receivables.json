@@ -1,0 +1,79 @@
+[ 
+    {
+        "name": "Customer",
+        "plural": "Customers",
+        "module": "Cardinal",
+        "description": "Customer",
+        "inherits": "Node",
+        "properties": {
+            "code": {
+                "description": "Customer code",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "C",
+                    "sequence": "customer_seq_num",
+                    "length": 5
+                },
+                "isUnique": true,
+                "inheritedFrom": "Node"
+            },
+            "name": {
+                "description": "Customer name",
+                "type": "string"
+            },
+            "billToAddress": {
+                "description": "Bill to Address",
+                "type": "string"
+            },
+            "shipToAddress": {
+                "description": "Ship to Address",
+                "type": "string"
+            },
+            "contact": {
+                "description": "Contact",
+                "type": {
+                  "relation": "Contact",
+                  "properties": ["name", "email", "homePhone", "workPhone"]
+                }
+            },
+            "creditStatus": {
+                "description": "creditStatus",
+                "type": "string"
+            },
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
+            }
+        }
+    },
+    {
+        "name": "AccountsReceivable",
+        "plural": "AccountsReceivable",
+        "module": "Cardinal",
+        "description": "Accounts receivable balance",
+        "inherits": "NodeBalance"
+    },
+    {
+        "name": "AccountsReceivableJournal",
+        "plural": "AccountsReceivableJournal",
+        "module": "Cardinal",
+        "description": "Accounts receivable journal",
+        "inherits": "Journal",
+        "properties": {
+            "number": {
+                "description": "Journal number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "AR",
+                    "sequence": "ar_seq_num",
+                    "length": 5
+                },
+                "isUnique": true,
+                "inheritedFrom": "Journal"
+            }
+        }
+    }
+]

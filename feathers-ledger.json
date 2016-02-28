@@ -1,0 +1,134 @@
+[ 
+    {
+        "name": "Currency",
+        "plural": "Currencies",
+        "module": "Cardinal",
+        "description": "Currency",
+        "inherits": "Node",
+        "properties": {
+            "symbol": {
+                "description": "Symbol",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "LedgerNode",
+        "plural": "LedgerNodes",
+        "module": "Cardinal",
+        "description": "Ledger nodes",
+        "inherits": "Node"
+    },
+    {
+        "name": "LedgerAccount",
+        "plural": "LedgerAccounts",
+        "module": "Cardinal",
+        "description": "Ledger accounts",
+        "inherits": "LedgerNode",
+        "properties": {
+            "parent": {
+                "description": "Parent account",
+                "type": {
+                    "relation": "LedgerNode",
+                    "properties": ["code", "description"]
+                }
+            }
+        }
+    },
+    {
+        "name": "LedgerBalance",
+        "plural": "LedgerBalance",
+        "module": "Cardinal",
+        "description": "Ledger account balance",
+        "inherits": "NodeBalance"
+    },
+    {
+        "name": "FiscalYear",
+        "plural": "FiscalYears",
+        "module": "Cardinal",
+        "description": "Fiscal year periods",
+        "inherits": "Period"
+    },
+    {
+        "name": "FiscalPeriod",
+        "plural": "FiscalPeriod",
+        "module": "Cardinal",
+        "description": "Fiscal periods",
+        "inherits": "Period",
+        "properties": {
+            "parent": {
+                "description": "Fiscal year",
+                "required": true,
+                "type": {
+                    "relation": "FiscalYear",
+                    "properties": ["name", "start", "end"]
+                }
+            }
+        }
+    },
+    {
+        "name": "LedgerBalance",
+        "plural": "LedgerBalance",
+        "module": "Cardinal",
+        "description": "Current ledger balance",
+        "inherits": "NodeBalance"
+    },
+    {
+        "name": "Journal",
+        "plural": "Journals",
+        "module": "Cardinal",
+        "description": "Abstract journal entries",
+        "inherits": "Request",
+        "properties": {
+            "number": {
+                "description": "Journal number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "GJ",
+                    "sequence": "gj_seq_num",
+                    "length": 5
+                },
+                "isUnique": true
+            },
+            "reference": {
+                "description": "Reference to source document",
+                "type": "string"
+            },
+            "folio": {
+                "description": "Reference to ledger posting",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "GeneralJournal",
+        "plural": "GeneralJournals",
+        "module": "Cardinal",
+        "description": "General journal entries",
+        "inherits": "Journal"
+    },
+    {
+        "name": "GeneralLedger",
+        "plural": "GeneralLedger",
+        "module": "Cardinal",
+        "description": "General ledger entries",
+        "inherits": "Journal"
+    },
+    {
+        "name": "TrialBalance",
+        "plural": "TrialBalance",
+        "inherits": "NodePeriodBalance",
+        "module": "Cardinal",
+        "description": "Amount of currency in ledger accounts per period",
+        "properties": {
+            "previous": {
+                "description": "Previous node period balance",
+                "type": {
+                    "relation": "NodePeriodBalance",
+                    "properties": ["balance"]
+                }
+            }
+        }
+    }
+]

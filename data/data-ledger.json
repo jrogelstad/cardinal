@@ -6,7 +6,7 @@
         "data": {
             "code": "101",
             "description": "Cash",
-            "comments": "Checking account balance (as shown in company records), currency, coins, checks received from customers but not yet deposited.",
+            "note": "Checking account balance (as shown in company records), currency, coins, checks received from customers but not yet deposited.",
             "type": "Asset"
         }
     },
@@ -17,7 +17,7 @@
         "data": {
             "code": "120",
             "description": "Accounts Receivable",
-            "comments": "Amounts owed to the company for services performed or products sold not yet paid for.",
+            "note": "Amounts owed to the company for services performed or products sold not yet paid for.",
             "type": "Asset"
         }
     },
@@ -28,7 +28,7 @@
         "data": {
             "code": "140",
             "description": "Merchandise Inventory",
-            "comments": "Cost of merchandise purchased but has not yet been sold",
+            "note": "Cost of merchandise purchased but has not yet been sold",
             "type": "Asset"
         }
     },
@@ -39,7 +39,7 @@
         "data": {
             "code": "150",
             "description": "Supplies",
-            "comments": "Cost of supplies that have not yet been used.",
+            "note": "Cost of supplies that have not yet been used.",
             "type": "Asset"
         }
     },
@@ -50,7 +50,7 @@
         "data": {
             "code": "160",
             "description": "Work in Process",
-            "comments": "Cost of accumulated on inventory being built but incomplete.",
+            "note": "Cost of accumulated on inventory being built but incomplete.",
             "type": "Asset"
         }
     },
@@ -61,7 +61,7 @@
         "data": {
             "code": "170",
             "description": "Land",
-            "comments": "Cost to acquire and prepare land for use by the company.",
+            "note": "Cost to acquire and prepare land for use by the company.",
             "type": "Asset"
         }
     },
@@ -72,7 +72,7 @@
         "data": {
             "code": "175",
             "description": "Buildings",
-            "comments": "Cost to purchase or construct buildings for use by the company.",
+            "note": "Cost to purchase or construct buildings for use by the company.",
             "type": "Asset"
         }
     },
@@ -83,7 +83,7 @@
         "data": {
             "code": "178",
             "description": "Accumulated Depreciation - Buildings",
-            "comments": "Amount of the building's cost that has been allocated to Depreciation Expense since the time the building was acquired.",
+            "note": "Amount of the building's cost that has been allocated to Depreciation Expense since the time the building was acquired.",
             "type": "Asset"
         }
     },
@@ -94,7 +94,7 @@
         "data": {
             "code": "180",
             "description": "Equipment",
-            "comments": "Cost to acquire and prepare equipment for use by the company.",
+            "note": "Cost to acquire and prepare equipment for use by the company.",
             "type": "Asset"
         }
     },
@@ -105,7 +105,7 @@
         "data": {
             "code": "188",
             "description": "Accumulated Depreciation - Equipment",
-            "comments": "Amount of the equipment's cost that has been allocated to Depreciation Expense since the time the equipment was acquired.",
+            "note": "Amount of the equipment's cost that has been allocated to Depreciation Expense since the time the equipment was acquired.",
             "type": "Asset"
         }
     },
@@ -116,7 +116,7 @@
         "data": {
             "code": "210",
             "description": "Notes Payable",
-            "comments": "The amount of principle due on a formal written promise to pay. Loans from banks are included in this account.",
+            "note": "The amount of principle due on a formal written promise to pay. Loans from banks are included in this account.",
             "type": "Liability"
         }
     },
@@ -127,7 +127,7 @@
         "data": {
             "code": "215",
             "description": "Accounts Payable",
-            "comments": "Ammounts owned to suppliers who provided goods and services to the company but did not require immediate payment in cash.",
+            "note": "Ammounts owned to suppliers who provided goods and services to the company but did not require immediate payment in cash.",
             "type": "Liability"
         }
     },
@@ -138,7 +138,7 @@
         "data": {
             "code": "220",
             "description": "Wages Payable",
-            "comments": "Amounts owned to employees for hours worked but not yet paid.",
+            "note": "Amounts owned to employees for hours worked but not yet paid.",
             "type": "Liability"
         }
     },
@@ -149,7 +149,7 @@
         "data": {
             "code": "240",
             "description": "Unearned Revenues",
-            "comments": "Ammounts received in advance of delivering goods or providing services.",
+            "note": "Ammounts received in advance of delivering goods or providing services.",
             "type": "Liability"
         }
     },
@@ -160,7 +160,7 @@
         "data": {
             "code": "250",
             "description": "Mortgage Loan Payable",
-            "comments": "A formal loan that involves a lien on real estate until the loan is repaid.",
+            "note": "A formal loan that involves a lien on real estate until the loan is repaid.",
             "type": "Liability"
         }
     },
@@ -171,7 +171,7 @@
         "data": {
             "code": "290",
             "description": "Owner's Capital",
-            "comments": "Amount owner invested in the company (through cash or other assets) plus earnings of the company not withdrawn by the owner.",
+            "note": "Amount owner invested in the company (through cash or other assets) plus earnings of the company not withdrawn by the owner.",
             "type": "Equity"
         }
     },
@@ -182,7 +182,7 @@
         "data": {
             "code": "295",
             "description": "Owner's Drawing",
-            "comments": "Amount owner of he sole proprietership has withdrawn for personal use during the current accounting year. At the end of the year, the amount in this account will be transferred to Owner's Capital (290).",
+            "note": "Amount owner of he sole proprietership has withdrawn for personal use during the current accounting year. At the end of the year, the amount in this account will be transferred to Owner's Capital (290).",
             "type": "Equity"
         }
     },
@@ -193,7 +193,7 @@
         "data": {
             "code": "310",
             "description": "Serivice Revenues",
-            "comments": "Amounts earned from providing services to clients, either for cash or credit.",
+            "note": "Amounts earned from providing services to clients, either for cash or credit.",
             "type": "Revenue"
         }
     },
@@ -204,7 +204,7 @@
         "data": {
             "code": "320",
             "description": "Products Revenues",
-            "comments": "Amounts earned from providing products to clients, either for cash or credit.",
+            "note": "Amounts earned from providing products to clients, either for cash or credit.",
             "type": "Revenue"
         }
     },
@@ -215,7 +215,7 @@
         "data": {
             "code": "500",
             "description": "Salaries Expense",
-            "comments": "Expenses incurred for the work performed by salaried employees during the accounting period.",
+            "note": "Expenses incurred for the work performed by salaried employees during the accounting period.",
             "type": "Expense"
         }
     },
@@ -226,7 +226,7 @@
         "data": {
             "code": "510",
             "description": "Wage Expense",
-            "comments": "Expenses incurred for the work performed by non-salaried employees during the accounting period.",
+            "note": "Expenses incurred for the work performed by non-salaried employees during the accounting period.",
             "type": "Expense"
         }
     },
@@ -237,7 +237,7 @@
         "data": {
             "code": "520",
             "description": "Commissions Expense",
-            "comments": "Expenses incurred for the sales closed by commissioned employees during the accounting period.",
+            "note": "Expenses incurred for the sales closed by commissioned employees during the accounting period.",
             "type": "Expense"
         }
     },
@@ -248,7 +248,7 @@
         "data": {
             "code": "540",
             "description": "Supplies Expense",
-            "comments": "Cost of supplies used up during the accounting period.",
+            "note": "Cost of supplies used up during the accounting period.",
             "type": "Expense"
         }
     },
@@ -259,7 +259,7 @@
         "data": {
             "code": "550",
             "description": "Cost of Sales",
-            "comments": "Cost of inventory used up during the accounting period.",
+            "note": "Cost of inventory used up during the accounting period.",
             "type": "Expense"
         }
     },
@@ -270,7 +270,7 @@
         "data": {
             "code": "560",
             "description": "Rent Expense",
-            "comments": "Cost of occupying rented facilities during the accounting period.",
+            "note": "Cost of occupying rented facilities during the accounting period.",
             "type": "Expense"
         }
     },
@@ -281,7 +281,7 @@
         "data": {
             "code": "570",
             "description": "Utilities Expense",
-            "comments": "Costs for electricity, heat, water, and sewer that were used during the accounting period.",
+            "note": "Costs for electricity, heat, water, and sewer that were used during the accounting period.",
             "type": "Expense"
         }
     },
@@ -292,7 +292,7 @@
         "data": {
             "code": "576",
             "description": "Telephone Expense",
-            "comments": "Costs of telephone used during the accounting period.",
+            "note": "Costs of telephone used during the accounting period.",
             "type": "Expense"
         }
     },
@@ -303,7 +303,7 @@
         "data": {
             "code": "610",
             "description": "Advertising Expense",
-            "comments": "Costs incurred by the company during the accounting period for ads, promotions, and other selling expenses.",
+            "note": "Costs incurred by the company during the accounting period for ads, promotions, and other selling expenses.",
             "type": "Expense"
         }
     },
@@ -314,7 +314,7 @@
         "data": {
             "code": "750",
             "description": "Depreciation Expense",
-            "comments": "Costs of long-term assets allocated to expenses during the accounting period.",
+            "note": "Costs of long-term assets allocated to expenses during the accounting period.",
             "type": "Expense"
         }
     },
@@ -325,7 +325,7 @@
         "data": {
             "code": "810",
             "description": "Interest Revenues",
-            "comments": "Interest and dividents earned on bank accounts, investments, or notes receivable.",
+            "note": "Interest and dividents earned on bank accounts, investments, or notes receivable.",
             "type": "Revenue"
         }
     },
@@ -336,7 +336,7 @@
         "data": {
             "code": "910",
             "description": "Gain on Sale of Assets",
-            "comments": "Occurs when the company sells one of its assets (other than inventory) for more than the asset's book value.",
+            "note": "Occurs when the company sells one of its assets (other than inventory) for more than the asset's book value.",
             "type": "Revenue"
         }
     },
@@ -347,8 +347,174 @@
         "data": {
             "code": "960",
             "description": "Loss on Sale of Assets",
-            "comments": "Occurs when the company sells one of its assets (other than inventory) for less than the asset's book value.",
+            "note": "Occurs when the company sells one of its assets (other than inventory) for less than the asset's book value.",
             "type": "Expense"
+        }
+    },
+    {
+        "name": "FiscalYear",
+        "method": "POST",
+        "id": "lv3qgixdqfv8",
+        "data": {
+            "name": "2016",
+            "start": "2016-01-01",
+            "end": "2016-12-31"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "s36oeecdmudl",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Jan. 2016",
+            "start": "2016-01-01",
+            "end": "2016-01-31"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "nkc9dw4sw5a0",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Feb. 2016",
+            "start": "2016-02-01",
+            "end": "2016-02-29"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "fb79hlz84al6",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Mar. 2016",
+            "start": "2016-03-01",
+            "end": "2016-03-31"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "mwmhrjoobous",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Apr. 2016",
+            "start": "2016-04-01",
+            "end": "2016-04-30"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "fbm2a1s03510",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "May 2016",
+            "start": "2016-05-01",
+            "end": "2016-05-31"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "do6spdsr0uc3",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Jun. 2016",
+            "start": "2016-06-01",
+            "end": "2016-06-30"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "w35mevu3354m",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Jul. 2016",
+            "start": "2016-07-01",
+            "end": "2016-07-31"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "w35mevu3354m",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Aug. 2016",
+            "start": "2016-08-01",
+            "end": "2016-08-31"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "ho0ldmnh7gbe",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Sep. 2016",
+            "start": "2016-09-01",
+            "end": "2016-09-30"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "rkmufh75bwes",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Oct. 2016",
+            "start": "2016-10-01",
+            "end": "2016-10-31"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "3uugl7btr6w4",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Nov. 2016",
+            "start": "2016-11-01",
+            "end": "2016-11-30"
+        }
+    },
+    {
+        "name": "FiscalPeriod",
+        "method": "POST",
+        "id": "14vvc8u5eu5q",
+        "data": {
+            "parent": {
+              "id": "lv3qgixdqfv8"
+            },
+            "name": "Dec. 2016",
+            "start": "2016-12-01",
+            "end": "2016-12-31"
         }
     }
 ]

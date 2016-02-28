@@ -21,7 +21,7 @@
       debitLocation = data.location,
       creditLocation = {id: "u69aj7cgtkmf"},
       time = data.time || f.now(),
-      comments = data.comments,
+      note = data.note,
       quantity = data.quantity,
       n = 0;
 
@@ -107,7 +107,7 @@
           id: requestId,
           node: item,
           time: time,
-          comments: comments,
+          note: note,
           distributions: [{
             container: debitLocation,
             quantity: quantity
@@ -130,7 +130,7 @@
         node: item,
         parent: {id: requestId},
         time: time,
-        comments: comments,
+        note: note,
         distributions: [{
           container: debitLocation,
           quantity: quantity

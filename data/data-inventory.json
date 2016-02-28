@@ -336,7 +336,7 @@
             "node": {
                 "id": "y52uj6x49ham"
             },
-            "comments": "Adjust frame in",
+            "note": "Adjust frame in",
             "isPosted": true,
             "distributions": [
                 {
@@ -364,7 +364,7 @@
             "parent": {
                 "id": "mz7jb6xx66x5"
             },
-            "comments": "Adjust frame in",
+            "note": "Adjust frame in",
             "distributions": [
                 {
                    "container": {

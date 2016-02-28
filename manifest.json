@@ -12,6 +12,26 @@
         },
         {
             "type": "feather",
+            "path": "feathers-ledger.json"
+        },
+        {
+            "type": "feather",
+            "path": "feathers-payables.json"
+        },
+        {
+            "type": "feather",
+            "path": "feathers-receivables.json"
+        },
+        {
+            "type": "feather",
+            "path": "feathers-inventory.json"
+        },
+        {
+            "type": "feather",
+            "path": "feathers-sales.json"
+        },
+        {
+            "type": "feather",
             "path": "feathers-product.json"
         },
         {
