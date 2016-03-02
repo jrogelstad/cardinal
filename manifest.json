@@ -39,6 +39,16 @@
             "path": "module.js"
         },
         {
+            "type": "controller",
+            "name": "Inventory",
+            "path": "controller-inventory.js"
+        },
+        {
+            "type": "controller",
+            "name": "Ledger",
+            "path": "controller-ledger.js"
+        },
+        {
             "type": "route",
             "name": "Inventory",
             "path": "route-inventory.js"

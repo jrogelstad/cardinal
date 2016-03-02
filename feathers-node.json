@@ -119,10 +119,10 @@
                     "properties": ["code", "description"]
                 }
             },
-            "time": {
-                "description": "Action time",
+            "date": {
+                "description": "Action date",
                 "type": "string",
-                "format": "dateTime"
+                "format": "date"
             },
             "note": {
                 "description": "Note",

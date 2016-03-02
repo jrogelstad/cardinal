@@ -113,7 +113,7 @@
         "plural": "GeneralLedger",
         "module": "Cardinal",
         "description": "General ledger entries",
-        "inherits": "Journal"
+        "inherits": "Transaction"
     },
     {
         "name": "TrialBalance",
