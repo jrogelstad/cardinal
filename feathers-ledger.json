@@ -9,6 +9,10 @@
             "symbol": {
                 "description": "Symbol",
                 "type": "string"
+            },
+            "isBase": {
+                "description": "System base currency flag",
+                "type": "boolean"
             }
         }
     },

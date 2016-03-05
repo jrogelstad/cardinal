@@ -8,24 +8,6 @@
             "description": "Each"
         }
     }, {
-        "name": "Currency",
-        "method": "POST",
-        "id": "4y9dtthuen7z",
-        "data": {
-            "code": "USD",
-            "description": "U.S. Dollar",
-            "symbol": "$"
-        }
-    }, {
-        "name": "Currency",
-        "method": "POST",
-        "id": "twugl4nqeodj",
-        "data": {
-            "code": "EUR",
-            "description": "Euro",
-            "symbol": "€"
-        }
-    }, {
         "name": "Bicycle",
         "method": "POST",
         "id": "rx5mzee83c5l",

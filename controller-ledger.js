@@ -6,8 +6,137 @@
     math = require("mathjs"),
     jsonpatch = require("fast-json-patch");
 
+  var doInsertLedgerAccount = function (obj) {
+    var afterInsertAccount, afterFiscalPeriod, afterCurrency,
+      createTrialBalance, done, raiseError, periods, prev,
+      currency, result,
+      client = obj.client,
+      callback = obj.callback,
+      account = obj,
+      period = null,
+      n = 0,
+      count = 3;
+
+    delete account.client;
+    delete account.callback;
+
+    afterInsertAccount = function (err, resp) {
+      n += 1;
+      if (err) {
+        done(err);
+        return;
+      }
+      jsonpatch.apply(account, resp);
+      result = resp;
+      if (n === count) { createTrialBalance(); }
+    };
+
+    afterCurrency = function (err, resp) {
+      n += 1;
+      if (err) {
+        done(err);
+        return;
+      }
+      if (!resp.length) {
+        done("No base currency found");
+      }
+      currency = resp[0];
+      if (n === count) { createTrialBalance(); }
+    };
+
+    afterFiscalPeriod = function (err, resp) {
+      n += 1;
+      if (err) {
+        done(err);
+        return;
+      }
+ 
+      periods = resp;
+      if (n === count) { createTrialBalance(); }
+    };
+
+    createTrialBalance = function (err) {
+      if (err) {
+        done(err);
+        return;
+      }
+
+      if (!periods.length) {
+        done();
+        return;
+      }
+
+      prev = period;
+      period = periods.shift();
+
+      datasource.request({
+        method: "POST",
+        name: "TrialBalance",
+        client: client,
+        callback: createTrialBalance,
+        data: {
+          node: currency,
+          container: account,
+          period: period,
+          previous: prev
+        }     
+      }, true);
+    };
+
+    done = function (err) {
+      if (err && !raiseError) {
+        raiseError = err;
+        return;
+      }
+      if (n === count) {
+        if (raiseError) {
+          callback(raiseError);
+          return;
+        }
+        callback(null, result);
+      }
+    };
+
+    // Real work starts here
+    datasource.request({
+      method: "POST",
+      name: "doInsert",
+      data: {
+        name: "LedgerAccount",
+        data: account
+      },
+      client: client,
+      callback: afterInsertAccount
+    }, true);
+
+    datasource.request({
+      method: "GET",
+      name: "Currency",
+      client: client,
+      callback: afterCurrency,
+      filter: {
+        criteria: [{
+          property: "isBase",
+          value: true
+        }]
+      }
+    }, true);
+
+    datasource.request({
+      method: "GET",
+      name: "FiscalPeriod",
+      client: client,
+      callback: afterFiscalPeriod,
+      filter: {
+        order: [{property: "start"}]
+      }
+    }, true);
+  };
+
+  datasource.registerFunction("POST", "LedgerAccount", doInsertLedgerAccount);
+
   // Register database procedure on datasource
-  var journalEntry = function (obj) {
+  var doJournalEntry = function (obj) {
     var afterAccount, afterCurrency, afterLedgerBalance,
       createJournal, postJournal,
       afterPostBalance, afterPostTransaction,
@@ -223,6 +352,6 @@
     }, true);
   };
 
-  datasource.registerFunction("POST", "journalEntry", journalEntry);
+  datasource.registerFunction("POST", "journalEntry", doJournalEntry);
 
 }(datasource));
