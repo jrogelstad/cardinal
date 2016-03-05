@@ -6,26 +6,51 @@
     math = require("mathjs"),
     jsonpatch = require("fast-json-patch");
 
-  var doInsertLedgerAccount = function (obj) {
-    var afterInsertAccount, afterFiscalPeriod, afterCurrency,
-      createTrialBalance, done, raiseError, periods, prev,
-      currency, result,
+  var doUpsertLedgerAccount = function (obj) {
+    var afterAccount, afterUpsertAccount, afterFiscalPeriod, afterCurrency,
+      createTrialBalance, done, raiseError, periods, prev, currency, result,
       client = obj.client,
       callback = obj.callback,
       account = obj,
+      id = account.id || f.createId(),
       period = null,
       n = 0,
-      count = 3;
+      count = 3,
+      found = false;
 
     delete account.client;
     delete account.callback;
 
-    afterInsertAccount = function (err, resp) {
+    afterAccount = function (err, resp) {
       n += 1;
       if (err) {
         done(err);
         return;
       }
+
+      count += 1;
+      if (resp) { found = true; }
+
+      datasource.request({
+        method: "POST",
+        name: "doUpsert",
+        id: id,
+        data: {
+          name: "LedgerAccount",
+          data: account
+        },
+        client: client,
+        callback: afterUpsertAccount
+      }, true);
+    };
+
+    afterUpsertAccount = function (err, resp) {
+      n += 1;
+      if (err) {
+        done(err);
+        return;
+      }
+
       jsonpatch.apply(account, resp);
       result = resp;
       if (n === count) { createTrialBalance(); }
@@ -61,7 +86,7 @@
         return;
       }
 
-      if (!periods.length) {
+      if (found || !periods.length) {
         done();
         return;
       }
@@ -98,16 +123,26 @@
     };
 
     // Real work starts here
-    datasource.request({
-      method: "POST",
-      name: "doInsert",
-      data: {
+    if (!account.id) {
+      datasource.request({
+        method: "POST",
+        name: "doInsert",
+        data: {
+          name: "LedgerAccount",
+          data: account
+        },
+        client: client,
+        callback: afterUpsertAccount
+      }, true);
+    } else {
+      datasource.request({
+        method: "GET",
         name: "LedgerAccount",
-        data: account
-      },
-      client: client,
-      callback: afterInsertAccount
-    }, true);
+        client: client,
+        callback: afterAccount,
+        id: id
+      }, true);
+    }
 
     datasource.request({
       method: "GET",
@@ -133,7 +168,7 @@
     }, true);
   };
 
-  datasource.registerFunction("POST", "LedgerAccount", doInsertLedgerAccount);
+  datasource.registerFunction("POST", "LedgerAccount", doUpsertLedgerAccount);
 
   // Register database procedure on datasource
   var doJournalEntry = function (obj) {
