@@ -12,7 +12,7 @@
         },
         {
             "type": "feather",
-            "path": "feathers-ledger.json"
+            "path": "ledger/feathers-ledger.json"
         },
         {
             "type": "feather",
@@ -24,7 +24,7 @@
         },
         {
             "type": "feather",
-            "path": "feathers-inventory.json"
+            "path": "inventory/feathers-inventory.json"
         },
         {
             "type": "feather",
@@ -41,22 +41,32 @@
         {
             "type": "controller",
             "name": "Inventory",
-            "path": "controller-inventory.js"
+            "path": "inventory/controller-inventory.js"
         },
         {
             "type": "controller",
-            "name": "Ledger",
-            "path": "controller-ledger.js"
+            "name": "LedgerFiscalPeriod",
+            "path": "ledger/controller-fiscal-period.js"
+        },
+        {
+            "type": "controller",
+            "name": "LedgerLedgerAccount",
+            "path": "ledger/controller-ledger-account.js"
+        },
+        {
+            "type": "controller",
+            "name": "LedgerJournalEntry",
+            "path": "ledger/controller-journal-entry.js"
         },
         {
             "type": "route",
             "name": "Inventory",
-            "path": "route-inventory.js"
+            "path": "inventory/route-inventory.js"
         },
         {
             "type": "route",
             "name": "Ledger",
-            "path": "route-ledger.js"
+            "path": "ledger/route-ledger.js"
         },
         {
             "type": "workbook",

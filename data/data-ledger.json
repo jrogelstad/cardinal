@@ -1,5 +1,25 @@
 [
     {
+        "name": "Currency",
+        "method": "POST",
+        "id": "4y9dtthuen7z",
+        "data": {
+            "code": "USD",
+            "description": "U.S. Dollar",
+            "symbol": "$",
+            "isBase": true
+        }
+    }, {
+        "name": "Currency",
+        "method": "POST",
+        "id": "twugl4nqeodj",
+        "data": {
+            "code": "EUR",
+            "description": "Euro",
+            "symbol": "€"
+        }
+    },
+    {
         "name": "FiscalYear",
         "method": "POST",
         "id": "lv3qgixdqfv8",
@@ -90,7 +110,7 @@
     {
         "name": "FiscalPeriod",
         "method": "POST",
-        "id": "w35mevu3354m",
+        "id": "2i5kfyv6tion",
         "data": {
             "parent": {
               "id": "lv3qgixdqfv8"
@@ -163,26 +183,6 @@
             "name": "Dec. 2016",
             "start": "2016-12-01",
             "end": "2016-12-31"
-        }
-    },
-    {
-        "name": "Currency",
-        "method": "POST",
-        "id": "4y9dtthuen7z",
-        "data": {
-            "code": "USD",
-            "description": "U.S. Dollar",
-            "symbol": "$",
-            "isBase": true
-        }
-    }, {
-        "name": "Currency",
-        "method": "POST",
-        "id": "twugl4nqeodj",
-        "data": {
-            "code": "EUR",
-            "description": "Euro",
-            "symbol": "€"
         }
     },
     {
