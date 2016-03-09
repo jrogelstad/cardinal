@@ -7,18 +7,21 @@
     jsonpatch = require("fast-json-patch");
 
   var doJournalEntry = function (obj) {
-    var afterAccount, afterCurrency, afterLedgerBalance,
-      createJournal, postJournal,
+    var afterAccount, afterCurrency, createJournal, postJournal,
       afterPostBalance, afterPostTransaction,
       count, request, transaction, raiseError,
       data = obj.specs,
+      trialBalances = [],
+      profitLossIds = {},
+      balanceSheetIds = {},
+      date = data.date || f.today(),
       n = 0;
 
     if (!Array.isArray(data.distributions)) {
       obj.callback("Distributions must be a valid array.");
       return;
     }
-    count = data.distributions.length * 2 + 1;
+    count = data.distributions.length + 1;
 
     afterCurrency = function (err, resp) {
       if (err) {
@@ -29,6 +32,7 @@
         obj.callback("Invalid currency \"" + data.currency.id + "\".");
         return;
       }
+
       n += 1;
       if (n === count) { createJournal(); }
     };
@@ -42,27 +46,14 @@
         obj.callback("Invalid ledger account \"" + this.ledgerAccount.id + "\".");
         return;
       }
-      n += 1;
-      if (n === count) { createJournal(); }
-    };
 
-    afterLedgerBalance = function (err, resp) {
-      if (err) {
-        obj.callback(err);
-        return;
-      }
-
-      n += 1;
-      if (resp.length) {
-        this.ledgerBalance = resp[0];
+      if (resp.type === "Revenue" || resp.type === "Liability") {
+        profitLossIds[resp.id] = null;
       } else {
-        this.ledgerBalance = {
-          id: f.createId(),
-          node: data.currency,
-          container: this.ledgerAccount,
-          balance: 0
-        };
+        balanceSheetIds[resp.id] = null;
       }
+
+      n += 1;
       if (n === count) { createJournal(); }
     };
 
@@ -74,7 +65,7 @@
       request = {
         id: f.createId(),
         node: data.currency,
-        date: data.time || f.today(),
+        date: date,
         note: data.note,
         reference: data.reference,
         isPosted: true,
@@ -101,8 +92,6 @@
           quantity = dist.credit;
         }
 
-        dist.ledgerBalance.balance = math.add(dist.ledgerBalance.balance, quantity);
-
         request.distributions.push({
           container: dist.LedgerAccount,
           quantity: quantity
@@ -119,6 +108,7 @@
       datasource.request({
         method: "POST",
         name: "GeneralJournal",
+        user: obj.client.currentUser,
         client: obj.client,
         callback: postJournal,
         data: request     
@@ -131,36 +121,154 @@
         return;
       }
 
+      balanceSheetIds = Object.keys(balanceSheetIds);
+      profitLossIds = Object.keys(profitLossIds);
       n = 0;
-      count = request.distributions.length + 1;
-      transaction = {
-        node: data.currency,
-        parent: request,
-        date: data.date || f.today(),
-        note: data.note,
-        distributions: request.distributions
-      };
+      if (profitLossIds.length && balanceSheetIds.length) {
+        count = 2;
+      } else {
+        count = 1;
+      }
 
-      // Post journal
-      datasource.request({
-        method: "POST",
-        name: "GeneralLedger",
-        client: obj.client,
-        callback: afterPostTransaction,
-        data: transaction      
-      }, true);
-  
-      // Post balance updates
-      data.distributions.forEach(function (dist) {
+      var afterTrialBalance = function (err, resp) {
+        n += 1;
+
+        if (err && !raiseError) {
+          raiseError = err;
+          return;
+        }
+
+        trialBalances = trialBalances.concat(resp);
+        if (n < count) {
+          return;
+        }
+
+        if (raiseError) {
+          obj.callback(raiseError);
+          return;
+        }
+
+        n = 0;
+        count = trialBalances.length + 1;
+        transaction = {
+          node: data.currency,
+          parent: request,
+          date: data.date || f.today(),
+          note: data.note,
+          distributions: request.distributions
+        };
+
+        // Post journal
         datasource.request({
           method: "POST",
-          name: "LedgerBalance",
-          id: dist.ledgerBalance.id,
+          name: "GeneralLedger",
+          user: obj.client.currentUser,
           client: obj.client,
-          callback: afterPostBalance,
-          data: dist.ledgerBalance
+          callback: afterPostTransaction,
+          data: transaction      
         }, true);
-      });
+    
+        // Post balance updates
+        data.distributions.forEach(function (dist) {
+          var update,
+            balances = trialBalances.filter(function (row) {
+              return row.container.id === dist.ledgerAccount.id;
+            }),
+            debit = function (row) {
+              row.balance = math.subtract(row.balance, dist.debit);
+            },
+            credit = function (row) {
+              row.balance = math.add(row.balance, dist.credit);
+            };
+
+          if (!balances.length) {
+            count = 2;
+            afterPostBalance("No open trial balance for account " + dist.ledgerAccount.name + ".");
+            return;
+          }
+
+          if (dist.debit) {
+            balances[0].debits = math.add(balances[0].debits, dist.debit);
+            update = debit;
+          } else {
+            balances[0].credits = math.add(balances[0].credits, dist.credit);
+            update = credit;
+          }
+          update = dist.debit ? debit : credit;
+          balances.forEach(update);
+        });
+
+        trialBalances.forEach(function (balance) {
+          datasource.request({
+            method: "POST",
+            id: balance.id,
+            name: "TrialBalance",
+            user: obj.client.currentUser,
+            client: obj.client,
+            callback: afterPostBalance,
+            data: balance
+          }, true);
+        });
+      };
+
+      // Retrieve profit/loss trial balances
+      if (profitLossIds.length) {
+        datasource.request({
+          method: "GET",
+          name: "TrialBalance",
+          user: obj.client.currentUser,
+          client: obj.client,
+          callback: afterTrialBalance,
+          filter: {
+            criteria: [{
+              property: "node",
+              value: data.currency},{
+              property: "container.id",
+              operator: "IN",
+              value: profitLossIds},{
+              property: "period.start",
+              operator: "<=",
+              value: date},{
+              property: "period.end",
+              operator: ">=",
+              value: date},{
+              property: "period.isClosed",
+              value: false}],
+            order: [{
+              property: "period.start",
+              value: "start"
+            }]
+          }
+        }, true);
+      }
+
+      // Retrieve balance sheet trial balances
+      if (balanceSheetIds.length) {
+        datasource.request({
+          method: "GET",
+          name: "TrialBalance",
+          user: obj.client.currentUser,
+          client: obj.client,
+          callback: afterTrialBalance,
+          filter: {
+            criteria: [{
+              property: "node",
+              value: data.currency},{
+              property: "container.id",
+              operator: "IN",
+              value: balanceSheetIds},{
+              property: "period.start",
+              operator: ">=",
+              value: date},{
+              property: "period.isClosed",
+              value: false}],
+            order: [{
+              property: "period.start",
+              value: "start"
+            }]
+          }
+        }, true);
+      }
     };
 
     afterPostBalance = function (err) {
@@ -168,15 +276,17 @@
         raiseError = err;
       }
       n += 1;
-      if (n === count) {
-        // Raise error only after to all requests
-        // completed to ensure complete rollback
-        if (raiseError) {
-          obj.callback(raiseError);
-          return;
-        }
-        obj.callback(null, transaction);
+      if (n < count) {
+        return;
       }
+
+      // Raise error only after to all requests
+      // completed to ensure complete rollback
+      if (raiseError) {
+        obj.callback(raiseError);
+        return;
+      }
+      obj.callback(null, transaction);
     };
 
     afterPostTransaction = function (err, resp) {
@@ -184,7 +294,7 @@
         afterPostBalance(err);
         return;
       }
-      jsonpatch.apply(resp, transaction);
+      jsonpatch.apply(transaction, resp);
       afterPostBalance();
     };
 
@@ -193,29 +303,17 @@
       datasource.request({
         method: "GET",
         name: "LedgerAccount",
+        user: obj.client.currentUser,
         client: obj.client,
         callback: afterAccount.bind(dist),
         id: dist.ledgerAccount.id
       }, true);
-
-      datasource.request({
-        method: "GET",
-        name: "LedgerBalance",
-        client: obj.client,
-        callback: afterLedgerBalance.bind(dist),
-        filter: {
-          criteria: [{
-            property: "node",
-            value: data.currency},{
-            property: "container",
-            value: dist.ledgerAccount}]
-        }
-      }, true);
-     });
+    });
 
     datasource.request({
       method: "GET",
       name: "Currency",
+      user: obj.client.currentUser,
       client: obj.client,
       callback: afterCurrency,
       id: data.currency.id

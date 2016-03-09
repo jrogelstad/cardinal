@@ -40,13 +40,6 @@
         }
     },
     {
-        "name": "LedgerBalance",
-        "plural": "LedgerBalance",
-        "module": "Cardinal",
-        "description": "Ledger account balance",
-        "inherits": "NodeBalance"
-    },
-    {
         "name": "FiscalYear",
         "plural": "FiscalYears",
         "module": "Cardinal",
@@ -69,13 +62,6 @@
                 }
             }
         }
-    },
-    {
-        "name": "LedgerBalance",
-        "plural": "LedgerBalance",
-        "module": "Cardinal",
-        "description": "Current ledger balance",
-        "inherits": "NodeBalance"
     },
     {
         "name": "Journal",

@@ -93,7 +93,7 @@
                 "description": "Period",
                 "type": {
                     "relation": "Period",
-                    "properties": ["name", "start", "end"]
+                    "properties": ["name", "start", "end", "isFrozen", "isClosed"]
                 }
             },
             "debits": {
