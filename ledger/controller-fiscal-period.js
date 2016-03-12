@@ -9,7 +9,7 @@
     var afterPrevPeriod, afterUpsertPeriod,
       afterFiscalPeriod, afterCurrency, afterLedgerAccount,
       account, prevPeriod, createTrialBalance, done,
-      raiseError, accounts, currency, result,
+      raiseError, accounts, currency, result, prevTrialBalance,
       client = obj.client,
       callback = obj.callback,
       fiscalPeriod = obj,
@@ -51,10 +51,35 @@
         return;
       }
 
+      var afterTrialBalance = function (err, resp) {
+          if (err) {
+            done(err);
+            return;
+          }
+          prevTrialBalance = resp;
+          if (n === count) { createTrialBalance(); }
+        };
+
       if (resp.length) {
         prevPeriod = resp[0];
       }
-      if (n === count) { createTrialBalance(); }
+
+      datasource.request({
+        method: "GET",
+        name: "TrialBalance",
+        client: client,
+        callback: afterTrialBalance,
+        filter: {
+          criteria: [{
+            property: "container.type",
+            operator: "IN",
+            value: ["Asset", "Liability", "Equity"]
+          }, {
+            property: "period",
+            value: prevPeriod
+          }]
+        }
+      }, true);
     };
 
     afterCurrency = function (err, resp) {
@@ -94,6 +119,8 @@
     };
 
     createTrialBalance = function (err) {
+      var prev, balance;
+
       if (err) {
         done(err);
         return;
@@ -105,6 +132,10 @@
       }
 
       account = accounts.shift();
+      prev = prevTrialBalance.find(function (row) {
+        return row.container.id === account.id;
+      });
+      balance = prev ? prev.balance : 0;
 
       datasource.request({
         method: "POST",
@@ -115,7 +146,8 @@
           node: currency,
           container: account,
           period: fiscalPeriod,
-          previous: prevPeriod
+          previous: prevPeriod,
+          balance: balance
         }     
       }, true);
     };
@@ -175,7 +207,7 @@
       client: client,
       callback: afterPrevPeriod,
       filter: {
-        order: [{
+        sort: [{
           property: "end",
           operator: "<",
           value: fiscalPeriod.end,

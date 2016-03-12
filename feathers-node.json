@@ -36,14 +36,14 @@
                 "description": "Node quantified",
                 "type": {
                     "relation": "Node",
-                    "properties": ["code", "description"]
+                    "properties": ["code", "description", "type"]
                 }
             },
             "container": {
                 "description": "Node containing quantity",
                 "type": {
                     "relation": "Node",
-                    "properties": ["code", "description"]
+                    "properties": ["code", "description", "type"]
                 }
             },
             "balance": {

@@ -48,7 +48,7 @@
     },
     {
         "name": "FiscalPeriod",
-        "plural": "FiscalPeriod",
+        "plural": "FiscalPeriods",
         "module": "Cardinal",
         "description": "Fiscal periods",
         "inherits": "Period",

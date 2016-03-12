@@ -108,7 +108,6 @@
       datasource.request({
         method: "POST",
         name: "GeneralJournal",
-        user: obj.client.currentUser,
         client: obj.client,
         callback: postJournal,
         data: request     
@@ -162,7 +161,6 @@
         datasource.request({
           method: "POST",
           name: "GeneralLedger",
-          user: obj.client.currentUser,
           client: obj.client,
           callback: afterPostTransaction,
           data: transaction      
@@ -203,7 +201,6 @@
             method: "POST",
             id: balance.id,
             name: "TrialBalance",
-            user: obj.client.currentUser,
             client: obj.client,
             callback: afterPostBalance,
             data: balance
@@ -216,7 +213,6 @@
         datasource.request({
           method: "GET",
           name: "TrialBalance",
-          user: obj.client.currentUser,
           client: obj.client,
           callback: afterTrialBalance,
           filter: {
@@ -234,7 +230,7 @@
               value: date},{
               property: "period.isClosed",
               value: false}],
-            order: [{
+            sort: [{
               property: "period.start",
               value: "start"
             }]
@@ -247,7 +243,6 @@
         datasource.request({
           method: "GET",
           name: "TrialBalance",
-          user: obj.client.currentUser,
           client: obj.client,
           callback: afterTrialBalance,
           filter: {
@@ -262,7 +257,7 @@
               value: date},{
               property: "period.isClosed",
               value: false}],
-            order: [{
+            sort: [{
               property: "period.start",
               value: "start"
             }]
@@ -303,7 +298,6 @@
       datasource.request({
         method: "GET",
         name: "LedgerAccount",
-        user: obj.client.currentUser,
         client: obj.client,
         callback: afterAccount.bind(dist),
         id: dist.ledgerAccount.id
@@ -313,7 +307,6 @@
     datasource.request({
       method: "GET",
       name: "Currency",
-      user: obj.client.currentUser,
       client: obj.client,
       callback: afterCurrency,
       id: data.currency.id
