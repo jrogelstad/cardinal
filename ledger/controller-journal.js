@@ -152,14 +152,24 @@
             if (transDist) {
               process(transDist, dist);
             } else {
-              profitLossDist[accountId] = dist;
+              profitLossDist[accountId] = {
+                id: f.createId(),
+                container: dist.container,
+                credit: dist.credit,
+                debit: dist.debit
+              };
             }
           } else {
             transDist = balanceSheetDist[accountId];
             if (transDist) {
               process(transDist, dist);
             } else {
-              balanceSheetDist[accountId] = dist;
+              balanceSheetDist[accountId] = {
+                id: f.createId(),
+                container: dist.container,
+                credit: dist.credit,
+                debit: dist.debit
+              };
             }
           }
         });
