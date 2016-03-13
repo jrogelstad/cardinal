@@ -2,17 +2,23 @@
 (function (datasource) {
   "strict";
 
-  var f = require("./common/core"),
+  var doCheckJournal, doPostJournal, doPostJournals,
+    f = require("./common/core"),
     math = require("mathjs"),
     jsonpatch = require("fast-json-patch");
 
   /**
     Check whether a passed journal is valid or not.
     Raises error if not.
+
+    @param {Object} [payload] Payload.
+    @param {Object} [payload.client] Database client.
+    @param {Function} [payload.callback] callback.
+    @param {Object} [payload.journal] Journal to check.
   */
-  var doCheckJournal = function (obj) {
+  doCheckJournal = function (obj) {
     var sumcheck = 0,
-      data = obj.data,
+      data = obj.journal,
       callback = obj.callback;
 
     if (!Array.isArray(data.distributions)) {
@@ -53,50 +59,123 @@
 
   /**
     Post a journal and update trial balance.
+
+    @param {Object} [payload] Payload.
+    @param {Object} [payload.client] Database client.
+    @param {Function} [payload.callback] callback.
+    @param {Object} [payload.id] Journal id to post. Required
+    @param {Object} [payload.date] Post date. Default today.
   */
-  var doPostJournals = function (obj) {
-    var afterAccount, afterCurrency, afterJournal, updateTrialBalance,
-      afterPostBalance, afterPostTransaction, date,
-      journal, count, transaction, raiseError,
-      data = obj.specs,
+  doPostJournal = function (obj) {
+    obj.args.ids = [obj.args.id];
+    delete obj.args.id;
+    doPostJournals(obj);
+  };
+
+  datasource.registerFunction("POST", "postJournal", doPostJournal);
+
+  /**
+    Post a series of journals and update trial balance.
+
+    @param {Object} [payload] Payload.
+    @param {Object} [payload.client] Database client.
+    @param {Function} [payload.callback] callback.
+    @param {Object} [payload.ids] Journal ids to post. Required
+    @param {Object} [payload.date] Post date. Default today.
+  */
+  doPostJournals = function (obj) {
+    var afterCurrency, afterJournals, currency,
+      afterPostBalance, afterPostTransaction,
+      journals, count, transaction, raiseError,
+      profitLossIds, balanceSheetIds,
+      data = obj.args,
       client = obj.client,
       callback = obj.callback,
+      date = data.date || f.today(),
+      distributions = [],
       trialBalances = [],
-      profitLossIds = {},
-      balanceSheetIds = {},
+      profitLossDist = {},
+      balanceSheetDist = {},
       n = 0;
 
-    afterJournal = function (err, resp) {
+    afterJournals = function (err, resp) {
+      var node, process;
+
       if (err) {
         callback(err);
         return;
       }
-      if (!resp) {
-        callback("Invalid journal \"" + data.journal.id + "\".");
+      if (resp.length !== data.ids.length) {
+        callback("Journal(s) not found.");
         return;
       }
 
-      journal = resp;
-      date = data.date || journal.date;
-      count = journal.distributions.length + 1;
+      // Helper function
+      process = function (transDist, dist) {
+        var amount = math.chain(transDist.credit)
+          .subtract(transDist.debit)
+          .add(dist.credit)
+          .subtract(dist.debit)
+          .done();
+        if (amount > 0) {
+          transDist.credit = amount;
+          transDist.debit = 0;
+        } else {
+          transDist.credit = 0;
+          transDist.debit = amount * -1;
+        }
+      };
 
-      // Real work starts here
-      journal.distributions.forEach(function (dist) {
-        datasource.request({
-          method: "GET",
-          name: "LedgerAccount",
-          client: client,
-          callback: afterAccount.bind(dist),
-          id: dist.container.id
-        }, true);
+      journals = resp;
+      count = 1;
+
+      // Build list of accounts and distribution data
+      journals.forEach(function (journal) {
+        if (raiseError) { return; }
+
+        if (node && node.id !== journal.node.id) {
+          raiseError = "Journals must all be in the same currency.";
+          return;
+        }
+        node = journal.node;
+
+        if (journal.isPosted) {
+          raiseError = "Journal " +  journal.number + " is already posted.";
+          return;
+        }
+
+        journal.distributions.forEach(function (dist) {
+          var transDist,
+            accountId = dist.container.id;
+          if (dist.container.type === "Revenue" || dist.container.type === "Expense") {
+            transDist = profitLossDist[accountId];
+            if (transDist) {
+              process(transDist, dist);
+            } else {
+              profitLossDist[accountId] = dist;
+            }
+          } else {
+            transDist = balanceSheetDist[accountId];
+            if (transDist) {
+              process(transDist, dist);
+            } else {
+              balanceSheetDist[accountId] = dist;
+            }
+          }
+        });
       });
+
+      if (raiseError) {
+        callback(raiseError);
+        return;
+      }
 
       datasource.request({
         method: "GET",
         name: "Currency",
         client: client,
         callback: afterCurrency,
-        id: journal.node.id
+        id: node.id
       }, true);
     };
 
@@ -106,47 +185,8 @@
         return;
       }
       if (!resp) {
-        callback("Invalid currency \"" + journal.node.id + "\".");
+        callback("Invalid currency.");
         return;
-      }
-
-      n += 1;
-      if (n === count) { updateTrialBalance(); }
-    };
-
-    afterAccount = function (err, resp) {
-      if (err) {
-        callback(err);
-        return;
-      }
-      if (!resp) {
-        callback("Invalid ledger account \"" + this.ledgerAccount.id + "\".");
-        return;
-      }
-
-      if (resp.type === "Revenue" || resp.type === "Liability") {
-        profitLossIds[resp.id] = null;
-      } else {
-        balanceSheetIds[resp.id] = null;
-      }
-
-      n += 1;
-      if (n === count) { updateTrialBalance(); }
-    };
-
-    updateTrialBalance = function (err) {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      balanceSheetIds = Object.keys(balanceSheetIds);
-      profitLossIds = Object.keys(profitLossIds);
-      n = 0;
-      if (profitLossIds.length && balanceSheetIds.length) {
-        count = 2;
-      } else {
-        count = 1;
       }
 
       var afterTrialBalance = function (err, resp) {
@@ -170,11 +210,10 @@
         n = 0;
         count = trialBalances.length + 1;
         transaction = {
-          node: journal.node,
-          parent: journal,
-          date: data.date || f.today(),
-          note: journal.note,
-          distributions: journal.distributions
+          node: journals[0].node,
+          date: date,
+          note: data.note,
+          distributions: distributions
         };
 
         // Post journal
@@ -185,9 +224,9 @@
           callback: afterPostTransaction,
           data: transaction      
         }, true);
-    
+
         // Post balance updates
-        journal.distributions.forEach(function (dist) {
+        distributions.forEach(function (dist) {
           var update,
             balances = trialBalances.filter(function (row) {
               return row.container.id === dist.container.id;
@@ -228,6 +267,26 @@
         });
       };
 
+      currency = resp;
+
+      // Build distributions and filter criteria
+      balanceSheetIds = Object.keys(balanceSheetDist);
+      balanceSheetIds.forEach(function (id) {
+        distributions.push(balanceSheetDist[id]);
+      });
+
+      profitLossIds = Object.keys(profitLossDist);
+      profitLossIds.forEach(function (id) {
+        distributions.push(profitLossDist[id]);
+      });
+
+      n = 0;
+      if (profitLossIds.length && balanceSheetIds.length) {
+        count = 2;
+      } else {
+        count = 1;
+      }
+
       // Retrieve profit/loss trial balances
       if (profitLossIds.length) {
         datasource.request({
@@ -238,7 +297,7 @@
           filter: {
             criteria: [{
               property: "node",
-              value: journal.node},{
+              value: currency},{
               property: "container.id",
               operator: "IN",
               value: profitLossIds},{
@@ -268,7 +327,7 @@
           filter: {
             criteria: [{
               property: "node",
-              value: journal.node},{
+              value: currency},{
               property: "container.id",
               operator: "IN",
               value: balanceSheetIds},{
@@ -287,7 +346,7 @@
     };
 
     afterPostBalance = function (err) {
-      var afterPatch;
+      var afterUpdate;
 
       if (err && !raiseError) {
         raiseError = err;
@@ -304,24 +363,38 @@
         return;
       }
 
-      afterPatch = function (err) {
-        if (err) {
-          callback(err);
+      afterUpdate = function (err) {
+        n += 1;
+        if (err && !raiseError) {
+          raiseError = err;
           return;
         }
+
+        if (n < count) { return; }
+
+        if (raiseError) {
+          callback(raiseError);
+          return;
+        }
+
         callback(null, true);
       };
 
-      journal.isPosted = true;
-      journal.folio = transaction.number;
-      datasource.request({
-        method: "POST",
-        name: "Journal",
-        client: client,
-        callback: afterPatch,
-        id: journal.id,
-        data: journal
-      }, true);
+      n = 0;
+      count = journals.length;
+
+      journals.forEach(function (journal) {
+        journal.isPosted = true;
+        journal.folio = transaction.number;
+        datasource.request({
+          method: "POST",
+          name: "Journal",
+          client: client,
+          callback: afterUpdate,
+          id: journal.id,
+          data: journal
+        }, true);
+      });
     };
 
     afterPostTransaction = function (err, resp) {
@@ -338,8 +411,14 @@
       method: "GET",
       name: "Journal",
       client: client,
-      callback: afterJournal,
-      id: data.id
+      callback: afterJournals,
+      filter: {
+        criteria: [{
+          property: "id",
+          operator: "IN",
+          value: data.ids
+        }]
+      }
     }, true);
   };
 

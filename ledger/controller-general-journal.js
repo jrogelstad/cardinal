@@ -36,7 +36,7 @@
       client: client,
       callback: afterCheckJournal,
       data: {
-        data: obj
+        journal: obj
       }
     }, true);
   };
