@@ -6,44 +6,121 @@
     math = require("mathjs"),
     jsonpatch = require("fast-json-patch");
 
-  var doJournalEntry = function (obj) {
-    var afterAccount, afterCurrency, createJournal, postJournal,
-      afterPostBalance, afterPostTransaction,
-      count, request, transaction, raiseError,
+  /**
+    Check whether a passed journal is valid or not.
+    Raises error if not.
+  */
+  var doCheckJournal = function (obj) {
+    var sumcheck = 0,
+      data = obj.data,
+      callback = obj.callback;
+
+    if (!Array.isArray(data.distributions)) {
+      callback("Distributions must be a valid array.");
+      return;
+    }
+
+    // Check distributions
+    data.distributions.forEach(function (dist) {
+      if (dist.debit) {
+        if (dist.debit <= 0) {
+          callback("Debit must be a positive number.");
+          return;
+        }
+        sumcheck = math.subtract(sumcheck, dist.debit);
+      }
+
+      if (dist.credit) {
+        if (dist.credit <= 0) {
+          callback("Credit must be a positive number.");
+          return;
+        }
+        sumcheck = math.add(sumcheck, dist.credit);
+      }
+    });
+
+    // Check balance
+    if (sumcheck !== 0) {
+      callback("Distribution does not balance.");
+      return;
+    }
+
+    // Everything passed
+    callback();
+  };
+
+  datasource.registerFunction("POST", "checkJournal", doCheckJournal);
+
+  /**
+    Post a journal and update trial balance.
+  */
+  var doPostJournals = function (obj) {
+    var afterAccount, afterCurrency, afterJournal, updateTrialBalance,
+      afterPostBalance, afterPostTransaction, date,
+      journal, count, transaction, raiseError,
       data = obj.specs,
+      client = obj.client,
+      callback = obj.callback,
       trialBalances = [],
       profitLossIds = {},
       balanceSheetIds = {},
-      date = data.date || f.today(),
       n = 0;
 
-    if (!Array.isArray(data.distributions)) {
-      obj.callback("Distributions must be a valid array.");
-      return;
-    }
-    count = data.distributions.length + 1;
-
-    afterCurrency = function (err, resp) {
+    afterJournal = function (err, resp) {
       if (err) {
-        obj.callback(err);
+        callback(err);
         return;
       }
       if (!resp) {
-        obj.callback("Invalid currency \"" + data.currency.id + "\".");
+        callback("Invalid journal \"" + data.journal.id + "\".");
+        return;
+      }
+
+      journal = resp;
+      date = data.date || journal.date;
+      count = journal.distributions.length + 1;
+
+      // Real work starts here
+      journal.distributions.forEach(function (dist) {
+        datasource.request({
+          method: "GET",
+          name: "LedgerAccount",
+          client: client,
+          callback: afterAccount.bind(dist),
+          id: dist.container.id
+        }, true);
+      });
+
+      datasource.request({
+        method: "GET",
+        name: "Currency",
+        client: client,
+        callback: afterCurrency,
+        id: journal.node.id
+      }, true);
+    };
+
+    afterCurrency = function (err, resp) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      if (!resp) {
+        callback("Invalid currency \"" + journal.node.id + "\".");
         return;
       }
 
       n += 1;
-      if (n === count) { createJournal(); }
+      if (n === count) { updateTrialBalance(); }
     };
 
     afterAccount = function (err, resp) {
       if (err) {
-        obj.callback(err);
+        callback(err);
         return;
       }
       if (!resp) {
-        obj.callback("Invalid ledger account \"" + this.ledgerAccount.id + "\".");
+        callback("Invalid ledger account \"" + this.ledgerAccount.id + "\".");
         return;
       }
 
@@ -54,69 +131,12 @@
       }
 
       n += 1;
-      if (n === count) { createJournal(); }
+      if (n === count) { updateTrialBalance(); }
     };
 
-    createJournal = function () {
-      var sumcheck = 0,
-        quantity = 0;
-
-      // Create baseline request
-      request = {
-        id: f.createId(),
-        node: data.currency,
-        date: date,
-        note: data.note,
-        reference: data.reference,
-        isPosted: true,
-        distributions: []
-      };
-
-      // Build request distributions
-      data.distributions.forEach(function (dist) {
-        if (dist.debit) {
-          if (dist.debit <= 0) {
-            obj.callback("Debit must be a positive number.");
-            return;
-          }
-          sumcheck = math.subtract(sumcheck, dist.debit);
-          quantity = dist.debit * -1;
-        }
-
-        if (dist.credit) {
-          if (dist.credit <= 0) {
-            obj.callback("Credit must be a positive number.");
-            return;
-          }
-          sumcheck = math.add(sumcheck, dist.credit);
-          quantity = dist.credit;
-        }
-
-        request.distributions.push({
-          container: dist.LedgerAccount,
-          quantity: quantity
-        });
-      });
-
-      // Check balance
-      if (sumcheck !== 0) {
-        obj.callback("Distribution does not balance.");
-        return;
-      }
-
-      // Create journal
-      datasource.request({
-        method: "POST",
-        name: "GeneralJournal",
-        client: obj.client,
-        callback: postJournal,
-        data: request     
-      }, true);
-    };
-
-    postJournal = function (err) {
+    updateTrialBalance = function (err) {
       if (err) {
-        obj.callback(err);
+        callback(err);
         return;
       }
 
@@ -143,34 +163,34 @@
         }
 
         if (raiseError) {
-          obj.callback(raiseError);
+          callback(raiseError);
           return;
         }
 
         n = 0;
         count = trialBalances.length + 1;
         transaction = {
-          node: data.currency,
-          parent: request,
+          node: journal.node,
+          parent: journal,
           date: data.date || f.today(),
-          note: data.note,
-          distributions: request.distributions
+          note: journal.note,
+          distributions: journal.distributions
         };
 
         // Post journal
         datasource.request({
           method: "POST",
           name: "GeneralLedger",
-          client: obj.client,
+          client: client,
           callback: afterPostTransaction,
           data: transaction      
         }, true);
     
         // Post balance updates
-        data.distributions.forEach(function (dist) {
+        journal.distributions.forEach(function (dist) {
           var update,
             balances = trialBalances.filter(function (row) {
-              return row.container.id === dist.ledgerAccount.id;
+              return row.container.id === dist.container.id;
             }),
             debit = function (row) {
               row.balance = math.subtract(row.balance, dist.debit);
@@ -181,7 +201,7 @@
 
           if (!balances.length) {
             count = 2;
-            afterPostBalance("No open trial balance for account " + dist.ledgerAccount.name + ".");
+            afterPostBalance("No open trial balance for account " + dist.container.code + ".");
             return;
           }
 
@@ -201,7 +221,7 @@
             method: "POST",
             id: balance.id,
             name: "TrialBalance",
-            client: obj.client,
+            client: client,
             callback: afterPostBalance,
             data: balance
           }, true);
@@ -213,12 +233,12 @@
         datasource.request({
           method: "GET",
           name: "TrialBalance",
-          client: obj.client,
+          client: client,
           callback: afterTrialBalance,
           filter: {
             criteria: [{
               property: "node",
-              value: data.currency},{
+              value: journal.node},{
               property: "container.id",
               operator: "IN",
               value: profitLossIds},{
@@ -243,12 +263,12 @@
         datasource.request({
           method: "GET",
           name: "TrialBalance",
-          client: obj.client,
+          client: client,
           callback: afterTrialBalance,
           filter: {
             criteria: [{
               property: "node",
-              value: data.currency},{
+              value: journal.node},{
               property: "container.id",
               operator: "IN",
               value: balanceSheetIds},{
@@ -267,6 +287,8 @@
     };
 
     afterPostBalance = function (err) {
+      var afterPatch;
+
       if (err && !raiseError) {
         raiseError = err;
       }
@@ -278,10 +300,28 @@
       // Raise error only after to all requests
       // completed to ensure complete rollback
       if (raiseError) {
-        obj.callback(raiseError);
+        callback(raiseError);
         return;
       }
-      obj.callback(null, transaction);
+
+      afterPatch = function (err) {
+        if (err) {
+          callback(err);
+          return;
+        }
+        callback(null, true);
+      };
+
+      journal.isPosted = true;
+      journal.folio = transaction.number;
+      datasource.request({
+        method: "POST",
+        name: "Journal",
+        client: client,
+        callback: afterPatch,
+        id: journal.id,
+        data: journal
+      }, true);
     };
 
     afterPostTransaction = function (err, resp) {
@@ -294,25 +334,15 @@
     };
 
     // Real work starts here
-    data.distributions.forEach(function (dist) {
-      datasource.request({
-        method: "GET",
-        name: "LedgerAccount",
-        client: obj.client,
-        callback: afterAccount.bind(dist),
-        id: dist.ledgerAccount.id
-      }, true);
-    });
-
     datasource.request({
       method: "GET",
-      name: "Currency",
-      client: obj.client,
-      callback: afterCurrency,
-      id: data.currency.id
+      name: "Journal",
+      client: client,
+      callback: afterJournal,
+      id: data.id
     }, true);
   };
 
-  datasource.registerFunction("POST", "journalEntry", doJournalEntry);
+  datasource.registerFunction("POST", "postJournals", doPostJournals);
 
 }(datasource));

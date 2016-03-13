@@ -55,8 +55,13 @@
         },
         {
             "type": "controller",
-            "name": "LedgerJournalEntry",
-            "path": "ledger/controller-journal-entry.js"
+            "name": "LedgerJournal",
+            "path": "ledger/controller-journal.js"
+        },
+        {
+            "type": "controller",
+            "name": "LedgerGeneralJournal",
+            "path": "ledger/controller-general-journal.js"
         },
         {
             "type": "route",

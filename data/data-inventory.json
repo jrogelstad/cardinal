@@ -325,13 +325,13 @@
                    "container": {
                       "id": "u69aj7cgtkmf"
                    },
-                   "quantity": 10
+                   "credit": 10
                 },
                 {
                    "container": {
                       "id": "c0f47f26zb60"
                    },
-                   "quantity": -10
+                   "debit": 10
                 }
             ]
         }
@@ -352,19 +352,19 @@
                    "container": {
                       "id": "u69aj7cgtkmf"
                    },
-                   "quantity": 10
+                   "credit": 10
                 },
                 {
                    "container": {
                       "id": "hhxvcdowwn38"
                    },
-                   "quantity": -10
+                   "debit": 10
                 },
                 {
                    "container": {
                       "id": "c0f47f26zb60"
                    },
-                   "quantity": -10,
+                   "debit": 10,
                    "isPropagation": true
                 }
             ]

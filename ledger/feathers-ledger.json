@@ -103,7 +103,21 @@
         "plural": "GeneralLedger",
         "module": "Cardinal",
         "description": "General ledger entries",
-        "inherits": "Transaction"
+        "inherits": "Transaction",
+        "properties": {
+            "number": {
+                "description": "General ledger number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "GL",
+                    "sequence": "gl_seq_num",
+                    "length": 5
+                },
+                "isUnique": true,
+                "inheritedFrom": "Transaction"
+            }
+        }
     },
     {
         "name": "TrialBalance",

@@ -122,7 +122,8 @@
             "date": {
                 "description": "Action date",
                 "type": "string",
-                "format": "date"
+                "format": "date",
+                "default": "today()"
             },
             "note": {
                 "description": "Note",
@@ -150,8 +151,12 @@
                     "properties": ["code", "description"]
                 }
             },
-            "quantity": {
-                "description": "Quantity",
+            "debit": {
+                "description": "Debit",
+                "type": "number"
+            },
+            "credit": {
+                "description": "Credit",
                 "type": "number"
             },
             "isPropagation": {
@@ -181,6 +186,12 @@
         "description": "Action history",
         "inherits": "Action",
         "properties": {
+            "number": {
+              "description": "Transaction number",
+              "type": "string",
+              "isUnique": true,
+              "isRequired": true
+            },
             "parent": {
                 "description": "Parent action",
                 "type": {

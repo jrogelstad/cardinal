@@ -6,7 +6,7 @@
 
   // Register route to the public
   var router = express.Router();
-  var doJournalEntry = function (req, res) {
+  var doPostJournals = function (req, res) {
     var payload, callback,
       data = req.body;
 
@@ -21,7 +21,7 @@
 
     payload = {
       method: "POST",
-      name: "journalEntry",
+      name: "postJournals",
       user: "postgres", //getCurrentUser(),
       callback: callback,
       data: {
@@ -33,7 +33,7 @@
     datasource.request(payload);
   };
 
-  router.route("/journal-entry").post(doJournalEntry);
+  router.route("/post-journals").post(doPostJournals);
 
   app.use('/ledger', router);
 
