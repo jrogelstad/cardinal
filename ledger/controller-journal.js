@@ -7,6 +7,8 @@
     math = require("mathjs"),
     jsonpatch = require("fast-json-patch");
 
+  math.config({ precision: 6});
+
   /**
     Check whether a passed journal is valid or not.
     Raises error if not.
@@ -17,7 +19,7 @@
     @param {Object} [payload.journal] Journal to check.
   */
   doCheckJournal = function (obj) {
-    var sumcheck = 0,
+    var sumcheck = math.bignumber(0),
       data = obj.journal,
       callback = obj.callback;
 
@@ -33,7 +35,10 @@
           callback("Debit must be a positive number.");
           return;
         }
-        sumcheck = math.subtract(sumcheck, dist.debit);
+        sumcheck = math.subtract(
+          sumcheck, 
+          math.bignumber(dist.debit)
+        );
       }
 
       if (dist.credit) {
@@ -41,12 +46,15 @@
           callback("Credit must be a positive number.");
           return;
         }
-        sumcheck = math.add(sumcheck, dist.credit);
+        sumcheck = math.add(
+          sumcheck,
+          math.bignumber(dist.credit)
+        );
       }
     });
 
     // Check balance
-    if (sumcheck !== 0) {
+    if (math.number(sumcheck) !== 0) {
       callback("Distribution does not balance.");
       return;
     }
@@ -105,6 +113,7 @@
         callback(err);
         return;
       }
+
       if (resp.length !== data.ids.length) {
         callback("Journal(s) not found.");
         return;
@@ -112,11 +121,12 @@
 
       // Helper function
       process = function (transDist, dist) {
-        var amount = math.chain(transDist.credit)
-          .subtract(transDist.debit)
-          .add(dist.credit)
-          .subtract(dist.debit)
-          .done();
+        var amount = math.number(math
+          .chain(math.bignumber(transDist.credit))
+          .subtract(math.bignumber(transDist.debit))
+          .add(math.bignumber(dist.credit))
+          .subtract(math.bignumber(dist.debit))
+          .done());
         if (amount > 0) {
           transDist.credit = amount;
           transDist.debit = 0;
@@ -242,10 +252,16 @@
               return row.container.id === dist.container.id;
             }),
             debit = function (row) {
-              row.balance = math.subtract(row.balance, dist.debit);
+              row.balance = math.number(math.subtract(
+                math.bignumber(row.balance), 
+                math.bignumber(dist.debit)
+              ));
             },
             credit = function (row) {
-              row.balance = math.add(row.balance, dist.credit);
+              row.balance = math.number(math.add(
+                math.bignumber(row.balance),
+                math.bignumber(dist.credit)
+              ));
             };
 
           if (!balances.length) {
@@ -255,10 +271,16 @@
           }
 
           if (dist.debit) {
-            balances[0].debits = math.add(balances[0].debits, dist.debit);
+            balances[0].debits = math.number(math.add(
+              math.bignumber(balances[0].debits), 
+              math.bignumber(dist.debit)
+            ));
             update = debit;
           } else {
-            balances[0].credits = math.add(balances[0].credits, dist.credit);
+            balances[0].credits = math.number(math.add(
+              math.bignumber(balances[0].credits),
+              math.bignumber(dist.credit)
+            ));
             update = credit;
           }
           update = dist.debit ? debit : credit;
