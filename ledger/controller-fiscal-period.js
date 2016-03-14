@@ -62,6 +62,9 @@
 
       if (resp.length) {
         prevPeriod = resp[0];
+        if ((new Date(fiscalPeriod.start) - new Date(prevPeriod.end)) / 86400000 !== 1) {
+          done("Period end may not overlap or leave gaps with the previous period.");
+        }
       }
 
       datasource.request({
@@ -126,7 +129,7 @@
         return;
       }
 
-      if (found || !accounts.length) {
+      if (raiseError || found || !accounts.length) {
         done();
         return;
       }
