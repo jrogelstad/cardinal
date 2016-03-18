@@ -74,11 +74,13 @@
             },
             "isFrozen": {
                 "description": "Period is frozen for transactions.",
-                "type": "boolean"
+                "type": "boolean",
+                "isReadOnly": true
             },
             "isClosed": {
                 "description": "Period is closed.",
-                "type": "boolean"
+                "type": "boolean",
+                "isReadOnly": true
             }
         }
     },

@@ -230,4 +230,64 @@
 
   datasource.registerFunction("POST", "FiscalPeriod", doUpsertFiscalPeriod);
 
+  var doUpdateFiscalPeriod = function (obj) {
+    var afterFiscalPeriod, afterUpdate, proposed, patches, actual,
+      client = obj.client,
+      callback = obj.callback,
+      fiscalPeriod = obj,
+      id = fiscalPeriod.id;
+
+    delete fiscalPeriod.client;
+    delete fiscalPeriod.callback;
+
+    afterFiscalPeriod = function (err, resp) {
+      var original;
+      if (err) {
+        callback(err);
+        return;
+      }
+
+      original = f.copy(resp);
+      jsonpatch.apply(resp, obj);
+      proposed = f.copy(resp);
+      resp.isClosed = original.isClosed;
+      resp.isFrozen = original.isFrozen;
+      actual = f.copy(resp);
+      patches = jsonpatch.compare(original, resp);
+
+      datasource.request({
+        method: "POST",
+        name: "doUpdate",
+        client: client,
+        callback: afterUpdate,
+        id: id,
+        data: {
+          name: "FiscalPeriod",
+          data: patches
+        }
+      });
+    };
+
+    afterUpdate = function (err, resp) {
+      if (err)  {
+        callback(err);
+        return;
+      }
+
+      jsonpatch.apply(actual, resp);
+      patches = jsonpatch.compare(proposed, actual);
+      callback(null, patches);
+    };
+
+    datasource.request({
+      method: "GET",
+      name: "FiscalPeriod",
+      client: client,
+      callback: afterFiscalPeriod,
+      id: id
+    }, true);
+  };
+
+  datasource.registerFunction("PATCH", "FiscalPeriod", doUpdateFiscalPeriod);
+
 }(datasource));
