@@ -6,7 +6,7 @@
     jsonpatch = require("fast-json-patch");
 
   var doUpsertFiscalPeriod = function (obj) {
-    var afterPrevPeriod, afterUpsertPeriod,
+    var afterPrevPeriod, afterUpsertPeriod, proposed, actual,
       afterFiscalPeriod, afterCurrency, afterLedgerAccount,
       account, prevPeriod, createTrialBalance, done,
       raiseError, accounts, currency, result, prevTrialBalance,
@@ -116,8 +116,13 @@
         return;
       }
 
+      // Update fiscal period for later reference
       jsonpatch.apply(fiscalPeriod, resp);
-      result = resp;
+
+      // Resolve changes from original request
+      jsonpatch.apply(actual, resp);
+      result = jsonpatch.compare(proposed, actual);
+
       if (n === count) { createTrialBalance(); }
     };
 
@@ -170,6 +175,12 @@
     };
 
     // Real work starts here
+    // These attributes _must_ be default
+    proposed = f.copy(fiscalPeriod);
+    delete fiscalPeriod.isFrozen;
+    delete fiscalPeriod.isClosed;
+    actual = f.copy(fiscalPeriod);
+
     if (!fiscalPeriod.id) {
       datasource.request({
         method: "POST",
