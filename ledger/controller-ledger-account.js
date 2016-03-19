@@ -10,15 +10,12 @@
       createTrialBalance, done, raiseError, periods, prev, currency, result,
       client = obj.client,
       callback = obj.callback,
-      account = obj,
+      account = obj.data,
       id = account.id || f.createId(),
       period = null,
       n = 0,
       count = 3,
       found = false;
-
-    delete account.client;
-    delete account.callback;
 
     afterAccount = function (err, resp) {
       n += 1;

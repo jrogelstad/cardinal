@@ -5,10 +5,8 @@
   var doInsertGeneralJournal = function (obj) {
     var afterCheckJournal,
       client = obj.client,
-      callback = obj.callback;
-
-    delete obj.client;
-    delete obj.callback;
+      callback = obj.callback,
+      journal = obj.data;
 
     afterCheckJournal = function (err) {
       if (err) {
@@ -24,7 +22,7 @@
         callback: callback,
         data: {
           name: "GeneralJournal",
-          data: obj
+          data: journal
         }
       }, true);
     };
@@ -36,7 +34,7 @@
       client: client,
       callback: afterCheckJournal,
       data: {
-        journal: obj
+        journal: journal
       }
     }, true);
   };

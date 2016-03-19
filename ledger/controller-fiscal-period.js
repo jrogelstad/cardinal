@@ -12,14 +12,11 @@
       raiseError, accounts, currency, result, prevTrialBalance,
       client = obj.client,
       callback = obj.callback,
-      fiscalPeriod = obj,
+      fiscalPeriod = obj.data,
       id = fiscalPeriod.id || f.createId(),
       n = 0,
       count = 4,
       found = false;
-
-    delete fiscalPeriod.client;
-    delete fiscalPeriod.callback;
 
     afterFiscalPeriod = function (err, resp) {
       n += 1;
@@ -245,11 +242,8 @@
     var afterFiscalPeriod, afterUpdate, proposed, patches, actual,
       client = obj.client,
       callback = obj.callback,
-      fiscalPeriod = obj,
+      fiscalPeriod = obj.data,
       id = fiscalPeriod.id;
-
-    delete fiscalPeriod.client;
-    delete fiscalPeriod.callback;
 
     afterFiscalPeriod = function (err, resp) {
       var original;
