@@ -48,7 +48,10 @@
         return;
       }
 
+      count += 1;
+
       var afterTrialBalance = function (err, resp) {
+          n += 1;
           if (err) {
             done(err);
             return;
