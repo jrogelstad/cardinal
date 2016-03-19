@@ -32,9 +32,7 @@
       name: name,
       user: "postgres", //getCurrentUser(),
       callback: callback,
-      data: {
-        args: args
-      }
+      data: args
     };
 
     console.log(JSON.stringify(payload, null, 2));

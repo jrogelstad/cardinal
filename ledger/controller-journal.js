@@ -20,7 +20,7 @@
   */
   doCheckJournal = function (obj) {
     var sumcheck = math.bignumber(0),
-      data = obj.journal,
+      data = obj.data.journal,
       callback = obj.callback;
 
     if (!Array.isArray(data.distributions)) {
@@ -71,12 +71,17 @@
     @param {Object} [payload] Payload.
     @param {Object} [payload.client] Database client.
     @param {Function} [payload.callback] callback.
-    @param {Object} [payload.id] Journal id to post. Required
-    @param {Object} [payload.date] Post date. Default today.
+    @param {Object} [payload.data] Journal data
+    @param {Object} [payload.data.id] Journal id to post. Required
+    @param {Object} [payload.data.date] Post date. Default today.
   */
   doPostJournal = function (obj) {
-    obj.args.ids = [obj.args.id];
-    delete obj.args.id;
+    if (!obj.data || !obj.data.id) {
+      obj.callback("Id must be provided");
+      return;
+    }
+    obj.data.ids = [obj.data.id];
+    delete obj.data.id;
     doPostJournals(obj);
   };
 
@@ -88,15 +93,16 @@
     @param {Object} [payload] Payload.
     @param {Object} [payload.client] Database client.
     @param {Function} [payload.callback] callback.
-    @param {Object} [payload.ids] Journal ids to post. Required
-    @param {Object} [payload.date] Post date. Default today.
+    @param {Object} [payload.data] Journal data
+    @param {Array} [payload.data.ids] Journal ids to post. Required
+    @param {Object} [payload.data.date] Post date. Default today.
   */
   doPostJournals = function (obj) {
     var afterCurrency, afterJournals, currency,
       afterPostBalance, afterPostTransaction,
       journals, count, transaction, raiseError,
       profitLossIds, balanceSheetIds,
-      data = obj.args,
+      data = obj.data,
       client = obj.client,
       callback = obj.callback,
       date = data.date || f.today(),
@@ -105,6 +111,11 @@
       profitLossDist = {},
       balanceSheetDist = {},
       n = 0;
+
+    if (!Array.isArray(obj.data.ids)) {
+      obj.callback("Ids must be provided");
+      return;
+    }
 
     afterJournals = function (err, resp) {
       var node, process;
@@ -383,6 +394,7 @@
       if (err && !raiseError) {
         raiseError = err;
       }
+
       n += 1;
       if (n < count) {
         return;
@@ -434,6 +446,7 @@
         afterPostBalance(err);
         return;
       }
+
       jsonpatch.apply(transaction, resp);
       afterPostBalance();
     };
