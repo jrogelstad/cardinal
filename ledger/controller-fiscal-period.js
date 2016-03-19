@@ -255,6 +255,8 @@
       original = f.copy(resp);
       jsonpatch.apply(resp, obj);
       proposed = f.copy(resp);
+      resp.start = original.start;
+      resp.end = original.end;
       resp.isClosed = original.isClosed;
       resp.isFrozen = original.isFrozen;
       actual = f.copy(resp);
