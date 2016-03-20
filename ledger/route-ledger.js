@@ -5,6 +5,7 @@
   var express = require("express");
 
   // Register route to the public
+  var doRequest = datasource.postFunction,
     router = express.Router();
 
   router.route("/post-journal").post(doRequest.bind("postJournal"));
