@@ -163,7 +163,6 @@
     done = function (err) {
       if (err && !raiseError) {
         raiseError = err;
-        return;
       }
       if (n === count) {
         if (raiseError) {
@@ -242,14 +241,13 @@
   datasource.registerFunction("POST", "FiscalPeriod", doUpsertFiscalPeriod);
 
   var doUpdateFiscalPeriod = function (obj) {
-    var afterFiscalPeriod, afterUpdate, proposed, patches, actual,
+    var afterFiscalPeriod, afterUpdate, proposed, patches, actual, original,
       client = obj.client,
       callback = obj.callback,
       fiscalPeriod = obj.data,
       id = fiscalPeriod.id;
 
     afterFiscalPeriod = function (err, resp) {
-      var original;
       if (err) {
         callback(err);
         return;
@@ -299,5 +297,95 @@
   };
 
   datasource.registerFunction("PATCH", "FiscalPeriod", doUpdateFiscalPeriod);
+
+  /**
+    Post a series of journals and update trial balance.
+
+    @param {Object} [payload] Payload.
+    @param {Object} [payload.client] Database client.
+    @param {Function} [payload.callback] callback.
+    @param {Object} [payload.data] Payload data
+    @param {Object} [payload.data.id] Fiscal period id to post. Required
+  */
+  var doCloseFiscalPeriod = function (obj) {
+    var afterFiscalPeriod, afterPrevFiscalPeriod, afterUpdate,
+      original, patches,
+      id = obj.data.id,
+      client = obj.client,
+      callback = obj.callback;
+
+    afterFiscalPeriod = function (err, resp) {
+      try {
+        if (err) { throw err; }
+        if (!resp) { throw "Period not found."; }
+        if (resp.isClosed) { throw "Period is already closed."; }
+
+        original = f.copy(resp);
+        resp.isClosed = true;
+        patches = jsonpatch.compare(original, resp);
+
+        datasource.request({
+          method: "GET",
+          name: "FiscalPeriod",
+          client: client,
+          callback: afterPrevFiscalPeriod,
+          filter: {
+            criteria: [{
+              property: "end",
+              operator: "<",
+              value: original.end,
+              order: "DESC"
+            },{
+              property: "isClosed",
+              value: false
+            }],
+            limit: 1
+          }
+        }, true);
+      } catch (e) {
+        callback(e);
+      }
+    };
+
+    afterPrevFiscalPeriod = function (err, resp) {
+      try {
+        if (err) { throw err; }
+
+        if (resp.length) {
+          throw "Previous period exists that is not closed.";
+        }
+
+        datasource.request({
+          method: "POST",
+          name: "doUpdate",
+          id: id,
+          client: client,
+          callback: afterUpdate,
+          data: {
+            name: "FiscalPeriod",
+            id: id,
+            data: patches
+          }
+        }, true);
+      } catch (e) {
+        callback(e);
+      }
+    };
+
+    afterUpdate = function (err) {
+      callback(err, true);
+    };
+
+    // Real work starts here
+    datasource.request({
+      method: "GET",
+      name: "FiscalPeriod",
+      id: id,
+      client: client,
+      callback: afterFiscalPeriod
+    }, true);
+  };
+
+  datasource.registerFunction("POST", "closeFiscalPeriod", doCloseFiscalPeriod);
 
 }(datasource));

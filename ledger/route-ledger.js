@@ -5,17 +5,11 @@
   var express = require("express");
 
   // Register route to the public
-  var doPostJournal, doPostJournals,
+  var doRequest,
     router = express.Router();
-  
-  doPostJournal = function (req, res) {
-    req.name = "postJournal";
-    doPostJournals(req, res);
-  };
 
-  doPostJournals = function (req, res) {
-    var payload, callback,
-      name = req.name || "postJournals",
+  doRequest = function (req, res) {
+   var payload, callback,
       args = req.body;
 
     callback = function (err, resp) {
@@ -29,7 +23,7 @@
 
     payload = {
       method: "POST",
-      name: name,
+      name: this,
       user: "postgres", //getCurrentUser(),
       callback: callback,
       data: args
@@ -39,8 +33,9 @@
     datasource.request(payload);
   };
 
-  router.route("/post-journal").post(doPostJournal);
-  router.route("/post-journals").post(doPostJournals);
+  router.route("/post-journal").post(doRequest.bind("postJournal"));
+  router.route("/post-journals").post(doRequest.bind("postJournals"));
+  router.route("/close-fiscal-period").post(doRequest.bind("closeFiscalPeriod"));
 
   app.use('/ledger', router);
 
