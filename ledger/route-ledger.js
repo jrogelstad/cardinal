@@ -11,6 +11,7 @@
   router.route("/post-journal").post(doRequest.bind("postJournal"));
   router.route("/post-journals").post(doRequest.bind("postJournals"));
   router.route("/close-fiscal-period").post(doRequest.bind("closeFiscalPeriod"));
+  router.route("/open-fiscal-period").post(doRequest.bind("openFiscalPeriod"));
 
   app.use('/ledger', router);
 
