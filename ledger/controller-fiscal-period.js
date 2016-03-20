@@ -308,81 +308,13 @@
     @param {Object} [payload.data.id] Fiscal period id to close. Required
   */
   var doCloseFiscalPeriod = function (obj) {
-    var afterFiscalPeriod, afterPrevFiscalPeriod, afterUpdate,
-      original, patches,
-      id = obj.data.id,
-      client = obj.client,
-      callback = obj.callback;
-
-    afterFiscalPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
-        if (!resp) { throw "Period not found."; }
-        if (resp.isClosed) { throw "Period is already closed."; }
-
-        original = f.copy(resp);
-        resp.isClosed = true;
-        patches = jsonpatch.compare(original, resp);
-
-        datasource.request({
-          method: "GET",
-          name: "FiscalPeriod",
-          client: client,
-          callback: afterPrevFiscalPeriod,
-          filter: {
-            criteria: [{
-              property: "end",
-              operator: "<",
-              value: original.end,
-              order: "DESC"
-            },{
-              property: "isClosed",
-              value: false
-            }],
-            limit: 1
-          }
-        }, true);
-      } catch (e) {
-        callback(e);
-      }
-    };
-
-    afterPrevFiscalPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
-
-        if (resp.length) {
-          throw "Previous period exists that is not closed.";
-        }
-
-        datasource.request({
-          method: "POST",
-          name: "doUpdate",
-          id: id,
-          client: client,
-          callback: afterUpdate,
-          data: {
-            name: "FiscalPeriod",
-            id: id,
-            data: patches
-          }
-        }, true);
-      } catch (e) {
-        callback(e);
-      }
-    };
-
-    afterUpdate = function (err) {
-      callback(err, true);
-    };
-
-    // Real work starts here
+    obj.data.feather = "FiscalPeriod";
     datasource.request({
-      method: "GET",
-      name: "FiscalPeriod",
-      id: id,
-      client: client,
-      callback: afterFiscalPeriod
+      method: "POST",
+      name: "closePeriod",
+      client: obj.client,
+      callback: obj.callback,
+      data: obj.data
     }, true);
   };
 
@@ -398,81 +330,13 @@
     @param {Object} [payload.data.id] Fiscal period id to open. Required
   */
   var doOpenFiscalPeriod = function (obj) {
-    var afterFiscalPeriod, afterPrevFiscalPeriod, afterUpdate,
-      original, patches,
-      id = obj.data.id,
-      client = obj.client,
-      callback = obj.callback;
-
-    afterFiscalPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
-        if (!resp) { throw "Period not found."; }
-        if (!resp.isClosed) { throw "Period is already open."; }
-
-        original = f.copy(resp);
-        resp.isClosed = false;
-        patches = jsonpatch.compare(original, resp);
-
-        datasource.request({
-          method: "GET",
-          name: "FiscalPeriod",
-          client: client,
-          callback: afterPrevFiscalPeriod,
-          filter: {
-            criteria: [{
-              property: "end",
-              operator: ">",
-              value: original.end,
-              order: "DESC"
-            },{
-              property: "isClosed",
-              value: true
-            }],
-            limit: 1
-          }
-        }, true);
-      } catch (e) {
-        callback(e);
-      }
-    };
-
-    afterPrevFiscalPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
-
-        if (resp.length) {
-          throw "Subsequent period exists that is closed.";
-        }
-
-        datasource.request({
-          method: "POST",
-          name: "doUpdate",
-          id: id,
-          client: client,
-          callback: afterUpdate,
-          data: {
-            name: "FiscalPeriod",
-            id: id,
-            data: patches
-          }
-        }, true);
-      } catch (e) {
-        callback(e);
-      }
-    };
-
-    afterUpdate = function (err) {
-      callback(err, true);
-    };
-
-    // Real work starts here
+    obj.data.feather = "FiscalPeriod";
     datasource.request({
-      method: "GET",
-      name: "FiscalPeriod",
-      id: id,
-      client: client,
-      callback: afterFiscalPeriod
+      method: "POST",
+      name: "openPeriod",
+      client: obj.client,
+      callback: obj.callback,
+      data: obj.data
     }, true);
   };
 

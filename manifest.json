@@ -45,6 +45,11 @@
         },
         {
             "type": "controller",
+            "name": "Period",
+            "path": "controller-period.js"
+        },
+        {
+            "type": "controller",
             "name": "LedgerFiscalPeriod",
             "path": "ledger/controller-fiscal-period.js"
         },
