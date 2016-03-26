@@ -188,8 +188,22 @@
     {
         "name": "LedgerAccount",
         "method": "POST",
+        "id": "owaaa1nehxsg",
+        "data": {
+            "code": "10",
+            "description": "Assets",
+            "note": "Asset summary account",
+            "type": "Asset"
+        }
+    },
+    {
+        "name": "LedgerAccount",
+        "method": "POST",
         "id": "sv2c4nheni07",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "101",
             "description": "Cash",
             "note": "Checking account balance (as shown in company records), currency, coins, checks received from customers but not yet deposited.",
@@ -201,6 +215,9 @@
         "method": "POST",
         "id": "ehpdd4vim8kw",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "120",
             "description": "Accounts Receivable",
             "note": "Amounts owed to the company for services performed or products sold not yet paid for.",
@@ -212,6 +229,9 @@
         "method": "POST",
         "id": "d43kvc7j6kmf",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "140",
             "description": "Merchandise Inventory",
             "note": "Cost of merchandise purchased but has not yet been sold",
@@ -223,6 +243,9 @@
         "method": "POST",
         "id": "72hjad8gjdbo",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "150",
             "description": "Supplies",
             "note": "Cost of supplies that have not yet been used.",
@@ -234,6 +257,9 @@
         "method": "POST",
         "id": "5pc0a4y8algp",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "160",
             "description": "Work in Process",
             "note": "Cost of accumulated on inventory being built but incomplete.",
@@ -245,6 +271,9 @@
         "method": "POST",
         "id": "1iwo57fdkx99",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "170",
             "description": "Land",
             "note": "Cost to acquire and prepare land for use by the company.",
@@ -256,6 +285,9 @@
         "method": "POST",
         "id": "gew8f0q24zco",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "175",
             "description": "Buildings",
             "note": "Cost to purchase or construct buildings for use by the company.",
@@ -267,6 +299,9 @@
         "method": "POST",
         "id": "48ukccp3f1fq",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "178",
             "description": "Accumulated Depreciation - Buildings",
             "note": "Amount of the building's cost that has been allocated to Depreciation Expense since the time the building was acquired.",
@@ -278,6 +313,9 @@
         "method": "POST",
         "id": "rb9ojr9xj964",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "180",
             "description": "Equipment",
             "note": "Cost to acquire and prepare equipment for use by the company.",
@@ -289,6 +327,9 @@
         "method": "POST",
         "id": "gj770uexye70",
         "data": {
+            "parent": {
+                "id": "owaaa1nehxsg"
+            },
             "code": "188",
             "description": "Accumulated Depreciation - Equipment",
             "note": "Amount of the equipment's cost that has been allocated to Depreciation Expense since the time the equipment was acquired.",
@@ -298,8 +339,22 @@
     {
         "name": "LedgerAccount",
         "method": "POST",
+        "id": "ynsg7fgc1g52",
+        "data": {
+            "code": "20",
+            "description": "Liabilities",
+            "note": "Liabilities summary account",
+            "type": "Liability"
+        }
+    },
+    {
+        "name": "LedgerAccount",
+        "method": "POST",
         "id": "rqtx71yzfbc0",
         "data": {
+            "parent": {
+                "id": "ynsg7fgc1g52"
+            },
             "code": "210",
             "description": "Notes Payable",
             "note": "The amount of principle due on a formal written promise to pay. Loans from banks are included in this account.",
@@ -311,6 +366,9 @@
         "method": "POST",
         "id": "5gxwtimnuw7r",
         "data": {
+            "parent": {
+                "id": "ynsg7fgc1g52"
+            },
             "code": "215",
             "description": "Accounts Payable",
             "note": "Ammounts owned to suppliers who provided goods and services to the company but did not require immediate payment in cash.",
@@ -322,6 +380,9 @@
         "method": "POST",
         "id": "q310bu9khp6w",
         "data": {
+            "parent": {
+                "id": "ynsg7fgc1g52"
+            },
             "code": "220",
             "description": "Wages Payable",
             "note": "Amounts owned to employees for hours worked but not yet paid.",
@@ -333,6 +394,9 @@
         "method": "POST",
         "id": "7o7mbtca5vi6",
         "data": {
+            "parent": {
+                "id": "ynsg7fgc1g52"
+            },
             "code": "240",
             "description": "Unearned Revenues",
             "note": "Ammounts received in advance of delivering goods or providing services.",
@@ -344,6 +408,9 @@
         "method": "POST",
         "id": "eatvskx2qk4c",
         "data": {
+            "parent": {
+                "id": "ynsg7fgc1g52"
+            },
             "code": "250",
             "description": "Mortgage Loan Payable",
             "note": "A formal loan that involves a lien on real estate until the loan is repaid.",
@@ -353,8 +420,22 @@
     {
         "name": "LedgerAccount",
         "method": "POST",
+        "id": "vwr8hwut060u",
+        "data": {
+            "code": "29",
+            "description": "Equity",
+            "note": "Equity summary account.",
+            "type": "Equity"
+        }
+    },
+    {
+        "name": "LedgerAccount",
+        "method": "POST",
         "id": "m5gpa3yggtok",
         "data": {
+            "parent": {
+                "id": "vwr8hwut060u"
+            },
             "code": "290",
             "description": "Owner's Capital",
             "note": "Amount owner invested in the company (through cash or other assets) plus earnings of the company not withdrawn by the owner.",
@@ -375,8 +456,22 @@
     {
         "name": "LedgerAccount",
         "method": "POST",
+        "id": "sklbdyyrjpxk",
+        "data": {
+            "code": "30",
+            "description": "Revenue",
+            "note": "Revenue summary account.",
+            "type": "Revenue"
+        }
+    },
+    {
+        "name": "LedgerAccount",
+        "method": "POST",
         "id": "bkxy7neljlp6",
         "data": {
+            "parent": {
+                "id": "sklbdyyrjpxk"
+            },
             "code": "310",
             "description": "Serivice Revenues",
             "note": "Amounts earned from providing services to clients, either for cash or credit.",
@@ -388,6 +483,9 @@
         "method": "POST",
         "id": "d7zf6nqrg9pr",
         "data": {
+            "parent": {
+                "id": "sklbdyyrjpxk"
+            },
             "code": "320",
             "description": "Products Revenues",
             "note": "Amounts earned from providing products to clients, either for cash or credit.",
@@ -397,8 +495,22 @@
     {
         "name": "LedgerAccount",
         "method": "POST",
+        "id": "kjgkwzxcls2f",
+        "data": {
+            "code": "50",
+            "description": "Expenses",
+            "note": "Expense summary account.",
+            "type": "Expense"
+        }
+    },
+    {
+        "name": "LedgerAccount",
+        "method": "POST",
         "id": "ivcfjs52f5ce",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "500",
             "description": "Salaries Expense",
             "note": "Expenses incurred for the work performed by salaried employees during the accounting period.",
@@ -410,6 +522,9 @@
         "method": "POST",
         "id": "2c7z6qx8w3w7",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "510",
             "description": "Wage Expense",
             "note": "Expenses incurred for the work performed by non-salaried employees during the accounting period.",
@@ -421,6 +536,9 @@
         "method": "POST",
         "id": "g5wevqm33v2d",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "520",
             "description": "Commissions Expense",
             "note": "Expenses incurred for the sales closed by commissioned employees during the accounting period.",
@@ -432,6 +550,9 @@
         "method": "POST",
         "id": "gqecdxxebsca",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "540",
             "description": "Supplies Expense",
             "note": "Cost of supplies used up during the accounting period.",
@@ -443,6 +564,9 @@
         "method": "POST",
         "id": "a9g8u1bdxz7o",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "550",
             "description": "Cost of Sales",
             "note": "Cost of inventory used up during the accounting period.",
@@ -454,6 +578,9 @@
         "method": "POST",
         "id": "ubki4zvk1t9y",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "560",
             "description": "Rent Expense",
             "note": "Cost of occupying rented facilities during the accounting period.",
@@ -465,6 +592,9 @@
         "method": "POST",
         "id": "2lckykmrwnel",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "570",
             "description": "Utilities Expense",
             "note": "Costs for electricity, heat, water, and sewer that were used during the accounting period.",
@@ -476,6 +606,9 @@
         "method": "POST",
         "id": "acl1u9i5gytd",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "576",
             "description": "Telephone Expense",
             "note": "Costs of telephone used during the accounting period.",
@@ -487,6 +620,9 @@
         "method": "POST",
         "id": "9cpzl8rm09uv",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "610",
             "description": "Advertising Expense",
             "note": "Costs incurred by the company during the accounting period for ads, promotions, and other selling expenses.",
@@ -498,6 +634,9 @@
         "method": "POST",
         "id": "mf43ga5w6akv",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "750",
             "description": "Depreciation Expense",
             "note": "Costs of long-term assets allocated to expenses during the accounting period.",
@@ -509,6 +648,9 @@
         "method": "POST",
         "id": "wyfblbo2ud93",
         "data": {
+            "parent": {
+                "id": "sklbdyyrjpxk"
+            },
             "code": "810",
             "description": "Interest Revenues",
             "note": "Interest and dividents earned on bank accounts, investments, or notes receivable.",
@@ -520,6 +662,9 @@
         "method": "POST",
         "id": "3ybj2w824ge2",
         "data": {
+            "parent": {
+                "id": "sklbdyyrjpxk"
+            },
             "code": "910",
             "description": "Gain on Sale of Assets",
             "note": "Occurs when the company sells one of its assets (other than inventory) for more than the asset's book value.",
@@ -531,6 +676,9 @@
         "method": "POST",
         "id": "5pc0a4y8algp",
         "data": {
+            "parent": {
+                "id": "kjgkwzxcls2f"
+            },
             "code": "960",
             "description": "Loss on Sale of Assets",
             "note": "Occurs when the company sells one of its assets (other than inventory) for less than the asset's book value.",
