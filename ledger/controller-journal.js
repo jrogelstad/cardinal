@@ -120,94 +120,85 @@
     afterJournals = function (err, resp) {
       var node, process;
 
-      if (err) {
-        callback(err);
-        return;
-      }
+      try {
+        if (err) { throw err; }
 
-      if (resp.length !== data.ids.length) {
-        callback("Journal(s) not found.");
-        return;
-      }
-
-      // Helper function
-      process = function (transDist, dist) {
-        var amount = math.number(math
-          .chain(math.bignumber(transDist.credit))
-          .subtract(math.bignumber(transDist.debit))
-          .add(math.bignumber(dist.credit))
-          .subtract(math.bignumber(dist.debit))
-          .done());
-        if (amount > 0) {
-          transDist.credit = amount;
-          transDist.debit = 0;
-        } else {
-          transDist.credit = 0;
-          transDist.debit = amount * -1;
-        }
-      };
-
-      journals = resp;
-      count = 1;
-
-      // Build list of accounts and distribution data
-      journals.forEach(function (journal) {
-        if (raiseError) { return; }
-
-        if (node && node.id !== journal.node.id) {
-          raiseError = "Journals must all be in the same currency.";
-          return;
-        }
-        node = journal.node;
-
-        if (journal.isPosted) {
-          raiseError = "Journal " +  journal.number + " is already posted.";
-          return;
+        if (resp.length !== data.ids.length) {
+          throw "Journal(s) not found.";
         }
 
-        journal.distributions.forEach(function (dist) {
-          var transDist,
-            accountId = dist.container.id;
-          if (dist.container.type === "Revenue" || dist.container.type === "Expense") {
-            transDist = profitLossDist[accountId];
-            if (transDist) {
-              process(transDist, dist);
-            } else {
-              profitLossDist[accountId] = {
-                id: f.createId(),
-                container: dist.container,
-                credit: dist.credit,
-                debit: dist.debit
-              };
-            }
+        // Helper function
+        process = function (transDist, dist) {
+          var amount = math.number(math
+            .chain(math.bignumber(transDist.credit))
+            .subtract(math.bignumber(transDist.debit))
+            .add(math.bignumber(dist.credit))
+            .subtract(math.bignumber(dist.debit))
+            .done());
+          if (amount > 0) {
+            transDist.credit = amount;
+            transDist.debit = 0;
           } else {
-            transDist = balanceSheetDist[accountId];
-            if (transDist) {
-              process(transDist, dist);
-            } else {
-              balanceSheetDist[accountId] = {
-                id: f.createId(),
-                container: dist.container,
-                credit: dist.credit,
-                debit: dist.debit
-              };
-            }
+            transDist.credit = 0;
+            transDist.debit = amount * -1;
           }
+        };
+
+        journals = resp;
+        count = 1;
+
+        // Build list of accounts and distribution data
+        journals.forEach(function (journal) {
+          if (node && node.id !== journal.node.id) {
+            throw "Journals must all be in the same currency.";
+          }
+          node = journal.node;
+
+          if (journal.isPosted) {
+            throw "Journal " +  journal.number + " is already posted.";
+          }
+
+          journal.distributions.forEach(function (dist) {
+            var transDist,
+              accountId = dist.container.id;
+            if (dist.container.type === "Revenue" || dist.container.type === "Expense") {
+              transDist = profitLossDist[accountId];
+              if (transDist) {
+                process(transDist, dist);
+              } else {
+                profitLossDist[accountId] = {
+                  id: f.createId(),
+                  container: dist.container,
+                  credit: dist.credit,
+                  debit: dist.debit
+                };
+              }
+            } else {
+              transDist = balanceSheetDist[accountId];
+              if (transDist) {
+                process(transDist, dist);
+              } else {
+                balanceSheetDist[accountId] = {
+                  id: f.createId(),
+                  container: dist.container,
+                  credit: dist.credit,
+                  debit: dist.debit
+                };
+              }
+            }
+          });
         });
-      });
 
-      if (raiseError) {
-        callback(raiseError);
-        return;
+        datasource.request({
+          method: "GET",
+          name: "Currency",
+          client: client,
+          callback: afterCurrency,
+          id: node.id
+        }, true);
+      } catch (e) {
+        callback(e);
       }
-
-      datasource.request({
-        method: "GET",
-        name: "Currency",
-        client: client,
-        callback: afterCurrency,
-        id: node.id
-      }, true);
     };
 
     afterCurrency = function (err, resp) {
