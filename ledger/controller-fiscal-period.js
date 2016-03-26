@@ -220,10 +220,13 @@
       client: client,
       callback: afterPrevPeriod,
       filter: {
-        sort: [{
+        criteria: [{
           property: "end",
           operator: "<",
-          value: fiscalPeriod.end,
+          value: fiscalPeriod.end
+        }],
+        sort: [{
+          property: "end",
           order: "DESC"
         }],
         limit: 1
