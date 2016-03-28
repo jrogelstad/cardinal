@@ -4,7 +4,7 @@
         "plural": "Customers",
         "module": "Cardinal",
         "description": "Customer",
-        "inherits": "Node",
+        "inherits": "Kind",
         "properties": {
             "code": {
                 "description": "Customer code",
@@ -53,7 +53,7 @@
         "plural": "AccountsReceivable",
         "module": "Cardinal",
         "description": "Accounts receivable balance",
-        "inherits": "NodeBalance"
+        "inherits": "Node"
     },
     {
         "name": "AccountsReceivableJournal",

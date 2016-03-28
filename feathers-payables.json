@@ -4,7 +4,7 @@
         "plural": "Vendors",
         "module": "Cardinal",
         "description": "Vendor",
-        "inherits": "Node",
+        "inherits": "Kind",
         "properties": {
             "code": {
                 "description": "Vendor code",
@@ -16,7 +16,7 @@
                     "length": 5
                 },
                 "isUnique": true,
-                "inheritedFrom": "Node"
+                "inheritedFrom": "Kind"
             },
             "name": {
                 "description": "Vendor name",
@@ -49,7 +49,7 @@
         "plural": "AccountsPayable",
         "module": "Cardinal",
         "description": "Accounts payable subledger",
-        "inherits": "NodeBalance"
+        "inherits": "Node"
     },
     {
         "name": "AccountsPayableJournal",

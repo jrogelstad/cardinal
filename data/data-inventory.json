@@ -250,12 +250,51 @@
             "creditStatus": "Good"
         }
     }, {
+        "name": "Kind",
+        "method": "POST",
+        "id": "7unvw0ncdiw2",
+        "data": {
+            "code": "WAREHOUSE",
+            "description": "Warehouse",
+            "type": "Asset"
+        }
+    }, {
+        "name": "Kind",
+        "method": "POST",
+        "id": "qhvr7j9d1yg2",
+        "data": {
+            "code": "PLANT",
+            "description": "Manufacturing plant",
+            "type": "Asset"
+        }
+    }, {
+        "name": "Kind",
+        "method": "POST",
+        "id": "ijfyi1jqa2uv",
+        "data": {
+            "code": "AISLE",
+            "description": "Warehouse aisle",
+            "type": "Asset"
+        }
+    }, {
+        "name": "Kind",
+        "method": "POST",
+        "id": "6ouqn83hzef0",
+        "data": {
+            "code": "ADJUSTMENT",
+            "description": "Physical adjustment",
+            "type": "Expense"
+        }
+    }, {
         "name": "Site",
         "method": "POST",
         "id": "c0f47f26zb60",
         "data": {
             "code": "WH1",
-            "description": "Warehouse 1"
+            "description": "Warehouse 1",
+            "kind": {
+                "id": "7unvw0ncdiw2"
+            }
         }
     }, {
         "name": "Location",
@@ -264,6 +303,9 @@
         "data": {
             "code": "A1",
             "description": "Aisle 1",
+            "kind": {
+                "id": "ijfyi1jqa2uv"
+            },
             "parent": {
                 "id": "c0f47f26zb60"
             }
@@ -275,6 +317,9 @@
         "data": {
             "code": "A2",
             "description": "Aisle 2",
+            "kind": {
+                "id": "ijfyi1jqa2uv"
+            },
             "parent": {
                 "id": "c0f47f26zb60"
             }
@@ -286,17 +331,9 @@
         "data": {
             "code": "A3",
             "description": "Aisle 3",
-            "parent": {
-                "id": "c0f47f26zb60"
-            }
-        }
-    }, {
-        "name": "Location",
-        "method": "POST",
-        "id": "z2ydzqcc5hgj",
-        "data": {
-            "code": "A3",
-            "description": "Aisle 3",
+            "kind": {
+                "id": "ijfyi1jqa2uv"
+            },
             "parent": {
                 "id": "c0f47f26zb60"
             }
@@ -308,27 +345,29 @@
         "data": {
             "code": "Adjustment",
             "description": "Adjustment",
-            "type": "Expense"
+            "kind": {
+                "id": "6ouqn83hzef0"
+            }
         }
     }, {
         "name": "Request",
         "method": "POST",
         "id": "mz7jb6xx66x5",
         "data": {
-            "node": {
+            "kind": {
                 "id": "y52uj6x49ham"
             },
             "note": "Adjust frame in",
             "isPosted": true,
             "distributions": [
                 {
-                   "container": {
+                   "node": {
                       "id": "u69aj7cgtkmf"
                    },
                    "credit": 10
                 },
                 {
-                   "container": {
+                   "node": {
                       "id": "c0f47f26zb60"
                    },
                    "debit": 10
@@ -340,7 +379,7 @@
         "method": "POST",
         "id": "u2zjx49ag4ew",
         "data": {
-            "node": {
+            "kind": {
                 "id": "y52uj6x49ham"
             },
             "parent": {
@@ -349,23 +388,16 @@
             "note": "Adjust frame in",
             "distributions": [
                 {
-                   "container": {
+                   "node": {
                       "id": "u69aj7cgtkmf"
                    },
                    "credit": 10
                 },
                 {
-                   "container": {
+                   "node": {
                       "id": "hhxvcdowwn38"
                    },
                    "debit": 10
-                },
-                {
-                   "container": {
-                      "id": "c0f47f26zb60"
-                   },
-                   "debit": 10,
-                   "isPropagation": true
                 }
             ]
         }
@@ -374,10 +406,10 @@
         "method": "POST",
         "id": "odkyup9m3pc4",
         "data": {
-            "node": {
+            "kind": {
                 "id": "y52uj6x49ham"
             },
-            "container": {
+            "parent": {
                 "id": "u69aj7cgtkmf"
             },
             "balance": 10
@@ -387,10 +419,10 @@
         "method": "POST",
         "id": "83jx5dbj6n7e",
         "data": {
-            "node": {
+            "kind": {
                 "id": "y52uj6x49ham"
             },
-            "container": {
+            "parent": {
                 "id": "hhxvcdowwn38"
             },
             "balance": -10
@@ -400,10 +432,10 @@
         "method": "POST",
         "id": "u2zjx49ag4ew",
         "data": {
-            "node": {
+            "kind": {
                 "id": "y52uj6x49ham"
             },
-            "container": {
+            "parent": {
                 "id": "c0f47f26zb60"
             },
             "balance": -10

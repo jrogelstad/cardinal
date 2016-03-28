@@ -1,9 +1,9 @@
 [ 
     {
-        "name": "Node",
-        "plural": "Nodes",
+        "name": "Kind",
+        "plural": "Kinds",
         "module": "Cardinal",
-        "description": "Base class for hiearchy support",
+        "description": "Base class for physical types",
         "properties": {
             "code": {
                 "description": "Natural key",
@@ -20,32 +20,66 @@
                 "type": "string"
             },
             "type": {
-                "description": "Node type",
+                "description": "Kind type",
                 "type": "string",
                 "default": "Asset"
             }
         }
     },
     {
-        "name": "NodeBalance",
-        "plural": "NodeBalance",
+        "name": "Container",
+        "plural": "Containers",
         "module": "Cardinal",
-        "description": "Current quantity of objects in containers",
+        "description": "Instance of a kind",
         "properties": {
-            "node": {
-                "description": "Node quantified",
-                "type": {
-                    "relation": "Node",
-                    "properties": ["code", "description", "type"]
-                }
+            "code": {
+                "description": "Natural key",
+                "type": "string",
+                "isUnique": true,
+                "isRequired": true
             },
-            "container": {
-                "description": "Node containing quantity",
-                "type": {
-                    "relation": "Node",
-                    "properties": ["code", "description", "type"]
-                }
+            "description": {
+                "description": "Description",
+                "type": "string"
             },
+            "note": {
+                "description": "Note",
+                "type": "string"
+            },
+            "kind": {
+                "description": "Node kind",
+                "type": {
+                    "relation": "Kind",
+                    "properties": ["code", "description", "type"],
+                    "isRequired": true
+                }
+            }
+        }
+    },
+    {
+        "name": "Node",
+        "plural": "Nodes",
+        "module": "Cardinal",
+        "description": "Base class for hiearchy support",
+        "inherits": "Container",
+        "properties": {
+            "parent": {
+                "description": "Parent container",
+                "type": {
+                    "relation": "Container",
+                    "properties": ["code", "description", "kind"],
+                    "isRequired": true
+                }
+            }
+        }
+    },
+    {
+        "name": "NodeBalance",
+        "plural": "NodeBalances",
+        "module": "Cardinal",
+        "description": "Base class for hiearchy support",
+        "inherits": "Node",
+        "properties": {
             "balance": {
                 "description": "Current quantity",
                 "type": "number"
@@ -89,7 +123,7 @@
         "plural": "NodePeriodBalance",
         "module": "Cardinal",
         "inherits": "NodeBalance",
-        "description": "Quantity of objects in containers per period",
+        "description": "Quantity of objects in node per period",
         "properties": {
             "period": {
                 "description": "Period",
@@ -114,10 +148,10 @@
         "module": "Cardinal",
         "description": "Abstract action",
         "properties": {
-            "node": {
+            "kind": {
                 "description": "Object action is taken on",
                 "type": {
-                    "relation": "Node",
+                    "relation": "Kind",
                     "properties": ["code", "description"]
                 }
             },
@@ -146,11 +180,11 @@
                     "childOf": "distributions"
                 }
             },
-            "container": {
+            "node": {
                 "description": "Object container",
                 "type": {
                     "relation": "Node",
-                    "properties": ["code", "description", "type"]
+                    "properties": ["id"]
                 }
             },
             "debit": {
@@ -160,10 +194,6 @@
             "credit": {
                 "description": "Credit",
                 "type": "number"
-            },
-            "isPropagation": {
-                "description": "Propagation flag",
-                "type": "boolean"
             }
         }
     },

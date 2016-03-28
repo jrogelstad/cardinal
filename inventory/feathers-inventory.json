@@ -4,14 +4,14 @@
         "plural": "Units",
         "module": "Cardinal",
         "description": "Unit of measure",
-        "inherits": "Node"
+        "inherits": "Kind"
     },
     {
         "name": "Item",
         "plural": "Items",
         "module": "Cardinal",
         "description": "Information about a product or service",
-        "inherits": "Node",
+        "inherits": "Kind",
         "properties": {
             "isActive": {
                 "description": "Active status",
@@ -46,27 +46,11 @@
         }
     },
     {
-        "name": "LocationNode",
-        "plural": "LocationNodes",
-        "module": "Cardinal",
-        "description": "Physical location nodes",
-        "inherits": "Node"
-    },
-    {
         "name": "Location",
         "plural": "Locations",
         "module": "Cardinal",
         "description": "Physical locations",
-        "inherits": "LocationNode",
-        "properties": {
-            "parent": {
-                "description": "Parent location",
-                "type": {
-                    "relation": "LocationNode",
-                    "properties": ["code", "description"]
-                }
-            }
-        }
+        "inherits": "Node"
     },
     {
         "name": "LocationBalance",

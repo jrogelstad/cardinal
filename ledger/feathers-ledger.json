@@ -4,7 +4,7 @@
         "plural": "Currencies",
         "module": "Cardinal",
         "description": "Currency",
-        "inherits": "Node",
+        "inherits": "Kind",
         "properties": {
             "symbol": {
                 "description": "Symbol",
@@ -17,23 +17,23 @@
         }
     },
     {
-        "name": "LedgerNode",
-        "plural": "LedgerNodes",
+        "name": "LedgerKind",
+        "plural": "LedgerKinds",
         "module": "Cardinal",
-        "description": "Ledger nodes",
-        "inherits": "Node"
+        "description": "Ledger kinds",
+        "inherits": "Kind"
     },
     {
         "name": "LedgerAccount",
         "plural": "LedgerAccounts",
         "module": "Cardinal",
         "description": "Ledger accounts",
-        "inherits": "LedgerNode",
+        "inherits": "LedgerKind",
         "properties": {
             "parent": {
                 "description": "Parent account",
                 "type": {
-                    "relation": "LedgerNode",
+                    "relation": "LedgerKind",
                     "properties": ["code", "description"]
                 }
             }
