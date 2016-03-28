@@ -17,27 +17,11 @@
         }
     },
     {
-        "name": "LedgerKind",
-        "plural": "LedgerKinds",
-        "module": "Cardinal",
-        "description": "Ledger kinds",
-        "inherits": "Kind"
-    },
-    {
         "name": "LedgerAccount",
         "plural": "LedgerAccounts",
         "module": "Cardinal",
         "description": "Ledger accounts",
-        "inherits": "LedgerKind",
-        "properties": {
-            "parent": {
-                "description": "Parent account",
-                "type": {
-                    "relation": "LedgerKind",
-                    "properties": ["code", "description"]
-                }
-            }
-        }
+        "inherits": "Node"
     },
     {
         "name": "FiscalYear",

@@ -254,7 +254,7 @@
         "method": "POST",
         "id": "7unvw0ncdiw2",
         "data": {
-            "code": "WAREHOUSE",
+            "code": "Warehouse",
             "description": "Warehouse",
             "type": "Asset"
         }
@@ -263,7 +263,7 @@
         "method": "POST",
         "id": "qhvr7j9d1yg2",
         "data": {
-            "code": "PLANT",
+            "code": "Plant",
             "description": "Manufacturing plant",
             "type": "Asset"
         }
@@ -272,7 +272,7 @@
         "method": "POST",
         "id": "ijfyi1jqa2uv",
         "data": {
-            "code": "AISLE",
+            "code": "Aisle",
             "description": "Warehouse aisle",
             "type": "Asset"
         }
@@ -281,7 +281,7 @@
         "method": "POST",
         "id": "6ouqn83hzef0",
         "data": {
-            "code": "ADJUSTMENT",
+            "code": "Adjustment",
             "description": "Physical adjustment",
             "type": "Expense"
         }

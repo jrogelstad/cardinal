@@ -74,7 +74,7 @@
         callback: afterTrialBalance,
         filter: {
           criteria: [{
-            property: "container.type",
+            property: "kind.type",
             operator: "IN",
             value: ["Asset", "Liability", "Equity"]
           }, {
@@ -141,7 +141,7 @@
 
       account = accounts.shift();
       prev = prevTrialBalance.find(function (row) {
-        return row.container.id === account.id;
+        return row.parent.id === account.id;
       });
       balance = prev ? prev.balance : 0;
 
@@ -151,8 +151,8 @@
         client: client,
         callback: createTrialBalance,
         data: {
-          node: currency,
-          container: account,
+          kind: currency,
+          parent: account,
           period: fiscalPeriod,
           previous: prevPeriod,
           balance: balance

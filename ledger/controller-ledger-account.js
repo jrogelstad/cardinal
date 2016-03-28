@@ -96,8 +96,8 @@
         client: client,
         callback: createTrialBalance,
         data: {
-          node: currency,
-          container: account,
+          kind: currency,
+          parent: account,
           period: period,
           previous: prev
         }     
