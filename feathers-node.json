@@ -184,7 +184,7 @@
                 "description": "Object container",
                 "type": {
                     "relation": "Node",
-                    "properties": ["id"]
+                    "properties": ["code", "description", "kind"]
                 }
             },
             "debit": {

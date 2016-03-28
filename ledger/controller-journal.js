@@ -104,7 +104,7 @@
       var afterCurrency, afterTrialBalance, afterJournals,
         afterPostBalance, afterPostTransaction, afterUpdate,
         getLedgerAccounts, afterLedgerAccounts, getParents,
-        node, currency, journals, count, transaction,
+        kind, currency, journals, count, transaction,
         raiseError, process, profitLossIds, balanceSheetIds,
         data = obj.data,
         client = obj.client,
@@ -167,10 +167,10 @@
 
           // Build list of accounts and distribution data
           journals.forEach(function (journal) {
-            if (node && node.id !== journal.node.id) {
+            if (kind && kind.id !== journal.kind.id) {
               throw "Journals must all be in the same currency.";
             }
-            node = journal.node;
+            kind = journal.kind;
 
             if (journal.isPosted) {
               throw "Journal " +  journal.number + " is already posted.";
@@ -178,17 +178,17 @@
 
             journal.distributions.forEach(function (dist) {
               var transDist,
-                accountId = dist.container.id;
-              if (dist.container.type === "Revenue" || dist.container.type === "Expense") {
+                accountId = dist.node.id;
+              if (dist.node.kind.type === "Revenue" || dist.node.kind.type === "Expense") {
                 transDist = profitLossDist[accountId];
                 if (transDist) {
                   process(transDist, dist);
                 } else {
                   profitLossDist[accountId] = {
                     id: f.createId(),
-                    container: dist.container,
+                    node: dist.node,
                     credit: dist.credit,
-                    debit: dist.debit
+                    debit: dist.debits
                   };
                 }
               } else {
@@ -198,7 +198,7 @@
                 } else {
                   balanceSheetDist[accountId] = {
                     id: f.createId(),
-                    container: dist.container,
+                    node: dist.node,
                     credit: dist.credit,
                     debit: dist.debit
                   };
@@ -248,7 +248,7 @@
           name: "Currency",
           client: client,
           callback: afterCurrency,
-          id: node.id
+          id: kind.id
         }, true);
       };
 
@@ -266,8 +266,8 @@
             if (parentId && ledgerAccountIds.indexOf(parentId) === -1) {
               ledgerAccountIds.push(parentId);
             }
-            if (ledgerAccount.type === "Revenue" ||
-                ledgerAccount.type === "Expense") {
+            if (ledgerAccount.kind.type === "Revenue" ||
+                ledgerAccount.kind.type === "Expense") {
               if (profitLossIds.indexOf(id) === -1) {
                 profitLossIds.push(id);
               }
@@ -307,9 +307,9 @@
               callback: afterTrialBalance,
               filter: {
                 criteria: [{
-                  property: "node",
+                  property: "kind",
                   value: currency},{
-                  property: "container.id",
+                  property: "parent.id",
                   operator: "IN",
                   value: profitLossIds},{
                   property: "period.start",
@@ -337,9 +337,9 @@
               callback: afterTrialBalance,
               filter: {
                 criteria: [{
-                  property: "node",
+                  property: "kind",
                   value: currency},{
-                  property: "container.id",
+                  property: "parent.id",
                   operator: "IN",
                   value: balanceSheetIds},{
                   property: "period.start",
@@ -377,7 +377,7 @@
           n = 0;
           count = trialBalances.length + 1;
           transaction = {
-            node: journals[0].node,
+            kind: journals[0].kind,
             date: date,
             note: data.note,
             distributions: distributions
@@ -394,7 +394,7 @@
 
           // Post balance updates
           distributions.forEach(function (dist) {
-            var ids = getParents(dist.container.id),
+            var ids = getParents(dist.node.id),
               debit = function (row) {
                 row.balance = math.number(math.subtract(
                   math.bignumber(row.balance), 
@@ -412,12 +412,12 @@
             ids.forEach(function (id) {
               var update,
                 balances = trialBalances.filter(function (row) {
-                  return row.container.id === id;
+                  return row.parent.id === id;
                 });
 
               if (!balances.length) {
                 count = 2;
-                afterPostBalance("No open trial balance for account " + dist.container.code + ".");
+                afterPostBalance("No open trial balance for account " + dist.node.code + ".");
                 return;
               }
 
