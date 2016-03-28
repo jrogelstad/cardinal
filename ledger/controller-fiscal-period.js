@@ -345,4 +345,125 @@
 
   datasource.registerFunction("POST", "openFiscalPeriod", doOpenFiscalPeriod);
 
+  var doDeleteFiscalPeriod = function (obj) {
+    var afterFiscalPeriod, afterNextPeriod, afterTrialBalance, afterDelete,
+      fiscalPeriod, count, raiseError,
+      n = 0;
+
+    afterFiscalPeriod = function (err, resp) {
+      try {
+        if (err) { throw err; }
+
+        fiscalPeriod = resp;
+
+        if (fiscalPeriod.isClosed) {
+          throw "Can not delete a closed period.";
+        }
+        if (fiscalPeriod.isFrozen) {
+          throw "Can not delete a frozen period.";
+        }
+
+        datasource.request({
+          method: "GET",
+          name: "FiscalPeriod",
+          client: obj.client,
+          callback: afterNextPeriod,
+          filter: {
+            criteria: [{
+              property: "end",
+              operator: ">",
+              value: fiscalPeriod.end
+            }],
+            limit: 1
+          }
+        }, true);
+      } catch (e) {
+        obj.callback(e);
+      }
+    };
+
+    afterNextPeriod = function (err, resp) {
+      try {
+        if (err) { throw err; }
+        if (resp.length) {
+          throw "Can not delete a period with a subsequent period.";
+        }
+
+        datasource.request({
+          method: "GET",
+          name: "TrialBalance",
+          client: obj.client,
+          callback: afterTrialBalance,
+          filter: {
+            criteria: [{
+              property: "period",
+              value: fiscalPeriod
+            }]
+          }
+        }, true);
+      } catch (e) {
+        obj.callback(e);
+      }
+    };
+
+    afterTrialBalance = function (err, resp) {
+      try {
+        if (err) { throw err; }
+        resp.forEach(function (trialBalance) {
+          if (trialBalance.debits !== 0 ||
+              trialBalance.credits !== 0) {
+            throw "Can not delete period with trial balance activity posted.";
+          }
+        });
+
+        count = resp.length + 1;
+
+        // Delete period
+        datasource.request({
+          method: "POST",
+          name: "doDelete",
+          client: obj.client,
+          callback: afterDelete,
+          data: {
+            name: "FiscalPeriod",
+            id: obj.id
+          }
+        }, true);
+
+        // Delete trial balances
+        resp.forEach(function (trialBalance) {
+          datasource.request({
+            method: "DELETE",
+            name: "TrialBalance",
+            client: obj.client,
+            callback: afterDelete,
+            id: trialBalance.id
+          }, true);
+        });
+      } catch (e) {
+        obj.callback(e);
+      }
+    };
+
+    afterDelete = function (err) {
+      n += 1;
+      if (err && !raiseError) {
+        raiseError = err;
+      }
+      if (n < count) { return; }
+      obj.callback(raiseError, true);
+    };
+
+    // Validate
+    datasource.request({
+      method: "GET",
+      name: "FiscalPeriod",
+      id: obj.id,
+      client: obj.client,
+      callback: afterFiscalPeriod
+    }, true);
+  };
+
+  datasource.registerFunction("DELETE", "FiscalPeriod", doDeleteFiscalPeriod);
+
 }(datasource));
