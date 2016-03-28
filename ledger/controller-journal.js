@@ -103,12 +103,15 @@
     try {
       var afterCurrency, afterTrialBalance, afterJournals,
         afterPostBalance, afterPostTransaction, afterUpdate,
-        currency, journals, count, transaction, raiseError,
-        process, profitLossIds, balanceSheetIds,
+        getLedgerAccounts, afterLedgerAccounts, getParents,
+        node, currency, journals, count, transaction,
+        raiseError, process, profitLossIds, balanceSheetIds,
         data = obj.data,
         client = obj.client,
         callback = obj.callback,
         date = data.date || f.today(),
+        ledgerAccounts = {},
+        ledgerAccountIds = [],
         distributions = [],
         trialBalances = [],
         profitLossDist = {},
@@ -119,7 +122,7 @@
         throw "Ids must be provided";
       }
 
-      // Helper function
+      // Helper functions
       process = function (transDist, dist) {
         var amount = math.number(math
           .chain(math.bignumber(transDist.credit))
@@ -136,9 +139,22 @@
         }
       };
 
-      afterJournals = function (err, resp) {
-        var node;
+      getParents = function (id, ary) {
+        ary = ary || [];
+        var ledgerAccount;
 
+        ary.push(id);
+
+        ledgerAccount = ledgerAccounts[id];
+
+        if (ledgerAccount.parent) {
+          getParents(ledgerAccount.parent.id, ary);
+        }
+
+        return ary;
+      };
+
+      afterJournals = function (err, resp) {
         try {
           if (err) { throw err; }
 
@@ -191,13 +207,78 @@
             });
           });
 
+          // Build distributions and filter criteria
+          balanceSheetIds = Object.keys(balanceSheetDist);
+          balanceSheetIds.forEach(function (id) {
+            distributions.push(balanceSheetDist[id]);
+          });
+          ledgerAccountIds = ledgerAccountIds.concat(balanceSheetIds);
+
+          profitLossIds = Object.keys(profitLossDist);
+          profitLossIds.forEach(function (id) {
+            distributions.push(profitLossDist[id]);
+          });
+          ledgerAccountIds = ledgerAccountIds.concat(profitLossIds);
+
+          getLedgerAccounts(ledgerAccountIds);
+        } catch (e) {
+          callback(e);
+        }
+      };
+
+      getLedgerAccounts = function (ids) {
+        if (ids.length) {
           datasource.request({
             method: "GET",
-            name: "Currency",
+            name: "LedgerAccount",
             client: client,
-            callback: afterCurrency,
-            id: node.id
+            callback: afterLedgerAccounts,
+            filter: {
+              criteria: [{
+                property: "id",
+                operator: "IN",
+                value: ids}]
+            }
           }, true);
+          return;
+        }
+
+        datasource.request({
+          method: "GET",
+          name: "Currency",
+          client: client,
+          callback: afterCurrency,
+          id: node.id
+        }, true);
+      };
+
+      afterLedgerAccounts = function (err, resp) {
+        try {
+          if (err) { throw err; }
+
+          ledgerAccountIds = [];
+
+          // Add parents to array of trial balance to update
+          resp.forEach(function (ledgerAccount) {
+            var id = ledgerAccount.id,
+              parentId = ledgerAccount.parent ? ledgerAccount.parent.id : false;
+            ledgerAccounts[ledgerAccount.id] = ledgerAccount;
+            if (parentId && ledgerAccountIds.indexOf(parentId) === -1) {
+              ledgerAccountIds.push(parentId);
+            }
+            if (ledgerAccount.type === "Revenue" ||
+                ledgerAccount.type === "Expense") {
+              if (profitLossIds.indexOf(id) === -1) {
+                profitLossIds.push(id);
+              }
+            } else {
+              if (balanceSheetIds.indexOf(id) === -1) {
+                balanceSheetIds.push(id);
+              }
+            }
+          });
+
+          getLedgerAccounts(ledgerAccountIds);
         } catch (e) {
           callback(e);
         }
@@ -205,21 +286,10 @@
 
       afterCurrency = function (err, resp) {
         try {
-          if (err) { throw(err); }
+          if (err) { throw err; }
           if (!resp) { throw "Invalid currency."; }
 
           currency = resp;
-
-          // Build distributions and filter criteria
-          balanceSheetIds = Object.keys(balanceSheetDist);
-          balanceSheetIds.forEach(function (id) {
-            distributions.push(balanceSheetDist[id]);
-          });
-
-          profitLossIds = Object.keys(profitLossDist);
-          profitLossIds.forEach(function (id) {
-            distributions.push(profitLossDist[id]);
-          });
 
           n = 0;
           if (profitLossIds.length && balanceSheetIds.length) {
@@ -324,10 +394,7 @@
 
           // Post balance updates
           distributions.forEach(function (dist) {
-            var update,
-              balances = trialBalances.filter(function (row) {
-                return row.container.id === dist.container.id;
-              }),
+            var ids = getParents(dist.container.id),
               debit = function (row) {
                 row.balance = math.number(math.subtract(
                   math.bignumber(row.balance), 
@@ -341,27 +408,35 @@
                 ));
               };
 
-            if (!balances.length) {
-              count = 2;
-              afterPostBalance("No open trial balance for account " + dist.container.code + ".");
-              return;
-            }
+            // Iterate through trial balances for account and parents
+            ids.forEach(function (id) {
+              var update,
+                balances = trialBalances.filter(function (row) {
+                  return row.container.id === id;
+                });
 
-            if (dist.debit) {
-              balances[0].debits = math.number(math.add(
-                math.bignumber(balances[0].debits), 
-                math.bignumber(dist.debit)
-              ));
-              update = debit;
-            } else {
-              balances[0].credits = math.number(math.add(
-                math.bignumber(balances[0].credits),
-                math.bignumber(dist.credit)
-              ));
-              update = credit;
-            }
-            update = dist.debit ? debit : credit;
-            balances.forEach(update);
+              if (!balances.length) {
+                count = 2;
+                afterPostBalance("No open trial balance for account " + dist.container.code + ".");
+                return;
+              }
+
+              if (dist.debit) {
+                balances[0].debits = math.number(math.add(
+                  math.bignumber(balances[0].debits), 
+                  math.bignumber(dist.debit)
+                ));
+                update = debit;
+              } else {
+                balances[0].credits = math.number(math.add(
+                  math.bignumber(balances[0].credits),
+                  math.bignumber(dist.credit)
+                ));
+                update = credit;
+              }
+
+              balances.forEach(update);
+            });
           });
 
           trialBalances.forEach(function (balance) {
