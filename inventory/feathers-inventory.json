@@ -74,5 +74,25 @@
                 }
             }
         }
+    },
+    {
+        "name": "InventoryTransaction",
+        "plural": "InventoryTransactions",
+        "module": "Cardinal",
+        "description": "Inventory transactions",
+        "inherits": "Transaction",
+        "properties": {
+            "number": {
+                "description": "Transaction number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "sequence": "invtrans_seq_num",
+                    "length": 5
+                },
+                "isUnique": true,
+                "inheritedFrom": "Transaction"
+            }
+        }
     }
 ]
