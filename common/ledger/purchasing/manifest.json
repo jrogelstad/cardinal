@@ -1,0 +1,16 @@
+{
+    "module": "Purchasing",
+    "version": "0.0.1",
+    "dependencies": ["Payables"],
+    "files": [
+        {
+            "type": "module",
+            "path": "module.js"
+        },
+        {
+            "type": "workbook",
+            "path": "workbooks.json"
+        }
+    ]
+}
+

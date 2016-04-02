@@ -1,0 +1,115 @@
+[
+  {
+    "name": "Amazon",
+    "module": "Amazon",
+    "launchConfig": {
+      "icon": "amazon",
+      "color": "white",
+      "backgroundColor": "black"
+    },
+    "defaultConfig": [
+      {
+        "name": "Products",
+        "feather": "AmazonProduct",
+        "form": "bqip09ptmlx6",
+        "list": {
+          "columns": [{
+              "attr": "code"
+          }, {
+              "attr": "description"
+          }, {
+              "attr": "isActive"
+          }, {
+              "attr": "isSold"
+          }, {
+              "attr": "manufacturer"
+          }, {
+              "attr": "unit"
+          }, {
+              "attr": "asin"
+          }, {
+              "attr": "sellerRank"
+          }, {
+              "attr": "shippingWeight"
+          }, {
+              "attr": "productDescription"
+          }, {
+              "attr": "price"
+          }]
+        }
+      }, {
+        "name": "Bicycles",
+        "feather": "Bicycle",
+        "form": "mwg0gspc2sjj",
+        "list": {
+          "columns": [{
+              "attr": "code"
+          }, {
+              "attr": "description"
+          }, {
+              "attr": "manufacturer"
+          }, {
+              "attr": "cost"
+          }, {
+              "attr": "color"
+          }, {
+              "attr": "size"
+          }, {
+              "attr": "gearSet"
+          }, {
+              "attr": "weight"
+          }]
+        }
+      }, {
+        "name": "Frames",
+        "feather": "Frame",
+        "form": "cn37poq1shk4",
+        "list": {
+          "columns": [{
+              "attr": "code"
+          }, {
+              "attr": "description"
+          }, {
+              "attr": "manufacturer"
+          }, {
+              "attr": "cost"
+          }, {
+              "attr": "material"
+          }, {
+              "attr": "bottomBracket"
+          }, {
+              "attr": "fork"
+          }, {
+              "attr": "front"
+          }, {
+              "attr": "seatPost"
+          }, {
+              "attr": "weight"
+          }]
+        }
+      }, {
+        "name": "Wheels",
+        "feather": "Wheel",
+        "form": "uh6m1sizf2ni",
+        "list": {
+          "columns": [{
+              "attr": "code"
+          }, {
+              "attr": "description"
+          }, {
+              "attr": "manufacturer"
+          }, {
+              "attr": "cost"
+          }, {
+              "attr": "material"
+          }, {
+              "attr": "diameter"
+          }, {
+              "attr": "weight"
+          }
+          ]
+        }
+      }
+    ]
+  }
+]
