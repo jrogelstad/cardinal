@@ -1,0 +1,32 @@
+{
+    "module": "Common",
+    "version": "0.0.1",
+    "files": [
+        {
+            "type": "feather",
+            "path": "feathers-node.json"
+        },
+        {
+            "type": "feather",
+            "path": "feathers-common.json"
+        },
+        {
+            "type": "module",
+            "path": "module.js"
+        },
+        {
+            "type": "controller",
+            "name": "Period",
+            "path": "controller-period.js"
+        },
+        {
+            "type": "workbook",
+            "path": "workbooks.json"
+        },
+        {
+            "type": "batch",
+            "path": "data.json"
+        }
+    ]
+}
+

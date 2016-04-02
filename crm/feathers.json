@@ -1,0 +1,85 @@
+[
+    {
+        "name": "Opportunity",
+        "plural": "Opportunities",
+        "module": "Cardinal",
+        "description": "Opportunity",
+        "inherits": "Task",
+        "properties": {
+            "number": {
+                "description": "Natural key",
+                "type": "string",
+                "autonumber": {
+                    "prefix": "PRE",
+                    "sequence": "opportunity_seq_num",
+                    "length": 4,
+                    "suffix": "SFX"
+                },
+                "isReadOnly": true,
+                "isUnique": true
+            },
+            "amount": {
+                "description": "Estimated sales amount",
+                "type": "number",
+                "isRequired": true
+            },
+            "stage": {
+                "description": "Pipeline stage",
+                "type": "string"
+            },
+            "contact": {
+                "description": "Primary Contact",
+                "type": {
+                    "relation": "Contact",
+                    "properties": [
+                        "name",
+                        "email"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "name": "OpportunityTask",
+        "description": "Opportunity Task",
+        "module": "Cardinal",
+        "inherits": "Activity",
+        "properties": {
+            "parent": {
+                "description": "Parent Opportunity",
+                "type": {
+                    "relation": "Opportunity",
+                    "childOf": "tasks"
+                }
+            }
+        }
+    },
+    {
+        "name": "Lead",
+        "plural": "Leads",
+        "module": "Cardinal",
+        "description": "A sales contact",
+        "inherits": "Contact",
+        "properties": {
+            "company": {
+                "description": "Company",
+                "type": "string"
+            },
+            "remarks": {
+                "description": "Misc. text",
+                "type": "string"
+            },
+            "probability": {
+                "description": "Probability of closing",
+                "type": "number"
+            },
+            "opportunity": {
+                "description": "Related Opportunity",
+                "type": {
+                    "relation": "Opportunity",
+                    "properties": ["number", "name", "description"]
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,5 @@
+/*global f */
+(function () {
+  "strict";
+
+}());

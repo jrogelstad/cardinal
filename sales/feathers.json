@@ -2,7 +2,7 @@
     {
         "name": "SalesOrder",
         "plural": "SalesOrders",
-        "module": "Cardinal",
+        "module": "Sales",
         "inherits": "Document",
         "description": "Sales order",
         "properties": {
@@ -56,7 +56,7 @@
     },
     {
         "name": "SalesOrderLine",
-        "module": "Cardinal",
+        "module": "Sales",
         "description": "Sales order line",
         "properties": {
             "parent": {
@@ -108,7 +108,7 @@
     {
         "name": "SalesJournal",
         "plural": "SalesJournal",
-        "module": "Cardinal",
+        "module": "Sales",
         "description": "Sales journal",
         "inherits": "Journal",
         "properties": {
@@ -129,7 +129,7 @@
     {
         "name": "SalesReturnJournal",
         "plural": "SalesReturnJournal",
-        "module": "Cardinal",
+        "module": "Sales",
         "description": "Sales return journal",
         "inherits": "Journal",
         "properties": {

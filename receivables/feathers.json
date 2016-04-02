@@ -2,7 +2,7 @@
     {
         "name": "Customer",
         "plural": "Customers",
-        "module": "Cardinal",
+        "module": "Receivables",
         "description": "Customer",
         "inherits": "Kind",
         "properties": {

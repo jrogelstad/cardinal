@@ -1,0 +1,230 @@
+[{
+    "name": "Form",
+    "method": "POST",
+    "id": "cn37poq1shk4",
+    "data": {
+        "name": "Frame",
+        "description": "Frame form",
+        "feather": "Frame",
+        "module": "Amazon",
+        "attrs": [{
+            "attr": "code"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "isActive"
+        }, {
+            "attr": "isSold"
+        }, {
+            "attr": "barcode"
+        }, {
+            "attr": "manufacturer"
+        }, {
+            "attr": "cost"
+        }, {
+            "attr": "unit"
+        }, {
+            "attr": "asin"
+        }, {
+            "attr": "sellerRank"
+        }, {
+            "attr": "shippingWeight"
+        }, {
+            "attr": "productDescription"
+        }, {
+            "attr": "price"
+        }, {
+            "attr": "material"
+        }, {
+            "attr": "bottomBracket"
+        }, {
+            "attr": "fork"
+        }, {
+            "attr": "front"
+        }, {
+            "attr": "seatPost"
+        }, {
+            "attr": "weight"
+        }]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "uh6m1sizf2ni",
+    "data": {
+        "name": "Wheel",
+        "description": "Wheel form",
+        "feather": "Wheel",
+        "module": "Amazon",
+        "attrs": [{
+            "attr": "code"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "isActive"
+        }, {
+            "attr": "isSold"
+        }, {
+            "attr": "barcode"
+        }, {
+            "attr": "manufacturer"
+        }, {
+            "attr": "cost"
+        }, {
+            "attr": "unit"
+        }, {
+            "attr": "asin"
+        }, {
+            "attr": "sellerRank"
+        }, {
+            "attr": "shippingWeight"
+        }, {
+            "attr": "productDescription"
+        }, {
+            "attr": "price"
+        }, {
+            "attr": "material"
+        }, {
+            "attr": "diameter"
+        }, {
+            "attr": "width"
+        }, {
+            "attr": "hub"
+        }, {
+            "attr": "style"
+        }, {
+            "attr": "weight"
+        }]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "1gbw7j4wi2sb",
+    "data": {
+        "name": "Seat",
+        "description": "Seat form",
+        "feather": "Seat",
+        "module": "Amazon",
+        "attrs": [{
+            "attr": "code"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "isActive"
+        }, {
+            "attr": "isSold"
+        }, {
+            "attr": "barcode"
+        }, {
+            "attr": "manufacturer"
+        }, {
+            "attr": "cost"
+        }, {
+            "attr": "unit"
+        }, {
+            "attr": "asin"
+        }, {
+            "attr": "sellerRank"
+        }, {
+            "attr": "shippingWeight"
+        }, {
+            "attr": "productDescription"
+        }, {
+            "attr": "price"
+        }, {
+            "attr": "color"
+        }, {
+            "attr": "style"
+        }, {
+            "attr": "weight"
+        }]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "mwg0gspc2sjj",
+    "data": {
+        "name": "Bicycle",
+        "description": "Bicycle form",
+        "feather": "Bicycle",
+        "module": "Amazon",
+        "attrs": [{
+            "attr": "code"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "isActive"
+        }, {
+            "attr": "isSold"
+        }, {
+            "attr": "barcode"
+        }, {
+            "attr": "manufacturer"
+        }, {
+            "attr": "cost"
+        }, {
+            "attr": "unit"
+        }, {
+            "attr": "asin"
+        }, {
+            "attr": "sellerRank"
+        }, {
+            "attr": "shippingWeight"
+        }, {
+            "attr": "productDescription"
+        }, {
+            "attr": "price"
+        }, {
+            "attr": "frameMaterial"
+        }, {
+            "attr": "color"
+        }, {
+            "attr": "size"
+        }, {
+            "attr": "hub"
+        }, {
+            "attr": "gearSet"
+        }, {
+            "attr": "style"
+        }, {
+            "attr": "weight"
+        }]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "bqip09ptmlx6",
+    "data": {
+        "name": "Amazon Product",
+        "description": "Amazon Product form",
+        "feather": "AmazonProduct",
+        "module": "Amazon",
+        "attrs": [{
+            "attr": "code"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "isActive"
+        }, {
+            "attr": "isSold"
+        }, {
+            "attr": "barcode"
+        }, {
+            "attr": "manufacturer"
+        }, {
+            "attr": "cost"
+        }, {
+            "attr": "unit"
+        }, {
+            "attr": "asin"
+        }, {
+            "attr": "sellerRank"
+        }, {
+            "attr": "shippingWeight"
+        }, {
+            "attr": "productDescription"
+        }, {
+            "attr": "price"
+        }]
+    }
+}]

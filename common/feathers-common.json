@@ -1,7 +1,7 @@
 [
     {
         "name": "Note",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Note",
         "properties": {
             "text": {
@@ -12,7 +12,7 @@
     },
     {
         "name": "DocumentNote",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Note on document",
         "inherits": "Note",
         "properties": {
@@ -28,7 +28,7 @@
     {
         "name": "Contact",
         "plural": "Contacts",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Information about a person",
         "inherits": "Document",
         "properties": {
@@ -82,14 +82,14 @@
     {
         "name": "MyContact",
         "plural": "MyContacts",
-        "module": "Cardinal",
+        "module": "Common",
         "inherits": "Contact",
         "description": "My private contacts"
     },
     {
         "name": "Address",
         "plural": "Addresses",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Physical location",
         "properties": {
             "type": {
@@ -124,7 +124,7 @@
     },
     {
         "name": "ContactAddress",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Contact address",
         "properties": {
             "parent": {
@@ -146,7 +146,7 @@
     {
         "name": "Activity",
         "plural": "Activities",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Activity",
         "inherits": "Object",
         "properties": {
@@ -189,7 +189,7 @@
     }, 
     {
         "name": "ActivityNote",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Note on Activity",
         "inherits": "Note",
         "properties": {
@@ -205,96 +205,59 @@
     {
         "name": "Task",
         "plural": "Tasks",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "User task",
         "inherits": "Activity"
     },
     {
-        "name": "Opportunity",
-        "plural": "Opportunities",
-        "module": "Cardinal",
-        "description": "Opportunity",
-        "inherits": "Task",
+        "name": "Unit",
+        "plural": "Units",
+        "module": "Common",
+        "description": "Unit of measure",
+        "inherits": "Kind"
+    },
+    {
+        "name": "Item",
+        "plural": "Items",
+        "module": "Common",
+        "description": "Information about a product or service",
+        "inherits": "Kind",
         "properties": {
-            "number": {
-                "description": "Natural key",
-                "type": "string",
-                "autonumber": {
-                    "prefix": "PRE",
-                    "sequence": "opportunity_seq_num",
-                    "length": 4,
-                    "suffix": "SFX"
-                },
-                "isReadOnly": true,
-                "isUnique": true
-            },
-            "amount": {
-                "description": "Estimated sales amount",
-                "type": "number",
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true,
                 "isRequired": true
             },
-            "stage": {
-                "description": "Pipeline stage",
+            "isSold": {
+                "description": "Selling status",
+                "type": "boolean",
+                "default": false
+            },
+            "barcode": {
+                "description": "Bar code number",
                 "type": "string"
             },
-            "contact": {
-                "description": "Primary Contact",
-                "type": {
-                    "relation": "Contact",
-                    "properties": [
-                        "name",
-                        "email"
-                    ]
-                }
-            }
-        }
-    },
-    {
-        "name": "OpportunityTask",
-        "description": "Opportunity Task",
-        "module": "Cardinal",
-        "inherits": "Activity",
-        "properties": {
-            "parent": {
-                "description": "Parent Opportunity",
-                "type": {
-                    "relation": "Opportunity",
-                    "childOf": "tasks"
-                }
-            }
-        }
-    },
-    {
-        "name": "Lead",
-        "plural": "Leads",
-        "module": "Cardinal",
-        "description": "A sales contact",
-        "inherits": "Contact",
-        "properties": {
-            "company": {
-                "description": "Company",
+            "manufacturer": {
+                "description": "Manufacturer",
                 "type": "string"
             },
-            "remarks": {
-                "description": "Misc. text",
-                "type": "string"
-            },
-            "probability": {
-                "description": "Probability of closing",
+            "cost": {
+                "description": "Cost",
                 "type": "number"
             },
-            "opportunity": {
-                "description": "Related Opportunity",
-                "type": {
-                    "relation": "Opportunity",
-                    "properties": ["number", "name", "description"]
-                }
+            "unit":  {
+              "description": "Unit of measure",
+              "type": {
+                "relation": "Unit",
+                "properties": ["code", "description"]
+              }
             }
         }
     },
     {
         "name": "TestTypes",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Test all types and formats",
         "properties": {
             "integer": {

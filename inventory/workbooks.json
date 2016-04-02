@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Inventory",
+    "module": "Inventory",
+    "launchConfig": {
+      "icon": "cube",
+      "color": "white",
+      "backgroundColor": "#FBEB0A"
+    },
+    "defaultConfig": [
+      {
+        "name": "Items",
+        "feather": "Item",
+        "form": "3b5i7biisqbw",
+        "list": {
+          "columns": [{
+              "attr": "code"
+          }, {
+              "attr": "description"
+          }, {
+              "attr": "isActive"
+          }, {
+              "attr": "isSold"
+          }, {
+              "attr": "objectType"
+          }, {
+              "attr": "manufacturer"
+          }, {
+              "attr": "cost"
+          }, {
+              "attr": "unit"
+          }]
+        }
+      }
+    ]
+  }
+]

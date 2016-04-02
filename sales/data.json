@@ -1,0 +1,55 @@
+[{
+    "name": "Form",
+    "method": "POST",
+    "id": "bt7da1jdyxw9",
+    "data": {
+        "name": "Sales Order",
+        "description": "Sales order form",
+        "module": "Cardinal",
+        "feather": "SalesOrder",
+        "tabs": [{
+            "name": "Lines"
+        }, {
+            "name": "Audit"
+        }],
+        "attrs": [{
+            "attr": "number",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "orderDate",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "customer",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "shipMethod",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "status",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "lines",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "item"
+            }, {
+                "attr": "item.description"
+            }, {
+                "attr": "quantityOrdered",
+                "label": "Ordered"
+            }, {
+                "attr": "quantityShipped",
+                "label": "Shipped"
+            }, {
+                "attr": "status"
+            }]
+        }]
+    }
+}]

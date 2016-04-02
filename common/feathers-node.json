@@ -228,7 +228,7 @@
                 "description": "Parent action",
                 "type": {
                     "relation": "Request",
-                    "properties": ["id"]
+                    "properties": ["kind", "date"]
                 }
             }
         }
