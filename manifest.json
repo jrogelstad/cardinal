@@ -1,0 +1,42 @@
+{
+    "notes": "This manifest is not a module, but installs all modules at once.",
+    "files": [
+        {
+            "type": "configure",
+            "path": "common/manifest.json"
+        },
+        {
+            "type": "configure",
+            "path": "crm/manifest.json"
+        },
+        {
+            "type": "configure",
+            "path": "ledger/manifest.json"
+        },
+        {
+            "type": "configure",
+            "path": "receivables/manifest.json"
+        },
+        {
+            "type": "configure",
+            "path": "sales/manifest.json"
+        },
+        {
+            "type": "configure",
+            "path": "amazon/manifest.json"
+        },
+        {
+            "type": "configure",
+            "path": "payables/manifest.json"
+        },
+        {
+            "type": "configure",
+            "path": "purchasing/manifest.json"
+        },
+        {
+            "type": "configure",
+            "path": "inventory/manifest.json"
+        }
+    ]
+}
+
