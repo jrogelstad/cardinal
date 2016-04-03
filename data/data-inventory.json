@@ -2,7 +2,7 @@
     {
         "name": "Unit",
         "method": "POST",
-        "id": "k8qi7ba21j6z",
+        "id": "each",
         "data": {
             "code": "EA",
             "description": "Each"
@@ -27,7 +27,7 @@
             "isSold": true,
             "manufacturer": "Road Master",
             "unit": {
-                "id": "k8qi7ba21j6z"
+                "id": "each"
             }
         }
     }, {
@@ -51,7 +51,7 @@
             "gearSet": "21 speed, derailleur",
             "manufacturer": "Thruster",
             "unit": {
-                "id": "k8qi7ba21j6z"
+                "id": "each"
             }
         }
     }, {
@@ -75,7 +75,7 @@
             "gearSet": "7 speed, hub",
             "manufacturer": "Thruster",
             "unit": {
-                "id": "k8qi7ba21j6z"
+                "id": "each"
             }
         }
     }, {
@@ -97,7 +97,7 @@
             "isSold": true,
             "manufacturer": "Diamondback",
             "unit": {
-                "id": "k8qi7ba21j6z"
+                "id": "each"
             }
         }
     }, {
@@ -119,7 +119,7 @@
             "isSold": true,
             "manufacturer": "Sta-true",
             "unit": {
-                "id": "k8qi7ba21j6z"
+                "id": "each"
             }
         }
     }, {
@@ -141,7 +141,7 @@
             "isSold": true,
             "manufacturer": "Avenir",
             "unit": {
-                "id": "k8qi7ba21j6z"
+                "id": "each"
             }
         }
     }, {
@@ -167,7 +167,7 @@
             "isSold": true,
             "manufacturer": "Fuji",
             "unit": {
-                "id": "k8qi7ba21j6z"
+                "id": "each"
             }
         }
     }, {
@@ -193,7 +193,7 @@
             "isSold": true,
             "manufacturer": "Ridley",
             "unit": {
-                "id": "k8qi7ba21j6z"
+                "id": "each"
             }
         }
     }, {
@@ -219,7 +219,7 @@
             "isSold": true,
             "manufacturer": "Ridley",
             "unit": {
-                "id": "k8qi7ba21j6z"
+                "id": "each"
             }
         }
     }, {
@@ -412,7 +412,10 @@
             "parent": {
                 "id": "u69aj7cgtkmf"
             },
-            "balance": 10
+            "balance": 10,
+            "unit": {
+                "id": "each"
+            }      
         }
     }, {
         "name": "LocationBalance",
@@ -425,7 +428,10 @@
             "parent": {
                 "id": "hhxvcdowwn38"
             },
-            "balance": -10
+            "balance": -10,
+            "unit": {
+                "id": "each"
+            } 
         }
     }, {
         "name": "LocationBalance",
@@ -438,7 +444,10 @@
             "parent": {
                 "id": "c0f47f26zb60"
             },
-            "balance": -10
+            "balance": -10,
+            "unit": {
+                "id": "each"
+            } 
         }
     }
 ]

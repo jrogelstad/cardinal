@@ -210,13 +210,6 @@
         "inherits": "Activity"
     },
     {
-        "name": "Unit",
-        "plural": "Units",
-        "module": "Common",
-        "description": "Unit of measure",
-        "inherits": "Kind"
-    },
-    {
         "name": "Item",
         "plural": "Items",
         "module": "Common",

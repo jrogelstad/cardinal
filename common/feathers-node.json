@@ -27,6 +27,20 @@
         }
     },
     {
+        "name": "Unit",
+        "plural": "Units",
+        "module": "Common",
+        "description": "Unit of measure",
+        "inherits": "Kind"
+    },
+    {
+        "name": "Element",
+        "plural": "Elements",
+        "module": "Common",
+        "description": "Unit of measure",
+        "inherits": "Kind"
+    },
+    {
         "name": "Container",
         "plural": "Containers",
         "module": "Cardinal",
@@ -50,9 +64,9 @@
                 "description": "Node kind",
                 "type": {
                     "relation": "Kind",
-                    "properties": ["code", "description", "type"],
-                    "isRequired": true
-                }
+                    "properties": ["code", "description", "type"]
+                },
+                "isRequired": true
             }
         }
     },
@@ -83,6 +97,17 @@
             "balance": {
                 "description": "Current quantity",
                 "type": "number"
+            },
+            "unit": {
+                "description": "Unit of measure",
+                "type": {
+                    "relation": "Unit",
+                    "properties": ["code", "description", "type"]
+                },
+                "isRequired": true,
+                "default": {
+                    "id": "each"
+                }
             }
         }
     },
@@ -230,6 +255,81 @@
                     "relation": "Request",
                     "properties": ["kind", "date"]
                 }
+            }
+        }
+    },
+    {
+        "name": "Conversion",
+        "plural": "Conversions",
+        "module": "Common",
+        "description": "Conversion rates",
+        "properties": {
+            "kind": {
+              "description": "Transaction number",
+              "type": {
+                "relation": "Kind",
+                "properties": ["code", "description"]
+              }
+            },
+            "element": {
+              "description": "Element",
+              "type": {
+                "relation": "Element",
+                "properties": ["code", "description"]
+              }
+            },
+            "from": {
+                "description": "From node",
+                "type": {
+                    "relation": "Node",
+                    "properties": ["kind"]
+                }
+            },
+            "to": {
+                "description": "To node",
+                "type": {
+                    "relation": "Node",
+                    "properties": ["kind"]
+                }
+            },
+            "amount": {
+                "description": "Fixed amount",
+                "type": "number",
+                "isRequired": true
+            },
+            "amountUnit": {
+                "description": "Amount unit",
+                "type": {
+                  "relation": "Unit",
+                  "properties": ["code", "description"]
+                },
+                "isRequired": true
+            },
+            "quantity": {
+                "description": "Per quantity",
+                "type": "number",
+                "isRequired": true
+            },
+            "quantityUnit": {
+                "description": "Quantity unit",
+                "type": {
+                  "relation": "Unit",
+                  "properties": ["code", "description"]
+                },
+                "isRequired": true
+            },
+            "effective": {
+                "description": "Effective date",
+                "type": "string",
+                "format": "date",
+                "isRequired": true,
+                "default": "today()"
+            },
+            "transact": {
+                "description": "Process flag",
+                "type": "string",
+                "isRequired": true,
+                "default": "Prompt"
             }
         }
     }
