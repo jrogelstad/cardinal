@@ -269,7 +269,8 @@
               "type": {
                 "relation": "Kind",
                 "properties": ["code", "description"]
-              }
+              },
+              "isRequired": true
             },
             "element": {
               "description": "Element",
@@ -278,26 +279,42 @@
                 "properties": ["code", "description"]
               }
             },
-            "from": {
+            "fromNode": {
                 "description": "From node",
                 "type": {
                     "relation": "Node",
                     "properties": ["kind"]
                 }
             },
-            "to": {
+            "fromQuantity": {
+                "description": "From quantity bound",
+                "type": "number",
+                "isRequired": true
+            },
+            "fromUnit": {
+                "description": "Quantity unit",
+                "type": {
+                  "relation": "Unit",
+                  "properties": ["code", "description"]
+                },
+                "isRequired": true,
+                "default": {
+                    "id": "each"
+                }
+            },
+            "toNode": {
                 "description": "To node",
                 "type": {
                     "relation": "Node",
                     "properties": ["kind"]
                 }
             },
-            "amount": {
-                "description": "Fixed amount",
+            "toQuantity": {
+                "description": "To fixed quantity",
                 "type": "number",
                 "isRequired": true
             },
-            "amountUnit": {
+            "toUnit": {
                 "description": "Amount unit",
                 "type": {
                   "relation": "Unit",
@@ -305,25 +322,17 @@
                 },
                 "isRequired": true
             },
-            "quantity": {
-                "description": "Per quantity",
+            "toRatio": {
+                "description": "To ratio",
                 "type": "number",
-                "isRequired": true
-            },
-            "quantityUnit": {
-                "description": "Quantity unit",
-                "type": {
-                  "relation": "Unit",
-                  "properties": ["code", "description"]
-                },
+                "default": 1,
                 "isRequired": true
             },
             "effective": {
                 "description": "Effective date",
                 "type": "string",
                 "format": "date",
-                "isRequired": true,
-                "default": "today()"
+                "isRequired": true
             },
             "transact": {
                 "description": "Process flag",

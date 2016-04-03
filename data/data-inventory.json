@@ -1,11 +1,71 @@
 [
     {
+        "name": "Currency",
+        "method": "POST",
+        "id": "4y9dtthuen7z",
+        "data": {
+            "code": "USD",
+            "description": "U.S. Dollar",
+            "symbol": "$",
+            "isBase": true
+        }
+    }, {
+        "name": "Currency",
+        "method": "POST",
+        "id": "twugl4nqeodj",
+        "data": {
+            "code": "EUR",
+            "description": "Euro",
+            "symbol": "€"
+        }
+    },
+    {
         "name": "Unit",
         "method": "POST",
         "id": "each",
         "data": {
             "code": "EA",
             "description": "Each"
+        }
+    }, {
+        "name": "Element",
+        "method": "POST",
+        "id": "qyimlv8irjei",
+        "data": {
+            "code": "Material",
+            "description": "Material cost"
+        }
+    }, {
+        "name": "Element",
+        "method": "POST",
+        "id": "nnthfvq95vse",
+        "data": {
+            "code": "Labor",
+            "description": "Labor cost"
+        }
+    }, {
+        "name": "Element",
+        "method": "POST",
+        "id": "7vseubams1ag",
+        "data": {
+            "code": "Service",
+            "description": "Service cost"
+        }
+    }, {
+        "name": "Element",
+        "method": "POST",
+        "id": "wmmkfze40xp2",
+        "data": {
+            "code": "Overhead",
+            "description": "Overhead cost"
+        }
+    }, {
+        "name": "Element",
+        "method": "POST",
+        "id": "nuvjc18o8jj9",
+        "data": {
+            "code": "Weight",
+            "description": "Unit weight"
         }
     }, {
         "name": "Bicycle",
@@ -228,7 +288,7 @@
         "id": "tip3j0u9g58l",
         "data": {
             "code": "C00001",
-            "name": "Anglo Thompson",
+            "description": "Anglo Thompson",
             "creditStatus": "Good"
         }
     }, {
@@ -237,7 +297,7 @@
         "id": "jfj635axkhbb",
         "data": {
             "code": "C00002",
-            "name": "Freida Flannigan",
+            "description": "Freida Flannigan",
             "creditStatus": "Good"
         }
     }, {
@@ -246,7 +306,7 @@
         "id": "brwlmg5fnsl",
         "data": {
             "code": "C00003",
-            "name": "Courtney Casper",
+            "description": "Courtney Casper",
             "creditStatus": "Good"
         }
     }, {
@@ -448,6 +508,88 @@
             "unit": {
                 "id": "each"
             } 
+        }
+    }, {
+        "name": "Conversion",
+        "note": "Ridly Ignite, Material to Any",
+        "method": "POST",
+        "id": "6n2140oa5ar1",
+        "data": {
+            "kind": {
+                "id": "y52uj6x49ham"
+            },
+            "element": {
+                "id": "qyimlv8irjei"
+            },
+            "fromQuantity": 1,
+            "toQuantity": 100,
+            "toUnit": {
+              "id": "4y9dtthuen7z"
+            },
+            "transact": "Auto"
+        }
+    }, {
+        "name": "Conversion",
+        "note": "Ridly Ignite, Overhead to Any",
+        "method": "POST",
+        "id": "m3mft32wwgjk",
+        "data": {
+            "kind": {
+                "id": "y52uj6x49ham"
+            },
+            "element": {
+                "id": "wmmkfze40xp2"
+            },
+            "fromQuantity": 1,
+            "toQuantity": 5,
+            "toUnit": {
+              "id": "4y9dtthuen7z"
+            },
+            "transact": "Auto"
+        }
+    }, {
+        "name": "Conversion",
+        "note": "Ridly Ignite, Material to WH1",
+        "method": "POST",
+        "id": "7bymp5x5bj4t",
+        "data": {
+            "kind": {
+                "id": "y52uj6x49ham"
+            },
+            "element": {
+                "id": "qyimlv8irjei"
+            },
+            "fromQuantity": 1,
+            "toNode": {
+                "id": "c0f47f26zb60"
+            },
+            "toQuantity": 90,
+            "toUnit": {
+              "id": "4y9dtthuen7z"
+            },
+            "transact": "Auto"
+        }
+    }, {
+        "name": "Conversion",
+        "note": "Ridly Ignite, Overhead to WH1",
+        "method": "POST",
+        "id": "64me7to8fbxs",
+        "data": {
+            "kind": {
+                "id": "y52uj6x49ham"
+            },
+            "element": {
+                "id": "wmmkfze40xp2"
+            },
+            "fromQuantity": 1,
+            "toNode": {
+                "id": "c0f47f26zb60"
+            },
+            "toQuantity": 2,
+            "toUnit": {
+              "id": "4y9dtthuen7z"
+            },
+            "transact": "Auto"
         }
     }
 ]
