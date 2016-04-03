@@ -1,6 +1,0 @@
-/*global f */
-(function () {
-  "strict";
-
-
-}());
