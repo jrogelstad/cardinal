@@ -219,6 +219,11 @@
             "credit": {
                 "description": "Credit",
                 "type": "number"
+            },
+            "isPropagation": {
+                "description": "Parent propagation",
+                "type": "boolean",
+                "default": false
             }
         }
     },

@@ -137,19 +137,29 @@
           return;
         }
 
+        var distributions = [{
+            node: args.debitLocation,
+          credit: quantity
+        }, {
+          node: args.creditLocation,
+          debit: quantity
+        }];
+
+        parents.forEach(function (parent) {
+          distributions.push({
+              node: parent,
+              credit: quantity,
+              isPropagation: true
+          });
+        });
+
         n = 0;
         transaction = {
           kind: args.item,
           parent: {id: requestId},
           date: date,
           note: note,
-          distributions: [{
-            node: args.debitLocation,
-            credit: quantity
-          }, {
-            node: args.creditLocation,
-            debit: quantity
-          }]
+          distributions: distributions
         };
 
         datasource.request({
