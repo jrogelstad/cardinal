@@ -12,7 +12,7 @@
       var afterCreditLocationBalance, afterDebitLocationBalance,
         afterGet, creditLocationBalance, debitLocationBalance, transaction,
         postRequest, postTransaction, afterPostTransaction, afterPostBalance,
-        requestId, raiseError,
+        afterParent, getParent, propagate, requestId, raiseError,
         count = 5,
         POSTED = 3,
         data = obj.data.specs,
@@ -24,6 +24,7 @@
         date = data.date || f.now(),
         note = data.note,
         quantity = data.quantity,
+        parents = [],
         n = 0;
 
       afterGet = function (err, resp) {
@@ -34,6 +35,30 @@
         }
         args[this] = resp;
         if (n < count) { return; }
+        getParent(args.debitLocation);
+      };
+
+      afterParent = function (err, resp) {
+        try {
+          if (err) { throw err; }
+          parents.push(resp);
+          getParent(resp);
+        } catch (e) {
+          obj.callback(e);
+        }
+      };
+
+      getParent = function (resp) {
+        if (resp.parent) {
+          datasource.request({
+            method: "GET",
+            name: "Location",
+            client: obj.client,
+            callback: afterParent,
+            id: resp.parent.id
+          }, true);
+          return;
+        }
         postRequest();
       };
 
@@ -54,7 +79,7 @@
             balance: quantity
           };
         }
-        if (n === count) { postRequest(); }
+        if (n === count) { getParent(args.debitLocation); }
       };
 
       afterDebitLocationBalance = function (err, resp) {
@@ -69,12 +94,12 @@
         } else {
           debitLocationBalance = {
             id: f.createId(),
-            kind: args.sitem,
+            kind: args.item,
             node: args.debitLocation,
             balance: quantity * -1
           };
         }
-        if (n === count) { postRequest(); }
+        if (n === count) { getParent(args.debitLocation); }
       };
 
       postRequest = function () {
@@ -161,7 +186,11 @@
           return;
         }
         if (n === POSTED) {
-          obj.callback(raiseError, transaction);
+          if (raiseError) {
+            obj.callback(raiseError);
+            return;
+          }
+          propagate();
         }
       };
 
@@ -172,6 +201,63 @@
           afterPostBalance();
         } catch (e) {
           afterPostBalance(e);
+        }
+      };
+
+      propagate = function () {
+        try {
+          var parent, after;
+          if (!parents.length) {
+            obj.callback(null, transaction);
+            return;
+          }
+          parent = parents.pop();
+
+          after = function (err, resp) {
+            try {
+              var parentBalance;
+              if (err) { throw err; }
+              if (resp.length) {
+                parentBalance = resp[0];
+                parentBalance.balance = math.subtract(parentBalance.balance, quantity);
+              } else {
+                parentBalance = {
+                  id: f.createId(),
+                  kind: args.item,
+                  node: parent,
+                  balance: quantity * -1
+                };
+              }
+
+              datasource.request({
+                method: "POST",
+                name: "LocationBalance",
+                id: parentBalance.id,
+                client: obj.client,
+                callback: propagate,
+                data: parentBalance
+              }, true);
+            } catch (e) {
+              obj.callback(e);
+            }
+          };
+
+          datasource.request({
+            method: "GET",
+            name: "LocationBalance",
+            client: obj.client,
+            callback: after,
+            filter: {
+              criteria: [{
+                property: "kind",
+                value: args.item},{
+                property: "parent",
+                value: parent}]
+            }
+          }, true);
+
+        } catch (e) {
+          obj.callback(e);
         }
       };
 

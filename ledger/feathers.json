@@ -4,7 +4,7 @@
         "plural": "Currencies",
         "module": "Cardinal",
         "description": "Currency",
-        "inherits": "Kind",
+        "inherits": "Unit",
         "properties": {
             "symbol": {
                 "description": "Symbol",
