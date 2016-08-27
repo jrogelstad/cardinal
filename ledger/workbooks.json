@@ -9,41 +9,22 @@
     },
     "defaultConfig": [
       {
-        "name": "Contacts",
-        "feather": "Contact",
-        "form": "cvt2t75sl90s",
+        "name": "TrialBalance",
+        "feather": "TrialBalance",
+        "form": "llxahr1fgcsl",
         "list": {
           "columns": [{
-              "attr": "name"
+              "attr": "period.start"
             }, {
-              "attr": "email"
+              "attr": "period.end"
             }, {
-              "attr": "isActive"
+              "attr": "debits"
             }, {
-              "attr": "birthDate"
+              "attr": "debits"
             }, {
-              "attr": "workPhone"
-            }, {
-              "attr": "homePhone"
-            }, {
-              "attr": "creditScore"
-            }, {
-              "attr": "role"
-            }, {
-              "attr": "role.description"
-            }, {
-              "attr": "objectType"
+              "attr": "credits"
             }
-          ],
-          "filter": {
-            "criteria": [{
-              "property": "isActive",
-              "value": "true"
-            }],
-            "sort": [{
-              "property": "name"
-            }]
-          }
+          ]
         }
       },
       {

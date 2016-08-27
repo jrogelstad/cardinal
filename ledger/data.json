@@ -1,6 +1,41 @@
 [{
     "name": "Form",
     "method": "POST",
+    "id": "llxahr1fgcsl",
+    "data": {
+        "name": "Trial Balance",
+        "description": "Trial balance form",
+        "module": "Cardinal",
+        "feather": "TrialBalance",
+        "attrs": [{
+            "attr": "debits",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "credits",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "created",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "createdBy",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "updated",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "updatedBy",
+            "grid": 0,
+            "unit": 0
+        }]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
     "id": "yiabdmdcpj84",
     "data": {
         "name": "General Journal",
@@ -57,10 +92,10 @@
     "method": "POST",
     "id": "uqti737ax5o3",
     "data": {
-        "name": "GeneralJournal",
+        "name": "General Journal",
         "description": "General Journal relation wdiget",
         "isActive": true,
-        "feather": "General Journal",
+        "feather": "GeneralJournal",
         "valueProperty": "number",
         "labelProperty": "reference",
         "form": {
@@ -72,6 +107,53 @@
                 "attr": "reference"
             }, {
                 "attr": "folio"
+            }
+        ]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "1ow29jmd5ht2",
+    "data": {
+        "name": "Period",
+        "description": "Period form",
+        "module": "Cardinal",
+        "feather": "Period",
+        "attrs": [{
+            "attr": "name"
+        }, {
+            "attr": "start"
+        }, {
+            "attr": "end"
+        }, {
+            "attr": "created"
+        }, {
+            "attr": "createdBy"
+        }, {
+            "attr": "updated"
+        }, {
+            "attr": "updatedBy"
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "xb74g8prlq28",
+    "data": {
+        "name": "Period",
+        "description": "Period relation wdiget",
+        "isActive": true,
+        "feather": "Period",
+        "valueProperty": "name",
+        "form": {
+            "id": "1ow29jmd5ht2"
+        },
+        "searchColumns": [{
+                "attr": "name"
+            }, {
+                "attr": "start"
+            }, {
+                "attr": "end"
             }
         ]
     }
