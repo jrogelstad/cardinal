@@ -353,6 +353,50 @@
 }, {
     "name": "Form",
     "method": "POST",
+    "id": "l353cu26nozk",
+    "data": {
+        "name": "Kind",
+        "description": "Kind form",
+        "feather": "Kind",
+        "module": "Cardinal",
+        "attrs": [{
+            "attr": "name"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "created"
+        }, {
+            "attr": "createdBy"
+        }, {
+            "attr": "updated"
+        }, {
+            "attr": "updatedBy"
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "el92ht8yp1x4",
+    "data": {
+        "name": "Kind",
+        "description": "Kind relation wdiget",
+        "isActive": true,
+        "feather": "Kind",
+        "valueProperty": "code",
+        "labelProperty": "description",
+        "form": {
+            "id": "l353cu26nozk"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }
+        ]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
     "id": "o6qktnxyz4dk",
     "data": {
         "name": "MyContact",

@@ -1,0 +1,78 @@
+[{
+    "name": "Form",
+    "method": "POST",
+    "id": "yiabdmdcpj84",
+    "data": {
+        "name": "General Journal",
+        "description": "General Journal form",
+        "module": "Cardinal",
+        "feather": "GeneralJournal",
+        "tabs": [{
+            "name": "Distribution"
+        }, {
+            "name": "Audit"
+        }],
+        "attrs": [{
+            "attr": "number",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "kind",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "note",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "distributions",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "debit"
+            }, {
+                "attr": "credit"
+            }]
+        }, {
+            "attr": "created",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "createdBy",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "updated",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "updatedBy",
+            "grid": 2,
+            "unit": 1
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "uqti737ax5o3",
+    "data": {
+        "name": "GeneralJournal",
+        "description": "General Journal relation wdiget",
+        "isActive": true,
+        "feather": "General Journal",
+        "valueProperty": "number",
+        "labelProperty": "reference",
+        "form": {
+            "id": "yiabdmdcpj84"
+        },
+        "searchColumns": [{
+                "attr": "number"
+            }, {
+                "attr": "reference"
+            }, {
+                "attr": "folio"
+            }
+        ]
+    }
+}]

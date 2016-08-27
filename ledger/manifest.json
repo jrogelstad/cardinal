@@ -39,6 +39,10 @@
         {
             "type": "workbook",
             "path": "workbooks.json"
+        },
+        {
+            "type": "batch",
+            "path": "data.json"
         }
     ]
 }
