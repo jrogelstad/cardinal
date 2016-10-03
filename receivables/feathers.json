@@ -51,14 +51,14 @@
     {
         "name": "AccountsReceivable",
         "plural": "AccountsReceivable",
-        "module": "Cardinal",
+        "module": "Receivables",
         "description": "Accounts receivable balance",
         "inherits": "Node"
     },
     {
         "name": "AccountsReceivableJournal",
         "plural": "AccountsReceivableJournal",
-        "module": "Cardinal",
+        "module": "Receivables",
         "description": "Accounts receivable journal",
         "inherits": "Journal",
         "properties": {

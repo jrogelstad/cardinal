@@ -2,7 +2,7 @@
     {
         "name": "Opportunity",
         "plural": "Opportunities",
-        "module": "Cardinal",
+        "module": "CRM",
         "description": "Opportunity",
         "inherits": "Task",
         "properties": {
@@ -42,7 +42,7 @@
     {
         "name": "OpportunityTask",
         "description": "Opportunity Task",
-        "module": "Cardinal",
+        "module": "CRM",
         "inherits": "Activity",
         "properties": {
             "parent": {
@@ -57,7 +57,7 @@
     {
         "name": "Lead",
         "plural": "Leads",
-        "module": "Cardinal",
+        "module": "CRM",
         "description": "A sales contact",
         "inherits": "Contact",
         "properties": {

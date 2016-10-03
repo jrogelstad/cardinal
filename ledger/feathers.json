@@ -2,7 +2,7 @@
     {
         "name": "Currency",
         "plural": "Currencies",
-        "module": "Cardinal",
+        "module": "Ledger",
         "description": "Currency",
         "inherits": "Unit",
         "properties": {
@@ -19,21 +19,21 @@
     {
         "name": "LedgerAccount",
         "plural": "LedgerAccounts",
-        "module": "Cardinal",
+        "module": "Ledger",
         "description": "Ledger accounts",
         "inherits": "Node"
     },
     {
         "name": "FiscalYear",
         "plural": "FiscalYears",
-        "module": "Cardinal",
+        "module": "Ledger",
         "description": "Fiscal year periods",
         "inherits": "Period"
     },
     {
         "name": "FiscalPeriod",
         "plural": "FiscalPeriods",
-        "module": "Cardinal",
+        "module": "Ledger",
         "description": "Fiscal periods",
         "inherits": "Period",
         "properties": {
@@ -50,7 +50,7 @@
     {
         "name": "Journal",
         "plural": "Journals",
-        "module": "Cardinal",
+        "module": "Ledger",
         "description": "Abstract journal entries",
         "inherits": "Request",
         "properties": {
@@ -78,14 +78,14 @@
     {
         "name": "GeneralJournal",
         "plural": "GeneralJournals",
-        "module": "Cardinal",
+        "module": "Ledger",
         "description": "General journal entries",
         "inherits": "Journal"
     },
     {
         "name": "GeneralLedger",
         "plural": "GeneralLedger",
-        "module": "Cardinal",
+        "module": "Ledger",
         "description": "General ledger entries",
         "inherits": "Transaction",
         "properties": {
@@ -107,7 +107,7 @@
         "name": "TrialBalance",
         "plural": "TrialBalances",
         "inherits": "NodePeriodBalance",
-        "module": "Cardinal",
+        "module": "Ledger",
         "description": "Amount of currency in ledger accounts per period",
         "properties": {
             "previous": {

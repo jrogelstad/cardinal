@@ -2,7 +2,7 @@
     {
         "name": "Kind",
         "plural": "Kinds",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Base class for physical types",
         "properties": {
             "code": {
@@ -43,7 +43,7 @@
     {
         "name": "Container",
         "plural": "Containers",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Instance of a kind",
         "properties": {
             "code": {
@@ -73,7 +73,7 @@
     {
         "name": "Node",
         "plural": "Nodes",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Base class for hiearchy support",
         "inherits": "Container",
         "properties": {
@@ -90,7 +90,7 @@
     {
         "name": "NodeBalance",
         "plural": "NodeBalances",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Base class for hiearchy support",
         "inherits": "Node",
         "properties": {
@@ -114,7 +114,7 @@
     {
         "name": "Period",
         "plural": "Periods",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Base class for bucketed time period support",
         "properties": {
             "name": {
@@ -146,7 +146,7 @@
     {
         "name": "NodePeriodBalance",
         "plural": "NodePeriodBalance",
-        "module": "Cardinal",
+        "module": "Common",
         "inherits": "NodeBalance",
         "description": "Quantity of objects in node per period",
         "properties": {
@@ -170,7 +170,7 @@
     {
         "name": "Action",
         "plural": "Action",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Abstract action",
         "properties": {
             "kind": {
@@ -195,7 +195,7 @@
     {
         "name": "Distribution",
         "plural": "Distributions",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Action distribution",
         "properties": {
             "parent": {
@@ -230,7 +230,7 @@
     {
         "name": "Request",
         "plural": "Requests",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Action request",
         "inherits": "Action",
         "properties": {
@@ -244,7 +244,7 @@
     {
         "name": "Transaction",
         "plural": "Transactions",
-        "module": "Cardinal",
+        "module": "Common",
         "description": "Action history",
         "inherits": "Action",
         "properties": {

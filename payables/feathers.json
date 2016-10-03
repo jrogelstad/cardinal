@@ -2,7 +2,7 @@
     {
         "name": "Vendor",
         "plural": "Vendors",
-        "module": "Cardinal",
+        "module": "Payables",
         "description": "Vendor",
         "inherits": "Kind",
         "properties": {
@@ -47,14 +47,14 @@
     {
         "name": "AccountsPayable",
         "plural": "AccountsPayable",
-        "module": "Cardinal",
+        "module": "Payables",
         "description": "Accounts payable subledger",
         "inherits": "Node"
     },
     {
         "name": "AccountsPayableJournal",
         "plural": "AccountsPayableJournal",
-        "module": "Cardinal",
+        "module": "Payables",
         "description": "Accounts payable journal",
         "inherits": "Journal",
         "properties": {

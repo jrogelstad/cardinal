@@ -277,7 +277,7 @@
         "name": "Address",
         "description": "Address form",
         "feather": "Address",
-        "module": "Cardinal",
+        "module": "Common",
         "attrs": [{
             "attr": "line1"
         }, {
