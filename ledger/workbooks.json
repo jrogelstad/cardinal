@@ -9,6 +9,21 @@
     },
     "defaultConfig": [
       {
+        "name": "Accounts",
+        "feather": "LedgerAccount",
+        "form": "rbzal45p805f",
+        "list": {
+          "columns": [{
+              "attr": "code"
+            }, {
+              "attr": "description"
+            }, {
+              "attr": "note"
+            }
+          ]
+        }
+      },
+      {
         "name": "TrialBalance",
         "feather": "TrialBalance",
         "form": "llxahr1fgcsl",

@@ -87,6 +87,29 @@
             "unit": 1
         }]
     }
+},{
+    "name": "Form",
+    "method": "POST",
+    "id": "rbzal45p805f",
+    "data": {
+        "name": "Account",
+        "description": "Ledger account form",
+        "module": "Ledger",
+        "feather": "LedgerAccount",
+        "attrs": [{
+            "attr": "code",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "description",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "note",
+            "grid": 0,
+            "unit": 0
+        }]
+    }
 }, {
     "name": "RelationWidget",
     "method": "POST",

@@ -39,7 +39,7 @@
         "properties": {
             "parent": {
                 "description": "Fiscal year",
-                "required": true,
+                "isRequired": true,
                 "type": {
                     "relation": "FiscalYear",
                     "properties": ["name", "start", "end"]
