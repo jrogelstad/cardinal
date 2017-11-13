@@ -38,10 +38,10 @@
     "method": "POST",
     "id": "yiabdmdcpj84",
     "data": {
-        "name": "General Journal",
-        "description": "General Journal form",
+        "name": "General Ledger Transaction",
+        "description": "General Ledger Transaction form",
         "module": "Ledger",
-        "feather": "GeneralJournal",
+        "feather": "GeneralLedgerTransaction",
         "tabs": [{
             "name": "Distribution"
         }, {

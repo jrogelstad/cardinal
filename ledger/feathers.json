@@ -83,8 +83,8 @@
         "inherits": "Journal"
     },
     {
-        "name": "GeneralLedger",
-        "plural": "GeneralLedger",
+        "name": "GeneralLedgerTransaction",
+        "plural": "GeneralLedgerTransactions",
         "module": "Ledger",
         "description": "General ledger entries",
         "inherits": "Transaction",

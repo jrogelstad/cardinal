@@ -42,7 +42,7 @@
       },
       {
         "name": "GeneralLedger",
-        "feather": "GeneralLedger",
+        "feather": "GeneralLedgerTransaction",
         "form": "yiabdmdcpj84",
         "list": {
           "columns": [{

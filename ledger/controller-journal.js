@@ -386,7 +386,7 @@
           // Post journal
           datasource.request({
             method: "POST",
-            name: "GeneralLedger",
+            name: "GeneralLedgerTransaction",
             client: client,
             callback: afterPostTransaction,
             data: transaction      
