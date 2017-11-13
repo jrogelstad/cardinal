@@ -87,7 +87,71 @@
             "unit": 1
         }]
     }
-},{
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "1z598b1g0p4m",
+    "data": {
+        "name": "General Journal",
+        "description": "General Journal form",
+        "module": "Ledger",
+        "feather": "GeneralJournal",
+        "tabs": [{
+            "name": "Distribution"
+        }, {
+            "name": "Audit"
+        }],
+        "attrs": [{
+            "attr": "number",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "kind",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "note",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "isPosted",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "distributions",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "node.code",
+                "label": "Account"
+            }, {
+                "attr": "node.description",
+                "label": "Description"
+            }, {
+                "attr": "debit"
+            }, {
+                "attr": "credit"
+            }]
+        }, {
+            "attr": "created",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "createdBy",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "updated",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "updatedBy",
+            "grid": 2,
+            "unit": 1
+        }]
+    }
+}, {
     "name": "Form",
     "method": "POST",
     "id": "rbzal45p805f",

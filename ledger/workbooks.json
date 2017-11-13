@@ -59,6 +59,25 @@
             }
           ]
         }
+      },
+      {
+        "name": "GeneralJournal",
+        "feather": "GeneralJournal",
+        "form": "1z598b1g0p4m",
+        "list": {
+          "columns": [{
+              "attr": "number"
+            }, {
+              "attr": "date"
+            }, {
+              "attr": "created"
+            }, {
+              "attr": "createdBy"
+            }, {
+              "attr": "isPosted"
+            }
+          ]
+        }
       }
     ]
   }

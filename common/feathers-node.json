@@ -237,7 +237,8 @@
             "isPosted": {
                 "description": "Transaction is complete",
                 "type": "boolean",
-                "default": false
+                "default": false,
+                "isReadOnly": true
             }
         }
     },
