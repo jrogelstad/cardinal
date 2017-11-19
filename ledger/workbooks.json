@@ -27,6 +27,7 @@
         "name": "TrialBalance",
         "feather": "TrialBalance",
         "form": "llxahr1fgcsl",
+        "isEditModeEnabled": false,
         "list": {
           "columns": [{
               "attr": "period.start"
@@ -44,6 +45,7 @@
         "name": "GeneralLedger",
         "feather": "GeneralLedgerTransaction",
         "form": "yiabdmdcpj84",
+        "isEditModeEnabled": false,
         "list": {
           "columns": [{
               "attr": "number"
@@ -64,6 +66,7 @@
         "name": "GeneralJournal",
         "feather": "GeneralJournal",
         "form": "1z598b1g0p4m",
+        "isEditModeEnabled": false,
         "list": {
           "columns": [{
               "attr": "number"
