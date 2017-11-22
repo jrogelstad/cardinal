@@ -107,6 +107,7 @@
             "unit": 0
         }, {
             "attr": "kind",
+            "label": "Currency",
             "grid": 0,
             "unit": 0
         }, {

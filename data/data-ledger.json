@@ -787,5 +787,57 @@
               "id": "4kxxfqwmocc6"
             }
         }
+    }, {
+        "method": "POST",
+        "name": "GeneralJournal",
+        "id": "g6m2a2vajq5",
+        "data": {
+            "kind": {
+                "id": "4y9dtthuen7z"
+            },
+            "date": "2016-02-27",
+            "note": "Test Posting2",
+            "distributions": [
+            {
+                "node": {
+                    "id": "sv2c4nheni07"
+                },
+                "debit": 100
+            },
+            {
+                "node": {
+                    "id": "bkxy7neljlp6"
+                },
+                "credit": 25
+            },
+            {
+                "node": {
+                    "id": "d7zf6nqrg9pr"
+                },
+                "credit": 75
+            }]
+        },
+        "user": "postgres"
+    }, {
+        "method": "POST",
+        "name": "postJournal",
+        "user": "postgres",
+        "data": {
+            "id": "g6m2a2vajq5"
+        }
+    }, {
+        "method": "PUT",
+        "name": "saveSettings",
+        "user": "postgres",
+        "data": {
+            "name": "ledger",
+            "data": {
+                "defaultCurrency": {
+                    "id":"4y9dtthuen7z",
+                    "code":"USD",
+                    "description":"U.S. Dollar"
+                }
+            }
+        }
     }
 ]

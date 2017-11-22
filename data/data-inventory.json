@@ -591,5 +591,21 @@
             },
             "transact": "Auto"
         }
+    }, {
+        "method": "POST",
+        "name": "adjust",
+        "user": "postgres",
+        "data": {
+            "specs": {
+                "item": {
+                    "id": "y52uj6x49ham"
+                },
+                "location": {
+                    "id": "hhxvcdowwn38"
+                },
+                "quantity": 15,
+                "comments": "Test API"
+            }
+        }
     }
 ]

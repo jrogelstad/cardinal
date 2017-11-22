@@ -178,7 +178,8 @@
                 "type": {
                     "relation": "Kind",
                     "properties": ["code", "description"]
-                }
+                },
+                "isRequired": true
             },
             "date": {
                 "description": "Action date",
