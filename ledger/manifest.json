@@ -8,6 +8,10 @@
             "path": "feathers.json"
         },
         {
+            "type": "settings",
+            "path": "settings.json"
+        },
+        {
             "type": "module",
             "path": "module.js"
         },

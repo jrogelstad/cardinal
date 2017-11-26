@@ -1,0 +1,14 @@
+{
+    "name": "ledger",
+    "module": "Ledger",
+    "description": "Ledger settings",
+    "properties": {
+        "defaultCurrency": {
+            "description": "Default system currency",
+            "type": {
+                "relation": "Currency",
+                "properties": ["code", "description"]
+            }
+        }
+    }
+}
