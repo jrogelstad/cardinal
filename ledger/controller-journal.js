@@ -342,7 +342,7 @@
                   property: "parent.id",
                   operator: "IN",
                   value: balanceSheetIds},{
-                  property: "period.start",
+                  property: "period.end",
                   operator: ">=",
                   value: date},{
                   property: "period.isClosed",
@@ -360,6 +360,8 @@
       };
 
       afterTrialBalance = function (err, resp) {
+        var hasError = false;
+
         try {
           n += 1;
 
@@ -410,12 +412,15 @@
 
             // Iterate through trial balances for account and parents
             ids.forEach(function (id) {
+              if (hasError) { return; }
+
               var update,
                 balances = trialBalances.filter(function (row) {
                   return row.parent.id === id;
                 });
 
               if (!balances.length) {
+                hasError = true;
                 count = 2;
                 afterPostBalance("No open trial balance for account " + dist.node.code + ".");
                 return;
@@ -438,6 +443,9 @@
               balances.forEach(update);
             });
           });
+
+          // If error, forget about it
+          if (hasError) { return; }
 
           trialBalances.forEach(function (balance) {
             datasource.request({
