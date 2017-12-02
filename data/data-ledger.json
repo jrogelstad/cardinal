@@ -512,12 +512,28 @@
     {
         "name": "LedgerAccount",
         "method": "POST",
-        "id": "m5gpa3yggtok",
+        "id": "he0fhtf7atl6",
         "data": {
             "parent": {
                 "id": "vwr8hwut060u"
             },
             "code": "290",
+            "description": "Retained earnings",
+            "note": "Net earnings not paid out as dividends, but retained by the company to be reinvested in its core business, or to pay debt.",
+            "kind": {
+              "id": "oj7j21mxes06"
+            }
+        }
+    },
+    {
+        "name": "LedgerAccount",
+        "method": "POST",
+        "id": "m5gpa3yggtok",
+        "data": {
+            "parent": {
+                "id": "vwr8hwut060u"
+            },
+            "code": "291",
             "description": "Owner's Capital",
             "note": "Amount owner invested in the company (through cash or other assets) plus earnings of the company not withdrawn by the owner.",
             "kind": {
@@ -530,7 +546,7 @@
         "method": "POST",
         "id": "mai7o26oigc4",
         "data": {
-            "code": "295",
+            "code": "292",
             "description": "Owner's Drawing",
             "note": "Amount owner of he sole proprietership has withdrawn for personal use during the current accounting year. At the end of the year, the amount in this account will be transferred to Owner's Capital (290).",
             "kind": {
@@ -788,6 +804,25 @@
             }
         }
     }, {
+        "method": "PUT",
+        "name": "saveSettings",
+        "user": "postgres",
+        "data": {
+            "name": "ledgerSettings",
+            "data": {
+                "defaultCurrency": {
+                    "id":"4y9dtthuen7z",
+                    "code":"USD",
+                    "description":"U.S. Dollar"
+                },
+                "retainedEarnings": {
+                    "id":"he0fhtf7atl6",
+                    "code":"290",
+                    "description":"Retained earnings"
+                }
+            }
+        }
+    }, {
         "method": "POST",
         "name": "GeneralJournal",
         "id": "g6m2a2vajq5",
@@ -795,7 +830,7 @@
             "kind": {
                 "id": "4y9dtthuen7z"
             },
-            "date": "2016-02-27",
+            "date": "2017-02-27",
             "note": "Test Posting2",
             "distributions": [
             {
@@ -823,21 +858,8 @@
         "name": "postJournal",
         "user": "postgres",
         "data": {
-            "id": "g6m2a2vajq5"
-        }
-    }, {
-        "method": "PUT",
-        "name": "saveSettings",
-        "user": "postgres",
-        "data": {
-            "name": "ledger",
-            "data": {
-                "defaultCurrency": {
-                    "id":"4y9dtthuen7z",
-                    "code":"USD",
-                    "description":"U.S. Dollar"
-                }
-            }
+            "id": "g6m2a2vajq5",
+            "date": "2017-11-23"
         }
     }
 ]

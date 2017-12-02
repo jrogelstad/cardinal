@@ -1,5 +1,5 @@
 {
-    "name": "ledger",
+    "name": "ledgerSettings",
     "module": "Ledger",
     "description": "Ledger settings",
     "properties": {
@@ -7,6 +7,13 @@
             "description": "Default system currency",
             "type": {
                 "relation": "Currency",
+                "properties": ["code", "description"]
+            }
+        },
+        "retainedEarnings": {
+            "description": "Retained earnings account",
+            "type": {
+                "relation": "LedgerAccount",
                 "properties": ["code", "description"]
             }
         }

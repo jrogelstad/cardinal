@@ -2,6 +2,7 @@
   {
     "name": "Ledger",
     "module": "Ledger",
+    "settings": "ledger",
     "launchConfig": {
       "icon": "book",
       "color": "white",
