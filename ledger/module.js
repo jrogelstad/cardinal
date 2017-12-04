@@ -24,11 +24,8 @@
     list = require("list"),
     models = catalog.register("models"),
     feather = catalog.getFeather("GeneralJournal"),
-    settings = catalog.settings(),
-    ledgerSettings;
+    ledgerSettings = models.ledgerSettings();
 
-  // Fetch ledger settings
-  ledgerSettings = settings("ledger");
   ledgerSettings.fetch();
 
   // Create general journal model
@@ -37,7 +34,7 @@
 
     // Set default currency on 'kind' attribute
     var defaultCurrency = function () {
-      return ledgerSettings.data().defaultCurrency;
+      return ledgerSettings.data.defaultCurrency();
     };
     feather.properties.kind.default = defaultCurrency;
 

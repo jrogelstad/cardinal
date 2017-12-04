@@ -176,6 +176,29 @@
         }]
     }
 }, {
+    "name": "Form",
+    "method": "POST",
+    "id": "5kn0ocip2zqt",
+    "data": {
+        "name": "Currency",
+        "description": "Currency form",
+        "module": "Ledger",
+        "feather": "Currency",
+        "attrs": [{
+            "attr": "code",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "description",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "note",
+            "grid": 0,
+            "unit": 0
+        }]
+    }
+}, {
     "name": "RelationWidget",
     "method": "POST",
     "id": "uqti737ax5o3",
@@ -242,6 +265,50 @@
                 "attr": "start"
             }, {
                 "attr": "end"
+            }
+        ]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "6s2kh7qaixab",
+    "data": {
+        "name": "Currency",
+        "description": "Currency relation wdiget",
+        "isActive": true,
+        "feather": "Currency",
+        "valueProperty": "code",
+        "form": {
+            "id": "5kn0ocip2zqt"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }, {
+                "attr": "note"
+            }
+        ]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "s5gqybvksczh",
+    "data": {
+        "name": "LedgerAccount",
+        "description": "Ledger account relation wdiget",
+        "isActive": true,
+        "feather": "LedgerAccount",
+        "valueProperty": "code",
+        "form": {
+            "id": "rbzal45p805f"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }, {
+                "attr": "note"
             }
         ]
     }

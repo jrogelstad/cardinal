@@ -2,11 +2,11 @@
   {
     "name": "Ledger",
     "module": "Ledger",
-    "settings": "ledger",
     "launchConfig": {
       "icon": "book",
       "color": "white",
-      "backgroundColor": "orange"
+      "backgroundColor": "orange",
+      "settings": "ledgerSettings"
     },
     "defaultConfig": [
       {
