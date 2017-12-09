@@ -26,21 +26,21 @@
     feather = catalog.getFeather("GeneralJournal"),
     ledgerSettings = models.ledgerSettings();
 
-  ledgerSettings.fetch();
+  ledgerSettings.fetch().then(function () {
 
-  // Create general journal model
-  models.generalJournal = function (data) {
-    data = data || {};
+    // Create general journal model
+    models.generalJournal = function (data) {
+      data = data || {};
 
-    // Set default currency on 'kind' attribute
-    var defaultCurrency = function () {
-      return ledgerSettings.data.defaultCurrency();
-    };
-    feather.properties.kind.default = defaultCurrency;
+      // Set default currency on 'kind' (currency) attribute
+      feather.properties.kind.default = function () {
+        return ledgerSettings.data.defaultCurrency.toJSON();
+      };
 
-    // Return instantiated model
-  	return model(data, feather);
-	};
+      // Return instantiated model
+    	return model(data, feather);
+  	};
 
-  models.generalJournal.list = list("GeneralJournal");
+    models.generalJournal.list = list("GeneralJournal");
+  });
 }());

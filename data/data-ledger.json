@@ -811,10 +811,12 @@
             "name": "ledgerSettings",
             "data": {
                 "defaultCurrency": {
+                    "id":"4y9dtthuen7z",
                     "code":"USD",
                     "description":"U.S. Dollar"
                 },
                 "retainedEarnings": {
+                    "id":"he0fhtf7atl6",
                     "code":"290",
                     "description":"Retained earnings"
                 }
