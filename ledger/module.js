@@ -31,14 +31,22 @@
     // Create general journal model
     models.generalJournal = function (data) {
       data = data || {};
+      var that;
 
       // Set default currency on 'kind' (currency) attribute
       feather.properties.kind.default = function () {
         return ledgerSettings.data.defaultCurrency.toJSON();
       };
 
+      that = model(data, feather);
+
+      // Can't delete posted general journals
+      that.onCanDelete(function () {
+        return !that.data.isPosted();
+      });
+
       // Return instantiated model
-    	return model(data, feather);
+    	return that;
   	};
 
     models.generalJournal.list = list("GeneralJournal");
