@@ -278,6 +278,7 @@
         "isActive": true,
         "feather": "Currency",
         "valueProperty": "code",
+        "labelProperty": "description",
         "form": {
             "id": "5kn0ocip2zqt"
         },
@@ -300,6 +301,7 @@
         "isActive": true,
         "feather": "LedgerAccount",
         "valueProperty": "code",
+        "labelProperty": "description",
         "form": {
             "id": "rbzal45p805f"
         },
