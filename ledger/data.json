@@ -124,7 +124,7 @@
             "grid": 1,
             "unit": 0,
             "columns": [{
-                "attr": "node.code",
+                "attr": "node",
                 "label": "Account"
             }, {
                 "attr": "node.description",

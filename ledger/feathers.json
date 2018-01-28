@@ -52,7 +52,6 @@
         "plural": "Journals",
         "module": "Ledger",
         "description": "Abstract journal entries",
-        "inherits": "Request",
         "properties": {
             "number": {
                 "description": "Journal number",
@@ -65,6 +64,30 @@
                 },
                 "isUnique": true
             },
+            "kind": {
+                "description": "Object action is taken on",
+                "type": {
+                    "relation": "Currency",
+                    "properties": ["code", "description"]
+                },
+                "isRequired": true
+            },
+            "date": {
+                "description": "Action date",
+                "type": "string",
+                "format": "date",
+                "default": "today()"
+            },
+            "note": {
+                "description": "Note",
+                "type": "string"
+            },
+            "isPosted": {
+                "description": "Transaction is complete",
+                "type": "boolean",
+                "default": false,
+                "isReadOnly": true
+            },
             "reference": {
                 "description": "Reference to source document",
                 "type": "string"
@@ -72,6 +95,41 @@
             "folio": {
                 "description": "Reference to ledger posting",
                 "type": "string"
+            }
+        }
+    },
+    {
+        "name": "JournalDistribution",
+        "plural": "JournalDistributions",
+        "module": "Ledger",
+        "description": "Journal distribution",
+        "properties": {
+            "parent": {
+                "description": "Parent",
+                "type": {
+                    "relation": "Journal",
+                    "childOf": "distributions"
+                }
+            },
+            "node": {
+                "description": "Ledger Account",
+                "type": {
+                    "relation": "LedgerAccount",
+                    "properties": ["code", "description", "kind"]
+                }
+            },
+            "debit": {
+                "description": "Debit",
+                "type": "number"
+            },
+            "credit": {
+                "description": "Credit",
+                "type": "number"
+            },
+            "isPropagation": {
+                "description": "Parent propagation",
+                "type": "boolean",
+                "default": false
             }
         }
     },
