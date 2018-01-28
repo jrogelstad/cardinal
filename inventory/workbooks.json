@@ -1,6 +1,6 @@
 [
   {
-    "name": "Inventory",
+    "name": "Stock",
     "module": "Inventory",
     "launchConfig": {
       "icon": "cube",

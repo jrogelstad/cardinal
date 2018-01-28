@@ -5,7 +5,7 @@
     "data": {
         "name": "Sales Order",
         "description": "Sales order form",
-        "module": "Cardinal",
+        "module": "Sales",
         "feather": "SalesOrder",
         "tabs": [{
             "name": "Lines"

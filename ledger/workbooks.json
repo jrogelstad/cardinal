@@ -1,9 +1,9 @@
 [
   {
-    "name": "Ledger",
+    "name": "Balance",
     "module": "Ledger",
     "launchConfig": {
-      "icon": "book",
+      "icon": "balance-scale",
       "color": "white",
       "backgroundColor": "orange",
       "settings": "ledgerSettings"

@@ -1,6 +1,6 @@
 [
   {
-    "name": "BackOffice",
+    "name": "Manage",
     "module": "Common",
     "launchConfig": {
       "icon": "users",

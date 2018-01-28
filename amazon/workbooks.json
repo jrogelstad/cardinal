@@ -1,6 +1,6 @@
 [
   {
-    "name": "Amazon",
+    "name": "Catalog",
     "module": "Amazon",
     "launchConfig": {
       "icon": "amazon",

@@ -1,6 +1,6 @@
 [
   {
-    "name": "Purchasing",
+    "name": "Buy",
     "module": "Purchasing",
     "launchConfig": {
       "icon": "shopping-cart",

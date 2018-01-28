@@ -1,6 +1,6 @@
 [
   {
-    "name": "Receivables",
+    "name": "Collect",
     "module": "Receivables",
     "launchConfig": {
       "icon": "sign-in",

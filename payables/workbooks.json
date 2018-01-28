@@ -1,6 +1,6 @@
 [
   {
-    "name": "Payables",
+    "name": "Pay",
     "module": "Payables",
     "launchConfig": {
       "icon": "sign-out",
