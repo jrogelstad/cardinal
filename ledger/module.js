@@ -23,7 +23,9 @@
     model = require("model"),
     list = require("list"),
     models = catalog.register("models"),
-    feather = catalog.getFeather("GeneralJournal"),
+    gjFeather = catalog.getFeather("GeneralJournal"),
+    gjdFeather = catalog.getFeather("JournalDistribution"),
+    math = require("mathjs"),
     ledgerSettings = models.ledgerSettings();
 
   ledgerSettings.fetch().then(function () {
@@ -34,15 +36,43 @@
       var that;
 
       // Set default currency on 'kind' (currency) attribute
-      feather.properties.kind.default = function () {
+      gjFeather.properties.kind.default = function () {
         return ledgerSettings.data.defaultCurrency.toJSON();
       };
 
-      that = model(data, feather);
+      that = model(data, gjFeather);
 
       // Can't delete posted general journals
       that.onCanDelete(function () {
         return !that.data.isPosted();
+      });
+
+      that.onValidate(function () {
+        var dist = that.data.distributions().toJSON(),
+          sumcheck = math.bignumber(0);
+
+        if (!dist.length) {
+          throw "There are no distributions.";
+        }
+
+        dist.forEach(function (item) {
+          if (item.debit) {
+            sumcheck = math.subtract(
+              sumcheck, 
+              math.bignumber(item.debit)
+            );
+          } else {
+            sumcheck = math.add(
+              sumcheck, 
+              math.bignumber(item.credit)
+            );
+          }
+        });
+
+        if (math.number(sumcheck) !== 0) {
+          throw "Journal entries must sum to zero.";
+        }
+
       });
 
       // Return instantiated model
@@ -50,5 +80,40 @@
   	};
 
     models.generalJournal.list = list("GeneralJournal");
+
+    // Create general journal distribution model
+    models.journalDistribution = function (data) {
+      data = data || {};
+      var that = model(data, gjdFeather);
+
+      that.onChange("debit", function (prop) {
+        var value = prop();
+
+        if (value < 0) {
+          prop.newValue(0);
+        } else if (value) {
+          that.data.credit(0);
+        }
+      });
+
+      that.onChange("credit", function (prop) {
+        var value = prop();
+
+        if (value < 0) {
+          prop.newValue(0);
+        } else if (value) {
+          that.data.debit(0);
+        }
+      });
+
+      that.onValidate(function () {
+        if (that.data.debit() - 0 === 0 &&
+            that.data.credit() - 0 === 0) {
+          throw "Debit or credit must be positive on every distribution.";
+        }
+      });
+
+      return that;
+    };
   });
 }());

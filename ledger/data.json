@@ -107,7 +107,6 @@
             "unit": 0
         }, {
             "attr": "kind",
-            "label": "Currency",
             "grid": 0,
             "unit": 0
         }, {
@@ -124,8 +123,7 @@
             "grid": 1,
             "unit": 0,
             "columns": [{
-                "attr": "node",
-                "label": "Account"
+                "attr": "node"
             }, {
                 "attr": "node.description",
                 "label": "Description"

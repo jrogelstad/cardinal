@@ -79,6 +79,8 @@
               "attr": "createdBy"
             }, {
               "attr": "isPosted"
+            }, {
+              "attr": "kind"
             }
           ]
         }

@@ -70,7 +70,8 @@
                     "relation": "Currency",
                     "properties": ["code", "description"]
                 },
-                "isRequired": true
+                "isRequired": true,
+                "alias": "currency"
             },
             "date": {
                 "description": "Action date",
@@ -116,7 +117,9 @@
                 "type": {
                     "relation": "LedgerAccount",
                     "properties": ["code", "description", "kind"]
-                }
+                },
+                "alias": "account",
+                "isRequired": true
             },
             "debit": {
                 "description": "Debit",
