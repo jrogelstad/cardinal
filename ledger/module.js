@@ -22,98 +22,134 @@
   var catalog = require("catalog"),
     model = require("model"),
     list = require("list"),
+    dataSource = require("datasource"),
     models = catalog.register("models"),
     gjFeather = catalog.getFeather("GeneralJournal"),
     gjdFeather = catalog.getFeather("JournalDistribution"),
     math = require("mathjs"),
     ledgerSettings = models.ledgerSettings();
 
-  ledgerSettings.fetch().then(function () {
+  // Create general journal model
+  models.generalJournal = function (data) {
+    data = data || {};
+    var that;
 
-    // Create general journal model
-    models.generalJournal = function (data) {
-      data = data || {};
-      var that;
+    // Set default currency on 'kind' (currency) attribute
+    gjFeather.properties.kind.default = ledgerSettings.data.defaultCurrency.toJSON;
 
-      // Set default currency on 'kind' (currency) attribute
-      gjFeather.properties.kind.default = function () {
-        return ledgerSettings.data.defaultCurrency.toJSON();
+    that = model(data, gjFeather);
+
+    // Can't delete posted general journals
+    that.onCanDelete(function () {
+      return !that.data.isPosted();
+    });
+
+    that.onValidate(function () {
+      var dist = that.data.distributions().toJSON(),
+        sumcheck = math.bignumber(0);
+
+      if (!dist.length) {
+        throw "There are no distributions.";
+      }
+
+      dist.forEach(function (item) {
+        if (item.debit) {
+          sumcheck = math.subtract(
+            sumcheck, 
+            math.bignumber(item.debit)
+          );
+        } else {
+          sumcheck = math.add(
+            sumcheck, 
+            math.bignumber(item.credit)
+          );
+        }
+      });
+
+      if (math.number(sumcheck) !== 0) {
+        throw "Journal entries must sum to zero.";
+      }
+
+    });
+
+    // Return instantiated model
+  	return that;
+	};
+
+  // Static functions
+  models.generalJournal.list = list("GeneralJournal");
+  models.generalJournal.delete = function () {
+    var that = this;
+
+    if (!that.selections.length) { return; }
+
+    this.dialog.message("Are you sure you want to delete the selected journals?");
+    this.dialog.onOk(function () {
+      that.selections.forEach(function (model) {
+        return model.delete(true);
+      });
+    });
+    this.dialog.show();
+  };
+  models.generalJournal.postAll = function () {
+      this.dialog.message("This function is not implemented yet.");
+      this.dialog.show();
+  };
+
+  models.generalJournal.post = function () {
+    var ids = this.selections.map(function (model) {
+        return model.id();
+      }),
+      payload = {
+        method: "POST", 
+        path: "ledger/post-journal",
+        data: ids
+      },
+      callback = function (result) {
+        console.log("result->", result);
       };
 
-      that = model(data, gjFeather);
+    if (!ids.length) { return; }
 
-      // Can't delete posted general journals
-      that.onCanDelete(function () {
-        return !that.data.isPosted();
-      });
+    this.dialog.message("Are you sure you want to post the selected journals?");
+    this.dialog.onOk(function () {
+      dataSource.request(payload).then(callback);
+    });
+    this.dialog.show();
+  };
 
-      that.onValidate(function () {
-        var dist = that.data.distributions().toJSON(),
-          sumcheck = math.bignumber(0);
+  // Create general journal distribution model
+  models.journalDistribution = function (data) {
+    data = data || {};
+    var that = model(data, gjdFeather);
 
-        if (!dist.length) {
-          throw "There are no distributions.";
-        }
+    that.onChange("debit", function (prop) {
+      var value = prop();
 
-        dist.forEach(function (item) {
-          if (item.debit) {
-            sumcheck = math.subtract(
-              sumcheck, 
-              math.bignumber(item.debit)
-            );
-          } else {
-            sumcheck = math.add(
-              sumcheck, 
-              math.bignumber(item.credit)
-            );
-          }
-        });
+      if (value < 0) {
+        prop.newValue(0);
+      } else if (value) {
+        that.data.credit(0);
+      }
+    });
 
-        if (math.number(sumcheck) !== 0) {
-          throw "Journal entries must sum to zero.";
-        }
+    that.onChange("credit", function (prop) {
+      var value = prop();
 
-      });
+      if (value < 0) {
+        prop.newValue(0);
+      } else if (value) {
+        that.data.debit(0);
+      }
+    });
 
-      // Return instantiated model
-    	return that;
-  	};
+    that.onValidate(function () {
+      if (that.data.debit() - 0 === 0 &&
+          that.data.credit() - 0 === 0) {
+        throw "Debit or credit must be positive on every distribution.";
+      }
+    });
 
-    models.generalJournal.list = list("GeneralJournal");
-
-    // Create general journal distribution model
-    models.journalDistribution = function (data) {
-      data = data || {};
-      var that = model(data, gjdFeather);
-
-      that.onChange("debit", function (prop) {
-        var value = prop();
-
-        if (value < 0) {
-          prop.newValue(0);
-        } else if (value) {
-          that.data.credit(0);
-        }
-      });
-
-      that.onChange("credit", function (prop) {
-        var value = prop();
-
-        if (value < 0) {
-          prop.newValue(0);
-        } else if (value) {
-          that.data.debit(0);
-        }
-      });
-
-      that.onValidate(function () {
-        if (that.data.debit() - 0 === 0 &&
-            that.data.credit() - 0 === 0) {
-          throw "Debit or credit must be positive on every distribution.";
-        }
-      });
-
-      return that;
-    };
-  });
+    return that;
+  };
 }());

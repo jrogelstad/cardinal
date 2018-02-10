@@ -68,6 +68,27 @@
         "feather": "GeneralJournal",
         "form": "1z598b1g0p4m",
         "isEditModeEnabled": false,
+        "actions": [{
+          "name": "Delete",
+          "title": "Delete selected journal",
+          "icon": "remove",
+          "method": "delete",
+          "isSelectedOnly": true
+        }, {
+          "name": "Post",
+          "title": "Post selected unposted journals to the ledger",
+          "icon": "thumbtack",
+          "method": "post",
+          "isSelectedOnly": true,
+          "authorization": "PostGeneralJournals"
+        }, {
+          "name": "Post all",
+          "title": "Post all unposted journals to the ledger",
+          "icon": "thumbtack",
+          "method": "postAll",
+          "authorization": "PostGeneralJournals",
+          "hasSeparator": true
+        }],
         "list": {
           "columns": [{
               "attr": "number"
