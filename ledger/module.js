@@ -97,25 +97,36 @@
   };
 
   models.generalJournal.post = function () {
-    var ids = this.selections.map(function (model) {
+    var dialog = this.dialog,
+      ids = this.selections.map(function (model) {
         return model.id();
       }),
       payload = {
         method: "POST", 
-        path: "ledger/post-journal",
-        data: ids
+        path: "/ledger/post-journals",
+        data: {ids: ids}
       },
-      callback = function (result) {
+      callback = function (result, err) {
         console.log("result->", result);
+        console.log("error", err);
+      },
+      error = function (err) {
+        dialog.message(err.message);
+        dialog.icon("exclamation-triangle");
+        dialog.onOk(undefined);
+        dialog.show();
       };
 
     if (!ids.length) { return; }
 
-    this.dialog.message("Are you sure you want to post the selected journals?");
-    this.dialog.onOk(function () {
-      dataSource.request(payload).then(callback);
+    dialog.message("Are you sure you want to post the selected journals?");
+    dialog.icon("question-circle");
+    dialog.onOk(function () {
+      dataSource.request(payload)
+                .then(callback)
+                .catch(error);
     });
-    this.dialog.show();
+    dialog.show();
   };
 
   // Create general journal distribution model
