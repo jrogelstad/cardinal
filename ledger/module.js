@@ -96,9 +96,11 @@
       this.dialog.show();
   };
 
-  models.generalJournal.post = function () {
-    var dialog = this.dialog,
-      ids = this.selections.map(function (model) {
+  models.generalJournal.post = function (selections, dialog) {
+    var unposted = selections.filter(function(model) {
+        return !model.data.isPosted();
+      }),
+      ids = unposted.map(function (model) {
         return model.id();
       }),
       payload = {
@@ -106,9 +108,10 @@
         path: "/ledger/post-journals",
         data: {ids: ids}
       },
-      callback = function (result, err) {
-        console.log("result->", result);
-        console.log("error", err);
+      callback = function () {
+        unposted.forEach(function(model) {
+          model.fetch();
+        });
       },
       error = function (err) {
         dialog.message(err.message);
