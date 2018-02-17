@@ -78,11 +78,6 @@
 
   // Static functions
   models.generalJournal.list = list("GeneralJournal");
-  models.generalJournal.postAll = function () {
-      this.dialog.message("This function is not implemented yet.");
-      this.dialog.show();
-  };
-
   models.generalJournal.post = function (selections, dialog) {
     var unposted = selections.filter(function(model) {
         return !model.data.isPosted();
@@ -117,6 +112,15 @@
                 .catch(error);
     });
     dialog.show();
+  };
+  models.generalJournal.postAll = function () {
+    this.dialog.message("This function is not implemented yet.");
+    this.dialog.show();
+  };
+  models.generalJournal.postCheck = function (selections) {
+    return selections.some(function(model) {
+      return !model.data.isPosted();
+    });
   };
 
   // Create general journal distribution model

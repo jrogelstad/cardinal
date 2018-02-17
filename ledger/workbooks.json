@@ -73,8 +73,8 @@
           "title": "Post selected unposted journals to the ledger",
           "icon": "thumbtack",
           "method": "post",
-          "isSelectedOnly": true,
-          "authorization": "PostGeneralJournals"
+          "authorization": "PostGeneralJournals",
+          "validator": "postCheck"
         }, {
           "name": "Post all",
           "title": "Post all unposted journals to the ledger",
