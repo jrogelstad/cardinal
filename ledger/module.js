@@ -78,19 +78,6 @@
 
   // Static functions
   models.generalJournal.list = list("GeneralJournal");
-  models.generalJournal.delete = function () {
-    var that = this;
-
-    if (!that.selections.length) { return; }
-
-    this.dialog.message("Are you sure you want to delete the selected journals?");
-    this.dialog.onOk(function () {
-      that.selections.forEach(function (model) {
-        return model.delete(true);
-      });
-    });
-    this.dialog.show();
-  };
   models.generalJournal.postAll = function () {
       this.dialog.message("This function is not implemented yet.");
       this.dialog.show();
