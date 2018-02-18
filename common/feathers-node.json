@@ -84,6 +84,20 @@
                     "properties": ["code", "description", "kind"],
                     "isRequired": true
                 }
+            },            
+            "isUsed": {
+                "description": "Indicates node has transactions",
+                "type": "boolean",
+                "isReadOnly": true,
+                "isRequired": true,
+                "default": false
+            },
+            "isParent": {
+                "description": "Indicates node is a parent of other nodes",
+                "type": "boolean",
+                "isReadOnly": true,
+                "isRequired": true,
+                "default": false
             }
         }
     },

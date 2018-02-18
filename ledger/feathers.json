@@ -17,11 +17,34 @@
         }
     },
     {
+        "name": "LedgerAccountType",
+        "plural": "LedgerAccountsType",
+        "module": "Ledger",
+        "description": "Ledger account types",
+        "inherits": "Kind"
+    },
+    {
         "name": "LedgerAccount",
         "plural": "LedgerAccounts",
         "module": "Ledger",
         "description": "Ledger accounts",
-        "inherits": "Node"
+        "inherits": "Node",
+        "overloads": {
+            "kind": {
+                "asType": {
+                    "relation": "LedgerAccountType",
+                    "properties": ["code", "description", "type"]
+                },
+                "alias": "type"
+            },
+            "parent": {
+                "asType": {
+                    "relation": "LedgerAccount",
+                    "properties": ["code", "description", "kind"],
+                    "isRequired": true
+                }
+            }
+        }
     },
     {
         "name": "FiscalYear",

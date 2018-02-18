@@ -185,7 +185,7 @@
             "end": "2018-12-31"
         }
     }, {
-        "name": "Kind",
+        "name": "LedgerAccountType",
         "method": "POST",
         "id": "4kxxfqwmocc6",
         "data": {
@@ -194,7 +194,7 @@
             "type": "Revenue"
         }
     }, {
-        "name": "Kind",
+        "name": "LedgerAccountType",
         "method": "POST",
         "id": "a3c77kewproj",
         "data": {
@@ -203,7 +203,7 @@
             "type": "Expense"
         }
     }, {
-        "name": "Kind",
+        "name": "LedgerAccountType",
         "method": "POST",
         "id": "qw7nu8ljza2o",
         "data": {
@@ -212,7 +212,7 @@
             "type": "liability"
         }
     }, {
-        "name": "Kind",
+        "name": "LedgerAccountType",
         "method": "POST",
         "id": "oj7j21mxes06",
         "data": {
@@ -221,7 +221,7 @@
             "type": "Equity"
         }
     }, {
-        "name": "Kind",
+        "name": "LedgerAccountType",
         "method": "POST",
         "id": "pnzo0mpf0bqs",
         "data": {
