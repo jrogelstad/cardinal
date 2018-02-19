@@ -31,17 +31,16 @@
         "inherits": "Node",
         "overloads": {
             "kind": {
-                "asType": {
+                "type": {
                     "relation": "LedgerAccountType",
                     "properties": ["code", "description", "type"]
                 },
                 "alias": "type"
             },
             "parent": {
-                "asType": {
+                "type": {
                     "relation": "LedgerAccount",
-                    "properties": ["code", "description", "kind"],
-                    "isRequired": true
+                    "properties": ["code", "description", "kind"]
                 }
             }
         }
@@ -75,6 +74,7 @@
         "plural": "Journals",
         "module": "Ledger",
         "description": "Abstract journal entries",
+        "inherits": "Request",
         "properties": {
             "number": {
                 "description": "Journal number",
@@ -87,31 +87,6 @@
                 },
                 "isUnique": true
             },
-            "kind": {
-                "description": "Object action is taken on",
-                "type": {
-                    "relation": "Currency",
-                    "properties": ["code", "description"]
-                },
-                "isRequired": true,
-                "alias": "currency"
-            },
-            "date": {
-                "description": "Action date",
-                "type": "string",
-                "format": "date",
-                "default": "today()"
-            },
-            "note": {
-                "description": "Note",
-                "type": "string"
-            },
-            "isPosted": {
-                "description": "Transaction is complete",
-                "type": "boolean",
-                "default": false,
-                "isReadOnly": true
-            },
             "reference": {
                 "description": "Reference to source document",
                 "type": "string"
@@ -120,42 +95,23 @@
                 "description": "Reference to ledger posting",
                 "type": "string"
             }
-        }
-    },
-    {
-        "name": "JournalDistribution",
-        "plural": "JournalDistributions",
-        "module": "Ledger",
-        "description": "Journal distribution",
-        "properties": {
-            "parent": {
-                "description": "Parent",
+        },
+        "overloads": {
+            "kind": {
+                "alias": "currency",
                 "type": {
-                    "relation": "Journal",
-                    "childOf": "distributions"
+                    "relation": "Currency",
+                    "properties": ["code", "description"]
                 }
             },
-            "node": {
-                "description": "Ledger Account",
-                "type": {
-                    "relation": "LedgerAccount",
-                    "properties": ["code", "description", "kind"]
-                },
-                "alias": "account",
-                "isRequired": true
-            },
-            "debit": {
-                "description": "Debit",
-                "type": "number"
-            },
-            "credit": {
-                "description": "Credit",
-                "type": "number"
-            },
-            "isPropagation": {
-                "description": "Parent propagation",
-                "type": "boolean",
-                "default": false
+            "distributions": {
+                "node": {
+                    "alias": "account",
+                    "type": {
+                        "relation": "LedgerAccount",
+                        "properties": ["code", "description", "kind"]
+                    }
+                }
             }
         }
     },
