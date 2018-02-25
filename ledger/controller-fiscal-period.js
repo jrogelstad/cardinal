@@ -2,44 +2,17 @@
 (function (datasource) {
   "strict";
 
-  var f = require("./common/core"),
-    jsonpatch = require("fast-json-patch");
-
-  var doUpsertFiscalPeriod = function (obj) {
-    var afterPrevPeriod, afterUpsertPeriod, proposed, actual,
-      afterFiscalPeriod, afterCurrency, afterLedgerAccount,
+  var doAfterUpsertFiscalPeriod = function (obj) {
+    var afterPrevPeriod, 
+      afterCurrency, afterLedgerAccount,
       account, prevPeriod, createTrialBalance, done,
-      raiseError, accounts, currency, result, prevTrialBalance,
+      raiseError, accounts, currency, prevTrialBalance,
       client = obj.client,
       callback = obj.callback,
       fiscalPeriod = obj.data,
-      id = fiscalPeriod.id || f.createId(),
       n = 0,
-      count = 4,
+      count = 3,
       found = false;
-
-    afterFiscalPeriod = function (err, resp) {
-      n += 1;
-      if (err) {
-        done(err);
-        return;
-      }
-
-      count += 1;
-      if (resp) { found = true; }
-
-      datasource.request({
-        method: "POST",
-        name: "doUpsert",
-        id: id,
-        data: {
-          name: "FiscalPeriod",
-          data: fiscalPeriod
-        },
-        client: client,
-        callback: afterUpsertPeriod
-      }, true);
-    };
 
     afterPrevPeriod = function (err, resp) {
       n += 1;
@@ -109,23 +82,6 @@
       if (n === count) { createTrialBalance(); }
     };
 
-    afterUpsertPeriod = function (err, resp) {
-      n += 1;
-      if (err) {
-        done(err);
-        return;
-      }
-
-      // Update fiscal period for later reference
-      jsonpatch.apply(fiscalPeriod, resp);
-
-      // Resolve changes from original request
-      jsonpatch.apply(actual, resp);
-      result = jsonpatch.compare(proposed, actual);
-
-      if (n === count) { createTrialBalance(); }
-    };
-
     createTrialBalance = function (err) {
       var prev, balance;
 
@@ -169,38 +125,11 @@
           callback(raiseError);
           return;
         }
-        callback(null, result);
+        callback(null, obj);
       }
     };
 
     // Real work starts here
-    // These attributes _must_ be default
-    proposed = f.copy(fiscalPeriod);
-    delete fiscalPeriod.isFrozen;
-    delete fiscalPeriod.isClosed;
-    actual = f.copy(fiscalPeriod);
-
-    if (!fiscalPeriod.id) {
-      datasource.request({
-        method: "POST",
-        name: "doInsert",
-        data: {
-          name: "FiscalPeriod",
-          data: fiscalPeriod
-        },
-        client: client,
-        callback: afterUpsertPeriod
-      }, true);
-    } else {
-      datasource.request({
-        method: "GET",
-        name: "FiscalPeriod",
-        client: client,
-        callback: afterFiscalPeriod,
-        id: id
-      }, true);
-    }
-
     datasource.request({
       method: "GET",
       name: "Currency",
@@ -241,65 +170,8 @@
     }, true);
   };
 
-  datasource.registerFunction("POST", "FiscalPeriod", doUpsertFiscalPeriod);
-
-  var doUpdateFiscalPeriod = function (obj) {
-    var afterFiscalPeriod, afterUpdate, proposed, patches, actual, original,
-      client = obj.client,
-      callback = obj.callback,
-      fiscalPeriod = obj.data,
-      id = fiscalPeriod.id;
-
-    afterFiscalPeriod = function (err, resp) {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      original = f.copy(resp);
-      jsonpatch.apply(resp, obj);
-      proposed = f.copy(resp);
-      resp.start = original.start;
-      resp.end = original.end;
-      resp.isClosed = original.isClosed;
-      resp.isFrozen = original.isFrozen;
-      actual = f.copy(resp);
-      patches = jsonpatch.compare(original, resp);
-
-      datasource.request({
-        method: "POST",
-        name: "doUpdate",
-        client: client,
-        callback: afterUpdate,
-        id: id,
-        data: {
-          name: "FiscalPeriod",
-          data: patches
-        }
-      });
-    };
-
-    afterUpdate = function (err, resp) {
-      if (err)  {
-        callback(err);
-        return;
-      }
-
-      jsonpatch.apply(actual, resp);
-      patches = jsonpatch.compare(proposed, actual);
-      callback(null, patches);
-    };
-
-    datasource.request({
-      method: "GET",
-      name: "FiscalPeriod",
-      client: client,
-      callback: afterFiscalPeriod,
-      id: id
-    }, true);
-  };
-
-  datasource.registerFunction("PATCH", "FiscalPeriod", doUpdateFiscalPeriod);
+  datasource.registerFunction("POST", "FiscalPeriod", doAfterUpsertFiscalPeriod,
+    datasource.TRIGGER_AFTER);
 
   /**
     Close a fiscal period.

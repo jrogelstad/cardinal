@@ -31,11 +31,6 @@
             "path": "controller-journal.js"
         },
         {
-            "type": "controller",
-            "name": "LedgerGeneralJournal",
-            "path": "controller-general-journal.js"
-        },
-        {
             "type": "route",
             "name": "Ledger",
             "path": "route-ledger.js"

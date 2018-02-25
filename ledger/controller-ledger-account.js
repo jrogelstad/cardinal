@@ -2,55 +2,16 @@
 (function (datasource) {
   "strict";
 
-  var f = require("./common/core"),
-    jsonpatch = require("fast-json-patch");
-
-  var doUpsertLedgerAccount = function (obj) {
-    var afterAccount, afterUpsertAccount, afterFiscalPeriod, afterCurrency,
-      createTrialBalance, done, raiseError, periods, prev, currency, result,
+  var doAfterUpsertLedgerAccount = function (obj) {
+    var afterFiscalPeriod, afterCurrency,
+      createTrialBalance, done, raiseError, periods, prev, currency,
       client = obj.client,
       callback = obj.callback,
       account = obj.data,
-      id = account.id || f.createId(),
       period = null,
       n = 0,
-      count = 3,
+      count = 2,
       found = false;
-
-    afterAccount = function (err, resp) {
-      n += 1;
-      if (err) {
-        done(err);
-        return;
-      }
-
-      count += 1;
-      if (resp) { found = true; }
-
-      datasource.request({
-        method: "POST",
-        name: "doUpsert",
-        id: id,
-        data: {
-          name: "LedgerAccount",
-          data: account
-        },
-        client: client,
-        callback: afterUpsertAccount
-      }, true);
-    };
-
-    afterUpsertAccount = function (err, resp) {
-      n += 1;
-      if (err) {
-        done(err);
-        return;
-      }
-
-      jsonpatch.apply(account, resp);
-      result = resp;
-      if (n === count) { createTrialBalance(); }
-    };
 
     afterCurrency = function (err, resp) {
       n += 1;
@@ -114,32 +75,11 @@
           callback(raiseError);
           return;
         }
-        callback(null, result);
+        callback(null, obj);
       }
     };
 
     // Real work starts here
-    if (!account.id) {
-      datasource.request({
-        method: "POST",
-        name: "doInsert",
-        data: {
-          name: "LedgerAccount",
-          data: account
-        },
-        client: client,
-        callback: afterUpsertAccount
-      }, true);
-    } else {
-      datasource.request({
-        method: "GET",
-        name: "LedgerAccount",
-        client: client,
-        callback: afterAccount,
-        id: id
-      }, true);
-    }
-
     datasource.request({
       method: "GET",
       name: "Currency",
@@ -164,6 +104,7 @@
     }, true);
   };
 
-  datasource.registerFunction("POST", "LedgerAccount", doUpsertLedgerAccount);
+  datasource.registerFunction("POST", "LedgerAccount",
+    doAfterUpsertLedgerAccount, datasource.TRIGGER_AFTER);
 
 }(datasource));

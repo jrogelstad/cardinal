@@ -9,6 +9,71 @@
 
   math.config({ precision: 6});
 
+  /** 
+    Journal insert handler
+  */
+  var doInsertJournal = function (obj) {
+    var afterCheckJournal,
+      client = obj.client,
+      journal = obj.data;
+
+    afterCheckJournal = function (err) {
+      if (err) {
+        obj.callback(err);
+        return;
+      }
+
+      obj.callback(null, obj);
+    };
+
+    // Validate
+    datasource.request({
+      method: "POST",
+      name: "checkJournal",
+      client: client,
+      callback: afterCheckJournal,
+      data: {
+        journal: journal
+      }
+    }, true);
+  };
+
+  datasource.registerFunction("POST", "Journal", doInsertJournal,
+    datasource.TRIGGER_BEFORE);
+
+  /** 
+    Journal delete handler
+  */
+  var doDeleteJournal = function (obj) {
+    var afterJournal;
+
+    afterJournal = function (err, resp) {
+      try {
+        if (err) { throw err; }
+        if (resp.isPosted) {
+          throw "Can not delete a posted journal.";
+        }
+
+        // Done
+        obj.callback(null, obj);
+      } catch (e) {
+        obj.callback(e);
+      }
+    };
+
+    // Validate
+    datasource.request({
+      method: "GET",
+      name: "Journal",
+      id: obj.id,
+      client: obj.client,
+      callback: afterJournal
+    }, true);
+  };
+
+  datasource.registerFunction("DELETE", "Journal", doDeleteJournal,
+    datasource.TRIGGER_BEFORE);
+
   /**
     Check whether a passed journal is valid or not.
     Raises error if not.
@@ -56,7 +121,7 @@
       }
 
       // Everything passed
-      obj.callback();
+      obj.callback(true);
     } catch (e) {
       obj.callback(e);
     }
