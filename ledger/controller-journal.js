@@ -121,7 +121,7 @@
       }
 
       // Everything passed
-      obj.callback(true);
+      obj.callback(null, true);
     } catch (e) {
       obj.callback(e);
     }

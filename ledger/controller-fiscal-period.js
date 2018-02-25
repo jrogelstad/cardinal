@@ -336,6 +336,7 @@
     }, true);
   };
 
-  datasource.registerFunction("DELETE", "FiscalPeriod", doDeleteFiscalPeriod);
+  datasource.registerFunction("DELETE", "FiscalPeriod", doDeleteFiscalPeriod,
+    datasource.TRIGGER_AFTER);
 
 }(datasource));
