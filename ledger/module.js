@@ -24,20 +24,20 @@
     list = require("list"),
     dataSource = require("datasource"),
     models = catalog.register("models"),
-    gjFeather = catalog.getFeather("GeneralJournal"),
-    gjdFeather = catalog.getFeather("JournalDistribution"),
+    jFeather = catalog.getFeather("GeneralJournal"),
+    jdFeather = catalog.getFeather("JournalDistribution"),
     math = require("mathjs"),
     ledgerSettings = models.ledgerSettings();
 
   // Create general journal model
-  models.generalJournal = function (data) {
+  models.journal = function (data) {
     data = data || {};
     var that;
 
     // Set default currency on 'kind' (currency) attribute
-    gjFeather.properties.kind.default = ledgerSettings.data.defaultCurrency.toJSON;
+    jFeather.properties.kind.default = ledgerSettings.data.defaultCurrency.toJSON;
 
-    that = model(data, gjFeather);
+    that = model(data, jFeather);
 
     // Can't delete posted general journals
     that.onCanDelete(function () {
@@ -77,8 +77,8 @@
 	};
 
   // Static functions
-  models.generalJournal.list = list("GeneralJournal");
-  models.generalJournal.post = function (selections, dialog) {
+  models.journal.list = list("Journal");
+  models.journal.post = function (selections, dialog) {
     var unposted = selections.filter(function(model) {
         return !model.data.isPosted();
       }),
@@ -126,7 +126,7 @@
   // Create general journal distribution model
   models.journalDistribution = function (data) {
     data = data || {};
-    var that = model(data, gjdFeather);
+    var that = model(data, jdFeather);
 
     that.onChange("debit", function (prop) {
       var value = prop();

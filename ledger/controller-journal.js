@@ -92,6 +92,10 @@
         throw "Distributions must be a valid array.";
       }
 
+      if (!data.distributions.length) {
+        throw "Distributions must not be empty.";
+      }
+
       // Check distributions
       data.distributions.forEach(function (dist) {
         if (dist.debit) {
