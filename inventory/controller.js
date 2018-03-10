@@ -41,6 +41,7 @@
           function callback (resp) {
             return new Promise (function (resolve, reject) {
               parents.push(resp);
+
               getParent(resp)
                 .then(resolve)
                 .catch(reject);
@@ -49,8 +50,8 @@
 
           if (resp.parent) {
             datasource.request(payload, true)
-            .then(callback)
-            .catch(reject);
+              .then(callback)
+              .catch(reject);
             return;
           }
 
@@ -352,8 +353,8 @@
       // Real work starts here
       Promise.all([
           getItem,
-          getDebitLocation.then(afterGet.bind("debitLocation")),
-          getCreditLocation.then(afterGet.bind("creditLocation")),
+          getDebitLocation,
+          getCreditLocation,
           getDebitLocationBalance,
           getCreditLocationBalance
         ])
