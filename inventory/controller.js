@@ -59,100 +59,123 @@
       }
 
       function postRequest () {
-        requestId = f.createId();
-        datasource.request({
-          method: "POST",
-          name: "Request",
-          client: obj.client,
-          isPosted: true,
-          data: {
-            id: requestId,
-            kind: args.item,
-            date: date,
-            note: note,
-            distributions: [{
-              node: args.debitLocation,
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "POST",
+              name: "Request",
+              client: obj.client,
+              isPosted: true,
+              data: {
+                id: requestId,
+                kind: args.item,
+                date: date,
+                note: note,
+                distributions: [{
+                  node: args.debitLocation,
+                  credit: quantity
+                }, {
+                  node: args.creditLocation,
+                  debit: quantity
+                }]
+              }       
+            };
+
+          requestId = f.createId();
+
+          datasource.request(payload, true)
+            .then(resolve)
+            .catch(reject);
+        });
+      }
+
+      function postTransaction () {
+        return new Promise (function (resolve, reject) {
+          var postDebitLocation, postCreditLocation,
+            distributions = [{
+                node: args.debitLocation,
               credit: quantity
             }, {
               node: args.creditLocation,
               debit: quantity
-            }]
-          }       
-        }, true);
-      }
+            }];
 
-      function postTransaction () {
-        var distributions = [{
-            node: args.debitLocation,
-          credit: quantity
-        }, {
-          node: args.creditLocation,
-          debit: quantity
-        }];
-
-        parents.forEach(function (parent) {
-          distributions.push({
-              node: parent,
-              credit: quantity,
-              isPropagation: true
+          parents.forEach(function (parent) {
+            distributions.push({
+                node: parent,
+                credit: quantity,
+                isPropagation: true
+            });
           });
+
+          transaction = {
+            kind: args.item,
+            parent: {id: requestId},
+            date: date,
+            note: note,
+            distributions: distributions
+          };
+
+          function postInventory () {
+            return new Promise (function (resolve, reject) {
+              var payload = {
+                method: "POST",
+                name: "InventoryTransaction",
+                client: obj.client,
+                data: transaction      
+              };
+
+              function callback (resp) {
+                jsonpatch.apply(resp, transaction);
+                resolve();
+              }
+
+              datasource.request(payload, true)
+                .then(callback)
+                .catch(reject);
+            });
+          }
+
+          postDebitLocation = datasource.request.bind(null, {
+            method: "POST",
+            name: "LocationBalance",
+            id: debitLocationBalance.id,
+            client: obj.client,
+            data: debitLocationBalance
+          }, true);
+
+          postCreditLocation = datasource.request.bind(null, {
+            method: "POST",
+            name: "LocationBalance",
+            id: creditLocationBalance.id,
+            client: obj.client,
+            data: creditLocationBalance
+          }, true);
+
+          Promise.all([
+            postInventory,
+            postDebitLocation,
+            postCreditLocation
+          ])
+          .then(resolve)
+          .catch(reject);
         });
-
-        transaction = {
-          kind: args.item,
-          parent: {id: requestId},
-          date: date,
-          note: note,
-          distributions: distributions
-        };
-
-        datasource.request({
-          method: "POST",
-          name: "InventoryTransaction",
-          client: obj.client,
-          callback: afterPostTransaction,
-          data: transaction      
-        }, true);
-
-        datasource.request({
-          method: "POST",
-          name: "LocationBalance",
-          id: debitLocationBalance.id,
-          client: obj.client,
-          data: debitLocationBalance
-        }, true);
-        
-        datasource.request({
-          method: "POST",
-          name: "LocationBalance",
-          id: creditLocationBalance.id,
-          client: obj.client,
-          data: creditLocationBalance
-        }, true);
-      }
-
-      function afterPostTransaction (resp) {
-        try {
-          jsonpatch.apply(resp, transaction);
-          afterPostBalance();
-        } catch (e) {
-          afterPostBalance(e);
-        }
       }
 
       function propagate () {
-        try {
-          var parent, after;
+        return new Promise (function (resolve, reject) {
+          var parent, payload;
+
           if (!parents.length) {
-            obj.callback(null, transaction);
+            resolve(transaction);
             return;
           }
+
           parent = parents.pop();
 
-          after = function (err, resp) {
-            try {
-              var parentBalance;
-              if (err) { throw err; }
+          function callback (resp) {
+            return new Promise (function (resolve, reject) {
+              var parentBalance, cpayload;
+
               if (resp.length) {
                 parentBalance = resp[0];
                 parentBalance.balance = math.subtract(parentBalance.balance, quantity);
@@ -165,24 +188,26 @@
                 };
               }
 
-              datasource.request({
+              cpayload = {
                 method: "POST",
                 name: "LocationBalance",
                 id: parentBalance.id,
                 client: obj.client,
-                callback: propagate,
                 data: parentBalance
-              }, true);
-            } catch (e) {
-              obj.callback(e);
-            }
-          };
+              };
 
-          datasource.request({
+              Promise.resolve()
+                .then(datasource.request.bind(null, cpayload, true))
+                .then(propagate)
+                .then(resolve)
+                .catch(reject);
+            });
+          }
+
+          payload = {
             method: "GET",
             name: "LocationBalance",
             client: obj.client,
-            callback: after,
             filter: {
               criteria: [{
                 property: "kind",
@@ -190,11 +215,12 @@
                 property: "parent",
                 value: parent}]
             }
-          }, true);
+          };
 
-        } catch (e) {
-          reject(e);
-        }
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
       }
 
       function getItem () {
@@ -323,25 +349,20 @@
         });
       }
 
-      try {
-        // Real work starts here
-        Promise.resolve()
-          .all([
-            getItem,
-            getDebitLocation.then(afterGet.bind("debitLocation")),
-            getCreditLocation.then(afterGet.bind("creditLocation")),
-            getDebitLocationBalance,
-            getCreditLocationBalance
-          ])
-          .then(getParent.bind(null, args.debitLocation))
-          .then(postRequest)
-          .then(postTransaction)
-          .then(propagate)
-          .then(resolve)
-          .catch(reject);
-      } catch (e) {
-        reject(e);
-      }
+      // Real work starts here
+      Promise.all([
+          getItem,
+          getDebitLocation.then(afterGet.bind("debitLocation")),
+          getCreditLocation.then(afterGet.bind("creditLocation")),
+          getDebitLocationBalance,
+          getCreditLocationBalance
+        ])
+        .then(getParent.bind(null, args.debitLocation))
+        .then(postRequest)
+        .then(postTransaction)
+        .then(propagate)
+        .then(resolve)
+        .catch(reject);
     });
   };
 
