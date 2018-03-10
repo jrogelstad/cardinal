@@ -3,171 +3,180 @@
   "strict";
 
   var doAfterUpsertFiscalPeriod = function (obj) {
-    var afterPrevPeriod, 
-      afterCurrency, afterLedgerAccount,
-      account, prevPeriod, createTrialBalance, done,
-      raiseError, accounts, currency, prevTrialBalance,
-      client = obj.client,
-      callback = obj.callback,
-      fiscalPeriod = obj.data,
-      n = 0,
-      count = 3,
-      found = false;
+    return new Promise (function (resolve, reject) {
+      var account, prevPeriod,
+        accounts, currency, prevTrialBalance,
+        fiscalPeriod = obj.data;
 
-    afterPrevPeriod = function (err, resp) {
-      n += 1;
-      if (err) {
-        done(err);
-        return;
-      }
+      function createTrialBalance () {
+        return new Promise (function (resolve, reject) {
+          var prev, balance, payload;
 
-      count += 1;
-
-      var afterTrialBalance = function (err, resp) {
-          n += 1;
-          if (err) {
-            done(err);
+          if (!accounts.length) {
+            resolve();
             return;
           }
-          prevTrialBalance = resp;
-          if (n === count) { createTrialBalance(); }
-        };
 
-      if (resp.length) {
-        prevPeriod = resp[0];
-        if ((new Date(fiscalPeriod.start) - new Date(prevPeriod.end)) / 86400000 !== 1) {
-          done("Period end may not overlap or leave gaps with the previous period.");
-        }
+          account = accounts.shift();
+          prev = prevTrialBalance.find(function (row) {
+            return row.parent.id === account.id;
+          });
+          balance = prev ? prev.balance : 0;
+ 
+          payload = {
+            method: "POST",
+            name: "TrialBalance",
+            client: obj.client,
+            callback: createTrialBalance,
+            data: {
+              kind: currency,
+              parent: account,
+              period: fiscalPeriod,
+              previous: prevPeriod,
+              balance: balance
+            }     
+          };
+
+          // Recursively work through accounts
+          datasource.request(payload, true)
+            .then(createTrialBalance)
+            .catch(reject);
+        });
       }
 
-      datasource.request({
-        method: "GET",
-        name: "TrialBalance",
-        client: client,
-        callback: afterTrialBalance,
-        filter: {
-          criteria: [{
-            property: "kind.type",
-            operator: "IN",
-            value: ["Asset", "Liability", "Equity"]
-          }, {
-            property: "period",
-            value: prevPeriod
-          }]
-        }
-      }, true);
-    };
+      function getCurrency () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "Currency",
+              client: obj.client,
+              filter: {
+                criteria: [{
+                  property: "isBase",
+                  value: true
+                }]
+              }
+            };
 
-    afterCurrency = function (err, resp) {
-      n += 1;
-      if (err) {
-        done(err);
-        return;
-      }
-      if (!resp.length) {
-        done("No base currency found");
-      }
-      currency = resp[0];
-      if (n === count) { createTrialBalance(); }
-    };
+          function callback (resp) {
+            if (!resp.length) {
+              currency = resp[0];
+              resolve();
+            } else {
+              reject("No base currency found");
+            }
+          }
 
-    afterLedgerAccount = function (err, resp) {
-      n += 1;
-      if (err) {
-        done(err);
-        return;
+          datasource.request( payload, true)
+            .then(callback) 
+            .catch(reject);
+        });
       }
 
-      accounts = resp;
-      if (n === count) { createTrialBalance(); }
-    };
+      function getFiscalPeriod () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+            method: "GET",
+            name: "FiscalPeriod",
+            client: obj.client,
+            filter: {
+              criteria: [{
+                property: "end",
+                operator: "<",
+                value: fiscalPeriod.end
+              }],
+              sort: [{
+                property: "end",
+                order: "DESC"
+              }],
+              limit: 1
+            }
+          };
 
-    createTrialBalance = function (err) {
-      var prev, balance;
+          function afterFiscalPeriod (resp) {
+            return new Promise (function (resolve, reject) {
+              if (resp.length) {
+                prevPeriod = resp[0];
+                if ((new Date(fiscalPeriod.start) - new Date(prevPeriod.end)) / 86400000 !== 1) {
+                  reject("Period end may not overlap or leave gaps with the previous period.");
+                  return;
+                }
+              } else {
+                reject("No previous period found.");
+                return;
+              }
 
-      if (err) {
-        done(err);
-        return;
+              resolve();
+            });
+          }
+
+          function getTrialBalance () {
+            return new Promise (function (resolve, reject) {
+              var cpayload = {
+                  method: "GET",
+                  name: "TrialBalance",
+                  client: obj.client,
+                  filter: {
+                    criteria: [{
+                      property: "kind.type",
+                      operator: "IN",
+                      value: ["Asset", "Liability", "Equity"]
+                    }, {
+                      property: "period",
+                      value: prevPeriod
+                    }]
+                  }
+                };
+
+              datasource.request(cpayload, true)
+                .then(resolve)
+                .catch(reject);
+            });
+          }
+
+          function afterTrialBalance (resp) {
+              prevTrialBalance = resp;
+              resolve();
+          }
+
+          Promise.resolve()
+            .then(datasource.request.bind(null, payload, true))
+            .then(afterFiscalPeriod)
+            .then(getTrialBalance)
+            .then(afterTrialBalance)
+            .catch(reject);
+        });
       }
 
-      if (raiseError || found || !accounts.length) {
-        done();
-        return;
+      function  getLedgerAccount () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "LedgerAccount",
+              client: obj.client
+            };
+
+          function callback (resp) {
+            accounts = resp;
+            resolve();
+          }
+
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
       }
 
-      account = accounts.shift();
-      prev = prevTrialBalance.find(function (row) {
-        return row.parent.id === account.id;
-      });
-      balance = prev ? prev.balance : 0;
 
-      datasource.request({
-        method: "POST",
-        name: "TrialBalance",
-        client: client,
-        callback: createTrialBalance,
-        data: {
-          kind: currency,
-          parent: account,
-          period: fiscalPeriod,
-          previous: prevPeriod,
-          balance: balance
-        }     
-      }, true);
-    };
-
-    done = function (err) {
-      if (err && !raiseError) {
-        raiseError = err;
-      }
-      if (n === count) {
-        if (raiseError) {
-          callback(raiseError);
-          return;
-        }
-        callback(null, obj);
-      }
-    };
-
-    // Real work starts here
-    datasource.request({
-      method: "GET",
-      name: "Currency",
-      client: client,
-      callback: afterCurrency,
-      filter: {
-        criteria: [{
-          property: "isBase",
-          value: true
-        }]
-      }
-    }, true);
-
-    datasource.request({
-      method: "GET",
-      name: "FiscalPeriod",
-      client: client,
-      callback: afterPrevPeriod,
-      filter: {
-        criteria: [{
-          property: "end",
-          operator: "<",
-          value: fiscalPeriod.end
-        }],
-        sort: [{
-          property: "end",
-          order: "DESC"
-        }],
-        limit: 1
-      }
-    }, true);
-
-    datasource.request({
-      method: "GET",
-      name: "LedgerAccount",
-      client: client,
-      callback: afterLedgerAccount
-    }, true);
+      Promise.all([
+          getCurrency,
+          getFiscalPeriod,
+          getLedgerAccount
+        ])
+        .then(createTrialBalance)
+        .then(resolve)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("POST", "FiscalPeriod", doAfterUpsertFiscalPeriod,
@@ -183,14 +192,20 @@
     @param {Object} [payload.data.id] Fiscal period id to close. Required
   */
   var doCloseFiscalPeriod = function (obj) {
-    obj.data.feather = "FiscalPeriod";
-    datasource.request({
-      method: "POST",
-      name: "closePeriod",
-      client: obj.client,
-      callback: obj.callback,
-      data: obj.data
-    }, true);
+    return new Promise (function (resolve, reject) {
+      var payload = {
+          method: "POST",
+          name: "closePeriod",
+          client: obj.client,
+          callback: obj.callback,
+          data: obj.data
+        };
+
+      obj.data.feather = "FiscalPeriod";
+      datasource.request(payload, true)
+        .then(resolve)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("POST", "closeFiscalPeriod", doCloseFiscalPeriod);
@@ -205,135 +220,151 @@
     @param {Object} [payload.data.id] Fiscal period id to open. Required
   */
   var doOpenFiscalPeriod = function (obj) {
-    obj.data.feather = "FiscalPeriod";
-    datasource.request({
-      method: "POST",
-      name: "openPeriod",
-      client: obj.client,
-      callback: obj.callback,
-      data: obj.data
-    }, true);
+    return new Promise (function (resolve, reject) {
+      var payload = {
+          method: "POST",
+          name: "openPeriod",
+          client: obj.client,
+          data: obj.data
+        };
+
+      obj.data.feather = "FiscalPeriod";
+      datasource.request(payload, true)
+        .then(resolve)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("POST", "openFiscalPeriod", doOpenFiscalPeriod);
 
   var doDeleteFiscalPeriod = function (obj) {
-    var afterFiscalPeriod, afterNextPeriod, afterTrialBalance, afterDelete,
-      fiscalPeriod, count, raiseError,
-      n = 0;
+    return new Promise (function (resolve, reject) {
+      var fiscalPeriod;
 
-    afterFiscalPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
+      // Validate
+      function getFiscalPeriod () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "FiscalPeriod",
+              id: obj.id,
+              client: obj.client
+            };
 
-        fiscalPeriod = resp;
+          function callback (resp) {
+            if (fiscalPeriod.isClosed) {
+              reject("Can not delete a closed period.");
+              return;
+            }
 
-        if (fiscalPeriod.isClosed) {
-          throw "Can not delete a closed period.";
-        }
-        if (fiscalPeriod.isFrozen) {
-          throw "Can not delete a frozen period.";
-        }
+            if (fiscalPeriod.isFrozen) {
+              reject("Can not delete a frozen period.");
+              return;
+            }
 
-        datasource.request({
-          method: "GET",
-          name: "FiscalPeriod",
-          client: obj.client,
-          callback: afterNextPeriod,
-          filter: {
-            criteria: [{
-              property: "end",
-              operator: ">",
-              value: fiscalPeriod.end
-            }],
-            limit: 1
+            fiscalPeriod = resp;
+            resolve();
           }
-        }, true);
-      } catch (e) {
-        obj.callback(e);
-      }
-    };
 
-    afterNextPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
-        if (resp.length) {
-          throw "Can not delete a period with a subsequent period.";
-        }
-
-        datasource.request({
-          method: "GET",
-          name: "TrialBalance",
-          client: obj.client,
-          callback: afterTrialBalance,
-          filter: {
-            criteria: [{
-              property: "period",
-              value: fiscalPeriod
-            }]
-          }
-        }, true);
-      } catch (e) {
-        obj.callback(e);
-      }
-    };
-
-    afterTrialBalance = function (err, resp) {
-      try {
-        if (err) { throw err; }
-        resp.forEach(function (trialBalance) {
-          if (trialBalance.debits !== 0 ||
-              trialBalance.credits !== 0) {
-            throw "Can not delete period with trial balance activity posted.";
-          }
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
         });
+      }
 
-        count = resp.length + 1;
+      function getNextFiscalPeriod () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "FiscalPeriod",
+              client: obj.client,
+              filter: {
+                criteria: [{
+                  property: "end",
+                  operator: ">",
+                  value: fiscalPeriod.end
+                }],
+                limit: 1
+              }
+            };
 
-        // Delete period
-        datasource.request({
-          method: "POST",
-          name: "doDelete",
-          client: obj.client,
-          callback: afterDelete,
-          data: {
-            name: "FiscalPeriod",
-            id: obj.id
+          function callback (resp) {
+            if (resp.length) {
+              reject("Can not delete a period with a subsequent period.");
+              return;
+            }
+
+            resolve();
           }
-        }, true);
-
-        // Delete trial balances
-        resp.forEach(function (trialBalance) {
-          datasource.request({
-            method: "DELETE",
-            name: "TrialBalance",
-            client: obj.client,
-            callback: afterDelete,
-            id: trialBalance.id
-          }, true);
+          
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
         });
-      } catch (e) {
-        obj.callback(e);
       }
-    };
 
-    afterDelete = function (err) {
-      n += 1;
-      if (err && !raiseError) {
-        raiseError = err;
+      function getTrialBalances () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "TrialBalance",
+              client: obj.client,
+              filter: {
+                criteria: [{
+                  property: "period",
+                  value: fiscalPeriod
+                }]
+              }
+            };
+
+          function callback (resp) {
+            resp.forEach(function (trialBalance) {
+              if (trialBalance.debits !== 0 ||
+                  trialBalance.credits !== 0) {
+                reject("Can not delete period with trial balance activity posted.");
+                return;
+              }
+            });
+
+            resolve(resp);
+          }
+
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
       }
-      if (n < count) { return; }
-      obj.callback(raiseError, true);
-    };
 
-    // Validate
-    datasource.request({
-      method: "GET",
-      name: "FiscalPeriod",
-      id: obj.id,
-      client: obj.client,
-      callback: afterFiscalPeriod
-    }, true);
+      function doDeleteTrialBalances (resp) {
+        return new Promise (function (resolve, reject) {
+          var deletions;
+
+          // Build array of deletion calls
+          deletions = resp.map(function (trialBalance) {
+            var payload = {
+                method: "DELETE",
+                name: "TrialBalance",
+                client: obj.client,
+                id: trialBalance.id
+              };
+
+            return  datasource.request.bind(null, payload, true);
+          });
+
+          Promise.all(deletions)
+            .then(resolve)
+            .catch(reject);
+        });
+      }
+
+      Promise.resolve()
+        .then(getFiscalPeriod)
+        .then(getNextFiscalPeriod)
+        .then(getTrialBalances)
+        .then(doDeleteTrialBalances)
+        .then(resolve.bind(null, true))
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("DELETE", "FiscalPeriod", doDeleteFiscalPeriod,
