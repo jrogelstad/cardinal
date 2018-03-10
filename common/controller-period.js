@@ -17,83 +17,88 @@
 
   */
   var doClosePeriod = function (obj) {
-    var afterPeriod, afterPrevPeriod, afterUpdate,
-      original, patches,
-      id = obj.data.id,
-      name = obj.data.feather || "Period",
-      client = obj.client,
-      callback = obj.callback;
+    return new Promise (function (resolve, reject) {
+      var original, patches, getPeriod,
+        id = obj.data.id,
+        name = obj.data.feather || "Period",
+        client = obj.client;
 
-    afterPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
-        if (!resp) { throw "Period not found."; }
-        if (resp.isClosed) { throw "Period is already closed."; }
+      function getPreviousPeriod (resp) {
+        return new Promise (function (resolve, reject) {
+          try {
+            if (!resp) { throw "Period not found."; }
+            if (resp.isClosed) { throw "Period is already closed."; }
 
-        original = f.copy(resp);
-        resp.isClosed = true;
-        patches = jsonpatch.compare(original, resp);
+            original = f.copy(resp);
+            resp.isClosed = true;
+            patches = jsonpatch.compare(original, resp);
 
-        datasource.request({
-          method: "GET",
-          name: name,
-          client: client,
-          callback: afterPrevPeriod,
-          filter: {
-            criteria: [{
-              property: "end",
-              operator: "<",
-              value: original.end,
-              order: "DESC"
-            },{
-              property: "isClosed",
-              value: false
-            }],
-            limit: 1
+            var prevPeriod = datasource.request.bind(null, {
+                method: "GET",
+                name: name,
+                client: client,
+                filter: {
+                  criteria: [{
+                    property: "end",
+                    operator: "<",
+                    value: original.end,
+                    order: "DESC"
+                  },{
+                    property: "isClosed",
+                    value: false
+                  }],
+                  limit: 1
+                }
+              }, true);
+
+            prevPeriod().then(resolve).catch(reject);
+          } catch (e) {
+            reject(e);
           }
-        }, true);
-      } catch (e) {
-        callback(e);
+        });
       }
-    };
 
-    afterPrevPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
+      function doUpdate (resp) {
+        return new Promise (function (resolve, reject) {
+          try {
+            if (resp.length) {
+              throw "Previous period exists that is not closed.";
+            }
 
-        if (resp.length) {
-          throw "Previous period exists that is not closed.";
-        }
+            var update = datasource.request.bind(null, {
+                method: "POST",
+                name: "doUpdate",
+                id: id,
+                client: client,
+                data: {
+                  name: "Period",
+                  id: id,
+                  data: patches
+                }
+              }, true);
 
-        datasource.request({
-          method: "POST",
-          name: "doUpdate",
-          id: id,
-          client: client,
-          callback: afterUpdate,
-          data: {
-            name: "Period",
-            id: id,
-            data: patches
+            update().then(resolve).catch(reject);
+          } catch (e) {
+            reject(e);
           }
-        }, true);
-      } catch (e) {
-        callback(e);
+        });
       }
-    };
 
-    afterUpdate = function (err) {
-      callback(err, true);
-    };
+      getPeriod = datasource.request.bind(null, {
+        method: "GET",
+        name: "Period",
+        id: id,
+        client: client
+      }, true);
 
-    // Real work starts here
-    datasource.request({
-      method: "GET",
-      name: "Period",
-      id: id,
-      client: client,
-      callback: afterPeriod
-    }, true);
+      // Real work starts here
+      Promise.resolve()
+        .then(getPeriod)
+        .then(getPreviousPeriod)
+        .then(doUpdate)
+        .then(resolve)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("POST", "closePeriod", doClosePeriod);
@@ -109,83 +114,88 @@
     @param {Object} [payload.data.feather] Inheriting feather. Default is "Period"
   */
   var doOpenPeriod = function (obj) {
-    var afterPeriod, afterPrevPeriod, afterUpdate,
-      original, patches,
-      id = obj.data.id,
-      name = obj.data.name || "Period",
-      client = obj.client,
-      callback = obj.callback;
+    return new Promise (function (resolve, reject) {
+      var original, patches, getPeriod,
+        id = obj.data.id,
+        name = obj.data.name || "Period",
+        client = obj.client;
 
-    afterPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
-        if (!resp) { throw "Period not found."; }
-        if (!resp.isClosed) { throw "Period is already open."; }
+      function getPreviousPeriod (resp) {
+        return new Promise (function (resolve, reject) {
+          try {
+            if (!resp) { throw "Period not found."; }
+            if (!resp.isClosed) { throw "Period is already open."; }
 
-        original = f.copy(resp);
-        resp.isClosed = false;
-        patches = jsonpatch.compare(original, resp);
+            original = f.copy(resp);
+            resp.isClosed = false;
+            patches = jsonpatch.compare(original, resp);
 
-        datasource.request({
-          method: "GET",
-          name: name,
-          client: client,
-          callback: afterPrevPeriod,
-          filter: {
-            criteria: [{
-              property: "end",
-              operator: ">",
-              value: original.end,
-              order: "DESC"
-            },{
-              property: "isClosed",
-              value: true
-            }],
-            limit: 1
+            var prevPeriod = datasource.request.bind(null, {
+                method: "GET",
+                name: name,
+                client: client,
+                filter: {
+                  criteria: [{
+                    property: "end",
+                    operator: ">",
+                    value: original.end,
+                    order: "DESC"
+                  },{
+                    property: "isClosed",
+                    value: true
+                  }],
+                  limit: 1
+                }
+              }, true);
+
+            prevPeriod().then(resolve).catch(reject);
+          } catch (e) {
+            reject(e);
           }
-        }, true);
-      } catch (e) {
-        callback(e);
+        });
       }
-    };
 
-    afterPrevPeriod = function (err, resp) {
-      try {
-        if (err) { throw err; }
+      function doUpdate (resp) {
+        return new Promise (function (resolve, reject) {
+          try {
+            if (resp.length) {
+              throw "Subsequent period exists that is closed.";
+            }
 
-        if (resp.length) {
-          throw "Subsequent period exists that is closed.";
-        }
+            var update = datasource.request.bind(null, {
+                method: "POST",
+                name: "doUpdate",
+                id: id,
+                client: client,
+                data: {
+                  name: name,
+                  id: id,
+                  data: patches
+                }
+              }, true);
 
-        datasource.request({
-          method: "POST",
-          name: "doUpdate",
-          id: id,
-          client: client,
-          callback: afterUpdate,
-          data: {
-            name: name,
-            id: id,
-            data: patches
+            update().then(resolve).catch(reject);
+          } catch (e) {
+            reject(e);
           }
-        }, true);
-      } catch (e) {
-        callback(e);
+        });
       }
-    };
 
-    afterUpdate = function (err) {
-      callback(err, true);
-    };
+      getPeriod = datasource.request.bind(null, {
+        method: "GET",
+        name: name,
+        id: id,
+        client: client
+      }, true);
 
-    // Real work starts here
-    datasource.request({
-      method: "GET",
-      name: name,
-      id: id,
-      client: client,
-      callback: afterPeriod
-    }, true);
+      // Real work starts here
+      Promise.resolve()
+        .then(getPeriod)
+        .then(getPreviousPeriod)
+        .then(doUpdate)
+        .then(resolve)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("POST", "openPeriod", doOpenPeriod);

@@ -8,13 +8,9 @@
 
   // Register database procedure on datasource
   var doAdjust = function (obj) {
-    try {
-      var afterCreditLocationBalance, afterDebitLocationBalance,
-        afterGet, creditLocationBalance, debitLocationBalance, transaction,
-        postRequest, postTransaction, afterPostTransaction, afterPostBalance,
-        afterParent, getParent, propagate, requestId, raiseError,
-        count = 5,
-        POSTED = 3,
+   return new Promise (function (resolve, reject) {
+      var requestId, transaction,
+        creditLocationBalance, debitLocationBalance,
         data = obj.data.specs,
         args = {
           item: data.item,
@@ -24,96 +20,50 @@
         date = data.date || f.now(),
         note = data.note,
         quantity = data.quantity,
-        parents = [],
-        n = 0;
+        parents = [];
 
-      afterGet = function (err, resp) {
-        n += 1;
-        if (err && !raiseError) {
-          raiseError = err;
-          return;
-        }
-        args[this] = resp;
-        if (n < count) { return; }
-        getParent(args.debitLocation);
-      };
+      function afterGet (resp) {
+        return new Promise (function (resolve) {
+          args[this] = resp;
+          resolve();
+        });
+      }
 
-      afterParent = function (err, resp) {
-        try {
-          if (err) { throw err; }
-          parents.push(resp);
-          getParent(resp);
-        } catch (e) {
-          obj.callback(e);
-        }
-      };
+      function getParent (resp) {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "Location",
+              client: obj.client,
+              id: resp.parent.id
+            };
 
-      getParent = function (resp) {
-        if (resp.parent) {
-          datasource.request({
-            method: "GET",
-            name: "Location",
-            client: obj.client,
-            callback: afterParent,
-            id: resp.parent.id
-          }, true);
-          return;
-        }
-        postRequest();
-      };
+          function callback (resp) {
+            return new Promise (function (resolve, reject) {
+              parents.push(resp);
+              getParent(resp)
+                .then(resolve)
+                .catch(reject);
+            });
+          }
 
-      afterCreditLocationBalance = function (err, resp) {
-        n += 1;
-        if (err && !raiseError) { 
-          raiseError = err;
-          return;
-        }
-        if (resp.length) {
-          creditLocationBalance = resp[0];
-          creditLocationBalance.balance = math.add(creditLocationBalance.balance, quantity);
-        } else {
-          creditLocationBalance = {
-            id: f.createId(),
-            kind: args.item,
-            parent: args.creditLocation,
-            balance: quantity
-          };
-        }
-        if (n === count) { getParent(args.debitLocation); }
-      };
+          if (resp.parent) {
+            datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+            return;
+          }
 
-      afterDebitLocationBalance = function (err, resp) {
-        n += 1;
-        if (err && !raiseError) { 
-          raiseError = err;
-          return;
-        }
-        if (resp.length) {
-          debitLocationBalance = resp[0];
-          debitLocationBalance.balance = math.subtract(debitLocationBalance.balance, quantity);
-        } else {
-          debitLocationBalance = {
-            id: f.createId(),
-            kind: args.item,
-            node: args.debitLocation,
-            balance: quantity * -1
-          };
-        }
-        if (n === count) { getParent(args.debitLocation); }
-      };
+          resolve(resp);
+        });
+      }
 
-      postRequest = function () {
-        if (raiseError) {
-          obj.callback(raiseError);
-          return;
-        }
-
+      function postRequest () {
         requestId = f.createId();
         datasource.request({
           method: "POST",
           name: "Request",
           client: obj.client,
-          callback: postTransaction,
           isPosted: true,
           data: {
             id: requestId,
@@ -129,14 +79,9 @@
             }]
           }       
         }, true);
-      };
+      }
 
-      postTransaction = function (err) {
-        if (err) {
-          obj.callback(err);
-          return;
-        }
-
+      function postTransaction () {
         var distributions = [{
             node: args.debitLocation,
           credit: quantity
@@ -153,7 +98,6 @@
           });
         });
 
-        n = 0;
         transaction = {
           kind: args.item,
           parent: {id: requestId},
@@ -175,7 +119,6 @@
           name: "LocationBalance",
           id: debitLocationBalance.id,
           client: obj.client,
-          callback: afterPostBalance,
           data: debitLocationBalance
         }, true);
         
@@ -184,37 +127,20 @@
           name: "LocationBalance",
           id: creditLocationBalance.id,
           client: obj.client,
-          callback: afterPostBalance,
           data: creditLocationBalance
         }, true);
-      };
+      }
 
-      afterPostBalance = function (err) {
-        n += 1;
-        if (err && !raiseError) {
-          raiseError = err;
-          return;
-        }
-        if (n === POSTED) {
-          if (raiseError) {
-            obj.callback(raiseError);
-            return;
-          }
-          propagate();
-        }
-      };
-
-      afterPostTransaction = function (err, resp) {
+      function afterPostTransaction (resp) {
         try {
-          if (err) { throw err; }
           jsonpatch.apply(resp, transaction);
           afterPostBalance();
         } catch (e) {
           afterPostBalance(e);
         }
-      };
+      }
 
-      propagate = function () {
+      function propagate () {
         try {
           var parent, after;
           if (!parents.length) {
@@ -267,65 +193,156 @@
           }, true);
 
         } catch (e) {
-          obj.callback(e);
+          reject(e);
         }
-      };
+      }
 
-      // Real work starts here
-      datasource.request({
-        method: "GET",
-        name: "Item",
-        client: obj.client,
-        callback: afterGet.bind("item"),
-        id: args.item.id
-      }, true);
+      function getItem () {
+        return new Promise (function (resolve, reject) {
+          var payload =  {
+              method: "GET",
+              name: "Item",
+              client: obj.client,
+              id: args.item.id
+            };
 
-      datasource.request({
-        method: "GET",
-        name: "Location",
-        client: obj.client,
-        callback: afterGet.bind("debitLocation"),
-        id: args.debitLocation.id
-      }, true);
+          Promise.resolve()
+            .then(datasource.request.bind(null, payload, true))
+            .then(afterGet.bind("item"))
+            .then(resolve)
+            .catch(reject);
+        });
+      }
 
-      datasource.request({
-        method: "GET",
-        name: "Location",
-        client: obj.client,
-        callback: afterGet.bind("creditLocation"),
-        id: args.creditLocation.id
-      }, true);
+      function getDebitLocation () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "Location",
+              client: obj.client,
+              id: args.debitLocation.id
+            };
 
-      datasource.request({
-        method: "GET",
-        name: "LocationBalance",
-        client: obj.client,
-        callback: afterCreditLocationBalance,
-        filter: {
-          criteria: [{
-            property: "kind",
-            value: args.item},{
-            property: "parent",
-            value: args.creditLocation}]
-        }
-      }, true);
+          Promise.resolve()
+            .then(datasource.request.bind(null, payload, true))
+            .then(afterGet.bind("debitLocation"))
+            .then(resolve)
+            .catch(reject);
+        });
+      }
 
-      datasource.request({
-        method: "GET",
-        name: "LocationBalance",
-        client: obj.client,
-        callback: afterDebitLocationBalance,
-        filter: {
-          criteria: [{
-            property: "kind",
-            value: args.item},{
-            property: "parent",
-            value: args.debitLocation}]
-        }
-      }, true);
-    } catch (e) {
-      obj.callback(e);
-    }
+      function getCreditLocation () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "Location",
+              client: obj.client,
+              id: args.cebitLocation.id
+            };
+
+          Promise.resolve()
+            .then(datasource.request.bind(null, payload, true))
+            .then(afterGet.bind("creditLocation"))
+            .then(resolve)
+            .catch(reject);
+        });
+      }
+
+      function getDebitLocationBalance () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "LocationBalance",
+              client: obj.client,
+              filter: {
+                criteria: [{
+                  property: "kind",
+                  value: args.item},{
+                  property: "parent",
+                  value: args.debitLocation}]
+              }
+            };
+
+          function callback (resp) {
+            if (resp.length) {
+              debitLocationBalance = resp[0];
+              debitLocationBalance.balance = math.subtract(debitLocationBalance.balance, quantity);
+            } else {
+              debitLocationBalance = {
+                id: f.createId(),
+                kind: args.item,
+                node: args.debitLocation,
+                balance: quantity * -1
+              };
+            }
+
+            resolve();
+          }
+
+         
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
+      }
+
+      function getCreditLocationBalance () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "LocationBalance",
+              client: obj.client,
+              filter: {
+                criteria: [{
+                  property: "kind",
+                  value: args.item},{
+                  property: "parent",
+                  value: args.creditLocation}]
+              }
+            };
+
+          function callback (resp) {
+            if (resp.length) {
+              creditLocationBalance = resp[0];
+              creditLocationBalance.balance = math.add(creditLocationBalance.balance, quantity);
+            } else {
+              creditLocationBalance = {
+                id: f.createId(),
+                kind: args.item,
+                parent: args.creditLocation,
+                balance: quantity
+              };
+            }
+
+            resolve();
+          }
+         
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
+      }
+
+      try {
+        // Real work starts here
+        Promise.resolve()
+          .all([
+            getItem,
+            getDebitLocation.then(afterGet.bind("debitLocation")),
+            getCreditLocation.then(afterGet.bind("creditLocation")),
+            getDebitLocationBalance,
+            getCreditLocationBalance
+          ])
+          .then(getParent.bind(null, args.debitLocation))
+          .then(postRequest)
+          .then(postTransaction)
+          .then(propagate)
+          .then(resolve)
+          .catch(reject);
+      } catch (e) {
+        reject(e);
+      }
+    });
   };
 
   datasource.registerFunction("POST", "adjust", doAdjust);
