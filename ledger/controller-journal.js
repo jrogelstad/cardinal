@@ -13,29 +13,21 @@
     Journal insert handler
   */
   var doInsertJournal = function (obj) {
-    var afterCheckJournal,
-      client = obj.client,
-      journal = obj.data;
+    return new Promise (function (resolve, reject) {
+      var payload = {
+          method: "POST",
+          name: "checkJournal",
+          client: obj.client,
+          data: {
+            journal: obj.data
+          }
+        };
 
-    afterCheckJournal = function (err) {
-      if (err) {
-        obj.callback(err);
-        return;
-      }
-
-      obj.callback(null, obj);
-    };
-
-    // Validate
-    datasource.request({
-      method: "POST",
-      name: "checkJournal",
-      client: client,
-      callback: afterCheckJournal,
-      data: {
-        journal: journal
-      }
-    }, true);
+      // Validate
+      datasource.request(payload, true)
+        .then(resolve)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("POST", "Journal", doInsertJournal,
@@ -45,30 +37,28 @@
     Journal delete handler
   */
   var doDeleteJournal = function (obj) {
-    var afterJournal;
+    return new Promise (function (resolve, reject) {
+      var payload = {
+          method: "GET",
+          name: "Journal",
+          id: obj.id,
+          client: obj.client
+        };
 
-    afterJournal = function (err, resp) {
-      try {
-        if (err) { throw err; }
+      // Validate
+      function callback (resp) {
         if (resp.isPosted) {
-          throw "Can not delete a posted journal.";
+          reject("Can not delete a posted journal.");
+          return;
         }
 
-        // Done
-        obj.callback(null, obj);
-      } catch (e) {
-        obj.callback(e);
+        resolve();
       }
-    };
 
-    // Validate
-    datasource.request({
-      method: "GET",
-      name: "Journal",
-      id: obj.id,
-      client: obj.client,
-      callback: afterJournal
-    }, true);
+      datasource.request(payload, true)
+        .then(callback)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("DELETE", "Journal", doDeleteJournal,
@@ -80,28 +70,31 @@
 
     @param {Object} [payload] Payload.
     @param {Object} [payload.client] Database client.
-    @param {Function} [payload.callback] callback.
     @param {Object} [payload.journal] Journal to check.
   */
   doCheckJournal = function (obj) {
-    try {
+    return new Promise (function (resolve, reject) {
       var sumcheck = math.bignumber(0),
         data = obj.data.journal;
 
       if (!Array.isArray(data.distributions)) {
-        throw "Distributions must be a valid array.";
+        reject("Distributions must be a valid array.");
+        return;
       }
 
       if (!data.distributions.length) {
-        throw "Distributions must not be empty.";
+        reject("Distributions must not be empty.");
+        return;
       }
 
       // Check distributions
       data.distributions.forEach(function (dist) {
         if (dist.debit) {
           if (dist.debit <= 0) {
-            throw "Debit must be a positive number.";
+            reject("Debit must be a positive number.");
+            return;
           }
+
           sumcheck = math.subtract(
             sumcheck, 
             math.bignumber(dist.debit)
@@ -110,8 +103,10 @@
 
         if (dist.credit) {
           if (dist.credit <= 0) {
-            throw "Credit must be a positive number.";
+            reject("Credit must be a positive number.");
+            return;
           }
+
           sumcheck = math.add(
             sumcheck,
             math.bignumber(dist.credit)
@@ -121,14 +116,13 @@
 
       // Check balance
       if (math.number(sumcheck) !== 0) {
-        throw "Distribution does not balance.";
+        reject("Distribution does not balance.");
+        return;
       }
 
       // Everything passed
-      obj.callback(null, true);
-    } catch (e) {
-      obj.callback(e);
-    }
+      resolve(true);
+    });
   };
 
   datasource.registerFunction("POST", "checkJournal", doCheckJournal);
@@ -144,16 +138,19 @@
     @param {Object} [payload.data.date] Post date. Default today.
   */
   doPostJournal = function (obj) {
-    try {
+    return new Promise (function (resolve, reject) {
       if (!obj.data || !obj.data.id) {
-        throw "Id must be provided";
+        reject("Id must be provided");
+        return;
       }
+
       obj.data.ids = [obj.data.id];
       delete obj.data.id;
-      doPostJournals(obj);
-    } catch (e) {
-      obj.callback(e);
-    }
+
+      doPostJournals(obj)
+        .then(resolve)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("POST", "postJournal", doPostJournal);
@@ -163,36 +160,31 @@
 
     @param {Object} [payload] Payload.
     @param {Object} [payload.client] Database client.
-    @param {Function} [payload.callback] callback.
     @param {Object} [payload.data] Journal data
     @param {Array} [payload.data.ids] Journal ids to post. Required
     @param {Object} [payload.data.date] Post date. Default today.
   */
   doPostJournals = function (obj) {
-    try {
-      var afterCurrency, afterTrialBalance, afterJournals,
-        afterPostBalance, afterPostTransaction, afterUpdate,
-        getLedgerAccounts, afterLedgerAccounts, getParents,
-        kind, currency, journals, count, transaction,
-        raiseError, process, profitLossIds, balanceSheetIds,
+    return new Promise (function (resolve, reject) {
+      var afterLedgerAccounts,
+        kind, currency, journals, transaction,
+        profitLossIds, balanceSheetIds,
         data = obj.data,
-        client = obj.client,
-        callback = obj.callback,
         date = data.date || f.today(),
         ledgerAccounts = {},
         ledgerAccountIds = [],
         distributions = [],
         trialBalances = [],
         profitLossDist = {},
-        balanceSheetDist = {},
-        n = 0;
+        balanceSheetDist = {};
 
       if (!Array.isArray(obj.data.ids)) {
-        throw "Ids must be provided";
+        reject("Ids must be provided");
+        return;
       }
 
       // Helper functions
-      process = function (transDist, dist) {
+      function compute (transDist, dist) {
         var amount = math.number(math
           .chain(math.bignumber(transDist.credit))
           .subtract(math.bignumber(transDist.debit))
@@ -206,9 +198,9 @@
           transDist.credit = 0;
           transDist.debit = amount * -1;
         }
-      };
+      }
 
-      getParents = function (id, ary) {
+      function getParents (id, ary) {
         ary = ary || [];
         var ledgerAccount;
 
@@ -221,37 +213,58 @@
         }
 
         return ary;
-      };
+      }
 
-      afterJournals = function (err, resp) {
-        try {
-          if (err) { throw err; }
+      // Promise functions
+      function getJournals () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "Journal",
+              client: obj.client,
+              filter: {
+                criteria: [{
+                  property: "id",
+                  operator: "IN",
+                  value: data.ids
+                }]
+              }
+            };
 
+          datasource.request(payload, true)
+            .then(resolve)
+            .catch(reject);
+        });
+      }
+
+      function afterJournals (resp) {
+        return new Promise (function (resolve, reject) {
           if (resp.length !== data.ids.length) {
-            throw "Journal(s) not found.";
+            reject("Journal(s) not found.");
+            return;
           }
 
           journals = resp;
-          count = 1;
 
           // Build list of accounts and distribution data
           journals.forEach(function (journal) {
             if (kind && kind.id !== journal.kind.id) {
-              throw "Journals must all be in the same currency.";
+              throw new Error("Journals must all be in the same currency.");
             }
             kind = journal.kind;
 
             if (journal.isPosted) {
-              throw "Journal " +  journal.number + " is already posted.";
+              throw new Error("Journal " +  journal.number + " is already posted.");
             }
 
             journal.distributions.forEach(function (dist) {
               var transDist,
                 accountId = dist.node.id;
-              if (dist.node.kind.type === "Revenue" || dist.node.kind.type === "Expense") {
+              if (dist.node.kind.type === "Revenue" ||
+                  dist.node.kind.type === "Expense") {
                 transDist = profitLossDist[accountId];
                 if (transDist) {
-                  process(transDist, dist);
+                  compute(transDist, dist);
                 } else {
                   profitLossDist[accountId] = {
                     id: f.createId(),
@@ -263,7 +276,7 @@
               } else {
                 transDist = balanceSheetDist[accountId];
                 if (transDist) {
-                  process(transDist, dist);
+                  compute(transDist, dist);
                 } else {
                   balanceSheetDist[accountId] = {
                     id: f.createId(),
@@ -289,42 +302,41 @@
           });
           ledgerAccountIds = ledgerAccountIds.concat(profitLossIds);
 
-          getLedgerAccounts(ledgerAccountIds);
-        } catch (e) {
-          callback(e);
-        }
-      };
+          resolve(ledgerAccountIds);
+        });
+      }
 
-      getLedgerAccounts = function (ids) {
-        if (ids.length) {
-          datasource.request({
-            method: "GET",
-            name: "LedgerAccount",
-            client: client,
-            callback: afterLedgerAccounts,
-            filter: {
-              criteria: [{
-                property: "id",
-                operator: "IN",
-                value: ids}]
-            }
-          }, true);
-          return;
-        }
+      function getLedgerAccounts (ids) {
+        return new Promise (function (resolve, reject) {
+          var payload;
 
-        datasource.request({
-          method: "GET",
-          name: "Currency",
-          client: client,
-          callback: afterCurrency,
-          id: kind.id
-        }, true);
-      };
+          if (ids.length) {
+            payload = {
+              method: "GET",
+              name: "LedgerAccount",
+              client: obj.client,
+              callback: afterLedgerAccounts,
+              filter: {
+                criteria: [{
+                  property: "id",
+                  operator: "IN",
+                  value: ids}]
+              }
+            };
 
-      afterLedgerAccounts = function (err, resp) {
-        try {
-          if (err) { throw err; }
+            datasource.request(payload, true)
+              .then(afterLedgerAccounts)
+              .then(resolve)
+              .catch(reject);
+            return;
+          }
 
+          resolve();
+        });
+      }
+
+      afterLedgerAccounts = function (resp) {
+        return new Promise (function (resolve, reject) {
           ledgerAccountIds = [];
 
           // Add parents to array of trial balance to update
@@ -347,106 +359,95 @@
             }
           });
 
-          getLedgerAccounts(ledgerAccountIds);
-        } catch (e) {
-          callback(e);
-        }
+          getLedgerAccounts(ledgerAccountIds)
+            .then(resolve)
+            .catch(reject);
+        });
       };
 
-      afterCurrency = function (err, resp) {
-        try {
-          if (err) { throw err; }
-          if (!resp) { throw "Invalid currency."; }
+      function getCurrency () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "Currency",
+              client: obj.client,
+              id: kind.id
+            };
 
-          currency = resp;
+          function callback (resp) {
+            if (!resp) { 
+              reject("Invalid currency.");
+              return;
+            }
 
-          n = 0;
-          if (profitLossIds.length && balanceSheetIds.length) {
-            count = 2;
-          } else {
-            count = 1;
+            currency = resp;
+            resolve();
           }
+
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
+      }
+
+      function getTrialBalance (ids) {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+            method: "GET",
+            name: "TrialBalance",
+            client: obj.client,
+            filter: {
+              criteria: [{
+                property: "kind",
+                value: currency},{
+                property: "parent.id",
+                operator: "IN",
+                value: ids},{
+                property: "period.start",
+                operator: "<=",
+                value: date},{
+                property: "period.end",
+                operator: ">=",
+                value: date},{
+                property: "period.isClosed",
+                value: false}],
+              sort: [{
+                property: "period.start",
+                value: "start"
+              }]
+            }
+          };
+
+          datasource.request(payload, true)
+            .then(resolve)
+            .catch(reject);
+        });  
+      }
+
+      function getTrialBalances () {
+        return new Promise (function (resolve, reject) {
+          var requests = [];
 
           // Retrieve profit/loss trial balances
           if (profitLossIds.length) {
-            datasource.request({
-              method: "GET",
-              name: "TrialBalance",
-              client: client,
-              callback: afterTrialBalance,
-              filter: {
-                criteria: [{
-                  property: "kind",
-                  value: currency},{
-                  property: "parent.id",
-                  operator: "IN",
-                  value: profitLossIds},{
-                  property: "period.start",
-                  operator: "<=",
-                  value: date},{
-                  property: "period.end",
-                  operator: ">=",
-                  value: date},{
-                  property: "period.isClosed",
-                  value: false}],
-                sort: [{
-                  property: "period.start",
-                  value: "start"
-                }]
-              }
-            }, true);
+            requests.push(getTrialBalance.bind(null, profitLossIds));
           }
 
           // Retrieve balance sheet trial balances
           if (balanceSheetIds.length) {
-            datasource.request({
-              method: "GET",
-              name: "TrialBalance",
-              client: client,
-              callback: afterTrialBalance,
-              filter: {
-                criteria: [{
-                  property: "kind",
-                  value: currency},{
-                  property: "parent.id",
-                  operator: "IN",
-                  value: balanceSheetIds},{
-                  property: "period.end",
-                  operator: ">=",
-                  value: date},{
-                  property: "period.isClosed",
-                  value: false}],
-                sort: [{
-                  property: "period.start",
-                  value: "start"
-                }]
-              }
-            }, true);
-          }
-        } catch (e) {
-          callback(e);
-        }
-      };
-
-      afterTrialBalance = function (err, resp) {
-        var hasError = false;
-
-        try {
-          n += 1;
-
-          // Only throw error once all requests return response
-          if (err && !raiseError) {
-            raiseError = err;
-            return;
+            requests.push(getTrialBalance.bind(null, balanceSheetIds));
           }
 
-          trialBalances = trialBalances.concat(resp);
+          Promise.all(requests)
+            .then(resolve)
+            .catch(reject);
+        });
+      }
 
-          if (n < count) { return; }
-          if (raiseError) { throw raiseError; }
+      function postGLTransaction () {
+        return new Promise (function (resolve, reject) {
+          var payload;
 
-          n = 0;
-          count = trialBalances.length + 1;
           transaction = {
             kind: journals[0].kind,
             date: date,
@@ -454,14 +455,29 @@
             distributions: distributions
           };
 
-          // Post journal
-          datasource.request({
+          payload = {
             method: "POST",
             name: "GeneralLedgerTransaction",
-            client: client,
-            callback: afterPostTransaction,
+            client: obj.client,
             data: transaction      
-          }, true);
+          };
+
+          function callback (resp) {
+            jsonpatch.apply(transaction, resp);
+            resolve();
+          }
+
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
+      }
+
+      function postBalance (resp) {
+        return new Promise (function (resolve, reject) {
+          var requests = [];
+
+          trialBalances = trialBalances.concat(resp);
 
           // Post balance updates
           distributions.forEach(function (dist) {
@@ -481,18 +497,13 @@
 
             // Iterate through trial balances for account and parents
             ids.forEach(function (id) {
-              if (hasError) { return; }
-
               var update,
                 balances = trialBalances.filter(function (row) {
                   return row.parent.id === id;
                 });
 
               if (!balances.length) {
-                hasError = true;
-                count = 2;
-                afterPostBalance("No open trial balance for account " + dist.node.code + ".");
-                return;
+                throw new Error("No open trial balance for account " + dist.node.code + "."); 
               }
 
               if (dist.debit) {
@@ -513,95 +524,64 @@
             });
           });
 
-          // If error, forget about it
-          if (hasError) { return; }
+          // Add trial balance updates
+          requests = trialBalances.map(function (balance) {
+            var payload = {
+                method: "POST",
+                id: balance.id,
+                name: "TrialBalance",
+                client: obj.client,
+                data: balance
+              };
 
-          trialBalances.forEach(function (balance) {
-            datasource.request({
-              method: "POST",
-              id: balance.id,
-              name: "TrialBalance",
-              client: client,
-              callback: afterPostBalance,
-              data: balance
-            }, true);
+            return datasource.request(null, payload, true);
           });
-        } catch (e) {
-          callback(e);
-        }
-      };
 
-      afterPostBalance = function (err) {
-        try {
-          if (err && !raiseError) {
-            raiseError = err;
-          }
+          // Create the GL transaction
+          requests.push(postGLTransaction);
 
-          n += 1;
-          if (n < count) { return; }
+          Promise.all(requests)
+            .then(resolve)
+            .catch(reject);
+        });
+      }
 
-          // Raise error only after to all requests
-          // completed to ensure complete rollback
-          if (raiseError) { throw raiseError; }
+      function updateJournal () {
+        return new Promise (function (resolve, reject) {
+          var requests;
 
-          n = 0;
-          count = journals.length;
-
-          journals.forEach(function (journal) {
-            journal.isPosted = true;
-            journal.folio = transaction.number;
-            datasource.request({
+          requests = journals.map(function (journal) {
+            var payload = {
               method: "POST",
               name: "Journal",
-              client: client,
-              callback: afterUpdate,
+              client: obj.client,
               id: journal.id,
               data: journal
-            }, true);
+            };
+
+            journal.isPosted = true;
+            journal.folio = transaction.number;
+
+            return datasource.request.bind(null, payload, true);
           });
-        } catch (e) {
-          callback(e);
-        }
-      };
 
-      afterUpdate = function (err) {
-        n += 1;
-        if (err && !raiseError) {
-          raiseError = err;
-          return;
-        }
+          Promise.all(requests)
+            .then(resolve)
+            .catch(reject);
+        });
+      }
 
-        if (n < count) { return; }
-        callback(raiseError, true);
-      };
-
-      afterPostTransaction = function (err, resp) {
-        try {
-          if (err) { throw err; }
-          jsonpatch.apply(transaction, resp);
-          afterPostBalance();
-        } catch (e) {
-          afterPostBalance(e);
-        }
-      };
-
-      // Real work starts here
-      datasource.request({
-        method: "GET",
-        name: "Journal",
-        client: client,
-        callback: afterJournals,
-        filter: {
-          criteria: [{
-            property: "id",
-            operator: "IN",
-            value: data.ids
-          }]
-        }
-      }, true);
-    } catch (e) {
-      obj.callback(e);
-    }
+      Promise.resolve()
+        .then(getJournals)
+        .then(afterJournals)
+        .then(getLedgerAccounts)
+        .then(getCurrency)
+        .then(getTrialBalances)
+        .then(postBalance)
+        .then(updateJournal)
+        .then(resolve)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("POST", "postJournals", doPostJournals);
