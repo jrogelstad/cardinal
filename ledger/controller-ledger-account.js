@@ -3,105 +3,102 @@
   "strict";
 
   var doAfterUpsertLedgerAccount = function (obj) {
-    var afterFiscalPeriod, afterCurrency,
-      createTrialBalance, done, raiseError, periods, prev, currency,
-      client = obj.client,
-      callback = obj.callback,
-      account = obj.data,
-      period = null,
-      n = 0,
-      count = 2,
-      found = false;
+    return new Promise (function (resolve, reject) {
+      var periods, prev, currency,
+        account = obj.data,
+        period = null;
 
-    afterCurrency = function (err, resp) {
-      n += 1;
-      if (err) {
-        done(err);
-        return;
-      }
-      if (!resp.length) {
-        done("No base currency found");
-      }
-      currency = resp[0];
-      if (n === count) { createTrialBalance(); }
-    };
+      function createTrialBalance () {
+        return new Promise (function (resolve, reject) {
+          var payload;
 
-    afterFiscalPeriod = function (err, resp) {
-      n += 1;
-      if (err) {
-        done(err);
-        return;
-      }
- 
-      periods = resp;
-      if (n === count) { createTrialBalance(); }
-    };
+          if (!periods.length) {
+            resolve();
+            return;
+          }
 
-    createTrialBalance = function (err) {
-      if (err) {
-        done(err);
-        return;
+          prev = period;
+          period = periods.shift();
+          payload = {
+            method: "POST",
+            name: "TrialBalance",
+            client: obj.client,
+            data: {
+              kind: currency,
+              parent: account,
+              period: period,
+              previous: prev
+            }     
+          };
+
+          Promise.resolve()
+            .then(datasource.request.bind(null, payload, true))
+            .then(createTrialBalance)
+            .then(resolve)
+            .catch(reject);
+        });
       }
 
-      if (found || !periods.length) {
-        done();
-        return;
+      function getCurrency () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "Currency",
+              client: obj.client,
+              filter: {
+                criteria: [{
+                  property: "isBase",
+                  value: true
+                }]
+              }
+            };
+
+          function callback (resp) {
+            if (!resp.length) {
+              reject("No base currency found");
+              return;
+            }
+
+            currency = resp[0];
+            resolve();
+          }
+
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
       }
 
-      prev = period;
-      period = periods.shift();
+      function getFiscalPeriod () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "FiscalPeriod",
+              client: obj.client,
+              filter: {
+                order: [{property: "start"}]
+              }
+            };
 
-      datasource.request({
-        method: "POST",
-        name: "TrialBalance",
-        client: client,
-        callback: createTrialBalance,
-        data: {
-          kind: currency,
-          parent: account,
-          period: period,
-          previous: prev
-        }     
-      }, true);
-    };
+          function callback (resp) {
+            periods = resp;
+            resolve();
+          }
 
-    done = function (err) {
-      if (err && !raiseError) {
-        raiseError = err;
-        return;
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
       }
-      if (n === count) {
-        if (raiseError) {
-          callback(raiseError);
-          return;
-        }
-        callback(null, obj);
-      }
-    };
 
-    // Real work starts here
-    datasource.request({
-      method: "GET",
-      name: "Currency",
-      client: client,
-      callback: afterCurrency,
-      filter: {
-        criteria: [{
-          property: "isBase",
-          value: true
-        }]
-      }
-    }, true);
-
-    datasource.request({
-      method: "GET",
-      name: "FiscalPeriod",
-      client: client,
-      callback: afterFiscalPeriod,
-      filter: {
-        order: [{property: "start"}]
-      }
-    }, true);
+      Promise.all([
+          getCurrency,
+          getFiscalPeriod
+        ])
+        .then(createTrialBalance)
+        .then(resolve)
+        .catch(reject);
+    });
   };
 
   datasource.registerFunction("POST", "LedgerAccount",
