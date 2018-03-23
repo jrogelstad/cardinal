@@ -44,129 +44,120 @@
         });
       }
 
-      function getCurrency () {
-        return new Promise (function (resolve, reject) {
-          var payload = {
-              method: "GET",
-              name: "Currency",
-              client: obj.client,
-              filter: {
-                criteria: [{
-                  property: "isBase",
-                  value: true
-                }]
-              }
-            };
-
-          function callback (resp) {
-            if (!resp.length) {
-              currency = resp[0];
-              resolve();
-            } else {
-              reject("No base currency found");
-            }
-          }
-
-          datasource.request( payload, true)
-            .then(callback) 
-            .catch(reject);
-        });
-      }
-
-      function getFiscalPeriod () {
-        return new Promise (function (resolve, reject) {
-          var payload = {
+      var getCurrency = new Promise (function (resolve, reject) {
+        var payload = {
             method: "GET",
-            name: "FiscalPeriod",
+            name: "Currency",
             client: obj.client,
             filter: {
               criteria: [{
-                property: "end",
-                operator: "<",
-                value: fiscalPeriod.end
-              }],
-              sort: [{
-                property: "end",
-                order: "DESC"
-              }],
-              limit: 1
+                property: "isBase",
+                value: true
+              }]
             }
           };
 
-          function afterFiscalPeriod (resp) {
-            return new Promise (function (resolve, reject) {
-              if (resp.length) {
-                prevPeriod = resp[0];
-                if ((new Date(fiscalPeriod.start) - new Date(prevPeriod.end)) / 86400000 !== 1) {
-                  reject("Period end may not overlap or leave gaps with the previous period.");
-                  return;
-                }
-              } else {
-                reject("No previous period found.");
+        function callback (resp) {
+          if (resp.length) {
+            currency = resp[0];
+            resolve();
+          } else {
+            reject("No base currency found");
+          }
+        }
+
+        datasource.request( payload, true)
+          .then(callback) 
+          .catch(reject);
+      });
+
+      var getFiscalPeriod = new Promise (function (resolve, reject) {
+        var payload = {
+          method: "GET",
+          name: "FiscalPeriod",
+          client: obj.client,
+          filter: {
+            criteria: [{
+              property: "end",
+              operator: "<",
+              value: fiscalPeriod.end
+            }],
+            sort: [{
+              property: "end",
+              order: "DESC"
+            }],
+            limit: 1
+          }
+        };
+
+        function afterFiscalPeriod (resp) {
+          return new Promise (function (resolve, reject) {
+            if (resp.length) {
+              prevPeriod = resp[0];
+              if ((new Date(fiscalPeriod.start) - new Date(prevPeriod.end)) / 86400000 !== 1) {
+                reject("Period end may not overlap or leave gaps with the previous period.");
                 return;
               }
+            }
 
-              resolve();
-            });
-          }
-
-          function getTrialBalance () {
-            return new Promise (function (resolve, reject) {
-              var cpayload = {
-                  method: "GET",
-                  name: "TrialBalance",
-                  client: obj.client,
-                  filter: {
-                    criteria: [{
-                      property: "kind.type",
-                      operator: "IN",
-                      value: ["Asset", "Liability", "Equity"]
-                    }, {
-                      property: "period",
-                      value: prevPeriod
-                    }]
-                  }
-                };
-
-              datasource.request(cpayload, true)
-                .then(resolve)
-                .catch(reject);
-            });
-          }
-
-          function afterTrialBalance (resp) {
-              prevTrialBalance = resp;
-              resolve();
-          }
-
-          Promise.resolve()
-            .then(datasource.request.bind(null, payload, true))
-            .then(afterFiscalPeriod)
-            .then(getTrialBalance)
-            .then(afterTrialBalance)
-            .catch(reject);
-        });
-      }
-
-      function  getLedgerAccount () {
-        return new Promise (function (resolve, reject) {
-          var payload = {
-              method: "GET",
-              name: "LedgerAccount",
-              client: obj.client
-            };
-
-          function callback (resp) {
-            accounts = resp;
             resolve();
-          }
+          });
+        }
 
-          datasource.request(payload, true)
-            .then(callback)
-            .catch(reject);
-        });
-      }
+        function getTrialBalance () {
+          return new Promise (function (resolve, reject) {
+            debugger;
+            var cpayload = {
+                method: "GET",
+                name: "TrialBalance",
+                client: obj.client,
+                filter: {
+                  criteria: [{
+                    property: "kind.type",
+                    operator: "IN",
+                    value: ["Asset", "Liability", "Equity"]
+                  }, {
+                    property: "period",
+                    value: prevPeriod
+                  }]
+                }
+              };
 
+            datasource.request(cpayload, true)
+              .then(resolve)
+              .catch(reject);
+          });
+        }
+
+        function afterTrialBalance (resp) {
+          prevTrialBalance = resp;
+          resolve();
+        }
+
+        Promise.resolve()
+          .then(datasource.request.bind(null, payload, true))
+          .then(afterFiscalPeriod)
+          .then(getTrialBalance)
+          .then(afterTrialBalance)
+          .catch(reject);
+      });
+
+      var getLedgerAccount = new Promise (function (resolve, reject) {
+        var payload = {
+            method: "GET",
+            name: "LedgerAccount",
+            client: obj.client
+          };
+
+        function callback (resp) {
+          accounts = resp;
+          resolve();
+        }
+
+        datasource.request(payload, true)
+          .then(callback)
+          .catch(reject);
+      });
 
       Promise.all([
           getCurrency,
@@ -215,7 +206,6 @@
 
     @param {Object} [payload] Payload.
     @param {Object} [payload.client] Database client.
-    @param {Function} [payload.callback] callback.
     @param {Object} [payload.data] Payload data
     @param {Object} [payload.data.id] Fiscal period id to open. Required
   */
@@ -348,7 +338,7 @@
                 id: trialBalance.id
               };
 
-            return  datasource.request.bind(null, payload, true);
+            return datasource.request(payload, true);
           });
 
           Promise.all(deletions)

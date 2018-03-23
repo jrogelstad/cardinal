@@ -430,12 +430,12 @@
 
           // Retrieve profit/loss trial balances
           if (profitLossIds.length) {
-            requests.push(getTrialBalance.bind(null, profitLossIds));
+            requests.push(getTrialBalance(profitLossIds));
           }
 
           // Retrieve balance sheet trial balances
           if (balanceSheetIds.length) {
-            requests.push(getTrialBalance.bind(null, balanceSheetIds));
+            requests.push(getTrialBalance(balanceSheetIds));
           }
 
           Promise.all(requests)
@@ -444,34 +444,32 @@
         });
       }
 
-      function postGLTransaction () {
-        return new Promise (function (resolve, reject) {
-          var payload;
+      var postGLTransaction = new Promise (function (resolve, reject) {
+        var payload;
 
-          transaction = {
-            kind: journals[0].kind,
-            date: date,
-            note: data.note,
-            distributions: distributions
-          };
+        transaction = {
+          kind: journals[0].kind,
+          date: date,
+          note: data.note,
+          distributions: distributions
+        };
 
-          payload = {
-            method: "POST",
-            name: "GeneralLedgerTransaction",
-            client: obj.client,
-            data: transaction      
-          };
+        payload = {
+          method: "POST",
+          name: "GeneralLedgerTransaction",
+          client: obj.client,
+          data: transaction      
+        };
 
-          function callback (resp) {
-            jsonpatch.apply(transaction, resp);
-            resolve();
-          }
+        function callback (resp) {
+          jsonpatch.apply(transaction, resp);
+          resolve();
+        }
 
-          datasource.request(payload, true)
-            .then(callback)
-            .catch(reject);
-        });
-      }
+        datasource.request(payload, true)
+          .then(callback)
+          .catch(reject);
+      });
 
       function postBalance (resp) {
         return new Promise (function (resolve, reject) {
@@ -534,7 +532,7 @@
                 data: balance
               };
 
-            return datasource.request(null, payload, true);
+            return datasource.request(payload, true);
           });
 
           // Create the GL transaction

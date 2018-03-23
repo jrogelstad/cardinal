@@ -39,57 +39,53 @@
         });
       }
 
-      function getCurrency () {
-        return new Promise (function (resolve, reject) {
-          var payload = {
-              method: "GET",
-              name: "Currency",
-              client: obj.client,
-              filter: {
-                criteria: [{
-                  property: "isBase",
-                  value: true
-                }]
-              }
-            };
-
-          function callback (resp) {
-            if (!resp.length) {
-              reject("No base currency found");
-              return;
+      var getCurrency = new Promise (function (resolve, reject) {
+        var payload = {
+            method: "GET",
+            name: "Currency",
+            client: obj.client,
+            filter: {
+              criteria: [{
+                property: "isBase",
+                value: true
+              }]
             }
+          };
 
-            currency = resp[0];
-            resolve();
+        function callback (resp) {
+          if (!resp.length) {
+            reject("No base currency found");
+            return;
           }
 
-          datasource.request(payload, true)
-            .then(callback)
-            .catch(reject);
-        });
-      }
+          currency = resp[0];
+          resolve();
+        }
 
-      function getFiscalPeriod () {
-        return new Promise (function (resolve, reject) {
-          var payload = {
-              method: "GET",
-              name: "FiscalPeriod",
-              client: obj.client,
-              filter: {
-                order: [{property: "start"}]
-              }
-            };
+        datasource.request(payload, true)
+          .then(callback)
+          .catch(reject);
+      });
 
-          function callback (resp) {
-            periods = resp;
-            resolve();
-          }
+      var getFiscalPeriod = new Promise (function (resolve, reject) {
+        var payload = {
+            method: "GET",
+            name: "FiscalPeriod",
+            client: obj.client,
+            filter: {
+              order: [{property: "start"}]
+            }
+          };
 
-          datasource.request(payload, true)
-            .then(callback)
-            .catch(reject);
-        });
-      }
+        function callback (resp) {
+          periods = resp;
+          resolve();
+        }
+
+        datasource.request(payload, true)
+          .then(callback)
+          .catch(reject);
+      });
 
       Promise.all([
           getCurrency,
