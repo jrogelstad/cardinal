@@ -106,7 +106,6 @@
 
         function getTrialBalance () {
           return new Promise (function (resolve, reject) {
-            debugger;
             var cpayload = {
                 method: "GET",
                 name: "TrialBalance",

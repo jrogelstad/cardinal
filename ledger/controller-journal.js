@@ -418,8 +418,13 @@
             }
           };
 
+          function callback (resp) {
+            trialBalances = trialBalances.concat(resp);
+            resolve();
+          }
+
           datasource.request(payload, true)
-            .then(resolve)
+            .then(callback)
             .catch(reject);
         });  
       }
@@ -444,38 +449,9 @@
         });
       }
 
-      var postGLTransaction = new Promise (function (resolve, reject) {
-        var payload;
-
-        transaction = {
-          kind: journals[0].kind,
-          date: date,
-          note: data.note,
-          distributions: distributions
-        };
-
-        payload = {
-          method: "POST",
-          name: "GeneralLedgerTransaction",
-          client: obj.client,
-          data: transaction      
-        };
-
-        function callback (resp) {
-          jsonpatch.apply(transaction, resp);
-          resolve();
-        }
-
-        datasource.request(payload, true)
-          .then(callback)
-          .catch(reject);
-      });
-
-      function postBalance (resp) {
+      function postBalance () {
         return new Promise (function (resolve, reject) {
           var requests = [];
-
-          trialBalances = trialBalances.concat(resp);
 
           // Post balance updates
           distributions.forEach(function (dist) {
@@ -536,6 +512,33 @@
           });
 
           // Create the GL transaction
+          var postGLTransaction = new Promise (function (resolve, reject) {
+            var payload;
+
+            transaction = {
+              kind: journals[0].kind,
+              date: date,
+              note: data.note,
+              distributions: distributions
+            };
+
+            payload = {
+              method: "POST",
+              name: "GeneralLedgerTransaction",
+              client: obj.client,
+              data: transaction      
+            };
+
+            function callback (resp) {
+              jsonpatch.apply(transaction, resp);
+              resolve();
+            }
+
+            datasource.request(payload, true)
+              .then(callback)
+              .catch(reject);
+          });
+
           requests.push(postGLTransaction);
 
           Promise.all(requests)
@@ -560,7 +563,7 @@
             journal.isPosted = true;
             journal.folio = transaction.number;
 
-            return datasource.request.bind(null, payload, true);
+            return datasource.request(payload, true);
           });
 
           Promise.all(requests)
