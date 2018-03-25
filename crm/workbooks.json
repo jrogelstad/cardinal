@@ -11,7 +11,6 @@
       {
         "name": "Contacts",
         "feather": "Contact",
-        "form": "cvt2t75sl90s",
         "list": {
           "columns": [{
               "attr": "name"
