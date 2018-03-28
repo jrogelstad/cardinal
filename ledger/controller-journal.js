@@ -566,8 +566,12 @@
             return datasource.request(payload, true);
           });
 
+          function callback () {
+            resolve(true);
+          }
+
           Promise.all(requests)
-            .then(resolve)
+            .then(callback)
             .catch(reject);
         });
       }
