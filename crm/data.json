@@ -5,44 +5,67 @@
     "data": {
         "name": "Lead",
         "description": "Lead form",
-        "module": "Cardinal",
+        "module": "CRM",
         "feather": "Lead",
+        "tabs": [{
+            "name": "Pipeline"
+        }, {
+            "name": "Updated"
+        }],
         "attrs": [{
-            "attr": "company"
+            "attr": "name",
+            "grid": 0,
+            "unit": 0
         }, {
-            "attr": "name"
+            "attr": "email",
+            "grid": 0,
+            "unit": 0
         }, {
-            "attr": "email"
+            "attr": "isActive",
+            "grid": 0,
+            "unit": 0
         }, {
-            "attr": "isActive"
+            "attr": "workPhone",
+            "grid": 0,
+            "unit": 0
         }, {
-            "attr": "birthDate"
+            "attr": "homePhone",
+            "grid": 0,
+            "unit": 0
         }, {
-            "attr": "workPhone"
+            "attr": "birthDate",
+            "grid": 0,
+            "unit": 1
         }, {
-            "attr": "homePhone"
+            "attr": "annualIncome",
+            "grid": 0,
+            "unit": 1
         }, {
-            "attr": "annualIncome"
+            "attr": "creditScore",
+            "grid": 0,
+            "unit": 1
         }, {
-            "attr": "creditScore"
+            "attr": "role",
+            "grid": 0,
+            "unit": 1
         }, {
-            "attr": "role"
+            "attr": "company",
+            "grid": 1
         }, {
-            "attr": "probability"
+            "attr": "opportunity",
+            "grid": 1
         }, {
-            "attr": "opportunity"
+            "attr": "probability",
+            "grid": 1
         }, {
-            "attr": "remarks"
+            "attr": "updated",
+            "grid": 2
         }, {
-            "attr": "created"
+            "attr": "updatedBy",
+            "grid": 2
         }, {
-            "attr": "createdBy"
-        }, {
-            "attr": "updated"
-        }, {
-            "attr": "updatedBy"
-        }, {
-            "attr": "objectType"
+            "attr": "objectType",
+            "grid": 2
         }]
     }
 }, {
