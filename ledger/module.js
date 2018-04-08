@@ -91,6 +91,7 @@
       },
       error = function (err) {
         dialog.message(err.message);
+        dialog.title("Error");
         dialog.icon("exclamation-triangle");
         dialog.onOk(undefined);
         dialog.show();
