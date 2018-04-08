@@ -300,7 +300,7 @@
                     id: f.createId(),
                     node: dist.node,
                     credit: dist.credit,
-                    debit: dist.debits
+                    debit: dist.debit
                   };
                 }
               } else {
