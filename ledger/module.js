@@ -73,18 +73,12 @@
     });
 
     // Return instantiated model
-  	return that;
-	};
+    return that;
+  };
 
-  // Static functions
-  models.journal.list = list("Journal");
-  models.journal.post = function (selections, dialog) {
-    var unposted = selections.filter(function(model) {
-        return !model.data.isPosted();
-      }),
-      ids = unposted.map(function (model) {
-        return model.id();
-      }),
+  // Private helper to consolidate logic
+  function post (ids, viewModel, message, unposted) {
+    var dialog = viewModel.confirmDialog(),
       payload = {
         method: "POST", 
         path: "/ledger/post-journals",
@@ -102,9 +96,7 @@
         dialog.show();
       };
 
-    if (!ids.length) { return; }
-
-    dialog.message("Are you sure you want to post the selected journals?");
+    dialog.message(message);
     dialog.icon("question-circle");
     dialog.onOk(function () {
       dataSource.request(payload)
@@ -112,10 +104,34 @@
                 .catch(error);
     });
     dialog.show();
+  }
+
+  // Static functions
+  models.journal.list = list("Journal");
+  models.journal.post = function (viewModel) {
+    var message = "Are you sure you want to post the selected journals?",
+      unposted = viewModel.tableWidget().selections().filter(function(model) {
+        return !model.data.isPosted();
+      }),
+      ids = unposted.map(function (model) {
+        return model.id();
+      });
+
+    if (!ids.length) { return; }
+
+    post(ids, viewModel, message, unposted);
   };
-  models.generalJournal.postAll = function () {
-    this.dialog.message("This function is not implemented yet.");
-    this.dialog.show();
+  models.generalJournal.postAll = function (viewModel) {
+    var message = "Are you sure you want to post all unposted journals?",
+      // Have to do this first because we made filter do something else on lists!
+      ary = viewModel.tableWidget().models().map(function(model) {
+        return model;
+      }),
+      unposted = ary.filter(function(model) {
+        return !model.data.isPosted();
+      });
+
+    post(null, viewModel, message, unposted);
   };
   models.generalJournal.postCheck = function (selections) {
     return selections.some(function(model) {

@@ -161,7 +161,8 @@
     @param {Object} [payload] Payload.
     @param {Object} [payload.client] Database client.
     @param {Object} [payload.data] Journal data
-    @param {Array} [payload.data.ids] Journal ids to post. Required
+    @param {Array} [payload.data.ids] Journal ids to post. Default = all.
+    @param {String} [payload.data.feather] Type of journal. Default = "Journal".
     @param {Object} [payload.data.date] Post date. Default today.
   */
   doPostJournals = function (obj) {
@@ -177,11 +178,6 @@
         trialBalances = [],
         profitLossDist = {},
         balanceSheetDist = {};
-
-      if (!Array.isArray(obj.data.ids)) {
-        reject("Ids must be provided");
-        return;
-      }
 
       // Helper functions
       function compute (transDist, dist) {
@@ -200,6 +196,40 @@
         }
       }
 
+      function getIds () {
+        return new Promise (function (resolve, reject) {
+          if (Array.isArray(obj.data.ids)) {
+            resolve(obj.data.ids);
+            return;
+          }
+
+          var payload = {
+              method: "GET",
+              name: obj.data.feather || "Journal",
+              client: obj.client,
+              filter: {
+                criteria: [{
+                  property: "isPosted",
+                  operator: "=",
+                  value: false
+                }]
+              }
+            };
+
+          function callback (resp) {
+            data.ids = resp.map(function (row) { 
+              return row.id;
+            });
+
+            resolve(data.ids);
+          }
+
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+        });
+      }
+
       function getParents (id, ary) {
         ary = ary || [];
         var ledgerAccount;
@@ -216,7 +246,7 @@
       }
 
       // Promise functions
-      function getJournals () {
+      function getJournals (ids) {
         return new Promise (function (resolve, reject) {
           var payload = {
               method: "GET",
@@ -226,7 +256,7 @@
                 criteria: [{
                   property: "id",
                   operator: "IN",
-                  value: data.ids
+                  value: ids
                 }]
               }
             };
@@ -577,6 +607,7 @@
       }
 
       Promise.resolve()
+        .then(getIds)
         .then(getJournals)
         .then(afterJournals)
         .then(getLedgerAccounts)
