@@ -3,7 +3,7 @@ Cardinal
 A sample module for the featherbone application framework.
 
 # Prerequisites
-* [Featherbone] (https://github.com/jrogelstad/featherbone)
+* [Featherbone](https://github.com/jrogelstad/featherbone)
   
 # Install
 
