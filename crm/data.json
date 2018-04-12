@@ -49,10 +49,10 @@
             "grid": 0,
             "unit": 1
         }, {
-            "attr": "company",
+            "attr": "opportunity",
             "grid": 1
         }, {
-            "attr": "opportunity",
+            "attr": "company",
             "grid": 1
         }, {
             "attr": "probability",
