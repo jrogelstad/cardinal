@@ -20,6 +20,10 @@
               "attr": "description"
             }, {
               "attr": "note"
+            }, {
+              "attr": "isParent"
+            }, {
+              "attr": "isUsed"
             }
           ]
         }

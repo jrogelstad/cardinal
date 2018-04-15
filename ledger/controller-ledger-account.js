@@ -2,7 +2,7 @@
 (function (datasource) {
   "strict";
 
-  var doAfterUpsertLedgerAccount = function (obj) {
+  var doAfterInsertLedgerAccount = function (obj) {
     return new Promise (function (resolve, reject) {
       var periods, prev, currency,
         account = obj.data,
@@ -87,17 +87,71 @@
           .catch(reject);
       });
 
+      function updateParent (parent) {
+        return new Promise (function (resolve, reject) {
+          if (!parent) {
+            reject("Parent not found.");
+            return;
+          }
+
+          var payload = {
+            method: "POST",
+            name: "LedgerAccount",
+            client: obj.client,
+            id: parent.id,
+            data: parent  
+          };
+
+          if (!parent.isParent) {
+            parent.isParent = true;
+
+            datasource.request(payload, true)
+              .then(resolve)
+              .catch(reject);
+
+            return;
+          }
+
+          resolve();
+        });
+      }
+
+      function getParent () {
+        return new Promise (function (resolve, reject) {
+          if (account.parent &&
+              account.parent.id !== undefined && 
+              account.parent.id !== null) {
+            var payload = {
+                method: "GET",
+                name: "LedgerAccount",
+                client: obj.client,
+                id: account.parent.id
+              };
+
+            datasource.request(payload, true)
+              .then(updateParent)
+              .then(resolve)
+              .catch(reject);
+
+            return;
+          }
+
+          resolve();
+        });
+      }
+
       Promise.all([
           getCurrency,
           getFiscalPeriod
         ])
         .then(createTrialBalance)
+        .then(getParent)
         .then(resolve)
         .catch(reject);
     });
   };
 
   datasource.registerFunction("POST", "LedgerAccount",
-    doAfterUpsertLedgerAccount, datasource.TRIGGER_AFTER);
+    doAfterInsertLedgerAccount, datasource.TRIGGER_AFTER);
 
 }(datasource));

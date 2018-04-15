@@ -29,6 +29,15 @@
         "module": "Ledger",
         "description": "Ledger accounts",
         "inherits": "Node",
+        "properties": {
+            "isParent": {
+                "description": "Indicates account is a parent of other accounts",
+                "type": "boolean",
+                "isReadOnly": true,
+                "isRequired": true,
+                "default": false
+            }
+        },
         "overloads": {
             "kind": {
                 "type": {

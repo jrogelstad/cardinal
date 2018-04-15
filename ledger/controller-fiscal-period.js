@@ -2,7 +2,7 @@
 (function (datasource) {
   "strict";
 
-  var doAfterUpsertFiscalPeriod = function (obj) {
+  var doAfterInsertFiscalPeriod = function (obj) {
     return new Promise (function (resolve, reject) {
       var account, prevPeriod,
         accounts, currency, prevTrialBalance,
@@ -169,7 +169,7 @@
     });
   };
 
-  datasource.registerFunction("POST", "FiscalPeriod", doAfterUpsertFiscalPeriod,
+  datasource.registerFunction("POST", "FiscalPeriod", doAfterInsertFiscalPeriod,
     datasource.TRIGGER_AFTER);
 
   /**
