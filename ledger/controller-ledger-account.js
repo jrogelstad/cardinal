@@ -154,4 +154,171 @@
   datasource.registerFunction("POST", "LedgerAccount",
     doAfterInsertLedgerAccount, datasource.TRIGGER_AFTER);
 
+  var doBeforeDeleteLedgerAccount = function (obj) {
+    return new Promise (function (resolve, reject) {
+      var parentId;
+
+      function getAccount () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "LedgerAccount",
+              client: obj.client,
+              id: obj.id
+            };
+
+          function callback (resp) {
+            if (resp.isParent) {
+              reject("Can not delete a parent account.");
+            } else if (resp.isUsed) {
+              reject("Can not delete a ledger account that has been used.");
+            }
+
+            if (resp.parent !== null) {
+              parentId = resp.parent.id;
+            }
+
+            resolve();
+          }
+
+          datasource.request(payload, true)
+            .then(callback)
+            .catch(reject);
+
+          return;
+        });
+      }
+
+      function getChildren () {
+        return new Promise (function (resolve, reject) {
+          if (parentId) {
+            var payload = {
+                method: "GET",
+                name: "LedgerAccount",
+                client: obj.client,
+                properties: ["id"],
+                filter: {
+                  criteria: [{
+                    property: "parent.id",
+                    value: parentId
+                  },
+                  {
+                    property: "id",
+                    operator: "!=",
+                    value: obj.id
+                  }]
+                }
+              };
+
+            datasource.request(payload, true)
+              .then(resolve)
+              .catch(reject);
+
+            return;
+          }
+
+          resolve();
+        });
+      }
+
+      function getParent (children) {
+        return new Promise (function (resolve, reject) {
+          if (!children.length) {
+            var payload = {
+                method: "GET",
+                name: "LedgerAccount",
+                client: obj.client,
+                id: parentId
+              };
+
+            datasource.request(payload, true)
+              .then(resolve)
+              .catch(reject);
+
+            return;
+          }
+
+          resolve();
+        });
+      }
+
+      function updateParent (parent) {
+        return new Promise (function (resolve, reject) {
+          if (!parent) {
+            resolve();
+            return;
+          }
+
+          var payload = {
+            method: "POST",
+            name: "LedgerAccount",
+            client: obj.client,
+            id: parentId,
+            data: parent  
+          };
+
+          parent.isParent = false;
+
+          datasource.request(payload, true)
+            .then(resolve)
+            .catch(reject);
+        });
+      }
+
+      function getTrialBalance () {
+        return new Promise (function (resolve, reject) {
+          var payload = {
+              method: "GET",
+              name: "TrialBalance",
+              client: obj.client,
+              properties: ["id"],
+              filter: {
+                criteria: [{
+                  property: "parent.id",
+                  value: obj.id
+                }]
+              }  
+            };
+
+          datasource.request(payload, true)
+            .then(resolve)
+            .catch(reject);
+        });
+      }
+
+      function deleteTrialBalance (trialBalances) {
+        return new Promise (function (resolve, reject) {
+          var requests = trialBalances.map(function (balance) {
+            var payload = {
+              method: "DELETE",
+              name: "TrialBalance",
+              client: obj.client,
+              id: balance.id  
+            };
+
+            return datasource.request(payload, true);
+          });
+
+          Promise.all(requests)
+            .then(resolve)
+            .catch(reject);
+        });
+      }
+
+
+      Promise.resolve()
+        .then(getAccount)
+        .then(getChildren)
+        .then(getParent)
+        .then(updateParent)
+        .then(getTrialBalance)
+        .then(deleteTrialBalance)
+        .then(resolve)
+        .catch(reject);
+    });
+  };
+
+  datasource.registerFunction("DELETE", "LedgerAccount",
+    doBeforeDeleteLedgerAccount, datasource.TRIGGER_BEFORE);
+
 }(datasource));
