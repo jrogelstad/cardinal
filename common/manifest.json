@@ -16,6 +16,11 @@
         },
         {
             "type": "controller",
+            "name": "Action",
+            "path": "controller-action.js"
+        },
+        {
+            "type": "controller",
             "name": "Period",
             "path": "controller-period.js"
         },
