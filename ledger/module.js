@@ -26,6 +26,7 @@
     models = catalog.register("models"),
     jFeather = catalog.getFeather("GeneralJournal"),
     jdFeather = catalog.getFeather("JournalDistribution"),
+    laFeather = catalog.getFeather("LedgerAccount"),
     math = require("mathjs"),
     ledgerSettings = models.ledgerSettings();
 
@@ -174,4 +175,20 @@
 
     return that;
   };
+
+  // Create ledger account model
+  models.ledgerAccount = function (data) {
+    data = data || {};
+    var that = model(data, laFeather);
+
+    that.onCanDelete(function () {
+      return !that.data.isUsed() && !that.data.isParent();
+    });
+
+    // Return instantiated model
+    return that;
+  };
+
+  models.ledgerAccount.list = list("LedgerAccount");
+
 }());
