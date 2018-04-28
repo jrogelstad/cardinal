@@ -183,6 +183,12 @@
             "unit": 0
         }, {
             "attr": "parent",
+            "filter": {
+              "criteria": [{
+                "property": "isUsed",
+                "value": false
+              }]
+            },
             "grid": 0,
             "unit": 0
         }, {
