@@ -185,6 +185,14 @@
       return !that.data.isUsed() && !that.data.isParent();
     });
 
+    that.onValidate(function () {
+      var parent = that.data.parent();
+
+      if (parent && parent.data.isUsed()) {
+        throw "Account used in transactions may not become a parent.";
+      }
+    });
+
     // Return instantiated model
     return that;
   };

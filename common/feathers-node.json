@@ -67,6 +67,13 @@
                     "properties": ["code", "description", "type"]
                 },
                 "isRequired": true
+            },            
+            "isUsed": {
+                "description": "Indicates node has transactions",
+                "type": "boolean",
+                "isReadOnly": true,
+                "isRequired": true,
+                "default": false
             }
         }
     },
@@ -81,16 +88,9 @@
                 "description": "Parent container",
                 "type": {
                     "relation": "Container",
-                    "properties": ["code", "description", "kind"],
+                    "properties": ["code", "description", "kind", "isUsed"],
                     "isRequired": true
                 }
-            },            
-            "isUsed": {
-                "description": "Indicates node has transactions",
-                "type": "boolean",
-                "isReadOnly": true,
-                "isRequired": true,
-                "default": false
             }
         }
     },

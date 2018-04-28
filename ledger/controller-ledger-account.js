@@ -94,6 +94,11 @@
             return;
           }
 
+          if (parent.isUsed) {
+            reject("Account used in transactions may not become a parent.");
+            return;
+          }
+
           var payload = {
             method: "POST",
             name: "LedgerAccount",

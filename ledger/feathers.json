@@ -49,7 +49,7 @@
             "parent": {
                 "type": {
                     "relation": "LedgerAccount",
-                    "properties": ["code", "description", "kind"]
+                    "properties": ["code", "description", "kind", "isUsed"]
                 }
             }
         }
