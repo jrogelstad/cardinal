@@ -13,22 +13,28 @@
         return dist.node.id;
       });
 
-      payload = {
-        method: "GET",
-        name: "Node",
-        client: obj.client,
-        filter: {
-          criteria: [{
-            property: "id",
-            operator: "IN",
-            value: ids
-          }]
-        }
-      };
+      if (ids.length) {
+        payload = {
+          method: "GET",
+          name: "Node",
+          client: obj.client,
+          filter: {
+            criteria: [{
+              property: "id",
+              operator: "IN",
+              value: ids
+            }]
+          }
+        };
 
-      datasource.request(payload, true)
-        .then(resolve)
-        .catch(reject);
+        datasource.request(payload, true)
+          .then(resolve)
+          .catch(reject);
+
+        return;
+      }
+
+      resolve([]);
     });
   }
 
