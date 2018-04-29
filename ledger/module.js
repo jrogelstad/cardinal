@@ -54,16 +54,18 @@
       }
 
       dist.forEach(function (item) {
-        if (item.debit) {
-          sumcheck = math.subtract(
-            sumcheck, 
-            math.bignumber(item.debit)
-          );
-        } else {
-          sumcheck = math.add(
-            sumcheck, 
-            math.bignumber(item.credit)
-          );
+        if (item) {
+          if (item.debit) {
+            sumcheck = math.subtract(
+              sumcheck, 
+              math.bignumber(item.debit)
+            );
+          } else {
+            sumcheck = math.add(
+              sumcheck, 
+              math.bignumber(item.credit)
+            );
+          }
         }
       });
 
