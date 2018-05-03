@@ -420,7 +420,7 @@
         });
       }
 
-      function getTrialBalance (ids) {
+      function getTrialBalance (ids, isBalanceSheet) {
         return new Promise (function (resolve, reject) {
           var payload = {
             method: "GET",
@@ -433,9 +433,6 @@
                 property: "parent.id",
                 operator: "IN",
                 value: ids},{
-                property: "period.start",
-                operator: "<=",
-                value: date},{
                 property: "period.end",
                 operator: ">=",
                 value: date},{
@@ -447,6 +444,14 @@
               }]
             }
           };
+
+          if (!isBalanceSheet) {
+            payload.filter.criteria.push({
+              property: "period.start",
+              operator: "<=",
+              value: date
+            });
+          }
 
           function callback (resp) {
             trialBalances = trialBalances.concat(resp);
@@ -470,7 +475,7 @@
 
           // Retrieve balance sheet trial balances
           if (balanceSheetIds.length) {
-            requests.push(getTrialBalance(balanceSheetIds));
+            requests.push(getTrialBalance(balanceSheetIds, true));
           }
 
           Promise.all(requests)

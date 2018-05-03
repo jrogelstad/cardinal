@@ -8,11 +8,24 @@
         "module": "Ledger",
         "feather": "TrialBalance",
         "attrs": [{
+            "attr": "parent",
+            "label": "account",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "period",
+            "grid": 0,
+            "unit": 0
+        },  {
             "attr": "debits",
             "grid": 0,
             "unit": 0
         }, {
             "attr": "credits",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "balance",
             "grid": 0,
             "unit": 0
         }, {

@@ -35,13 +35,23 @@
         "isEditModeEnabled": false,
         "list": {
           "columns": [{
-              "attr": "period.start"
+              "attr": "parent.code",
+              "label": "account"
             }, {
-              "attr": "period.end"
+              "attr": "parent.description",
+              "label": "account"
+            }, {
+              "attr": "parent.kind.type",
+              "label": "type"
+            }, {
+              "attr": "period.end",
+              "label": "period"
             }, {
               "attr": "debits"
             }, {
               "attr": "credits"
+            }, {
+              "attr": "balance"
             }
           ]
         }
