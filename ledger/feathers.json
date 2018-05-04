@@ -4,11 +4,20 @@
         "plural": "Currencies",
         "module": "Ledger",
         "description": "Currency",
-        "inherits": "Unit",
+        "inherits": "Kind",
         "properties": {
             "symbol": {
                 "description": "Symbol",
                 "type": "string"
+            },
+            "numericCode": {
+                "description": "Numeric code",
+                "type": "integer"
+            },
+            "minorUnit": {
+                "description": "Precision",
+                "type": "integer",
+                "default": 2
             },
             "isBase": {
                 "description": "System base currency flag",
