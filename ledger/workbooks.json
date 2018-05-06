@@ -36,13 +36,13 @@
         "list": {
           "columns": [{
               "attr": "parent.code",
-              "label": "account"
+              "label": "Code"
             }, {
               "attr": "parent.description",
-              "label": "account"
+              "label": "Description"
             }, {
               "attr": "parent.kind.type",
-              "label": "type"
+              "label": "Type"
             }, {
               "attr": "period.end",
               "label": "period"

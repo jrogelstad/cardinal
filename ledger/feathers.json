@@ -138,7 +138,22 @@
         "plural": "GeneralJournals",
         "module": "Ledger",
         "description": "General journal entries",
-        "inherits": "Journal"
+        "inherits": "Journal",
+        "overloads": {
+            "kind": {
+                "type": {
+                    "relation": "Currency",
+                    "properties": ["code", "description", "type"]
+                },
+                "alias": "Currency"
+            },
+            "parent": {
+                "type": {
+                    "relation": "LedgerAccount",
+                    "properties": ["code", "description", "kind", "isUsed"]
+                }
+            }
+        }
     },
     {
         "name": "GeneralLedgerTransaction",
@@ -174,6 +189,22 @@
                     "relation": "NodePeriodBalance",
                     "properties": ["balance"]
                 }
+            }
+        },
+        "overloads": {
+            "kind": {
+                "type": {
+                    "relation": "Currency",
+                    "properties": ["code", "description", "type"]
+                },
+                "alias": "Currency"
+            },
+            "parent": {
+                "type": {
+                    "relation": "LedgerAccount",
+                    "properties": ["code", "description", "kind", "isUsed"]
+                },
+                "alias": "Account"
             }
         }
     }

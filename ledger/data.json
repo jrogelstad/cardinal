@@ -9,7 +9,6 @@
         "feather": "TrialBalance",
         "attrs": [{
             "attr": "parent",
-            "label": "account",
             "grid": 0,
             "unit": 0
         }, {
@@ -65,6 +64,10 @@
             "grid": 0,
             "unit": 0
         }, {
+            "attr": "date",
+            "grid": 0,
+            "unit": 0
+        }, {
             "attr": "kind",
             "grid": 0,
             "unit": 0
@@ -116,6 +119,10 @@
         }],
         "attrs": [{
             "attr": "number",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "date",
             "grid": 0,
             "unit": 0
         }, {

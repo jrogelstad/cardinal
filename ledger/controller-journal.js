@@ -290,6 +290,7 @@
             journal.distributions.forEach(function (dist) {
               var transDist,
                 accountId = dist.node.id;
+
               if (dist.node.kind.type === "Revenue" ||
                   dist.node.kind.type === "Expense") {
                 transDist = profitLossDist[accountId];
@@ -490,17 +491,19 @@
 
           // Post balance updates
           distributions.forEach(function (dist) {
-            var ids = getParents(dist.node.id),
+            var value,
+              type = dist.node.kind.type,
+              ids = getParents(dist.node.id),
               debit = function (row) {
-                row.balance = math.number(math.subtract(
+                row.balance = math.number(math.add(
                   math.bignumber(row.balance), 
-                  math.bignumber(dist.debit)
+                  math.bignumber(value)
                 ));
               },
               credit = function (row) {
-                row.balance = math.number(math.add(
+                row.balance = math.number(math.subtract(
                   math.bignumber(row.balance),
-                  math.bignumber(dist.credit)
+                  math.bignumber(value)
                 ));
               };
 
@@ -515,17 +518,23 @@
                 throw new Error("No open trial balance for account " + dist.node.code + "."); 
               }
 
-              if (dist.debit) {
+              if (type === 'Asset' || type === 'Expense') {
+                value = dist.debit || dist.credit * -1;
+
                 balances[0].debits = math.number(math.add(
                   math.bignumber(balances[0].debits), 
-                  math.bignumber(dist.debit)
+                  math.bignumber(value)
                 ));
+
                 update = debit;
               } else {
+                value = dist.credit || dist.debit * -1;
+
                 balances[0].credits = math.number(math.add(
                   math.bignumber(balances[0].credits),
                   math.bignumber(dist.credit)
                 ));
+
                 update = credit;
               }
 

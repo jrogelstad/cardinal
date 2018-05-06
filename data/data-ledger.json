@@ -920,7 +920,7 @@
             "kind": {
                 "id": "4y9dtthuen7z"
             },
-            "date": "2018-02-27",
+            "date": "2018-05-01",
             "note": "Test Posting2",
             "distributions": [
             {
@@ -949,7 +949,7 @@
         "user": "postgres",
         "data": {
             "id": "g6m2a2vajq5",
-            "date": "2018-11-23"
+            "date": "2018-05-01"
         }
     }
 ]
