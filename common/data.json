@@ -130,48 +130,6 @@
 }, {
     "name": "Form",
     "method": "POST",
-    "id": "2natrk2ze6ts",
-    "data": {
-        "name": "Unit",
-        "description": "Unit form",
-        "feather": "Unit",
-        "module": "Common",
-        "attrs": [{
-            "attr": "code"
-        }, {
-            "attr": "description"
-        }]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "64p4bwkbr2xq",
-    "data": {
-        "name": "Unit",
-        "description": "Unit relation wdiget",
-        "isActive": true,
-        "feather": "Unit",
-        "valueProperty": "code",
-        "labelProperty": "description",
-        "form": {
-            "id": "2natrk2ze6ts"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }, {
-                "attr": "createdBy"
-            }, {
-                "attr": "updated"
-            }, {
-                "attr": "updatedBy"
-            }
-        ]
-    }
-}, {
-    "name": "Form",
-    "method": "POST",
     "id": "3b5i7biisqbw",
     "data": {
         "name": "Item",
@@ -248,7 +206,7 @@
     "id": "5za0lefbzqmc",
     "data": {
         "name": "Customer",
-        "description": "Unit relation wdiget",
+        "description": "Customer relation wdiget",
         "isActive": true,
         "feather": "Customer",
         "valueProperty": "code",

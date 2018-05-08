@@ -1,39 +1,5 @@
 [ 
     {
-        "name": "Kind",
-        "plural": "Kinds",
-        "module": "Common",
-        "description": "Base class for physical types",
-        "properties": {
-            "code": {
-                "description": "Natural key",
-                "type": "string",
-                "isUnique": true,
-                "isRequired": true
-            },
-            "description": {
-                "description": "Description",
-                "type": "string"
-            },
-            "note": {
-                "description": "Note",
-                "type": "string"
-            },
-            "type": {
-                "description": "Kind type",
-                "type": "string",
-                "default": "Asset"
-            }
-        }
-    },
-    {
-        "name": "Unit",
-        "plural": "Units",
-        "module": "Common",
-        "description": "Unit of measure",
-        "inherits": "Kind"
-    },
-    {
         "name": "Element",
         "plural": "Elements",
         "module": "Common",
@@ -109,7 +75,7 @@
                 "description": "Unit of measure",
                 "type": {
                     "relation": "Unit",
-                    "properties": ["code", "description", "type"]
+                    "properties": ["code", "description"]
                 },
                 "isRequired": true,
                 "default": {
