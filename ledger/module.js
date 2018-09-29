@@ -28,7 +28,7 @@
     jdFeather = catalog.getFeather("JournalDistribution"),
     laFeather = catalog.getFeather("LedgerAccount"),
     math = require("mathjs"),
-    ledgerSettings = models.ledgerSettings();
+    f = require("common-core");
 
   // Create general journal model
   models.journal = function (data) {
@@ -36,7 +36,7 @@
     var that;
 
     // Set default currency on 'kind' (currency) attribute
-    jFeather.properties.kind.default = ledgerSettings.data.defaultCurrency.toJSON;
+    jFeather.properties.kind.default = f.baseCurrency;
 
     that = model(data, jFeather);
 

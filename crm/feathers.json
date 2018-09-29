@@ -20,8 +20,10 @@
             },
             "amount": {
                 "description": "Estimated sales amount",
-                "type": "number",
-                "isRequired": true
+                "type": "object",
+                "format": "money",
+                "isRequired": true,
+                "default": "money()"
             },
             "stage": {
                 "description": "Pipeline stage",

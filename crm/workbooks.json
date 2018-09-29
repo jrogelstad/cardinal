@@ -73,8 +73,6 @@
             }, {
               "attr": "dueDate"
             }, {
-              "attr": "amount"
-            }, {
               "attr": "isCompleted"
             }, {
               "attr": "stage"
