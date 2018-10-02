@@ -294,29 +294,6 @@
 }, {
     "name": "RelationWidget",
     "method": "POST",
-    "id": "6s2kh7qaixab",
-    "data": {
-        "name": "Currency",
-        "description": "Currency relation wdiget",
-        "isActive": true,
-        "feather": "Currency",
-        "valueProperty": "code",
-        "labelProperty": "description",
-        "form": {
-            "id": "5kn0ocip2zqt"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }, {
-                "attr": "note"
-            }
-        ]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
     "id": "s5gqybvksczh",
     "data": {
         "name": "LedgerAccount",
