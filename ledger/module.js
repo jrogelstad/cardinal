@@ -15,7 +15,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-
+/*global datasource, require, Promise*/
+/*jslint white, this*/
 (function () {
   "use strict";
 
@@ -27,7 +28,6 @@
     jFeather = catalog.getFeather("GeneralJournal"),
     jdFeather = catalog.getFeather("JournalDistribution"),
     laFeather = catalog.getFeather("LedgerAccount"),
-    math = require("mathjs"),
     f = require("common-core");
 
   // Create general journal model
@@ -47,7 +47,7 @@
 
     that.onValidate(function () {
       var dist = that.data.distributions().toJSON(),
-        sumcheck = math.bignumber(0);
+        sumcheck = 0;
 
       if (!dist.length) {
         throw "There are no distributions.";
@@ -56,20 +56,19 @@
       dist.forEach(function (item) {
         if (item) {
           if (item.debit) {
-            sumcheck = math.subtract(
+            sumcheck = Math.subtract(
               sumcheck, 
-              math.bignumber(item.debit)
-            );
+              item.debit);
           } else {
-            sumcheck = math.add(
+            sumcheck = Math.add(
               sumcheck, 
-              math.bignumber(item.credit)
+              item.credit
             );
           }
         }
       });
 
-      if (math.number(sumcheck) !== 0) {
+      if (sumcheck !== 0) {
         throw "Journal entries must sum to zero.";
       }
 

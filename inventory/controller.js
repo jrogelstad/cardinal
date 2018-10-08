@@ -1,9 +1,9 @@
-/*global datasource*/
+/*global datasource, require, Promise*/
+/*jslint white, this*/
 (function (datasource) {
   "strict";
 
   var f = require("./common/core"),
-    math = require("mathjs"),
     jsonpatch = require("fast-json-patch");
 
   // Register database procedure on datasource
@@ -178,7 +178,7 @@
 
               if (resp.length) {
                 parentBalance = resp[0];
-                parentBalance.balance = math.subtract(parentBalance.balance, quantity);
+                parentBalance.balance = Math.subtract(parentBalance.balance, quantity);
               } else {
                 parentBalance = {
                   id: f.createId(),
@@ -285,7 +285,7 @@
         function callback (resp) {
           if (resp.length) {
             debitLocationBalance = resp[0];
-            debitLocationBalance.balance = math.subtract(debitLocationBalance.balance, quantity);
+            debitLocationBalance.balance = Math.subtract(debitLocationBalance.balance, quantity);
           } else {
             debitLocationBalance = {
               id: f.createId(),
@@ -321,7 +321,7 @@
         function callback (resp) {
           if (resp.length) {
             creditLocationBalance = resp[0];
-            creditLocationBalance.balance = math.add(creditLocationBalance.balance, quantity);
+            creditLocationBalance.balance = Math.add(creditLocationBalance.balance, quantity);
           } else {
             creditLocationBalance = {
               id: f.createId(),

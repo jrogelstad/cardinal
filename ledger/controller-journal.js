@@ -1,13 +1,11 @@
-/*global datasource*/
+/*global datasource, require, Promise*/
+/*jslint white, this*/
 (function (datasource) {
   "strict";
 
   var doCheckJournal, doPostJournal, doPostJournals,
     f = require("./common/core"),
-    math = require("mathjs"),
     jsonpatch = require("fast-json-patch");
-
-  math.config({ precision: 6});
 
   /** 
     Journal insert handler
@@ -74,7 +72,7 @@
   */
   doCheckJournal = function (obj) {
     return new Promise (function (resolve, reject) {
-      var sumcheck = math.bignumber(0),
+      var sumcheck = 0,
         data = obj.data.journal;
 
       if (!Array.isArray(data.distributions)) {
@@ -95,9 +93,9 @@
             return;
           }
 
-          sumcheck = math.subtract(
+          sumcheck = Math.subtract(
             sumcheck, 
-            math.bignumber(dist.debit)
+            dist.debit
           );
         }
 
@@ -107,15 +105,15 @@
             return;
           }
 
-          sumcheck = math.add(
+          sumcheck = Math.add(
             sumcheck,
-            math.bignumber(dist.credit)
+            dist.credit
           );
         }
       });
 
       // Check balance
-      if (math.number(sumcheck) !== 0) {
+      if (sumcheck !== 0) {
         reject("Distribution does not balance.");
         return;
       }
@@ -181,12 +179,9 @@
 
       // Helper functions
       function compute (transDist, dist) {
-        var amount = math.number(math
-          .chain(math.bignumber(transDist.credit))
-          .subtract(math.bignumber(transDist.debit))
-          .add(math.bignumber(dist.credit))
-          .subtract(math.bignumber(dist.debit))
-          .done());
+        var amount = Math.subtract(transDist.credit, transDist.debit);
+          amount = Math.add(amount, dist.credit);
+          amount = Math.subtract(amount, dist.debit);
         if (amount > 0) {
           transDist.credit = amount;
           transDist.debit = 0;
@@ -495,16 +490,10 @@
               type = dist.node.kind.type,
               ids = getParents(dist.node.id),
               debit = function (row) {
-                row.balance = math.number(math.add(
-                  math.bignumber(row.balance), 
-                  math.bignumber(value)
-                ));
+                row.balance = Math.add(row.balance, value);
               },
               credit = function (row) {
-                row.balance = math.number(math.subtract(
-                  math.bignumber(row.balance),
-                  math.bignumber(value)
-                ));
+                row.balance = Math.subtract(row.balance, value);
               };
 
             // Iterate through trial balances for account and parents
@@ -521,19 +510,13 @@
               if (type === 'Asset' || type === 'Expense') {
                 value = dist.debit || dist.credit * -1;
 
-                balances[0].debits = math.number(math.add(
-                  math.bignumber(balances[0].debits), 
-                  math.bignumber(value)
-                ));
+                balances[0].debits = Math.add(balances[0].debits, value);
 
                 update = debit;
               } else {
                 value = dist.credit || dist.debit * -1;
 
-                balances[0].credits = math.number(math.add(
-                  math.bignumber(balances[0].credits),
-                  math.bignumber(dist.credit)
-                ));
+                balances[0].credits = Math.add(balances[0].credits, dist.credit);
 
                 update = credit;
               }
