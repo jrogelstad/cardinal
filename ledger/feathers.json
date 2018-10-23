@@ -62,12 +62,35 @@
         }
     },
     {
-        "name": "Journal",
-        "plural": "Journals",
+        "name": "LedgerTransaction",
+        "plural": "LedgerTransactions",
         "module": "Ledger",
-        "description": "Abstract journal entries",
-        "inherits": "Request",
+        "description": "Abstract ledger transactions",
         "properties": {
+            "currency": {
+                "description": "Currency transaction is in",
+                "type": {
+                    "relation": "Currency",
+                    "properties": ["code", "description"]
+                },
+                "isRequired": true
+            },
+            "date": {
+                "description": "Journal date",
+                "type": "string",
+                "format": "date",
+                "default": "today()"
+            },
+            "note": {
+                "description": "Note",
+                "type": "string"
+            },
+            "isPosted": {
+                "description": "Transaction is complete",
+                "type": "boolean",
+                "default": false,
+                "isReadOnly": true
+            },
             "number": {
                 "description": "Journal number",
                 "isReadOnly": true,
@@ -87,54 +110,60 @@
                 "description": "Reference to ledger posting",
                 "type": "string"
             }
-        },
-        "overloads": {
-            "kind": {
-                "alias": "currency",
+        }
+    },
+    {
+        "name": "LedgerDistribution",
+        "plural": "LedgerDistributions",
+        "module": "Common",
+        "description": "Ledger distribution",
+        "properties": {
+            "parent": {
+                "description": "Parent",
                 "type": {
-                    "relation": "Currency",
-                    "properties": ["code", "description"]
+                    "relation": "LedgerTransaction",
+                    "childOf": "distributions"
                 }
             },
-            "distributions": {
-                "node": {
-                    "alias": "account",
-                    "type": {
-                        "relation": "LedgerAccount",
-                        "properties": ["code", "description", "kind"]
-                    }
+            "account": {
+                "description": "Ledger account",
+                "type": {
+                    "relation": "LedgerAccount",
+                    "properties": ["code", "description", "kind"]
                 }
+            },
+            "debit": {
+                "description": "Debit",
+                "type": "object",
+                "format": "money"
+            },
+            "credit": {
+                "description": "Credit",
+                "type": "object",
+                "format": "money"
             }
         }
+    },
+    {
+        "name": "Journal",
+        "plural": "Journals",
+        "module": "Ledger",
+        "description": "Journal entries",
+        "inherits": "LedgerTransaction"
     },
     {
         "name": "GeneralJournal",
         "plural": "GeneralJournals",
         "module": "Ledger",
         "description": "General journal entries",
-        "inherits": "Journal",
-        "overloads": {
-            "kind": {
-                "type": {
-                    "relation": "Currency",
-                    "properties": ["code", "description", "type"]
-                },
-                "alias": "Currency"
-            },
-            "parent": {
-                "type": {
-                    "relation": "LedgerAccount",
-                    "properties": ["code", "description", "kind", "isUsed"]
-                }
-            }
-        }
+        "inherits": "Journal"
     },
     {
         "name": "GeneralLedgerTransaction",
         "plural": "GeneralLedgerTransactions",
         "module": "Ledger",
         "description": "General ledger entries",
-        "inherits": "Transaction",
+        "inherits": "LedgerTransaction",
         "properties": {
             "number": {
                 "description": "General ledger number",
@@ -147,16 +176,56 @@
                 },
                 "isUnique": true,
                 "inheritedFrom": "Transaction"
+            },
+            "parent": {
+                "description": "Parent action",
+                "type": {
+                    "relation": "Journal",
+                    "properties": ["currency", "date"]
+                }
             }
         }
     },
     {
         "name": "TrialBalance",
         "plural": "TrialBalances",
-        "inherits": "NodePeriodBalance",
+        "inherits": "Node",
         "module": "Ledger",
         "description": "Amount of currency in ledger accounts per period",
         "properties": {
+            "balance": {
+                "description": "Current amount",
+                "type": "object",
+                "format": "money"
+            },
+            "unit": {
+                "description": "Unit of measure",
+                "type": {
+                    "relation": "Unit",
+                    "properties": ["code", "description"]
+                },
+                "isRequired": true,
+                "default": {
+                    "id": "each"
+                }
+            },
+            "period": {
+                "description": "Period",
+                "type": {
+                    "relation": "Period",
+                    "properties": ["name", "start", "end", "isFrozen", "isClosed"]
+                }
+            },
+            "debits": {
+                "description": "Sum of debits in the period",
+                "type": "object",
+                "format": "money"
+            },
+            "credits": {
+                "description": "Sum of credits in the period",
+                "type": "object",
+                "format": "money"
+            },
             "previous": {
                 "description": "Previous node period balance",
                 "type": {

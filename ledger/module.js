@@ -58,11 +58,11 @@
           if (item.debit) {
             sumcheck = Math.subtract(
               sumcheck, 
-              item.debit);
+              item.debit.amount);
           } else {
             sumcheck = Math.add(
               sumcheck, 
-              item.credit
+              item.credit.amount
             );
           }
         }
@@ -148,28 +148,32 @@
     var that = model(data, jdFeather);
 
     that.onChange("debit", function (prop) {
-      var value = prop();
+      var value = f.copy(prop());
 
-      if (value < 0) {
-        prop.newValue(0);
-      } else if (value) {
-        that.data.credit(0);
+      if (value.amount < 0) {
+        value.amount = 0;
+        prop.newValue(value);
+      } else if (value.amount) {
+        value.amount = 0;
+        that.data.credit(value);
       }
     });
 
     that.onChange("credit", function (prop) {
-      var value = prop();
+      var value = f.copy(prop());
 
-      if (value < 0) {
-        prop.newValue(0);
+      if (value.amount < 0) {
+        value.amount = 0;
+        prop.newValue(value);
       } else if (value) {
-        that.data.debit(0);
+        value.amount = 0;
+        that.data.debit(value);
       }
     });
 
     that.onValidate(function () {
-      if (that.data.debit() - 0 === 0 &&
-          that.data.credit() - 0 === 0) {
+      if (that.data.debit().amount - 0 === 0 &&
+          that.data.credit().amount - 0 === 0) {
         throw "Debit or credit must be positive on every distribution.";
       }
     });

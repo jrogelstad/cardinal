@@ -87,27 +87,27 @@
 
       // Check distributions
       data.distributions.forEach(function (dist) {
-        if (dist.debit) {
-          if (dist.debit <= 0) {
+        if (dist.debit.amount) {
+          if (dist.debit.amount <= 0) {
             reject("Debit must be a positive number.");
             return;
           }
 
           sumcheck = Math.subtract(
             sumcheck, 
-            dist.debit
+            dist.debit.amount
           );
         }
 
-        if (dist.credit) {
-          if (dist.credit <= 0) {
+        if (dist.credit.amount) {
+          if (dist.credit.amount <= 0) {
             reject("Credit must be a positive number.");
             return;
           }
 
           sumcheck = Math.add(
             sumcheck,
-            dist.credit
+            dist.credit.amount
           );
         }
       });
@@ -179,15 +179,15 @@
 
       // Helper functions
       function compute (transDist, dist) {
-        var amount = Math.subtract(transDist.credit, transDist.debit);
-          amount = Math.add(amount, dist.credit);
-          amount = Math.subtract(amount, dist.debit);
+        var amount = Math.subtract(transDist.credit.amount, transDist.debit.amount);
+          amount = Math.add(amount, dist.credit.amount);
+          amount = Math.subtract(amount, dist.debit.amount);
         if (amount > 0) {
-          transDist.credit = amount;
-          transDist.debit = 0;
+          transDist.credit.amount = amount;
+          transDist.debit.amount = 0;
         } else {
-          transDist.credit = 0;
-          transDist.debit = amount * -1;
+          transDist.credit.amount = 0;
+          transDist.debit.amount = amount * -1;
         }
       }
 
@@ -273,10 +273,10 @@
 
           // Build list of accounts and distribution data
           journals.forEach(function (journal) {
-            if (kind && kind.id !== journal.kind.id) {
+            if (kind && kind.id !== journal.currency.id) {
               throw new Error("Journals must all be in the same currency.");
             }
-            kind = journal.kind;
+            kind = journal.currency;
 
             if (journal.isPosted) {
               throw new Error("Journal " +  journal.number + " is already posted.");
@@ -295,8 +295,8 @@
                   profitLossDist[accountId] = {
                     id: f.createId(),
                     node: dist.node,
-                    credit: dist.credit,
-                    debit: dist.debit
+                    credit: dist.credit.amount,
+                    debit: dist.debit.amount
                   };
                 }
               } else {
@@ -307,8 +307,8 @@
                   balanceSheetDist[accountId] = {
                     id: f.createId(),
                     node: dist.node,
-                    credit: dist.credit,
-                    debit: dist.debit
+                    credit: dist.credit.amount,
+                    debit: dist.debit.amount
                   };
                 }
               }
@@ -424,7 +424,7 @@
             client: obj.client,
             filter: {
               criteria: [{
-                property: "kind",
+                property: "currency",
                 value: currency},{
                 property: "parent.id",
                 operator: "IN",
@@ -508,15 +508,15 @@
               }
 
               if (type === 'Asset' || type === 'Expense') {
-                value = dist.debit || dist.credit * -1;
+                value = dist.debit.amount || dist.credit.amount * -1;
 
-                balances[0].debits = Math.add(balances[0].debits, value);
+                balances[0].debit.amounts = Math.add(balances[0].debit.amounts, value);
 
                 update = debit;
               } else {
-                value = dist.credit || dist.debit * -1;
+                value = dist.credit.amount || dist.debit.amount * -1;
 
-                balances[0].credits = Math.add(balances[0].credits, dist.credit);
+                balances[0].credit.amounts = Math.add(balances[0].credit.amounts, dist.credit.amount);
 
                 update = credit;
               }
@@ -543,7 +543,7 @@
             var payload;
 
             transaction = {
-              kind: journals[0].kind,
+              currency: journals[0].currency,
               date: date,
               note: data.note,
               distributions: distributions

@@ -802,29 +802,50 @@
         "name": "GeneralJournal",
         "id": "g6m2a2vajq5",
         "data": {
-            "kind": {
+            "currency": {
                 "id": "4y9dtthuen7z"
             },
             "date": "2018-05-01",
             "note": "Test Posting2",
             "distributions": [
             {
-                "node": {
+                "account": {
                     "id": "sv2c4nheni07"
                 },
-                "debit": 100
+                "debit": {
+                  "amount": 100,
+                  "currency": "USD"
+                },
+                "credit": {
+                  "amount": 0,
+                  "currency": "USD"
+                }
             },
             {
-                "node": {
+                "account": {
                     "id": "bkxy7neljlp6"
                 },
-                "credit": 25
+                "debit": {
+                  "amount": 0,
+                  "currency": "USD"
+                },
+                "credit": {
+                  "amount": 25,
+                  "currency": "USD"
+                }
             },
             {
-                "node": {
+                "account": {
                     "id": "d7zf6nqrg9pr"
                 },
-                "credit": 75
+                "debit": {
+                  "amount": 0,
+                  "currency": "USD"
+                },
+                "credit": {
+                  "amount": 75,
+                  "currency": "USD"
+                }
             }]
         },
         "user": "postgres"
