@@ -35,8 +35,8 @@
     data = data || {};
     var that;
 
-    // Set default currency on 'kind' (currency) attribute
-    jFeather.properties.kind.default = f.baseCurrency;
+    // Set default currency attribute
+    jFeather.properties.currency.default = f.baseCurrency;
 
     that = model(data, jFeather);
 

@@ -137,6 +137,7 @@
   */
   doPostJournal = function (obj) {
     return new Promise (function (resolve, reject) {
+        debugger;
       if (!obj.data || !obj.data.id) {
         reject("Id must be provided");
         return;
@@ -295,8 +296,14 @@
                   profitLossDist[accountId] = {
                     id: f.createId(),
                     account: dist.account,
-                    credit: dist.credit.amount,
-                    debit: dist.debit.amount
+                    credit: {
+                      currency: journal.currency.code,
+                      amount: dist.credit.amount
+                    },
+                    debit: {
+                      currency: journal.currency.code,
+                      amount: dist.debit.amount
+                    }
                   };
                 }
               } else {
@@ -307,8 +314,14 @@
                   balanceSheetDist[accountId] = {
                     id: f.createId(),
                     account: dist.account,
-                    credit: dist.credit.amount,
-                    debit: dist.debit.amount
+                    credit: {
+                      currency: journal.currency.code,
+                      amount: dist.credit.amount
+                    },
+                    debit: {
+                      currency: journal.currency.code,
+                      amount: dist.debit.amount
+                    }
                   };
                 }
               }

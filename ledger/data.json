@@ -68,7 +68,7 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "kind",
+            "attr": "currency",
             "grid": 0,
             "unit": 0
         }, {
@@ -81,6 +81,12 @@
             "grid": 1,
             "unit": 0,
             "columns": [{
+                "attr": "account.code",
+                "label": "account"
+            }, {
+                "attr": "account.description",
+                "label": "description"
+            }, {
                 "attr": "debit"
             }, {
                 "attr": "credit"
@@ -126,7 +132,7 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "kind",
+            "attr": "currency",
             "grid": 0,
             "unit": 0
         }, {
@@ -143,7 +149,7 @@
             "grid": 1,
             "unit": 0,
             "columns": [{
-                "attr": "node",
+                "attr": "account",
                 "filter": {
                   "criteria": [{
                     "property": "isParent",
@@ -151,7 +157,7 @@
                   }]
                 }
             }, {
-                "attr": "node.description",
+                "attr": "account.description",
                 "label": "Description"
             }, {
                 "attr": "debit"

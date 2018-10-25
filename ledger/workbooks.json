@@ -71,8 +71,7 @@
             }, {
               "attr": "createdBy"
             }, {
-              "attr": "kind.code",
-              "label": "Currency"
+              "attr": "currency"
             }
           ]
         }
@@ -109,7 +108,7 @@
             }, {
               "attr": "isPosted"
             }, {
-              "attr": "kind"
+              "attr": "currency"
             }
           ]
         }
