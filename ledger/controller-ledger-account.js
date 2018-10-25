@@ -27,7 +27,19 @@
               kind: currency,
               parent: account,
               period: period,
-              previous: prev
+              previous: prev,
+              balance: {
+                  currency: currency.code,
+                  amount: 0
+              },
+              debits: {
+                  currency: currency.code,
+                  amount: 0
+              },
+              credits: {
+                  currency: currency.code,
+                  amount: 0
+              }
             }     
           };
 

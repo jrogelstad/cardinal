@@ -284,17 +284,17 @@
 
             journal.distributions.forEach(function (dist) {
               var transDist,
-                accountId = dist.node.id;
+                accountId = dist.account.id;
 
-              if (dist.node.kind.type === "Revenue" ||
-                  dist.node.kind.type === "Expense") {
+              if (dist.account.kind.type === "Revenue" ||
+                  dist.account.kind.type === "Expense") {
                 transDist = profitLossDist[accountId];
                 if (transDist) {
                   compute(transDist, dist);
                 } else {
                   profitLossDist[accountId] = {
                     id: f.createId(),
-                    node: dist.node,
+                    account: dist.account,
                     credit: dist.credit.amount,
                     debit: dist.debit.amount
                   };
@@ -306,7 +306,7 @@
                 } else {
                   balanceSheetDist[accountId] = {
                     id: f.createId(),
-                    node: dist.node,
+                    account: dist.account,
                     credit: dist.credit.amount,
                     debit: dist.debit.amount
                   };
@@ -424,7 +424,7 @@
             client: obj.client,
             filter: {
               criteria: [{
-                property: "currency",
+                property: "kind",
                 value: currency},{
                 property: "parent.id",
                 operator: "IN",
@@ -487,13 +487,13 @@
           // Post balance updates
           distributions.forEach(function (dist) {
             var value,
-              type = dist.node.kind.type,
-              ids = getParents(dist.node.id),
+              type = dist.account.kind.type,
+              ids = getParents(dist.account.id),
               debit = function (row) {
-                row.balance = Math.add(row.balance, value);
+                row.balance.amount = Math.add(row.balance.amount, value);
               },
               credit = function (row) {
-                row.balance = Math.subtract(row.balance, value);
+                row.balance.amount = Math.subtract(row.balance.amount, value);
               };
 
             // Iterate through trial balances for account and parents
@@ -504,19 +504,19 @@
                 });
 
               if (!balances.length) {
-                throw new Error("No open trial balance for account " + dist.node.code + "."); 
+                throw new Error("No open trial balance for account " + dist.account.code + "."); 
               }
 
               if (type === 'Asset' || type === 'Expense') {
                 value = dist.debit.amount || dist.credit.amount * -1;
 
-                balances[0].debit.amounts = Math.add(balances[0].debit.amounts, value);
+                balances[0].debits.amount = Math.add(balances[0].debits.amount, value);
 
                 update = debit;
               } else {
                 value = dist.credit.amount || dist.debit.amount * -1;
 
-                balances[0].credit.amounts = Math.add(balances[0].credit.amounts, dist.credit.amount);
+                balances[0].credits.amount = Math.add(balances[0].credits.amount, dist.credit.amount);
 
                 update = credit;
               }

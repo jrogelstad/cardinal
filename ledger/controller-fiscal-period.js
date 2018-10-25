@@ -21,7 +21,7 @@
           prev = prevTrialBalance.find(function (row) {
             return row.parent.id === account.id;
           });
-          balance = prev ? prev.balance : 0;
+          balance = prev ? prev.balance.amount : 0;
  
           payload = {
             method: "POST",
@@ -33,7 +33,18 @@
               parent: account,
               period: fiscalPeriod,
               previous: prevPeriod,
-              balance: balance
+              balance: {
+                  currency: currency.code,
+                  amount: balance
+              },
+              debits: {
+                  currency: currency.code,
+                  ammount: 0
+              },
+              credits: {
+                  currency: currency.code,
+                  amount: 0
+              }
             }     
           };
 

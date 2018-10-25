@@ -135,12 +135,14 @@
             "debit": {
                 "description": "Debit",
                 "type": "object",
-                "format": "money"
+                "format": "money",
+                "isRequired": true
             },
             "credit": {
                 "description": "Credit",
                 "type": "object",
-                "format": "money"
+                "format": "money",
+                "isRequired": true
             }
         }
     },
@@ -196,7 +198,8 @@
             "balance": {
                 "description": "Current amount",
                 "type": "object",
-                "format": "money"
+                "format": "money",
+                "isRequired": true
             },
             "unit": {
                 "description": "Unit of measure",
@@ -219,12 +222,14 @@
             "debits": {
                 "description": "Sum of debits in the period",
                 "type": "object",
-                "format": "money"
+                "format": "money",
+                "isRequired": true
             },
             "credits": {
                 "description": "Sum of credits in the period",
                 "type": "object",
-                "format": "money"
+                "format": "money",
+                "isRequired": true
             },
             "previous": {
                 "description": "Previous node period balance",
