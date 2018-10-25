@@ -55,7 +55,7 @@
 
       dist.forEach(function (item) {
         if (item) {
-          if (item.debit) {
+          if (item.debit.amount) {
             sumcheck = Math.subtract(
               sumcheck, 
               item.debit.amount);
