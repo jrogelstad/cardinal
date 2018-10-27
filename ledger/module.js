@@ -26,7 +26,7 @@
         dataSource = require("datasource"),
         models = catalog.register("models"),
         jFeather = catalog.getFeather("GeneralJournal"),
-        jdFeather = catalog.getFeather("JournalDistribution"),
+        jdFeather = catalog.getFeather("LedgerDistribution"),
         laFeather = catalog.getFeather("LedgerAccount"),
         f = require("common-core");
 
@@ -39,6 +39,33 @@
         jFeather.properties.currency.default = f.baseCurrency;
 
         that = model(data, jFeather);
+
+        // Sync currency
+        function updateCurrency() {
+            var value, code,
+                    dist = that.data.distributions(),
+                    currency = that.data.currency();
+
+            if (currency) {
+                code = that.data.currency().data.code();
+
+                dist.forEach(function (item) {
+                    if (item.data.debit().currency !== code) {
+                        value = f.copy(item.data.debit());
+                        value.currency = code;
+                        item.data.debit(value);
+                    }
+                    if (item.data.credit().currency !== code) {
+                        value = f.copy(item.data.credit());
+                        value.currency = code;
+                        item.data.credit(value);
+                    }
+                });
+            }
+        }
+
+        that.onChanged("currency", updateCurrency);
+        that.onChanged("distributions", updateCurrency);
 
         // Can't delete posted general journals
         that.onCanDelete(function () {
@@ -147,32 +174,34 @@
         });
     };
 
-    // Create general journal distribution model
-    models.journalDistribution = function (data) {
+    // Create ledger distribution model
+    models.ledgerDistribution = function (data, ignore, parent) {
         data = data || {};
-        var that = model(data, jdFeather);
+        var that = model(data, jdFeather, parent);
 
         that.onChange("debit", function (prop) {
-            var value = f.copy(prop());
+            var debit = prop.newValue.toJSON(),
+                credit = that.data.credit.toJSON();
 
-            if (value.amount < 0) {
-                value.amount = 0;
-                prop.newValue(value);
-            } else if (value.amount) {
-                value.amount = 0;
-                that.data.credit(value);
+            if (debit.amount < 0) {
+                debit.amount = 0;
+                prop(f.copy(debit));
+            } else if (debit.amount && credit.amount) {
+                credit.amount = 0;
+                that.data.credit(f.copy(credit));
             }
         });
 
         that.onChange("credit", function (prop) {
-            var value = f.copy(prop());
+            var credit = prop.newValue.toJSON(),
+                debit = that.data.debit.toJSON();
 
-            if (value.amount < 0) {
-                value.amount = 0;
-                prop.newValue(value);
-            } else if (value) {
-                value.amount = 0;
-                that.data.debit(value);
+            if (credit.amount < 0) {
+                credit.amount = 0;
+                prop(f.copy(credit));
+            } else if (credit.amount && debit.amount) {
+                debit.amount = 0;
+                that.data.debit(f.copy(debit));
             }
         });
 

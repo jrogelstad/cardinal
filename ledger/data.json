@@ -87,9 +87,11 @@
                 "attr": "account.description",
                 "label": "Description"
             }, {
-                "attr": "debit"
+                "attr": "debit",
+                "showCurrency": false
             }, {
-                "attr": "credit"
+                "attr": "credit",
+                "showCurrency": false
             }]
         }, {
             "attr": "created",
