@@ -166,6 +166,7 @@
         "module": "Ledger",
         "description": "General ledger entries",
         "inherits": "LedgerTransaction",
+        "isReadOnly": true,
         "properties": {
             "number": {
                 "description": "General ledger number",
@@ -194,6 +195,7 @@
         "inherits": "Node",
         "module": "Ledger",
         "description": "Amount of currency in ledger accounts per period",
+        "isReadOnly": true,
         "properties": {
             "balance": {
                 "description": "Current amount",
