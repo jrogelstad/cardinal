@@ -31,6 +31,30 @@
   datasource.registerFunction("POST", "Journal", doInsertJournal,
     datasource.TRIGGER_BEFORE);
 
+  var doUpdateJournal = function (obj) {
+    return new Promise (function (resolve, reject) {
+      function callback (result) {
+        if (result.isPosted) {
+          throw new Error("Posted journal may not be edited.");
+        }
+
+        resolve();
+      }
+
+      datasource.request({
+        method: "GET",
+        name: "Journal",
+        id: obj.id,
+        client: obj.client
+      }, true)
+        .then(callback)
+        .catch(reject);
+    });
+  };
+
+  datasource.registerFunction("PATCH", "Journal", doUpdateJournal,
+    datasource.TRIGGER_BEFORE);
+    
   /** 
     Journal delete handler
   */
@@ -137,7 +161,6 @@
   */
   doPostJournal = function (obj) {
     return new Promise (function (resolve, reject) {
-        debugger;
       if (!obj.data || !obj.data.id) {
         reject("Id must be provided");
         return;

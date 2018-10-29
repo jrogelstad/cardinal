@@ -30,7 +30,7 @@
         laFeather = catalog.getFeather("LedgerAccount"),
         f = require("common-core");
 
-    // Create general journal model
+    // Create journal model
     models.journal = function (data) {
         data = data || {};
         var that;
@@ -66,8 +66,14 @@
 
         that.onChanged("currency", updateCurrency);
         that.onChanged("distributions", updateCurrency);
+        that.state().resolve("/Ready/Fetched/Clean").enter(function () {
+            if (that.data.isPosted()) {
+                that.isReadOnly(true);
+                that.state().goto("/Ready/Fetched/ReadOnly");
+            }
+        });
 
-        // Can't delete posted general journals
+        // Can't delete posted journals
         that.onCanDelete(function () {
             return !that.data.isPosted();
         });
