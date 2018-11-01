@@ -109,6 +109,12 @@
             "folio": {
                 "description": "Reference to ledger posting",
                 "type": "string"
+            },
+            "amount": {
+                "description": "Total amount",
+                "type": "object",
+                "format": "money",
+                "isReadOnly": true
             }
         }
     },

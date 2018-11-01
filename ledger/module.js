@@ -25,47 +25,65 @@
         list = require("list"),
         dataSource = require("datasource"),
         models = catalog.register("models"),
-        jFeather = catalog.getFeather("GeneralJournal"),
+        ltFeather = catalog.getFeather("LedgerTransaction"),
         jdFeather = catalog.getFeather("LedgerDistribution"),
         laFeather = catalog.getFeather("LedgerAccount"),
         f = require("common-core");
 
-    // Create journal model
-    models.journal = function (data) {
-        data = data || {};
+    // Create ledger transaction model
+    models.ledgerTransaction = function (data, feather) {
+        feather = feather || ltFeather
         var that;
 
         // Set default currency attribute
-        jFeather.properties.currency.default = f.baseCurrency;
+        feather.properties.currency.default = f.baseCurrency;
 
-        that = model(data, jFeather);
+        that = model(data, feather);
 
         // Sync currency
-        function updateCurrency() {
-            var value, code,
-                    dist = that.data.distributions(),
-                    currency = that.data.currency();
+        function update() {
+            var value,
+                dist = that.data.distributions(),
+                code = that.data.currency().data.code(),
+                minorUnit = that.data.currency().data.minorUnit(),
+                total = that.data.amount();
 
-            if (currency) {
-                code = that.data.currency().data.code();
+            // Update distributions
+            code = that.data.currency().data.code();
 
-                dist.forEach(function (item) {
-                    if (item.data.debit().currency !== code) {
-                        value = f.copy(item.data.debit());
-                        value.currency = code;
-                        item.data.debit(value);
-                    }
-                    if (item.data.credit().currency !== code) {
-                        value = f.copy(item.data.credit());
-                        value.currency = code;
-                        item.data.credit(value);
-                    }
-                });
+            dist.forEach(function (item) {
+                if (item.data.debit().currency !== code) {
+                    value = f.copy(item.data.debit());
+                    value.currency = code;
+                    item.data.debit(value);
+                }
+                if (item.data.credit().currency !== code) {
+                    value = f.copy(item.data.credit());
+                    value.currency = code;
+                    item.data.credit(value);
+                }
+            });
+
+            // Update total
+            if (total.currency !== code) {
+                total.currency = code;
             }
+
+            total.amount = 0;
+            dist.forEach(function (item) {
+                if (item.state().current()[0] !== "/Delete") {
+                    total.amount = Math.add(total.amount,
+                            item.data.debit().amount, minorUnit);
+                }
+            });
+
+            that.data.amount(total);
         }
 
-        that.onChanged("currency", updateCurrency);
-        that.onChanged("distributions", updateCurrency);
+        that.onChanged("currency", update);
+        that.onChanged("distributions", update);
+        that.onChanged("distributions.debit", update);
+        that.onChanged("distributions.credit", update);
         that.state().resolve("/Ready/Fetched/Clean").enter(function () {
             if (that.data.isPosted()) {
                 that.isReadOnly(true);
@@ -112,78 +130,12 @@
         return that;
     };
 
-    // Private helper to consolidate logic
-    function post(ids, viewModel, message, unposted) {
-        var dialog = viewModel.confirmDialog(),
-            payload = {
-                method: "POST",
-                path: "/ledger/post-journals",
-                data: {
-                    ids: ids
-                }
-            },
-            callback = function () {
-                unposted.forEach(function (model) {
-                    model.fetch();
-                });
-            },
-            error = function (err) {
-                dialog.message(err.message);
-                dialog.title("Error");
-                dialog.icon("exclamation-triangle");
-                dialog.onOk(undefined);
-                dialog.show();
-            };
-
-        dialog.message(message);
-        dialog.icon("question-circle");
-        dialog.onOk(function () {
-            dataSource.request(payload)
-                .then(callback)
-                .catch(error);
-        });
-        dialog.show();
-    }
-
-    // Static functions
-    models.journal.list = list("Journal");
-    models.journal.post = function (viewModel) {
-        var message = "Are you sure you want to post the selected journals?",
-            unposted = viewModel.tableWidget().selections().filter(function (model) {
-                return !model.data.isPosted();
-            }),
-            ids = unposted.map(function (model) {
-                return model.id();
-            });
-
-        if (!ids.length) {
-            return;
-        }
-
-        post(ids, viewModel, message, unposted);
-    };
-    models.generalJournal.postAll = function (viewModel) {
-        var message = "Are you sure you want to post all unposted journals?",
-            // Have to do this first because we made filter do something else on lists!
-            ary = viewModel.tableWidget().models().map(function (model) {
-                return model;
-            }),
-            unposted = ary.filter(function (model) {
-                return !model.data.isPosted();
-            });
-
-        post(null, viewModel, message, unposted);
-    };
-    models.generalJournal.postCheck = function (selections) {
-        return selections.some(function (model) {
-            return !model.data.isPosted();
-        });
-    };
+    models.ledgerTransaction.list = list("LedgerTransaction");
 
     // Create ledger distribution model
-    models.ledgerDistribution = function (data, ignore, parent) {
-        data = data || {};
-        var that = model(data, jdFeather, parent);
+    models.ledgerDistribution = function (data, feather) {
+        feather = feather || jdFeather
+        var that = model(data, feather);
 
         that.onChange("debit", function (prop) {
             var debit = prop.newValue.toJSON(),
@@ -221,10 +173,79 @@
         return that;
     };
 
+    models.ledgerDistribution.list = list("LedgerDistribution");
+
+    // Private helper to consolidate logic
+    function post(ids, viewModel, message, unposted) {
+        var dialog = viewModel.confirmDialog(),
+            payload = {
+                method: "POST",
+                path: "/ledger/post-journals",
+                data: {
+                    ids: ids
+                }
+            },
+            callback = function () {
+                unposted.forEach(function (model) {
+                    model.fetch();
+                });
+            },
+            error = function (err) {
+                dialog.message(err.message);
+                dialog.title("Error");
+                dialog.icon("exclamation-triangle");
+                dialog.onOk(undefined);
+                dialog.show();
+            };
+
+        dialog.message(message);
+        dialog.icon("question-circle");
+        dialog.onOk(function () {
+            dataSource.request(payload)
+                .then(callback)
+                .catch(error);
+        });
+        dialog.show();
+    }
+
+    // Static functions
+    models.journal.post = function (viewModel) {
+        var message = "Are you sure you want to post the selected journals?",
+            unposted = viewModel.tableWidget().selections().filter(function (model) {
+                return !model.data.isPosted();
+            }),
+            ids = unposted.map(function (model) {
+                return model.id();
+            });
+
+        if (!ids.length) {
+            return;
+        }
+
+        post(ids, viewModel, message, unposted);
+    };
+    models.journal.postAll = function (viewModel) {
+        var message = "Are you sure you want to post all unposted journals?",
+            // Have to do this first because we made filter do something else on lists!
+            ary = viewModel.tableWidget().models().map(function (model) {
+                return model;
+            }),
+            unposted = ary.filter(function (model) {
+                return !model.data.isPosted();
+            });
+
+        post(null, viewModel, message, unposted);
+    };
+    models.journal.postCheck = function (selections) {
+        return selections.some(function (model) {
+            return !model.data.isPosted();
+        });
+    };
+
     // Create ledger account model
-    models.ledgerAccount = function (data) {
-        data = data || {};
-        var that = model(data, laFeather);
+    models.ledgerAccount = function (data, feather) {
+        feather = feather || laFeather;
+        var that = model(data, feather);
 
         that.onCanDelete(function () {
             return !that.data.isUsed() && !that.data.isParent();
