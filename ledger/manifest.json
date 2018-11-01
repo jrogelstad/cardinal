@@ -31,6 +31,11 @@
             "path": "controller-journal.js"
         },
         {
+            "type": "controller",
+            "name": "LedgerLedgerTransaction",
+            "path": "controller-ledger-transaction.js"
+        },
+        {
             "type": "route",
             "name": "Ledger",
             "path": "route-ledger.js"
