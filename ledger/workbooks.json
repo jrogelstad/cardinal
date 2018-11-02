@@ -67,6 +67,8 @@
             }, {
               "attr": "date"
             }, {
+              "attr": "amount"
+            }, {
               "attr": "created"
             }, {
               "attr": "createdBy"
