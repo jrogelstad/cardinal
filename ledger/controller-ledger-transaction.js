@@ -3,7 +3,8 @@
 (function (datasource) {
     "strict";
 
-    var jsonpatch = require("fast-json-patch");
+    var f = require("./common/core"),
+      jsonpatch = require("fast-json-patch");
 
     /**
       Check whether a passed ledger transaction is valid or not.
@@ -16,7 +17,7 @@
     function doCheckLedgerTransaction (obj) {
         return new Promise(function (resolve, reject) {
             var sumcheck = 0,
-                data = obj.data.journal;
+                data = obj.data.journal;            
 
             if(!Array.isArray(data.distributions)) {
                 reject("Distributions must be a valid array.");
@@ -67,13 +68,27 @@
     }
 
     datasource.registerFunction("POST", "checkLedgerTransaction", doCheckLedgerTransaction);
+    
+    function total (data) {
+        var totalAmount = {
+            amount: 0,
+            currency: data.currency.code
+        };
+        data.distributions.forEach(function (item) {
+            totalAmount.amount = Math.add(totalAmount.amount, item.debit.amount);
+        });
+        data.amount = totalAmount;
+    }
 
     /** 
       Ledger Transaction insert handler
     */
     function doInsertLedgerTransaction(obj) {
         return new Promise(function (resolve, reject) {
-            var payload = {
+            var payload,
+                data = obj.data;
+            
+            payload = {
                 method: "POST",
                 name: "checkLedgerTransaction",
                 client: obj.client,
@@ -81,30 +96,52 @@
                     journal: obj.data
                 }
             };
+            
+            function callback () {
+                if (!data.currency) {
+                    throw "Currency is required for ledger transaction";
+                }
+
+                total(data);
+
+                resolve();
+            }                
 
             // Validate
             datasource.request(payload, true)
-                .then(resolve)
+                .then(callback)
                 .catch(reject);
         });
     }
 
-    datasource.registerFunction("POST", "Journal", doInsertLedgerTransaction,
+    datasource.registerFunction("POST", "LedgerTransaction", doInsertLedgerTransaction,
         datasource.TRIGGER_BEFORE);
 
     function doUpdateLedgerTransaction(obj) {
         return new Promise(function (resolve, reject) {
             function callback(result) {
+                var newRec;
+
                 if(result.isPosted) {
                     throw new Error("Posted ledger transaction may not be edited.");
                 }
+
+                // Apply changes submitted to copy of current
+                newRec = f.copy(result);
+                jsonpatch.apply(newRec, obj.data);
+
+                // Add subtotal
+                total(newRec);
+
+                // Update patch
+                obj.data = jsonpatch.compare(result, newRec);
 
                 resolve();
             }
 
             datasource.request({
                     method: "GET",
-                    name: "Journal",
+                    name: "LedgerTransaction",
                     id: obj.id,
                     client: obj.client
                 }, true)
@@ -113,7 +150,7 @@
         });
     }
 
-    datasource.registerFunction("PATCH", "Journal", doUpdateLedgerTransaction,
+    datasource.registerFunction("PATCH", "LedgerTransaction", doUpdateLedgerTransaction,
         datasource.TRIGGER_BEFORE);
 
 }(datasource));
