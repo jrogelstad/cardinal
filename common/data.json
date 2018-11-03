@@ -1,73 +1,6 @@
 [{
     "name": "Form",
     "method": "POST",
-    "id": "cvt2t75sl90s",
-    "data": {
-        "name": "Contact",
-        "description": "Contact form",
-        "module": "Common",
-        "feather": "Contact",
-        "tabs": [{
-            "name": "Created"
-        }, {
-            "name": "Updated"
-        }],
-        "attrs": [{
-            "attr": "name",
-            "grid": 0,
-            "unit": 0
-        }, {
-            "attr": "email",
-            "grid": 0,
-            "unit": 0
-        }, {
-            "attr": "isActive",
-            "grid": 0,
-            "unit": 0
-        }, {
-            "attr": "workPhone",
-            "grid": 0,
-            "unit": 0
-        }, {
-            "attr": "homePhone",
-            "grid": 0,
-            "unit": 0
-        }, {
-            "attr": "birthDate",
-            "grid": 0,
-            "unit": 1
-        }, {
-            "attr": "annualIncome",
-            "grid": 0,
-            "unit": 1
-        }, {
-            "attr": "creditScore",
-            "grid": 0,
-            "unit": 1
-        }, {
-            "attr": "role",
-            "grid": 0,
-            "unit": 1
-        }, {
-            "attr": "created",
-            "grid": 1
-        }, {
-            "attr": "createdBy",
-            "grid": 1
-        }, {
-            "attr": "updated",
-            "grid": 2
-        }, {
-            "attr": "updatedBy",
-            "grid": 2
-        }, {
-            "attr": "objectType",
-            "grid": 2
-        }]
-    }
-}, {
-    "name": "Form",
-    "method": "POST",
     "id": "16f5p7dor8g6",
     "data": {
         "name": "Activity",
@@ -280,35 +213,6 @@
         ]
     }
 }, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "e7u0jgh1c6gm",
-    "data": {
-        "name": "Contact",
-        "description": "Contact relation wdiget",
-        "isActive": true,
-        "feather": "Contact",
-        "valueProperty": "name",
-        "labelProperty": "homePhone",
-        "form": {
-            "id": "cvt2t75sl90s"
-        },
-        "searchColumns": [{
-                "attr": "name"
-            }, {
-                "attr": "homePhone"
-            }, {
-                "attr": "workPhone"
-            }, {
-                "attr": "address.state"
-            }, {
-                "attr": "address.postalCode"
-            }, {
-                "attr": "address.ountry"
-            }
-        ]
-    }
-}, {
     "name": "Form",
     "method": "POST",
     "id": "l353cu26nozk",
@@ -351,26 +255,5 @@
                 "attr": "description"
             }
         ]
-    }
-}, {
-    "name": "Form",
-    "method": "POST",
-    "id": "o6qktnxyz4dk",
-    "data": {
-        "name": "MyContact",
-        "description": "My Contact form",
-        "feather": "MyContact",
-        "module": "Common",
-        "attrs": [{
-            "attr": "name"
-        }, {
-            "attr": "email"
-        }, {
-            "attr": "homePhone"
-        }, {
-            "attr": "workPhone"
-        }, {
-            "attr": "isActive"
-        }]
     }
 }]

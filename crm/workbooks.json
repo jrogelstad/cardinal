@@ -1,37 +1,14 @@
 [
   {
-    "name": "Contact",
+    "name": "Pipeline",
     "module": "CRM",
     "launchConfig": {
-      "icon": "comments-o",
+      "icon": "line-chart",
       "color": "white",
       "backgroundColor": "#FBEB0A"
     },
     "defaultConfig": [
-      {
-        "name": "Contacts",
-        "feather": "Contact",
-        "list": {
-          "columns": [{
-              "attr": "name"
-            }, {
-              "attr": "email"
-            }, {
-              "attr": "isActive"
-            }, {
-              "attr": "birthDate"
-            }, {
-              "attr": "workPhone"
-            }, {
-              "attr": "homePhone"
-            }, {
-              "attr": "creditScore"
-            }, {
-              "attr": "objectType"
-            }
-          ]
-        }
-      }, {
+    {
         "name": "Leads",
         "feather": "Lead",
         "form": "pgz21vbdunsy",
@@ -39,17 +16,17 @@
           "columns": [{
               "attr": "company"
             }, {
-              "attr": "name"
+              "attr": "firstName"
             }, {
-              "attr": "email"
+              "attr": "lastName"
             }, {
               "attr": "isActive"
             }, {
-              "attr": "birthDate"
+              "attr": "primaryEmail"
             }, {
-              "attr": "workPhone"
+              "attr": "primaryPhone"
             }, {
-              "attr": "homePhone"
+              "attr": "opportunity"
             }, {
               "attr": "annualIncome"
             }, {

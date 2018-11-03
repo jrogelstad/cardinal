@@ -16,8 +16,9 @@
         "method": "POST",
         "id": "hello",
         "data": {
-            "email": "jill@gmail.com",
-            "name": "Jill Doe"
+            "primaryEmail": "jill@gmail.com",
+            "firstName": "Jill",
+            "lastName":"Doe"
         }
     },
     {
@@ -25,8 +26,9 @@
         "method": "POST",
         "id": "hello1",
         "data": {
-            "email": "jn89911@gmail.com",
-            "name": "Jane Smith"
+            "primaryEmail": "jn89911@gmail.com",
+            "firstName": "Jane",
+            "lastName": "Smith"
         }
     },
     {
@@ -34,8 +36,9 @@
         "method": "POST",
         "id": "msn1",
         "data": {
-            "email": "blackbandit@yahoo.com",
-            "name": "Orin Blackwell"
+            "primaryEmail": "blackbandit@yahoo.com",
+            "firstName": "Orin",
+            "lastName": "Blackwell"
         }
     },
     {
@@ -43,8 +46,9 @@
         "method": "POST",
         "id": "msn2",
         "data": {
-            "email": "scarface@gmail.com",
-            "name": "Antoin Scarborough"
+            "primaryEmail": "scarface@gmail.com",
+            "firstName": "Antoin",
+            "lastName": "Scarborough"
         }
     },
     {
@@ -52,8 +56,9 @@
         "method": "POST",
         "id": "lead1",
         "data": {
-            "email": "ag8912@gmail.com",
-            "name": "Armin Ghia"
+            "primaryEmail": "ag8912@gmail.com",
+            "firstName": "Armin",
+            "lastName": "Ghia"
         }
     },
     {

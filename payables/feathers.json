@@ -34,7 +34,7 @@
                 "description": "Contact",
                 "type": {
                   "relation": "Contact",
-                  "properties": ["name", "email", "homePhone", "workPhone"]
+                  "properties": ["fullName", "primaryEmail", "primaryPhone"]
                 }
             },
             "isActive": {

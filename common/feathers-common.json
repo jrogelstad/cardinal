@@ -1,149 +1,5 @@
 [
     {
-        "name": "Note",
-        "module": "Common",
-        "description": "Note",
-        "properties": {
-            "text": {
-                "description": "Note text",
-                "type": "string"
-            }
-        }
-    },
-    {
-        "name": "DocumentNote",
-        "module": "Common",
-        "description": "Note on document",
-        "inherits": "Note",
-        "properties": {
-            "parent": {
-                "description": "Parent document",
-                "type": {
-                    "relation": "Document",
-                    "childOf": "notes"
-                }
-            }
-        }
-    },
-    {
-        "name": "Contact",
-        "plural": "Contacts",
-        "module": "Common",
-        "description": "Information about a person",
-        "inherits": "Document",
-        "properties": {
-            "name": {
-                "description": "Name",
-                "type": "string"
-            },
-            "email": {
-                "description": "email",
-                "type": "string"
-            },
-            "isActive": {
-                "description": "Active status",
-                "type": "boolean",
-                "default": true
-            },
-            "birthDate": {
-                "description": "Active status",
-                "type": "string",
-                "format": "date",
-                "default": null
-            },
-            "workPhone": {
-                "description": "Work phone",
-                "type": "string"
-            },
-            "homePhone": {
-                "description": "Work phone",
-                "type": "string"
-            },
-            "annualIncome": {
-                "description": "Work phone",
-                "type": "number",
-                "scale": 2
-            },
-            "creditScore": {
-                "description": "Credit Score",
-                "type": "integer",
-                "min": 0,
-                "max": 800
-            },
-            "role": {
-                "description": "Role",
-                "type": {
-                    "relation": "Role",
-                    "properties": ["name", "description"]
-                }
-            }
-        }
-    },
-    {
-        "name": "MyContact",
-        "plural": "MyContacts",
-        "module": "Common",
-        "inherits": "Contact",
-        "description": "My private contacts"
-    },
-    {
-        "name": "Address",
-        "plural": "Addresses",
-        "module": "Common",
-        "description": "Physical location",
-        "properties": {
-            "type": {
-                "description": "Home, work, other",
-                "type": "string"
-            },
-            "line1": {
-                "description": "Street3",
-                "type": "string"
-            },
-            "line2": {
-                "description": "Street2",
-                "type": "string"
-            },
-            "city": {
-                "description": "City",
-                "type": "string"
-            },
-            "state": {
-                "description": "State",
-                "type": "string"
-            },
-            "postalCode": {
-                "description": "Postal code",
-                "type": "string"
-            },
-            "country": {
-                "description": "Country",
-                "type": "string"
-            }
-        }
-    },
-    {
-        "name": "ContactAddress",
-        "module": "Common",
-        "description": "Contact address",
-        "properties": {
-            "parent": {
-                "description": "Parent",
-                "type": {
-                    "relation": "Contact",
-                    "childOf": "addresses"
-                }
-            },
-            "address": {
-                "description": "Address",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
-                }
-            }
-        }
-    },
-    {
         "name": "Activity",
         "plural": "Activities",
         "module": "Common",
@@ -188,16 +44,16 @@
         }
     }, 
     {
-        "name": "ActivityNote",
+        "name": "ActivityComment",
         "module": "Common",
-        "description": "Note on Activity",
-        "inherits": "Note",
+        "description": "Comment on Activity",
+        "inherits": "Comment",
         "properties": {
             "parent": {
                 "description": "Parent activity",
                 "type": {
                     "relation": "Activity",
-                    "childOf": "notes"
+                    "childOf": "comments"
                 }
             }
         }
@@ -261,12 +117,6 @@
                 "description": "Number",
                 "type": "number"
             },
-            "money": {
-                "description": "Custom number",
-                "type": "number",
-                "precision": 14,
-                "scale": 2
-            },
             "date": {
                 "description": "Date",
                 "type": "string",
@@ -283,6 +133,31 @@
                 "description": "Text",
                 "type": "string",
                 "format": "password"
+            },
+            "tel": {
+                "description": "Phone",
+                "type": "string",
+                "format": "tel"
+            },
+            "url": {
+                "description": "Hyperlink",
+                "type": "string",
+                "format": "url"
+            },
+            "textArea": {
+                "description": "Large text area",
+                "type": "string",
+                "format": "textArea"
+            },
+            "color": {
+                "description": "Color picker",
+                "type": "string",
+                "format": "color"
+            },
+            "money": {
+                "description": "Money object",
+                "type": "object",
+                "format": "money"
             }
         }
     }

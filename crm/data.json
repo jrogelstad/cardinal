@@ -13,11 +13,19 @@
             "name": "Updated"
         }],
         "attrs": [{
-            "attr": "name",
+            "attr": "firstName",
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "email",
+            "attr": "lastName",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "primaryEmail",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "primaryEmailType",
             "grid": 0,
             "unit": 0
         }, {
@@ -25,17 +33,13 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "workPhone",
+            "attr": "primaryPhone",
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "homePhone",
+            "attr": "primaryPhoneType",
             "grid": 0,
             "unit": 0
-        }, {
-            "attr": "birthDate",
-            "grid": 0,
-            "unit": 1
         }, {
             "attr": "annualIncome",
             "grid": 0,

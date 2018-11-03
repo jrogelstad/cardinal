@@ -34,8 +34,9 @@
                 "type": {
                     "relation": "Contact",
                     "properties": [
-                        "name",
-                        "email"
+                        "fullName",
+                        "primaryEmail",
+                        "primaryPhone"
                     ]
                 }
             }
@@ -67,10 +68,6 @@
                 "description": "Company",
                 "type": "string"
             },
-            "remarks": {
-                "description": "Misc. text",
-                "type": "string"
-            },
             "probability": {
                 "description": "Probability of closing",
                 "type": "number"
@@ -80,6 +77,29 @@
                 "type": {
                     "relation": "Opportunity",
                     "properties": ["number", "name", "description"]
+                }
+            },
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
+            },
+            "annualIncome": {
+                "description": "Work phone",
+                "type": "number",
+                "scale": 2
+            },
+            "creditScore": {
+                "description": "Credit Score",
+                "type": "integer",
+                "min": 0,
+                "max": 800
+            },
+            "role": {
+                "description": "Role",
+                "type": {
+                    "relation": "Role",
+                    "properties": ["name", "description"]
                 }
             }
         }
