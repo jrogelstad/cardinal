@@ -71,7 +71,7 @@
                 "description": "Currency transaction is in",
                 "type": {
                     "relation": "Currency",
-                    "properties": ["code", "description"]
+                    "properties": ["code", "description", "minorUnit"]
                 },
                 "isRequired": true
             },
