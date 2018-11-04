@@ -24,7 +24,7 @@
                 "description": "Physical address",
                 "type": {
                     "relation": "Address",
-                    "properties": ["line1", "line2", "city", "state", "postalCode", "country"]
+                    "properties": ["street", "unit", "city", "state", "postalCode", "country"]
                 }
             }
         }

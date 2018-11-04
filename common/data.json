@@ -163,58 +163,6 @@
 }, {
     "name": "Form",
     "method": "POST",
-    "id": "wwbkh4u9nd4s",
-    "data": {
-        "name": "Address",
-        "description": "Address form",
-        "feather": "Address",
-        "module": "Common",
-        "attrs": [{
-            "attr": "line1"
-        }, {
-            "attr": "line2"
-        }, {
-            "attr": "city"
-        }, {
-            "attr": "state"
-        }, {
-            "attr": "postalCode"
-        }, {
-            "attr": "country"
-        }]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "1g0xaicx1c8a",
-    "data": {
-        "name": "Address",
-        "description": "Address relation wdiget",
-        "isActive": true,
-        "feather": "Address",
-        "valueProperty": "line1",
-        "labelProperty": "city",
-        "form": {
-            "id": "wwbkh4u9nd4s"
-        },
-        "searchColumns": [{
-                "attr": "line1"
-            }, {
-                "attr": "line2"
-            }, {
-                "attr": "city"
-            }, {
-                "attr": "state"
-            }, {
-                "attr": "postalCode"
-            }, {
-                "attr": "country"
-            }
-        ]
-    }
-}, {
-    "name": "Form",
-    "method": "POST",
     "id": "l353cu26nozk",
     "data": {
         "name": "Kind",
