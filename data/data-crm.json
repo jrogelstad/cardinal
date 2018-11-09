@@ -16,7 +16,7 @@
         "method": "POST",
         "id": "hello",
         "data": {
-            "primaryEmail": "jill@gmail.com",
+            "email": "jill@gmail.com",
             "firstName": "Jill",
             "lastName":"Doe"
         }
@@ -26,7 +26,7 @@
         "method": "POST",
         "id": "hello1",
         "data": {
-            "primaryEmail": "jn89911@gmail.com",
+            "email": "jn89911@gmail.com",
             "firstName": "Jane",
             "lastName": "Smith"
         }
@@ -36,7 +36,7 @@
         "method": "POST",
         "id": "msn1",
         "data": {
-            "primaryEmail": "blackbandit@yahoo.com",
+            "email": "blackbandit@yahoo.com",
             "firstName": "Orin",
             "lastName": "Blackwell"
         }
@@ -46,7 +46,7 @@
         "method": "POST",
         "id": "msn2",
         "data": {
-            "primaryEmail": "scarface@gmail.com",
+            "email": "scarface@gmail.com",
             "firstName": "Antoin",
             "lastName": "Scarborough"
         }
@@ -56,7 +56,7 @@
         "method": "POST",
         "id": "lead1",
         "data": {
-            "primaryEmail": "ag8912@gmail.com",
+            "email": "ag8912@gmail.com",
             "firstName": "Armin",
             "lastName": "Ghia"
         }

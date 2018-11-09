@@ -34,7 +34,7 @@
                 "description": "Contact",
                 "type": {
                   "relation": "Contact",
-                  "properties": ["fullName", "primaryEmail", "primaryPhone"]
+                  "properties": ["fullName", "email", "phone", "address"]
                 }
             },
             "creditStatus": {

@@ -35,8 +35,9 @@
                     "relation": "Contact",
                     "properties": [
                         "fullName",
-                        "primaryEmail",
-                        "primaryPhone"
+                        "email",
+                        "phone",
+                        "address"
                     ]
                 }
             }
