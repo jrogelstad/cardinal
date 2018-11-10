@@ -27,9 +27,9 @@
             }, {
               "attr": "contact.email"
             }, {
-              "attr": "billToAddress.city"
+              "attr": "billTo.city"
             }, {
-              "attr": "billToAddress.state"
+              "attr": "billTo.state"
             }
           ],
           "filter": {

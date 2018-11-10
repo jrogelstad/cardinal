@@ -265,7 +265,7 @@
             "contact" : {
                 "id": "jdoe"
             },
-            "billToAddress": {
+            "billTo": {
                 "id": "C1A",
                 "street": "9801 Church Street",
                 "city": "West Chester",
@@ -273,7 +273,7 @@
                 "postalCode": "19380",
                 "country": "United States"
             },
-            "shipToAddress": {
+            "shipTo": {
                 "id": "C1B",
                 "street": "9801 Church Street",
                 "city": "West Chester",
@@ -293,7 +293,7 @@
             "contact" : {
                 "id": "jsmith"
             },
-            "billToAddress": {
+            "billTo": {
                 "id": "C2A",
                 "street": "869 Urban Avenue",
                 "city": "Phoenixville",
@@ -301,7 +301,7 @@
                 "postalCode": "19460",
                 "country": "United States"
             },
-            "shipToAddress": {
+            "shipTo": {
                 "id": "C2B",
                 "street": "432 Mall Blvd.",
                 "city": "Phoenixville",
@@ -321,7 +321,7 @@
             "contact" : {
                 "id": "ascarborough"
             },
-            "billToAddress": {
+            "billTo": {
                 "id": "C3A",
                 "street": "1076 Lancaster Ave.",
                 "city": "Downingtown",
@@ -329,7 +329,7 @@
                 "postalCode": "19335",
                 "country": "United States"
             },
-            "shipToAddress": {
+            "shipTo": {
                 "id": "C3A",
                 "street": "1076 Lancaster Ave.",
                 "city": "Downingtown",

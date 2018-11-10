@@ -18,7 +18,7 @@
                 "isUnique": true,
                 "inheritedFrom": "Node"
             },
-            "billToAddress": {
+            "billTo": {
                 "description": "Bill to Address",
                 "type": {
                     "relation": "Address",
@@ -27,7 +27,7 @@
                     "isChild": true
                 }
             },
-            "shipToAddress": {
+            "shipTo": {
                 "description": "Ship to Address",
                 "type": {
                     "relation": "Address",
