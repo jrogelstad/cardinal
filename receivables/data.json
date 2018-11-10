@@ -1,0 +1,76 @@
+[{
+    "name": "Form",
+    "method": "POST",
+    "id": "nkwmnrfy874f",
+    "data": {
+        "name": "Customer",
+        "description": "Customer form",
+        "module": "Receivables",
+        "feather": "Customer",
+        "tabs": [{
+            "name": "Credit"
+        }, {
+            "name": "Audit"
+        }],
+        "attrs": [{
+            "attr": "code",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "description",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "billToAddress",
+            "grid": 0,
+            "unit": 2
+        }, {
+            "attr": "shipToAddress",
+            "grid": 0,
+            "unit": 2
+        }, {
+            "attr": "creditStatus",
+            "grid": 1,
+            "unit": 0
+        }, {
+            "attr": "created",
+            "grid": 2
+        }, {
+            "attr": "createdBy",
+            "grid": 2
+        }, {
+            "attr": "updated",
+            "grid": 2
+        }, {
+            "attr": "updatedBy",
+            "grid": 2
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "5za0lefbzqmc",
+    "data": {
+        "name": "Customer",
+        "description": "Customer relation wdiget",
+        "isActive": true,
+        "feather": "Customer",
+        "valueProperty": "code",
+        "labelProperty": "name",
+        "form": {
+            "id": "nkwmnrfy874f"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "name"
+            }, {
+                "attr": "createdBy"
+            }, {
+                "attr": "updated"
+            }, {
+                "attr": "updatedBy"
+            }
+        ]
+    }
+}]

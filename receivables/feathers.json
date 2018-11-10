@@ -18,17 +18,23 @@
                 "isUnique": true,
                 "inheritedFrom": "Node"
             },
-            "name": {
-                "description": "Customer name",
-                "type": "string"
-            },
             "billToAddress": {
                 "description": "Bill to Address",
-                "type": "string"
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"],
+                    "isChild": true
+                }
             },
             "shipToAddress": {
                 "description": "Ship to Address",
-                "type": "string"
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"],
+                    "isChild": true
+                }
             },
             "contact": {
                 "description": "Contact",
@@ -39,12 +45,19 @@
             },
             "creditStatus": {
                 "description": "creditStatus",
-                "type": "string"
+                "type": "string",
+                "format": "enum",
+				"dataList": ["Good", "Warn", "Hold"]
             },
             "isActive": {
                 "description": "Active status",
                 "type": "boolean",
                 "default": true
+            }
+        },
+        "overloads": {
+            "description": {
+                "alias": "name"
             }
         }
     },

@@ -117,52 +117,6 @@
 }, {
     "name": "Form",
     "method": "POST",
-    "id": "ug5vvt3zho03",
-    "data": {
-        "name": "Customer",
-        "description": "Customer form",
-        "feather": "Customer",
-        "module": "Common",
-        "attrs": [{
-            "attr": "code"
-        }, {
-            "attr": "name"
-        }, {
-            "attr": "creditStatus"
-        }, {
-            "attr": "isActive"
-        }]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "5za0lefbzqmc",
-    "data": {
-        "name": "Customer",
-        "description": "Customer relation wdiget",
-        "isActive": true,
-        "feather": "Customer",
-        "valueProperty": "code",
-        "labelProperty": "name",
-        "form": {
-            "id": "ug5vvt3zho03"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "name"
-            }, {
-                "attr": "createdBy"
-            }, {
-                "attr": "updated"
-            }, {
-                "attr": "updatedBy"
-            }
-        ]
-    }
-}, {
-    "name": "Form",
-    "method": "POST",
     "id": "l353cu26nozk",
     "data": {
         "name": "Kind",

@@ -21,7 +21,7 @@
                 "description": "Customer",
                 "type": {
                     "relation": "Customer",
-                    "properties": ["code", "name"]
+                    "properties": ["code", "description"]
                 } 
             },
             "billToAddress": {

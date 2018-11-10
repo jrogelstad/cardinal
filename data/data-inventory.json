@@ -260,8 +260,27 @@
         "id": "tip3j0u9g58l",
         "data": {
             "code": "C00001",
-            "description": "Anglo Thompson",
-            "creditStatus": "Good"
+            "description": "West Chester Bicycle Company",
+            "creditStatus": "Good",
+            "contact" : {
+                "id": "jdoe"
+            },
+            "billToAddress": {
+                "id": "C1A",
+                "street": "9801 Church Street",
+                "city": "West Chester",
+                "state": "PA",
+                "postalCode": "19380",
+                "country": "United States"
+            },
+            "shipToAddress": {
+                "id": "C1B",
+                "street": "9801 Church Street",
+                "city": "West Chester",
+                "state": "PA",
+                "postalCode": "19380",
+                "country": "United States"
+            }
         }
     }, {
         "name": "Customer",
@@ -269,8 +288,27 @@
         "id": "jfj635axkhbb",
         "data": {
             "code": "C00002",
-            "description": "Freida Flannigan",
-            "creditStatus": "Good"
+            "description": "Enlightened Cycling",
+            "creditStatus": "Good",
+            "contact" : {
+                "id": "jsmith"
+            },
+            "billToAddress": {
+                "id": "C2A",
+                "street": "869 Urban Avenue",
+                "city": "Phoenixville",
+                "state": "PA",
+                "postalCode": "19460",
+                "country": "United States"
+            },
+            "shipToAddress": {
+                "id": "C2B",
+                "street": "432 Mall Blvd.",
+                "city": "Phoenixville",
+                "state": "PA",
+                "postalCode": "19460",
+                "country": "United States"
+            }
         }
     }, {
         "name": "Customer",
@@ -278,8 +316,27 @@
         "id": "brwlmg5fnsl",
         "data": {
             "code": "C00003",
-            "description": "Courtney Casper",
-            "creditStatus": "Good"
+            "description": "Downingtown Cycling",
+            "creditStatus": "Good",
+            "contact" : {
+                "id": "ascarborough"
+            },
+            "billToAddress": {
+                "id": "C3A",
+                "street": "1076 Lancaster Ave.",
+                "city": "Downingtown",
+                "state": "PA",
+                "postalCode": "19335",
+                "country": "United States"
+            },
+            "shipToAddress": {
+                "id": "C3A",
+                "street": "1076 Lancaster Ave.",
+                "city": "Downingtown",
+                "state": "PA",
+                "postalCode": "19335",
+                "country": "United States"
+            }
         }
     }, {
         "name": "Kind",
