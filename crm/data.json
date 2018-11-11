@@ -21,11 +21,11 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "primaryEmail",
+            "attr": "email",
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "primaryEmailType",
+            "attr": "emailType",
             "grid": 0,
             "unit": 0
         }, {
@@ -33,11 +33,11 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "primaryPhone",
+            "attr": "phone",
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "primaryPhoneType",
+            "attr": "phoneType",
             "grid": 0,
             "unit": 0
         }, {

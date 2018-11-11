@@ -22,9 +22,9 @@
             }, {
               "attr": "isActive"
             }, {
-              "attr": "primaryEmail"
+              "attr": "email"
             }, {
-              "attr": "primaryPhone"
+              "attr": "phone"
             }, {
               "attr": "opportunity"
             }, {
