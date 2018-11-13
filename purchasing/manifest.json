@@ -6,10 +6,6 @@
         {
             "type": "module",
             "path": "module.js"
-        },
-        {
-            "type": "workbook",
-            "path": "workbooks.json"
         }
     ]
 }
