@@ -32,7 +32,7 @@
 
     // Create ledger transaction model
     models.ledgerTransaction = function (data, feather) {
-        feather = feather || ltFeather
+        feather = feather || ltFeather;
         var that;
 
         // Set default currency attribute
@@ -96,31 +96,28 @@
             return !that.data.isPosted();
         });
 
+        function sum(total, item) {
+            if (item.debit.amount) {
+                return Math.subtract(
+                    total,
+                    item.debit.amount
+                );
+            } else {
+                return Math.add(
+                    total,
+                    item.credit.amount
+                );
+            }
+        }
+
         that.onValidate(function () {
-            var dist = that.data.distributions().toJSON(),
-                sumcheck = 0;
+            var dist = that.data.distributions().toJSON();
 
             if (!dist.length) {
                 throw "There are no distributions.";
             }
 
-            dist.forEach(function (item) {
-                if (item) {
-                    if (item.debit.amount) {
-                        sumcheck = Math.subtract(
-                            sumcheck,
-                            item.debit.amount
-                        );
-                    } else {
-                        sumcheck = Math.add(
-                            sumcheck,
-                            item.credit.amount
-                        );
-                    }
-                }
-            });
-
-            if (sumcheck !== 0) {
+            if (dist.reduce(sum, 0) !== 0) {
                 throw "Journal entries must sum to zero.";
             }
 
@@ -134,7 +131,7 @@
 
     // Create ledger distribution model
     models.ledgerDistribution = function (data, feather) {
-        feather = feather || jdFeather
+        feather = feather || jdFeather;
         var that = model(data, feather);
 
         that.onChange("debit", function (prop) {

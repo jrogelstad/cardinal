@@ -23,8 +23,7 @@
                 "type": {
                     "relation": "Address",
                     "properties": ["type", "street", "unit", "city",
-                        "state", "postalCode", "country"],
-                    "isChild": true
+                        "state", "postalCode", "country"]
                 }
             },
             "shipTo": {
@@ -32,8 +31,7 @@
                 "type": {
                     "relation": "Address",
                     "properties": ["type", "street", "unit", "city",
-                        "state", "postalCode", "country"],
-                    "isChild": true
+                        "state", "postalCode", "country"]
                 }
             },
             "contact": {
