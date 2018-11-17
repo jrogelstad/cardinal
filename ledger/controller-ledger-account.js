@@ -1,11 +1,12 @@
-/*global datasource*/
+/*global datasource, Promise*/
+/*jslint white*/
 (function (datasource) {
   "strict";
 
   var doAfterInsertLedgerAccount = function (obj) {
     return new Promise (function (resolve, reject) {
       var periods, prev, currency,
-        account = obj.data,
+        account = obj.newRec,
         period = null;
 
       function createTrialBalance () {
@@ -175,34 +176,21 @@
     return new Promise (function (resolve, reject) {
       var parentId;
 
-      function getAccount () {
-        return new Promise (function (resolve, reject) {
-          var payload = {
-              method: "GET",
-              name: "LedgerAccount",
-              client: obj.client,
-              id: obj.id
-            };
-
-          function callback (resp) {
-            if (resp.isParent) {
-              reject("Can not delete a parent account.");
-            } else if (resp.isUsed) {
-              reject("Can not delete a ledger account that has been used.");
+      function checkAccount () {
+        return new Promise (function (resolve) {
+            if (obj.oldRec.isParent) {
+              throw new Error("Can not delete a parent account.");
             }
 
-            if (resp.parent !== null) {
-              parentId = resp.parent.id;
+            if (obj.oldRec.isUsed) {
+              throw new Error("Can not delete a ledger account that has been used.");
+            }
+
+            if (obj.oldRec.parent !== null) {
+              parentId = obj.oldRec.parent.id;
             }
 
             resolve();
-          }
-
-          datasource.request(payload, true)
-            .then(callback)
-            .catch(reject);
-
-          return;
         });
       }
 
@@ -322,9 +310,8 @@
         });
       }
 
-
       Promise.resolve()
-        .then(getAccount)
+        .then(checkAccount)
         .then(getChildren)
         .then(getParent)
         .then(updateParent)

@@ -6,7 +6,7 @@
     return new Promise (function (resolve, reject) {
       var account, prevPeriod,
         accounts, currency, prevTrialBalance,
-        fiscalPeriod = obj.data;
+        fiscalPeriod = obj.newRec;
 
       function createTrialBalance () {
         return new Promise (function (resolve, reject) {

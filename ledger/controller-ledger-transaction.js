@@ -3,9 +3,6 @@
 (function (datasource) {
     "strict";
 
-    var f = require("./common/core"),
-      jsonpatch = require("fast-json-patch");
-
     /**
       Check whether a passed ledger transaction is valid or not.
       Raises error if not.
@@ -86,14 +83,14 @@
     function doInsertLedgerTransaction(obj) {
         return new Promise(function (resolve, reject) {
             var payload,
-                data = obj.data;
+                data = obj.newRec;
             
             payload = {
                 method: "POST",
                 name: "checkLedgerTransaction",
                 client: obj.client,
                 data: {
-                    journal: obj.data
+                    journal: data
                 }
             };
             
@@ -118,35 +115,15 @@
         datasource.TRIGGER_BEFORE);
 
     function doUpdateLedgerTransaction(obj) {
-        return new Promise(function (resolve, reject) {
-            function callback(result) {
-                var newRec;
-
-                if(result.isPosted) {
-                    throw new Error("Posted ledger transaction may not be edited.");
-                }
-
-                // Apply changes submitted to copy of current
-                newRec = f.copy(result);
-                jsonpatch.apply(newRec, obj.data);
-
-                // Add subtotal
-                total(newRec);
-
-                // Update patch
-                obj.data = jsonpatch.compare(result, newRec);
-
-                resolve();
+        return new Promise(function (resolve) {
+            if(obj.oldRec.isPosted) {
+                throw new Error("Posted ledger transaction may not be edited.");
             }
 
-            datasource.request({
-                    method: "GET",
-                    name: "LedgerTransaction",
-                    id: obj.id,
-                    client: obj.client
-                }, true)
-                .then(callback)
-                .catch(reject);
+            // Calculate subtotal
+            total(obj.newRec);
+            
+            resolve();
         });
     }
 
