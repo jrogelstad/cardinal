@@ -24,7 +24,8 @@
             },
             "note": {
                 "description": "Note",
-                "type": "string"
+                "type": "string",
+                "format": "textArea"
             },
             "kind": {
                 "description": "Node kind",
