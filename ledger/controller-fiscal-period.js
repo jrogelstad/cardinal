@@ -19,7 +19,110 @@
 (function (datasource) {
     "strict";
 
-    var doAfterInsertFiscalPeriod = function (obj) {
+    function doBeforeInsertFiscalPeriod(obj) {
+        return new Promise(function (resolve, reject) {
+            if (!obj.newRec.parent) {
+                throw new Error("Fiscal year is required.");
+            }
+
+            if (obj.newRec.start === null || isNaN(new Date(obj.newRec.start))) {
+                throw new Error("Valid start date is required.");
+            }
+
+            if (obj.newRec.end === null || isNaN(new Date(obj.newRec.end))) {
+                throw new Error("Valid end date is required.");
+            }
+
+            if (new Date(obj.newRec.end) <= new Date(obj.newRec.start)) {
+                throw new Error("Fiscal period end must be greater than start.");
+            }
+
+            var getFiscalPeriod = new Promise(function (resolve, reject) {
+                var payload = {
+                    method: "GET",
+                    name: "FiscalPeriod",
+                    client: obj.client,
+                    filter: {
+                        criteria: [{
+                            property: "end",
+                            operator: "<",
+                            value: obj.newRec.end
+                        }],
+                        sort: [{
+                            property: "end",
+                            order: "DESC"
+                        }],
+                        limit: 1
+                    }
+                };
+
+                function callback(resp) {
+                    var prevPeriod;
+
+                    if (resp.length) {
+                        prevPeriod = resp[0];
+
+                        if ((new Date(obj.newRec.start) - new Date(prevPeriod.end)) / 86400000 !== 1) {
+                            reject("Period end may not overlap or leave gaps with the previous period.");
+                            return;
+                        }
+
+                        // Set previous period to period found
+                        obj.newRec.previous = prevPeriod;
+                    } else {
+                        obj.newRec.previous = null;
+                    }
+
+                    resolve();
+                }
+
+                datasource.request(payload, true)
+                    .then(callback)
+                    .catch(reject);
+            });
+
+            var getFiscalYear = new Promise(function (resolve, reject) {
+                var payload;
+
+                payload = {
+                    method: "GET",
+                    name: "FiscalYear",
+                    client: obj.client,
+                    id: obj.newRec.parent.id
+                };
+
+                function callback(fiscalYear) {
+                    if (!fiscalYear) {
+                        throw new Error("Fiscal year not found");
+                    }
+
+                    if (new Date(fiscalYear.start) > new Date(obj.newRec.start)) {
+                        throw new Error("Fiscal period can not start earlier than fiscal year start.");
+                    }
+
+                    if (new Date(fiscalYear.end) < new Date(obj.newRec.end)) {
+                        throw new Error("Fiscal period can not end later than fiscal year end.");
+                    }
+
+                    resolve();
+                }
+
+                datasource.request(payload, true)
+                    .then(callback)
+                    .catch(reject);
+            });
+
+            Promise.all([
+                getFiscalPeriod,
+                getFiscalYear
+            ]).then(resolve).catch(reject);
+        });
+    }
+
+    datasource.registerFunction("POST", "FiscalPeriod", doBeforeInsertFiscalPeriod,
+            datasource.TRIGGER_BEFORE);
+
+    function doAfterInsertFiscalPeriod(obj) {
         return new Promise(function (resolve, reject) {
             var account, prevPeriod,
                     accounts, currency, prevTrialBalance,
@@ -58,7 +161,7 @@
                             },
                             debits: {
                                 currency: currency.code,
-                                ammount: 0
+                                amount: 0
                             },
                             credits: {
                                 currency: currency.code,
@@ -70,6 +173,7 @@
                     // Recursively work through accounts
                     datasource.request(payload, true)
                         .then(createTrialBalance)
+                        .then(resolve)
                         .catch(reject);
                 });
             }
@@ -122,12 +226,27 @@
 
                 function afterFiscalPeriod(resp) {
                     return new Promise(function (resolve, reject) {
+                        var prevPayload;
+
                         if (resp.length) {
                             prevPeriod = resp[0];
-                            if ((new Date(fiscalPeriod.start) - new Date(prevPeriod.end)) / 86400000 !== 1) {
-                                reject("Period end may not overlap or leave gaps with the previous period.");
-                                return;
-                            }
+
+                            // Update previous period to have this as next period
+                            prevPeriod.next = fiscalPeriod;
+
+                            prevPayload = {
+                                method: "POST",
+                                name: "FiscalPeriod",
+                                client: obj.client,
+                                id: prevPeriod.id,
+                                data: prevPeriod
+                            };
+
+                            datasource.request(prevPayload, true)
+                                .then(resolve)
+                                .catch(reject);
+
+                            return;
                         }
 
                         resolve();
@@ -197,7 +316,7 @@
                 .then(resolve)
                 .catch(reject);
         });
-    };
+    }
 
     datasource.registerFunction("POST", "FiscalPeriod", doAfterInsertFiscalPeriod,
             datasource.TRIGGER_AFTER);

@@ -92,17 +92,20 @@
         "properties": {
             "name": {
                 "description": "Name",
-                "type": "string"
+                "type": "string",
+                "isRequired": true
             },
             "start": {
                 "description": "Start date",
                 "type": "string",
-                "format": "date"
+                "format": "date",
+                "isRequired": true
             },
             "end": {
                 "description": "End date",
                 "type": "string",
-                "format": "date"
+                "format": "date",
+                "isRequired": true
             },
             "isFrozen": {
                 "description": "Period is frozen for transactions.",

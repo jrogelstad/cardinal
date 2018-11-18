@@ -189,6 +189,35 @@
 }, {
     "name": "Form",
     "method": "POST",
+    "id": "igqx4hvu0jne",
+    "data": {
+        "name": "FiscalYear",
+        "description": "Fiscal year form",
+        "module": "Ledger",
+        "feather": "FiscalYear",
+        "attrs": [{
+            "attr": "name"
+        }, {
+            "attr": "start"
+        }, {
+            "attr": "end"
+        }, {
+            "attr": "isFrozen"
+        }, {
+            "attr": "isClosed"
+        }, {
+            "attr": "created"
+        }, {
+            "attr": "createdBy"
+        }, {
+            "attr": "updated"
+        }, {
+            "attr": "updatedBy"
+        }]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
     "id": "rbzal45p805f",
     "data": {
         "name": "Account",
@@ -259,16 +288,22 @@
     "method": "POST",
     "id": "1ow29jmd5ht2",
     "data": {
-        "name": "Period",
+        "name": "FiscalPeriod",
         "description": "Period form",
         "module": "Ledger",
-        "feather": "Period",
+        "feather": "FiscalPeriod",
         "attrs": [{
             "attr": "name"
+        }, {
+            "attr": "parent"
         }, {
             "attr": "start"
         }, {
             "attr": "end"
+        }, {
+            "attr": "isFrozen"
+        }, {
+            "attr": "isClosed"
         }, {
             "attr": "created"
         }, {
@@ -284,13 +319,35 @@
     "method": "POST",
     "id": "xb74g8prlq28",
     "data": {
-        "name": "Period",
+        "name": "FiscalPeriod",
         "description": "Period relation wdiget",
         "isActive": true,
-        "feather": "Period",
+        "feather": "FiscalPeriod",
         "valueProperty": "name",
         "form": {
             "id": "1ow29jmd5ht2"
+        },
+        "searchColumns": [{
+                "attr": "name"
+            }, {
+                "attr": "start"
+            }, {
+                "attr": "end"
+            }
+        ]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "t5ccyqpmpzjg",
+    "data": {
+        "name": "FiscalYear",
+        "description": "Fiscal year relation wdiget",
+        "isActive": true,
+        "feather": "FiscalYear",
+        "valueProperty": "name",
+        "form": {
+            "id": "igqx4hvu0jne"
         },
         "searchColumns": [{
                 "attr": "name"

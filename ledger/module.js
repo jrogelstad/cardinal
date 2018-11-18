@@ -30,6 +30,28 @@
         laFeather = catalog.getFeather("LedgerAccount"),
         f = require("common-core");
 
+    models.fiscalPeriod.closeCheck = function (selections) {
+        return selections.every(function (model) {
+            return !model.data.isClosed() &&
+                    model.data.previous().data.isClosed();
+        });
+    };
+
+    models.fiscalPeriod.openCheck = function (selections) {
+        return selections.every(function (model) {
+            return model.data.isClosed() &&
+                    !model.data.next().data.isClosed();
+        });
+    };
+
+    models.fiscalPeriod.close = function () {
+        console.log("close sesame");
+    }
+    
+    models.fiscalPeriod.open = function () {
+        console.log("Open sesame");
+    }
+
     // Create ledger transaction model
     models.ledgerTransaction = function (data, feather) {
         feather = feather || ltFeather;

@@ -4,34 +4,12 @@
     "module": "Ledger",
     "launchConfig": {
       "icon": "balance-scale",
-      "color": "white",
-      "backgroundColor": "orange",
       "settings": "ledgerSettings"
     },
     "defaultConfig": [
       {
-        "name": "Accounts",
-        "feather": "LedgerAccount",
-        "form": "rbzal45p805f",
-        "list": {
-          "columns": [{
-              "attr": "code"
-            }, {
-              "attr": "description"
-            }, {
-              "attr": "note"
-            }, {
-              "attr": "isParent"
-            }, {
-              "attr": "isUsed"
-            }
-          ]
-        }
-      },
-      {
         "name": "TrialBalance",
         "feather": "TrialBalance",
-        "form": "llxahr1fgcsl",
         "isEditModeEnabled": false,
         "list": {
           "columns": [{
@@ -53,13 +31,22 @@
             }, {
               "attr": "balance"
             }
-          ]
+          ],
+          "filter": {
+            "sort": [
+                {
+                    "property": "parent.code"
+                },
+                {
+                    "property": "period.end"
+                }
+            ]
+          }
         }
       },
       {
         "name": "GeneralLedger",
         "feather": "GeneralLedgerTransaction",
-        "form": "yiabdmdcpj84",
         "isEditModeEnabled": false,
         "list": {
           "columns": [{
@@ -75,13 +62,20 @@
             }, {
               "attr": "currency"
             }
-          ]
+          ],
+          "filter": {
+            "sort": [
+                {
+                    "property": "number",
+                    "order": "DESC"
+                }
+            ]
+          }
         }
       },
       {
         "name": "GeneralJournal",
         "feather": "GeneralJournal",
-        "form": "1z598b1g0p4m",
         "isEditModeEnabled": false,
         "actions": [{
           "name": "Post",
@@ -114,7 +108,115 @@
             }, {
               "attr": "currency"
             }
-          ]
+          ],
+          "filter": {
+            "sort": [
+                {
+                    "property": "number",
+                    "order": "DESC"
+                }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Accounts",
+        "feather": "LedgerAccount",
+        "list": {
+          "columns": [{
+              "attr": "code"
+            }, {
+              "attr": "description"
+            }, {
+              "attr": "note"
+            }, {
+              "attr": "isParent"
+            }, {
+              "attr": "isUsed"
+            }
+          ],
+          "filter": {
+            "sort": [
+                {
+                    "property": "code",
+                    "order": "ASC"
+                }
+            ]
+          }
+        }
+      },
+      {
+        "name": "FiscalPeriods",
+        "feather": "FiscalPeriod",
+        "actions": [{
+          "name": "Close",
+          "title": "Close selected period",
+          "icon": "toggle-off",
+          "method": "close",
+          "authorization": "CloseFiscalPeriod",
+          "validator": "closeCheck"
+        }, {
+          "name": "Open",
+          "title": "Open selected period",
+          "icon": "toggle-on",
+          "method": "open",
+          "authorization": "OpenFiscalPeriod",
+          "validator": "openCheck"
+        }],
+        "list": {
+          "columns": [{
+              "attr": "name"
+            }, {
+              "attr": "start"
+            }, {
+              "attr": "end"
+            }, {
+              "attr": "parent.name",
+              "label": "Year"
+            }, {
+              "attr": "isFrozen"
+            }, {
+              "attr": "isClosed"
+            }
+          ],
+          "filter": {
+            "sort": [
+                {
+                    "property": "parent.end",
+                    "order": "DESC"
+                },
+                {
+                    "property": "end",
+                    "order": "ASC"
+                }
+            ]
+          }
+        }
+      },
+      {
+        "name": "FiscalYears",
+        "feather": "FiscalYear",
+        "list": {
+          "columns": [{
+              "attr": "name"
+            }, {
+              "attr": "start"
+            }, {
+              "attr": "end"
+            }, {
+              "attr": "isFrozen"
+            }, {
+              "attr": "isClosed"
+            }
+          ],
+          "filter": {
+            "sort": [
+                {
+                    "property": "end",
+                    "order": "ASC"
+                }
+            ]
+          }
         }
       }
     ]

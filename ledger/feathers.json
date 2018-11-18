@@ -58,6 +58,22 @@
                     "relation": "FiscalYear",
                     "properties": ["name", "start", "end"]
                 }
+            },
+            "previous": {
+                "description": "Previous period.",
+                "type": {
+                    "relation": "Period",
+                    "properties": ["name","start","end","isFrozen","isClosed"]
+                },
+                "isReadOnly": true
+            },
+            "next": {
+                "description": "Next period.",
+                "type": {
+                    "relation": "Period",
+                    "properties": ["name","start","end","isFrozen","isClosed"]
+                },
+                "isReadOnly": true
             }
         }
     },
