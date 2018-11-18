@@ -25,18 +25,6 @@
                 throw new Error("Fiscal year is required.");
             }
 
-            if (obj.newRec.start === null || isNaN(new Date(obj.newRec.start))) {
-                throw new Error("Valid start date is required.");
-            }
-
-            if (obj.newRec.end === null || isNaN(new Date(obj.newRec.end))) {
-                throw new Error("Valid end date is required.");
-            }
-
-            if (new Date(obj.newRec.end) <= new Date(obj.newRec.start)) {
-                throw new Error("Fiscal period end must be greater than start.");
-            }
-
             var getFiscalPeriod = new Promise(function (resolve, reject) {
                 var payload = {
                     method: "GET",
@@ -59,15 +47,9 @@
                 function callback(resp) {
                     var prevPeriod;
 
+                    // Set previous period to period found
                     if (resp.length) {
                         prevPeriod = resp[0];
-
-                        if ((new Date(obj.newRec.start) - new Date(prevPeriod.end)) / 86400000 !== 1) {
-                            reject("Period end may not overlap or leave gaps with the previous period.");
-                            return;
-                        }
-
-                        // Set previous period to period found
                         obj.newRec.previous = prevPeriod;
                     } else {
                         obj.newRec.previous = null;
