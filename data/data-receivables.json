@@ -1,0 +1,153 @@
+[    
+    {
+        "name": "Terms",
+        "method": "POST",
+        "id": "a8nsiqa9fxp3",
+        "data": {
+            "code": "Prepay",
+            "policy": "Prepay"
+        }
+    }, {
+        "name": "Terms",
+        "method": "POST",
+        "id": "ldxrcle1vbki",
+        "data": {
+            "code": "Net 30",
+            "policy": "Net",
+            "net": "30",
+            "isDepositRequired": false,
+            "depositPercent": 0
+        }
+    },
+    {
+        "name": "Terms",
+        "method": "POST",
+        "id": "xee4vnwrnv9k",
+        "data": {
+            "code": "2%/10 Net 30",
+            "policy": "Net",
+            "net": "30",
+            "discountDays": 10,
+            "discount": 2,
+            "isDepositRequired": false,
+            "depositPercent": 0
+        }
+    },
+    {
+        "name": "Terms",
+        "method": "POST",
+        "id": "1e35q0fp9iei",
+        "data": {
+            "code": "Net 60",
+            "policy": "Net",
+            "net": "60",
+            "isDepositRequired": false,
+            "depositPercent": 0
+        }
+    }, {
+        "name": "Terms",
+        "method": "POST",
+        "id": "pet2x6uth8n1",
+        "data": {
+            "code": "15th Day",
+            "policy": "DayOfMonth",
+            "day": "15",
+            "isDepositRequired": false,
+            "depositPercent": 0
+        }
+    },
+    {
+        "name": "Customer",
+        "method": "POST",
+        "id": "tip3j0u9g58l",
+        "data": {
+            "code": "C00001",
+            "description": "West Chester Bicycle Company",
+            "creditStatus": "Good",
+            "terms": {
+                "id": "xee4vnwrnv9k"
+            },
+            "contact" : {
+                "id": "jdoe"
+            },
+            "billTo": {
+                "id": "C1A",
+                "street": "9801 Church Street",
+                "city": "West Chester",
+                "state": "PA",
+                "postalCode": "19380",
+                "country": "United States"
+            },
+            "shipTo": {
+                "id": "C1B",
+                "street": "9801 Church Street",
+                "city": "West Chester",
+                "state": "PA",
+                "postalCode": "19380",
+                "country": "United States"
+            }
+        }
+    }, {
+        "name": "Customer",
+        "method": "POST",
+        "id": "jfj635axkhbb",
+        "data": {
+            "code": "C00002",
+            "description": "Enlightened Cycling",
+            "creditStatus": "Good",
+            "terms": {
+                "id": "ldxrcle1vbki"
+            },
+            "contact" : {
+                "id": "jsmith"
+            },
+            "billTo": {
+                "id": "C2A",
+                "street": "869 Urban Avenue",
+                "city": "Phoenixville",
+                "state": "PA",
+                "postalCode": "19460",
+                "country": "United States"
+            },
+            "shipTo": {
+                "id": "C2B",
+                "street": "432 Mall Blvd.",
+                "city": "Phoenixville",
+                "state": "PA",
+                "postalCode": "19460",
+                "country": "United States"
+            }
+        }
+    }, {
+        "name": "Customer",
+        "method": "POST",
+        "id": "brwlmg5fnsl",
+        "data": {
+            "code": "C00003",
+            "description": "Downingtown Cycling",
+            "creditStatus": "Warn",
+            "terms": {
+                "id": "a8nsiqa9fxp3"
+            },
+            "contact": {
+                "id": "ascarborough"
+            },
+            "billTo": {
+                "id": "C3A",
+                "street": "1076 Lancaster Ave.",
+                "city": "Downingtown",
+                "state": "PA",
+                "postalCode": "19335",
+                "country": "United States"
+            },
+            "shipTo": {
+                "id": "C3B",
+                "street": "1076 Lancaster Ave.",
+                "city": "Downingtown",
+                "state": "PA",
+                "postalCode": "19335",
+                "country": "United States"
+            }
+        }
+    }
+]

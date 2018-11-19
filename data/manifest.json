@@ -12,6 +12,10 @@
         {
             "type": "batch",
             "path": "data-ledger.json"
+        },
+        {
+            "type": "batch",
+            "path": "data-receivables.json"
         }
     ]
 }

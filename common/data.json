@@ -158,4 +158,59 @@
             }
         ]
     }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "drxve9irkxf",
+    "data": {
+        "name": "Terms",
+        "description": "Terms form",
+        "module": "common",
+        "feather": "Terms",
+        "attrs": [{
+            "attr": "code"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "policy"
+        }, {
+            "attr": "net"
+        }, {
+            "attr": "day"
+        }, {
+            "attr": "discountDays"
+        }, {
+            "attr": "discount"
+        }, {
+            "attr": "isDepositRequired"
+        }, {
+            "attr": "depositPercent"
+        }, {
+            "attr": "depositAmount"
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "inh1huvch0rf",
+    "data": {
+        "name": "Terms",
+        "description": "Terms relation wdiget",
+        "module": "common",
+        "isActive": true,
+        "feather": "Terms",
+        "valueProperty": "code",
+        "labelProperty": "description",
+        "form": {
+            "id": "drxve9irkxf"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }, {
+                "attr": "policy"
+            }
+        ]
+    }
 }]

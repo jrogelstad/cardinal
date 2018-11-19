@@ -23,7 +23,7 @@
               "label": "Type"
             }, {
               "attr": "period.end",
-              "label": "period"
+              "label": "Period"
             }, {
               "attr": "debits"
             }, {

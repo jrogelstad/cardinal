@@ -19,7 +19,8 @@
                 "description": "Start date",
                 "type": "string",
                 "format": "date",
-                "isRequired": true
+                "isRequired": true,
+                "default": "today()"
             },
             "dueDate": {
                 "description": "Due date",
@@ -156,6 +157,73 @@
             },
             "money": {
                 "description": "Money object",
+                "type": "object",
+                "format": "money"
+            }
+        }
+    },
+    {
+        "name": "Terms",
+        "plural": "Termses",
+        "module": "Common",
+        "description": "Payment terms",
+        "properties": {
+            "code": {
+                "description": "Code",
+                "type": "string",
+                "isRequired": true,
+                "isUnique": true
+            },
+            "description": {
+                "description": "Description",
+                "type": "string"
+            },
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
+            },
+            "policy": {
+                "description": "Date calculation policy",
+                "type": "string",
+                "format": "enum",
+                "dataList": ["Prepay","Immediate","Net","DayOfMonth"],
+                "default": "Prepay",
+                "isRequired": true
+            },
+            "net": {
+                "description": "Net days for payment",
+                "type": "integer",
+                "dataList": [10, 15, 30, 60, 90]
+            },
+            "day": {
+                "description": "Day of month",
+                "type": "integer"
+            },
+            "discountDays": {
+                "description": "Early payment discount days",
+                "type": "integer"
+            },
+            "discount": {
+                "description": "Discount percent",
+                "type": "number",
+                "scale": 2
+            },
+            "isDepositRequired": {
+                "description": "Deposit amount",
+                "type": "boolean",
+                "isRequired": true,
+                "default": true,
+                "alias": "depositRequired"
+            },
+            "depositPercent": {
+                "description": "Deposit percent",
+                "type": "number",
+                "scale": 2,
+                "default": 100
+            },
+            "depositAmount": {
+                "description": "Deposit amount",
                 "type": "object",
                 "format": "money"
             }

@@ -3,9 +3,7 @@
     "name": "Sell",
     "module": "Sales",
     "launchConfig": {
-      "icon": "dollar",
-      "color": "white",
-      "backgroundColor": "green"
+      "icon": "dollar"
     },
     "defaultConfig": [
       {

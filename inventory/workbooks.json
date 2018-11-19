@@ -3,9 +3,7 @@
     "name": "Stock",
     "module": "Inventory",
     "launchConfig": {
-      "icon": "cube",
-      "color": "white",
-      "backgroundColor": "#FBEB0A"
+      "icon": "cube"
     },
     "defaultConfig": [
       {

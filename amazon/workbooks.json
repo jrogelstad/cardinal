@@ -3,9 +3,7 @@
     "name": "Catalog",
     "module": "Amazon",
     "launchConfig": {
-      "icon": "amazon",
-      "color": "white",
-      "backgroundColor": "black"
+      "icon": "amazon"
     },
     "defaultConfig": [
       {

@@ -18,6 +18,15 @@
                 "isUnique": true,
                 "inheritedFrom": "Node"
             },
+            "terms": {
+                "description": "Payment terms",
+                "type": {
+                    "relation": "Terms",
+                    "properties": ["code", "description", "policy",
+                        "net", "day", "discountDays", "discount",
+                        "isDepositRequired", "depositPercent", "depositAmount"]
+                }
+            },
             "billTo": {
                 "description": "Bill to Address",
                 "type": {

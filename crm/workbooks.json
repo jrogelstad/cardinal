@@ -3,9 +3,7 @@
     "name": "Pipeline",
     "module": "CRM",
     "launchConfig": {
-      "icon": "line-chart",
-      "color": "white",
-      "backgroundColor": "#FBEB0A"
+      "icon": "line-chart"
     },
     "defaultConfig": [
     {
