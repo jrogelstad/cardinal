@@ -3,7 +3,7 @@
 (function (datasource) {
     "strict";
 
-    function doBeforeInsertPeriod(obj) {
+    function doHandlePeriod(obj) {
         return new Promise(function (resolve, reject) {
             if (obj.newRec.start === null || isNaN(new Date(obj.newRec.start))) {
                 throw new Error("Valid start date is required.");
@@ -59,7 +59,10 @@
         });
     }
 
-    datasource.registerFunction("POST", "Period", doBeforeInsertPeriod,
+    datasource.registerFunction("POST", "Period", doHandlePeriod,
+            datasource.TRIGGER_BEFORE);
+
+    datasource.registerFunction("PATCH", "Period", doHandlePeriod,
             datasource.TRIGGER_BEFORE);
 
     /**

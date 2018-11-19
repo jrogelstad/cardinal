@@ -4,11 +4,11 @@
     "files": [
         {
             "type": "feather",
-            "path": "feathers-node.json"
+            "path": "feathers/node.json"
         },
         {
             "type": "feather",
-            "path": "feathers-common.json"
+            "path": "feathers/common.json"
         },
         {
             "type": "module",
@@ -17,12 +17,17 @@
         {
             "type": "controller",
             "name": "Action",
-            "path": "controller-action.js"
+            "path": "controllers/action.js"
         },
         {
             "type": "controller",
             "name": "Period",
-            "path": "controller-period.js"
+            "path": "controllers/period.js"
+        },
+        {
+            "type": "controller",
+            "name": "terms",
+            "path": "controllers/terms.js"
         },
         {
             "type": "workbook",

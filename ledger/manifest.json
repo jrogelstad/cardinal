@@ -18,22 +18,22 @@
         {
             "type": "controller",
             "name": "LedgerFiscalPeriod",
-            "path": "controller-fiscal-period.js"
+            "path": "controllers/fiscal-period.js"
         },
         {
             "type": "controller",
             "name": "LedgerLedgerAccount",
-            "path": "controller-ledger-account.js"
+            "path": "controllers/ledger-account.js"
         },
         {
             "type": "controller",
             "name": "LedgerJournal",
-            "path": "controller-journal.js"
+            "path": "controllers/journal.js"
         },
         {
             "type": "controller",
             "name": "LedgerLedgerTransaction",
-            "path": "controller-ledger-transaction.js"
+            "path": "controllers/ledger-transaction.js"
         },
         {
             "type": "route",

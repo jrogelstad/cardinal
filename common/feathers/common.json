@@ -194,7 +194,7 @@
             "net": {
                 "description": "Net days for payment",
                 "type": "integer",
-                "dataList": [10, 15, 30, 60, 90]
+                "dataList": [0, 10, 15, 30, 60, 90]
             },
             "day": {
                 "description": "Day of month",
@@ -225,7 +225,8 @@
             "depositAmount": {
                 "description": "Deposit amount",
                 "type": "object",
-                "format": "money"
+                "format": "money",
+                "isRequired": true
             }
         }
     }

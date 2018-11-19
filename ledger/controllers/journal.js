@@ -27,27 +27,12 @@
       Journal delete handler
     */
     function doDeleteJournal(obj) {
-        return new Promise(function (resolve, reject) {
-            var payload = {
-                method: "GET",
-                name: "Journal",
-                id: obj.id,
-                client: obj.client
-            };
-
-            // Validate
-            function callback(resp) {
-                if (resp.isPosted) {
-                    reject("Can not delete a posted journal.");
-                    return;
-                }
-
-                resolve();
+        return new Promise(function (resolve) {
+            if (obj.oldRec.isPosted) {
+                throw new Error("Can not delete a posted journal.");
             }
 
-            datasource.request(payload, true)
-                .then(callback)
-                .catch(reject);
+            resolve();
         });
     }
 
