@@ -54,6 +54,9 @@
                     id: selected.id()
                 }
             },
+            callback = function () {
+                viewModel.tableWidget().refresh();
+            },
             error = function (err) {
                 dialog.message(err.message);
                 dialog.title("Error");
@@ -64,6 +67,7 @@
             };
 
         dataSource.request(payload)
+            .then(callback)
             .catch(error);
     }
 
