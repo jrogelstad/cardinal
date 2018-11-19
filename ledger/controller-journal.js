@@ -349,8 +349,9 @@
                                 operator: ">=",
                                 value: date
                             }, {
-                                property: "period.isClosed",
-                                value: false
+                                property: "period.status",
+                                operator: "!=",
+                                value: "Closed"
                             }],
                             sort: [{
                                 property: "period.start",

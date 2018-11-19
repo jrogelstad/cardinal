@@ -63,7 +63,7 @@
                 "description": "Previous period.",
                 "type": {
                     "relation": "Period",
-                    "properties": ["name","start","end","isFrozen","isClosed"]
+                    "properties": ["name","start","end","status"]
                 },
                 "isReadOnly": true
             },
@@ -71,7 +71,7 @@
                 "description": "Next period.",
                 "type": {
                     "relation": "Period",
-                    "properties": ["name","start","end","isFrozen","isClosed"]
+                    "properties": ["name","start","end","status"]
                 },
                 "isReadOnly": true
             }
@@ -240,7 +240,7 @@
                 "description": "Period",
                 "type": {
                     "relation": "Period",
-                    "properties": ["name", "start", "end", "isFrozen", "isClosed"]
+                    "properties": ["name", "start", "end", "status"]
                 }
             },
             "debits": {

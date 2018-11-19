@@ -171,12 +171,7 @@
             }, {
               "attr": "end"
             }, {
-              "attr": "parent.name",
-              "label": "Year"
-            }, {
-              "attr": "isFrozen"
-            }, {
-              "attr": "isClosed"
+              "attr": "status"
             }
           ],
           "filter": {
@@ -204,9 +199,7 @@
             }, {
               "attr": "end"
             }, {
-              "attr": "isFrozen"
-            }, {
-              "attr": "isClosed"
+              "attr": "status"
             }
           ],
           "filter": {

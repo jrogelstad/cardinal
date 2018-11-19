@@ -108,14 +108,13 @@
                 "format": "date",
                 "isRequired": true
             },
-            "isFrozen": {
-                "description": "Period is frozen for transactions.",
-                "type": "boolean",
-                "isReadOnly": true
-            },
-            "isClosed": {
-                "description": "Period is closed.",
-                "type": "boolean",
+            "status": {
+                "description": "Status",
+                "type": "string",
+                "format": "enum",
+                "isRequired": true,
+                "dataList": ["Open","Frozen","Closed"],
+                "default": "Open",
                 "isReadOnly": true
             }
         }
@@ -131,7 +130,7 @@
                 "description": "Period",
                 "type": {
                     "relation": "Period",
-                    "properties": ["name", "start", "end", "isFrozen", "isClosed"]
+                    "properties": ["name", "start", "end", "status"]
                 }
             },
             "debits": {

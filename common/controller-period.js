@@ -3,9 +3,6 @@
 (function (datasource) {
     "strict";
 
-    var f = require("./common/core"),
-        jsonpatch = require("fast-json-patch");
-
     function doBeforeInsertPeriod(obj) {
         return new Promise(function (resolve, reject) {
             if (obj.newRec.start === null || isNaN(new Date(obj.newRec.start))) {
@@ -78,73 +75,59 @@
         */
     var doClosePeriod = function (obj) {
         return new Promise(function (resolve, reject) {
-            var original, patches, getPeriod,
+            var newRec, getPeriod,
                     id = obj.data.id,
                     name = obj.data.feather || "Period",
                     client = obj.client;
 
             function getPreviousPeriod(resp) {
                 return new Promise(function (resolve, reject) {
-                    try {
-                        if (!resp) {
-                            throw "Period not found.";
-                        }
-                        if (resp.isClosed) {
-                            throw "Period is already closed.";
-                        }
-
-                        original = f.copy(resp);
-                        resp.isClosed = true;
-                        patches = jsonpatch.compare(original, resp);
-
-                        var prevPeriod = datasource.request.bind(null, {
-                            method: "GET",
-                            name: name,
-                            client: client,
-                            filter: {
-                                criteria: [{
-                                    property: "end",
-                                    operator: "<",
-                                    value: original.end,
-                                    order: "DESC"
-                                }, {
-                                    property: "isClosed",
-                                    value: false
-                                }],
-                                limit: 1
-                            }
-                        }, true);
-
-                        prevPeriod().then(resolve).catch(reject);
-                    } catch (e) {
-                        reject(e);
+                    if (!resp) {
+                        throw "Period not found.";
                     }
+                    if (resp.status === "Closed") {
+                        throw "Period is already closed.";
+                    }
+
+                    newRec = resp;
+                    newRec.status = "Closed";
+
+                    var prevPeriod = datasource.request.bind(null, {
+                        method: "GET",
+                        name: name,
+                        client: client,
+                        filter: {
+                            criteria: [{
+                                property: "end",
+                                operator: "<",
+                                value: newRec.end,
+                                order: "DESC"
+                            }, {
+                                property: "status",
+                                operator: "!=",
+                                value: "Closed"
+                            }],
+                            limit: 1
+                        }
+                    }, true);
+
+                    prevPeriod().then(resolve).catch(reject);
                 });
             }
 
             function doUpdate(resp) {
                 return new Promise(function (resolve, reject) {
-                    try {
-                        if (resp.length) {
-                            throw "Previous period exists that is not closed.";
-                        }
-
-                        var update = datasource.request.bind(null, {
-                            method: "POST",
-                            name: "doUpdate",
-                            id: id,
-                            client: client,
-                            data: {
-                                name: "Period",
-                                id: id,
-                                data: patches
-                            }
-                        }, true);
-
-                        update().then(resolve).catch(reject);
-                    } catch (e) {
-                        reject(e);
+                    if (resp.length) {
+                        throw "Previous period exists that is not closed.";
                     }
+
+                    datasource.request({
+                        method: "POST",
+                        name: "Period",
+                        id: id,
+                        client: client,
+                        data: newRec
+                    }, true).then(resolve).catch(reject);
                 });
             }
 
@@ -179,73 +162,56 @@
     */
     var doOpenPeriod = function (obj) {
         return new Promise(function (resolve, reject) {
-            var original, patches, getPeriod,
+            var newRec, getPeriod,
                     id = obj.data.id,
                     name = obj.data.name || "Period",
                     client = obj.client;
 
             function getPreviousPeriod(resp) {
                 return new Promise(function (resolve, reject) {
-                    try {
-                        if (!resp) {
-                            throw "Period not found.";
-                        }
-                        if (!resp.isClosed) {
-                            throw "Period is already open.";
-                        }
-
-                        original = f.copy(resp);
-                        resp.isClosed = false;
-                        patches = jsonpatch.compare(original, resp);
-
-                        var prevPeriod = datasource.request.bind(null, {
-                            method: "GET",
-                            name: name,
-                            client: client,
-                            filter: {
-                                criteria: [{
-                                    property: "end",
-                                    operator: ">",
-                                    value: original.end,
-                                    order: "DESC"
-                                }, {
-                                    property: "isClosed",
-                                    value: true
-                                }],
-                                limit: 1
-                            }
-                        }, true);
-
-                        prevPeriod().then(resolve).catch(reject);
-                    } catch (e) {
-                        reject(e);
+                    if (!resp) {
+                        throw "Period not found.";
                     }
+                    if (resp.status === "Open") {
+                        throw "Period is already open.";
+                    }
+
+                    newRec = resp;
+                    newRec.status = "Open";
+
+                    datasource.request({
+                        method: "GET",
+                        name: name,
+                        client: client,
+                        filter: {
+                            criteria: [{
+                                property: "end",
+                                operator: ">",
+                                value: newRec.end,
+                                order: "DESC"
+                            }, {
+                                property: "status",
+                                value: "Closed"
+                            }],
+                            limit: 1
+                        }
+                    }, true).then(resolve).catch(reject);
                 });
             }
 
             function doUpdate(resp) {
                 return new Promise(function (resolve, reject) {
-                    try {
-                        if (resp.length) {
-                            throw "Subsequent period exists that is closed.";
-                        }
-
-                        var update = datasource.request.bind(null, {
-                            method: "POST",
-                            name: "doUpdate",
-                            id: id,
-                            client: client,
-                            data: {
-                                name: name,
-                                id: id,
-                                data: patches
-                            }
-                        }, true);
-
-                        update().then(resolve).catch(reject);
-                    } catch (e) {
-                        reject(e);
+                    if (resp.length) {
+                        throw "Subsequent period exists that is closed.";
                     }
+
+                    datasource.request({
+                        method: "POST",
+                        name: "Period",
+                        id: id,
+                        client: client,
+                        data: newRec
+                    }, true).then(resolve).catch(reject);
                 });
             }
 

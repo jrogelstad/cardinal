@@ -202,9 +202,7 @@
         }, {
             "attr": "end"
         }, {
-            "attr": "isFrozen"
-        }, {
-            "attr": "isClosed"
+            "attr": "status"
         }, {
             "attr": "created"
         }, {
@@ -301,9 +299,7 @@
         }, {
             "attr": "end"
         }, {
-            "attr": "isFrozen"
-        }, {
-            "attr": "isClosed"
+            "attr": "status"
         }, {
             "attr": "created"
         }, {

@@ -32,24 +32,47 @@
 
     models.fiscalPeriod.closeCheck = function (selections) {
         return selections.every(function (model) {
-            return !model.data.isClosed() &&
-                    (!model.data.previous() || model.data.previous().data.isClosed());
+            return model.data.status() !== "Closed" &&
+                    (!model.data.previous() || model.data.previous().data.status() === "Closed");
         });
     };
 
     models.fiscalPeriod.openCheck = function (selections) {
         return selections.every(function (model) {
-            return model.data.isClosed() &&
-                    (!model.data.next() || !model.data.next().data.isClosed());
+            return model.data.status() === "Closed" &&
+                    (!model.data.next() || model.data.next().data.status() !== "Closed");
         });
     };
 
-    models.fiscalPeriod.close = function () {
-        console.log("close sesame");
+    function changePeriodStatus(viewModel, action) {
+        var dialog = viewModel.confirmDialog(),
+            selected = viewModel.tableWidget().selections()[0],
+            payload = {
+                method: "POST",
+                path: "/ledger/" + action,
+                data: {
+                    id: selected.id()
+                }
+            },
+            error = function (err) {
+                dialog.message(err.message);
+                dialog.title("Error");
+                dialog.icon("exclamation-triangle");
+                dialog.onOk(undefined);
+                dialog.buttonCancel().hide();
+                dialog.show();
+            };
+
+        dataSource.request(payload)
+            .catch(error);
+    }
+
+    models.fiscalPeriod.close = function (viewModel) {
+        changePeriodStatus(viewModel, "close-fiscal-period");
     };
 
-    models.fiscalPeriod.open = function () {
-        console.log("Open sesame");
+    models.fiscalPeriod.open = function (viewModel) {
+        changePeriodStatus(viewModel, "open-fiscal-period");
     };
 
     // Create ledger transaction model
@@ -195,7 +218,7 @@
     models.ledgerDistribution.list = list("LedgerDistribution");
 
     // Private helper to consolidate logic
-    function post(ids, viewModel, message, unposted) {
+    function post(ids, viewModel, message) {
         var dialog = viewModel.confirmDialog(),
             payload = {
                 method: "POST",
@@ -203,11 +226,6 @@
                 data: {
                     ids: ids
                 }
-            },
-            callback = function () {
-                unposted.forEach(function (model) {
-                    model.fetch();
-                });
             },
             error = function (err) {
                 dialog.message(err.message);
@@ -221,7 +239,6 @@
         dialog.icon("question-circle");
         dialog.onOk(function () {
             dataSource.request(payload)
-                .then(callback)
                 .catch(error);
         });
         dialog.show();
@@ -241,19 +258,12 @@
             return;
         }
 
-        post(ids, viewModel, message, unposted);
+        post(ids, viewModel, message);
     };
     models.journal.postAll = function (viewModel) {
-        var message = "Are you sure you want to post all unposted journals?",
-            // Have to do this first because we made filter do something else on lists!
-            ary = viewModel.tableWidget().models().map(function (model) {
-                return model;
-            }),
-            unposted = ary.filter(function (model) {
-                return !model.data.isPosted();
-            });
+        var message = "Are you sure you want to post all unposted journals?";
 
-        post(null, viewModel, message, unposted);
+        post(null, viewModel, message);
     };
     models.journal.postCheck = function (selections) {
         return selections.some(function (model) {
