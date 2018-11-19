@@ -19,7 +19,7 @@
 (function (datasource) {
     "strict";
 
-    function doBeforeInsertFiscalPeriod(obj) {
+    function doHandleFiscalPeriod(obj) {
         return new Promise(function (resolve, reject) {
             if (!obj.newRec.parent) {
                 throw new Error("Fiscal year is required.");
@@ -101,7 +101,10 @@
         });
     }
 
-    datasource.registerFunction("POST", "FiscalPeriod", doBeforeInsertFiscalPeriod,
+    datasource.registerFunction("POST", "FiscalPeriod", doHandleFiscalPeriod,
+            datasource.TRIGGER_BEFORE);
+
+    datasource.registerFunction("PATCH", "FiscalPeriod", doHandleFiscalPeriod,
             datasource.TRIGGER_BEFORE);
 
     function doAfterInsertFiscalPeriod(obj) {
