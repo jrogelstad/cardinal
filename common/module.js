@@ -23,14 +23,120 @@
         model = require("model"),
         list = require("list"),
         models = catalog.register("models"),
-        tFeather = catalog.getFeather("Terms");
+        tFeather = catalog.getFeather("Terms"),
+        f = require("component-core");
 
-    // Create ledger distribution model
+    // Create terms model
     models.terms = function (data, feather) {
         feather = feather || tFeather;
-        var that = model(data, feather);
+        var that = model(data, feather),
+            d = that.data;
 
-        //that.onChanged("policy", update);
+        function handlePolicy() {
+            var policy = d.policy();
+
+            switch (policy) {
+            case "P":
+                d.isDepositRequired(true);
+                d.depositPercent(100);
+                d.depositAmount().amount = 0;
+                d.net(0);
+                d.day(1);
+                d.discountDays(0);
+                d.discount(0);
+                d.net.isReadOnly(true);
+                d.day.isReadOnly(true);
+                d.discountDays.isReadOnly(true);
+                d.discount.isReadOnly(true);
+                d.isDepositRequired.isReadOnly(true);
+                break;
+            case "I":
+                d.net(0);
+                d.day(1);
+                d.discountDays(0);
+                d.discount(0);
+                d.net.isReadOnly(true);
+                d.day.isReadOnly(true);
+                d.discountDays.isReadOnly(true);
+                d.discount.isReadOnly(true);
+                d.isDepositRequired.isReadOnly(false);
+                break;
+            case "N":
+                d.day(1);
+                d.day.isReadOnly(true);
+                d.net.isReadOnly(false);
+                d.discountDays.isReadOnly(false);
+                d.discount.isReadOnly(false);
+                d.isDepositRequired.isReadOnly(false);
+                break;
+            case "D":
+                d.net(0);
+                d.discountDays(0);
+                d.discount(0);
+                d.discountDays.isReadOnly(true);
+                d.discount.isReadOnly(true);
+                d.day.isReadOnly(false);
+                d.net.isReadOnly(true);
+                d.isDepositRequired.isReadOnly(false);
+                break;
+            default:
+                throw new Error("Invalid terms policy.");
+            }
+        }
+
+        function handleIsDepositRequired() {
+            if (d.isDepositRequired()) {
+                if (d.policy() === "P") {
+                    d.depositAmount.isReadOnly(true);
+                    d.depositPercent.isReadOnly(true);
+                } else {
+                    d.depositAmount.isReadOnly(false);
+                    d.depositPercent.isReadOnly(false);
+                }
+            } else {
+                if (d.depositAmount() && d.depositAmount().amount) {
+                    d.depositAmount().amount = 0;
+                } else {
+                    d.depositAmount(f.money());
+                }
+                d.depositPercent(0);
+                d.depositAmount.isReadOnly(true);
+                d.depositPercent.isReadOnly(true);
+            }
+        }
+
+        that.onChange("day", function (prop) {
+            if (prop.newValue() < 1) {
+                prop.newValue(1);
+            } else if (prop.newValue() > 31) {
+                prop.newValue(31);
+            }
+        });
+        that.onChange("policy", function (prop) {
+            if (prop.oldValue() === "P") {
+                d.isDepositRequired(false);
+                d.depositPercent(0);
+            }
+            
+            if (prop.newValue() === "N") {
+                d.net(30);
+            }
+        });
+        that.onChanged("policy", handlePolicy);
+        that.onChanged("isDepositRequired", handleIsDepositRequired);
+        that.state().resolve("/Ready/Fetched/Clean").enter(function () {
+            handlePolicy();
+            handleIsDepositRequired();
+        });
+
+        that.onValidate(function () {
+            if (d.isDepositRequired() && d.depositAmount.toJSON().amount === 0 && d.depositPercent.toJSON() === 0) {
+                throw "Deposit percent or amount must be positive when deposit required.";
+            }
+        });
+
+        handlePolicy();
+        handleIsDepositRequired();
 
         return that;
     };

@@ -210,7 +210,10 @@
             },
             "day": {
                 "description": "Day of month",
-                "type": "integer"
+                "type": "integer",
+                "default": 1,
+                "min": 1,
+                "max": 31
             },
             "discountDays": {
                 "description": "Early payment discount days",
