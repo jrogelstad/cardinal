@@ -29,23 +29,23 @@
 
             try {
                 switch (newRec.policy) {
-                case "Prepay":
-                case "Immediate":
+                case "P":
+                case "I":
                     newRec.net = 0;
                     newRec.day = 0;
                     newRec.discountDays = 0;
                     newRec.discount = 0;
                     break;
-                case "Net":
+                case "N":
                     newRec.net = 0;
                     break;
-                case "DayOfMonth":
+                case "D":
                     newRec.day = 0;
                     newRec.discountDays = 0;
                     newRec.discount = 0;
                     break;
                 default:
-                    throw new Error("Invalid terms policy " + newRec.polcy + ".");
+                    throw new Error("Invalid terms policy.");
                 }
 
                 if (!newRec.depositAmount) {

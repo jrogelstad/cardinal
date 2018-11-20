@@ -375,12 +375,12 @@
                     };
 
                     function callback(resp) {
-                        if (fiscalPeriod.status === "Closed") {
+                        if (fiscalPeriod.status === "C") {
                             reject("Can not delete a closed period.");
                             return;
                         }
 
-                        if (fiscalPeriod.status === "Frozen") {
+                        if (fiscalPeriod.status === "F") {
                             reject("Can not delete a frozen period.");
                             return;
                         }

@@ -54,7 +54,18 @@
                 "description": "creditStatus",
                 "type": "string",
                 "format": "enum",
-				"dataList": ["Good", "Warn", "Hold"]
+                "isRequired": true,
+                "default": "G",
+				"dataList": [{
+                    "value": "G",
+                    "label": "Good"
+                }, {
+                    "value": "W",
+                    "label": "Warn"
+                }, {
+                    "value": "H",
+                    "label": "Hold"
+                }]
             },
             "isActive": {
                 "description": "Active status",

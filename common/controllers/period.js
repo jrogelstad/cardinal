@@ -88,12 +88,12 @@
                     if (!resp) {
                         throw "Period not found.";
                     }
-                    if (resp.status === "Closed") {
+                    if (resp.status === "C") {
                         throw "Period is already closed.";
                     }
 
                     newRec = resp;
-                    newRec.status = "Closed";
+                    newRec.status = "C";
 
                     var prevPeriod = datasource.request.bind(null, {
                         method: "GET",
@@ -108,7 +108,7 @@
                             }, {
                                 property: "status",
                                 operator: "!=",
-                                value: "Closed"
+                                value: "C"
                             }],
                             limit: 1
                         }
@@ -175,12 +175,12 @@
                     if (!resp) {
                         throw "Period not found.";
                     }
-                    if (resp.status === "Open") {
+                    if (resp.status === "O") {
                         throw "Period is already open.";
                     }
 
                     newRec = resp;
-                    newRec.status = "Open";
+                    newRec.status = "O";
 
                     datasource.request({
                         method: "GET",
@@ -194,7 +194,7 @@
                                 order: "DESC"
                             }, {
                                 property: "status",
-                                value: "Closed"
+                                value: "C"
                             }],
                             limit: 1
                         }

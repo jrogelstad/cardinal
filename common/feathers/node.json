@@ -113,8 +113,17 @@
                 "type": "string",
                 "format": "enum",
                 "isRequired": true,
-                "dataList": ["Open","Frozen","Closed"],
-                "default": "Open",
+                "dataList": [{
+                    "value": "O",
+                    "label": "Open"
+                }, {
+                    "value": "F",
+                    "label": "Frozen"
+                }, {
+                    "value": "C",
+                    "label": "Closed"
+                }],
+                "default": "O",
                 "isReadOnly": true
             }
         }

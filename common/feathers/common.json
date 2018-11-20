@@ -187,8 +187,20 @@
                 "description": "Date calculation policy",
                 "type": "string",
                 "format": "enum",
-                "dataList": ["Prepay","Immediate","Net","DayOfMonth"],
-                "default": "Prepay",
+                "dataList": [{
+                        "value": "P",
+                        "label": "Prepay"
+                    }, {
+                        "value": "I",
+                        "label": "Immediate"
+                    }, {
+                        "value": "N",
+                        "label": "Net"
+                    }, {
+                        "value": "D",
+                        "label": "Day Of Month"
+                }],
+                "default": "P",
                 "isRequired": true
             },
             "net": {

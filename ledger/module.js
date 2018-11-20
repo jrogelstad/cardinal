@@ -32,15 +32,15 @@
 
     models.fiscalPeriod.closeCheck = function (selections) {
         return selections.every(function (model) {
-            return model.data.status() !== "Closed" &&
-                    (!model.data.previous() || model.data.previous().data.status() === "Closed");
+            return model.data.status() !== "C" &&
+                    (!model.data.previous() || model.data.previous().data.status() === "C");
         });
     };
 
     models.fiscalPeriod.openCheck = function (selections) {
         return selections.every(function (model) {
-            return model.data.status() === "Closed" &&
-                    (!model.data.next() || model.data.next().data.status() !== "Closed");
+            return model.data.status() === "C" &&
+                    (!model.data.next() || model.data.next().data.status() !== "C");
         });
     };
 
