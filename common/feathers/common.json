@@ -94,7 +94,8 @@
             },
             "cost": {
                 "description": "Cost",
-                "type": "number"
+                "type": "object",
+                "format": "money"
             },
             "unit":  {
               "description": "Unit of measure",
@@ -102,6 +103,11 @@
                 "relation": "Unit",
                 "properties": ["code", "description"]
               }
+            },
+            "unitPrice":  {
+              "description": "Unit price",
+              "type": "object",
+              "format": "money"
             }
         }
     },
@@ -174,10 +180,6 @@
                 "isRequired": true,
                 "isUnique": true
             },
-            "description": {
-                "description": "Description",
-                "type": "string"
-            },
             "isActive": {
                 "description": "Active status",
                 "type": "boolean",
@@ -242,6 +244,281 @@
                 "type": "object",
                 "format": "money",
                 "isRequired": true
+            }
+        }
+    },
+    {
+        "name": "ShipMethod",
+        "plural": "ShipMethods",
+        "module": "Common",
+        "description": "Shipping methods",
+        "properties": {
+            "code": {
+                "description": "Code",
+                "type": "string",
+                "isRequired": true,
+                "isUnique": true
+            },
+            "description": {
+                "description": "Description",
+                "type": "string"
+            },
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
+            }
+        }
+    },
+    {
+        "name": "TaxType",
+        "plural": "TaxTypes",
+        "module": "Common",
+        "inherits": "Kind",
+        "description": "Tax types",
+        "properties": {
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
+            }
+        }
+    },
+    {
+        "name": "BillEntity",
+        "plural": "BillEntities",
+        "module": "Common",
+        "description": "Billing entity",
+        "inherits": "Kind",
+        "properties": {
+            "terms": {
+                "description": "Payment terms",
+                "type": {
+                    "relation": "Terms",
+                    "properties": ["code", "policy", "net", "day", "discountDays", "discount",
+                        "isDepositRequired", "depositPercent", "depositAmount"]
+                }
+            },
+            "billTo": {
+                "description": "Bill to Address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            },
+            "shipTo": {
+                "description": "Ship to Address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            },
+            "contact": {
+                "description": "Contact",
+                "type": {
+                  "relation": "Contact",
+                  "properties": ["fullName", "email", "phone", "address"]
+                }
+            },
+            "isActive": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
+            }
+        },
+        "overloads": {
+            "description": {
+                "alias": "name"
+            }
+        }
+    },
+    {
+        "name": "BillOrder",
+        "plural": "BillOrders",
+        "module": "Common",
+        "inherits": "Document",
+        "description": "Abstract billing documnet",
+        "properties": {
+            "number": {
+                "description": "Order number",
+                "type": "string",
+                "isUnique": true
+            },
+            "billEntity": {
+                "description": "Billing entity",
+                "type": {
+                    "relation": "Kind",
+                    "properties": ["code", "description"]
+                },
+                "isRequired": true
+            },
+            "orderDate": {
+                "description": "Order date",
+                "type": "string",
+                "format": "date",
+                "default": "today()",
+                "isRequired": true
+            },
+            "status": {
+                "description": "Order status",
+                "type": "string"
+            },
+            "billTo": {
+                "description": "Bill to address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            },
+            "contact": {
+                "description": "Contact",
+                "type": {
+                    "relation": "Contact",
+                    "properties": ["fullName", "email", "phone", "address"]
+                }
+            },
+            "currency": {
+                "description": "Currency",
+                "type": {
+                    "relation": "Currency",
+                    "properties": ["code", "description", "minorUnit"]
+                },
+                "isRequired": true
+            },
+            "terms": {
+                "description": "Payment terms",
+                "type": {
+                    "relation": "Terms",
+                    "properties": ["code", "policy", "net", "day", "discountDays", "discount",
+                        "isDepositRequired", "depositPercent", "depositAmount"]
+                }
+            },
+            "taxType": {
+                "description": "Tax type",
+                "type": {
+                    "relation": "TaxType",
+                    "properties": ["code", "description", "isActive"]
+                }
+            },
+            "subtotal": {
+                "description": "Subtotal",
+                "type": "object",
+                "format": "money",
+                "isRequired": true,
+                "default": "money()"
+            },
+            "freight": {
+                "description": "Freight",
+                "type": "object",
+                "format": "money",
+                "isRequired": true,
+                "default": "money()"
+            },
+            "tax": {
+                "description": "Tax",
+                "type": "object",
+                "format": "money",
+                "isRequired": true,
+                "default": "money()"
+            },
+            "total": {
+                "description": "Total",
+                "type": "object",
+                "format": "money",
+                "isRequired": true,
+                "default": "money()"
+            }
+        }
+    },
+    {
+        "name": "OrderLine",
+        "module": "Common",
+        "description": "Order line",
+        "properties": {
+            "number": {
+                "description": "Line number",
+                "isReadOnly": true,
+                "type": "integer"
+            },
+            "item": {
+                "description": "Item",
+                "type": {
+                    "relation": "Item",
+                    "properties": ["code", "description", "unitPrice"]
+                }
+            },
+            "ordered": {
+                "description": "Quantity ordered",
+                "type": "number"
+            },
+            "unitPrice": {
+                "description": "Unit price",
+                "type": "object",
+                "format": "money",
+                "isRequired": true,
+                "default": "money()"
+            },
+            "extended": {
+                "description": "Extended price",
+                "type": "object",
+                "format": "money",
+                "isRequired": true,
+                "default": "money()"
+            },
+            "taxType": {
+                "description": "Tax type",
+                "type": {
+                    "relation": "TaxType",
+                    "properties": ["code", "description", "isActive"]
+                }
+            },
+            "remarks": {
+                "description": "Order remarks",
+                "type": "string",
+                "format": "textArea"
+            },
+            "status": {
+                "description": "Status",
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "BillOrderLine",
+        "module": "Common",
+        "description": "Bill order line",
+        "inherits": "OrderLine",
+        "properties": {
+            "billed": {
+                "description": "Quantity billed",
+                "type": "number"
+            }
+        }
+    },
+    {
+        "name": "ShipOrder",
+        "plural": "SalesOrders",
+        "module": "Common",
+        "inherits": "BillOrder",
+        "description": "Sales order",
+        "properties": {
+            "shipTo": {
+                "description": "Ship to address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            },
+            "shipMethod": {
+                "description": "Ship method",
+                "type": {
+                    "relation": "ShipMethod",
+                    "properties": ["code", "description", "isActive"]
+                }
             }
         }
     }

@@ -60,20 +60,22 @@
         "isActive": true,
         "feather": "Customer",
         "valueProperty": "code",
-        "labelProperty": "name",
+        "labelProperty": "description",
         "form": {
             "id": "nkwmnrfy874f"
         },
         "searchColumns": [{
                 "attr": "code"
             }, {
-                "attr": "name"
+                "attr": "description"
             }, {
-                "attr": "createdBy"
+                "attr": "isActive"
             }, {
-                "attr": "updated"
+                "attr": "billTo.city"
             }, {
-                "attr": "updatedBy"
+                "attr": "billTo.state"
+            }, {
+                "attr": "contact.fullName"
             }
         ]
     }

@@ -3,6 +3,10 @@
     "files": [
         {
             "type": "batch",
+            "path": "data-common.json"
+        },
+        {
+            "type": "batch",
             "path": "data-crm.json"
         },
         {

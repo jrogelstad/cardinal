@@ -21,7 +21,7 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "customer",
+            "attr": "billEntity",
             "grid": 0,
             "unit": 0
         }, {
@@ -33,6 +33,14 @@
             "grid": 0,
             "unit": 0
         }, {
+            "attr": "billTo",
+            "grid": 0,
+            "unit": 2
+        }, {
+            "attr": "shipTo",
+            "grid": 0,
+            "unit": 2
+        }, {
             "attr": "lines",
             "showLabel": false,
             "grid": 1,
@@ -42,10 +50,10 @@
             }, {
                 "attr": "item.description"
             }, {
-                "attr": "quantityOrdered",
+                "attr": "ordered",
                 "label": "Ordered"
             }, {
-                "attr": "quantityShipped",
+                "attr": "shipped",
                 "label": "Shipped"
             }, {
                 "attr": "status"

@@ -3,7 +3,7 @@
         "name": "SalesOrder",
         "plural": "SalesOrders",
         "module": "Sales",
-        "inherits": "Document",
+        "inherits": "ShipOrder",
         "description": "Sales order",
         "properties": {
             "number": {
@@ -15,42 +15,56 @@
                     "sequence": "salesorder_seq_num",
                     "length": 5
                 },
-                "isUnique": true
+                "isUnique": true,
+                "inheritedFrom": "BillOrder"
             },
-            "customer": {
-                "description": "Customer",
+            "requestDate": {
+                "description": "Requsted date to ship",
+                "type": "string",
+                "format": "date",
+                "default": "today()"
+            },
+            "promiseDate": {
+                "description": "Promise date to ship",
+                "type": "string",
+                "format": "date",
+                "default": "today()"
+            }
+        },
+        "overloads": {
+            "billEntity": {
+                "alias": "Customer",
                 "type": {
                     "relation": "Customer",
-                    "properties": ["code", "description"]
-                } 
-            },
-            "billToAddress": {
-                "description": "Bill to address",
-                "type": "string"
-            },
-            "shipToAddress": {
-                "description": "Ship to address",
-                "type": "string"
-            },
-            "contact": {
-                "description": "Contact",
-                "type": {
-                    "relation": "Contact",
-                    "properties": ["fullName", "email", "phone", "address"]
-                }
-            },
-            "shipMethod": {
-                "description": "Ship method",
-                "type": "string"
+                    "properties": ["code", "description", "terms",
+                        "billTo", "shipTo", "isActive"] 
+                },
+                "isRequired": true
             },
             "status": {
                 "description": "Order status",
-                "type": "string"
-            },
-            "orderDate": {
-                "description": "Order date",
                 "type": "string",
-                "format": "date"
+                "default": "O",
+                "isReadOnly": true,
+                "format": "enum",
+                "dataList": [
+                    {
+                        "value": "O",
+                        "label": "Open"
+                    },
+                    {
+                        "value": "S",
+                        "label": "Shipping"
+                    },
+                    {
+                        "value": "P",
+                        "label": "Partial Ship"
+                    },
+                    {
+                        "value": "C",
+                        "label": "Closed"
+                    }
+                ]
             }
         }
     },
@@ -58,6 +72,7 @@
         "name": "SalesOrderLine",
         "module": "Sales",
         "description": "Sales order line",
+        "inherits": "OrderLine",
         "properties": {
             "parent": {
               "description": "Parent sales order",
@@ -66,42 +81,14 @@
                     "childOf": "lines"
                 }
             },
-            "number": {
-                "description": "Line number",
-                "isReadOnly": true,
-                "type": "integer"
-            },
-            "item": {
-                "description": "Item",
-                "type": {
-                    "relation": "Item",
-                    "properties": ["code", "description"]
-                }
-            },
-            "quantityOrdered": {
-                "description": "Quantity ordered",
-                "type": "number"
-            },
-            "quantityShipped": {
+            "shipped": {
                 "description": "Quantity shipped",
                 "type": "number"
             },
-            "unitPrice": {
-                "description": "Unit price",
-                "type": "number",
-                "scale": 4
-            },
-            "remarks": {
-                "description": "Order remarks",
-                "type": "string"
-            },
             "shipInstructions": {
                 "description": "Shipment Instructions",
-                "type": "string"
-            },
-            "status": {
-                "description": "Status",
-                "type": "string"
+                "type": "string",
+                "format": "textArea"
             }
         }
     },

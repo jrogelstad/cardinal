@@ -165,12 +165,10 @@
     "data": {
         "name": "Terms",
         "description": "Terms form",
-        "module": "common",
+        "module": "Common",
         "feather": "Terms",
         "attrs": [{
             "attr": "code"
-        }, {
-            "attr": "description"
         }, {
             "attr": "policy"
         }, {
@@ -196,7 +194,7 @@
     "data": {
         "name": "Terms",
         "description": "Terms relation wdiget",
-        "module": "common",
+        "module": "Common",
         "isActive": true,
         "feather": "Terms",
         "valueProperty": "code",
@@ -210,6 +208,47 @@
                 "attr": "description"
             }, {
                 "attr": "policy"
+            }
+        ]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "v3iy247php6b",
+    "data": {
+        "name": "ShipMethod",
+        "description": "Ship method form",
+        "module": "Common",
+        "feather": "ShipMethod",
+        "attrs": [{
+            "attr": "code"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "isActive"
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "9ocwxrthell3",
+    "data": {
+        "name": "ShipMethod",
+        "description": "Ship method relation wdiget",
+        "module": "Common",
+        "isActive": true,
+        "feather": "ShipMethod",
+        "valueProperty": "code",
+        "labelProperty": "description",
+        "form": {
+            "id": "v3iy247php6b"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }, {
+                "attr": "isActive"
             }
         ]
     }

@@ -5,11 +5,40 @@
     "launchConfig": {
       "icon": "dollar"
     },
-    "defaultConfig": [
-      {
-        "name": "Products",
-        "feather": "AmazonProduct",
-        "form": "bqip09ptmlx6",
+    "defaultConfig": [{
+        "name": "Orders",
+        "feather": "SalesOrder",
+        "list": {
+          "columns": [{
+              "attr": "number"
+          }, {
+              "attr": "billEntity"
+          }, {
+              "attr": "billEntity.description"
+          }, {
+              "attr": "orderDate"
+          }, {
+              "attr": "promiseDate"
+          }, {
+              "attr": "shipMethod"
+          }, {
+              "attr": "status"
+          }]
+        },
+        "filter": {
+            "criteria": [{
+                "property": "status",
+                "value": "O"
+            }],
+            "sort": [{
+                "property": "number",
+                "order": "DESC"
+            }]
+        }
+    },
+    {
+        "name": "Customers",
+        "feather": "Customer",
         "list": {
           "columns": [{
               "attr": "code"
@@ -17,55 +46,41 @@
               "attr": "description"
           }, {
               "attr": "isActive"
-          }, {
-              "attr": "isSold"
-          }, {
-              "attr": "manufacturer"
-          }, {
-              "attr": "unit"
-          }, {
-              "attr": "asin"
-          }, {
-              "attr": "sellerRank"
-          }, {
-              "attr": "shippingWeight"
-          }, {
-              "attr": "productDescription"
-          }, {
-              "attr": "price"
           }]
+        },
+        "filter": {
+            "criteria": [{
+                "property": "isActive",
+                "value": true
+            }],
+            "sort": [{
+                "property": "code",
+                "order": "ASC"
+            }]
         }
-      }, {
-        "name": "Customers",
-        "feather": "Customer",
-        "form": "ug5vvt3zho03",
+    },
+    {
+        "name": "ShipMethods",
+        "feather": "ShipMethod",
         "list": {
-          "columns": [{
+            "columns": [{
               "attr": "code"
-          }, {
-              "attr": "name"
-          }, {
+            }, {
+              "attr": "description"
+            }, {
               "attr": "isActive"
-          }]
+            }]
+        },
+        "filter": {
+            "criteria": [{
+                "property": "isActive",
+                "value": true
+            }],
+            "sort": [{
+                "property": "code",
+                "order": "ASC"
+            }]
         }
-      }, {
-        "name": "Orders",
-        "feather": "SalesOrder",
-        "form": "bt7da1jdyxw9",
-        "list": {
-          "columns": [{
-              "attr": "number"
-          }, {
-              "attr": "customer"
-          }, {
-              "attr": "customer.name"
-          }, {
-              "attr": "orderDate"
-          }, {
-              "attr": "status"
-          }]
-        }
-      }
-    ]
+    }]
   }
 ]

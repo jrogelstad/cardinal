@@ -49,8 +49,6 @@
           "columns": [{
               "attr": "code"
             }, {
-              "attr": "description"
-            }, {
               "attr": "policy"
           }],
           "filter": {

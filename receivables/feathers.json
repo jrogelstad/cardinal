@@ -4,7 +4,7 @@
         "plural": "Customers",
         "module": "Receivables",
         "description": "Customer",
-        "inherits": "Kind",
+        "inherits": "BillEntity",
         "properties": {
             "code": {
                 "description": "Customer code",
@@ -17,38 +17,6 @@
                 },
                 "isUnique": true,
                 "inheritedFrom": "Node"
-            },
-            "terms": {
-                "description": "Payment terms",
-                "type": {
-                    "relation": "Terms",
-                    "properties": ["code", "description", "policy",
-                        "net", "day", "discountDays", "discount",
-                        "isDepositRequired", "depositPercent", "depositAmount"]
-                }
-            },
-            "billTo": {
-                "description": "Bill to Address",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["type", "street", "unit", "city",
-                        "state", "postalCode", "country"]
-                }
-            },
-            "shipTo": {
-                "description": "Ship to Address",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["type", "street", "unit", "city",
-                        "state", "postalCode", "country"]
-                }
-            },
-            "contact": {
-                "description": "Contact",
-                "type": {
-                  "relation": "Contact",
-                  "properties": ["fullName", "email", "phone", "address"]
-                }
             },
             "creditStatus": {
                 "description": "creditStatus",
@@ -66,11 +34,6 @@
                     "value": "H",
                     "label": "Hold"
                 }]
-            },
-            "isActive": {
-                "description": "Active status",
-                "type": "boolean",
-                "default": true
             }
         },
         "overloads": {
