@@ -152,7 +152,8 @@
                 "type": {
                     "relation": "LedgerAccount",
                     "properties": ["code", "description", "kind"]
-                }
+                },
+                "isRequired": true
             },
             "debit": {
                 "description": "Debit",
