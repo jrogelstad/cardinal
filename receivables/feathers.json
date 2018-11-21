@@ -6,18 +6,6 @@
         "description": "Customer",
         "inherits": "BillEntity",
         "properties": {
-            "code": {
-                "description": "Customer code",
-                "isReadOnly": true,
-                "type": "string",
-                "autonumber": {
-                    "prefix": "C",
-                    "sequence": "customer_seq_num",
-                    "length": 5
-                },
-                "isUnique": true,
-                "inheritedFrom": "Node"
-            },
             "creditStatus": {
                 "description": "creditStatus",
                 "type": "string",
@@ -39,6 +27,90 @@
         "overloads": {
             "description": {
                 "alias": "name"
+            }
+        }
+    },
+    {
+        "name": "Invoice",
+        "plural": "Invoices",
+        "module": "Receivables",
+        "inherits": "BillOrder",
+        "description": "Invoice",
+        "properties": {
+            "number": {
+                "description": "Invoice number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "INV",
+                    "sequence": "invoice_seq_num",
+                    "length": 5
+                },
+                "isUnique": true,
+                "inheritedFrom": "BillOrder"
+            },
+            "dueDate": {
+                "description": "Posted date",
+                "type": "string",
+                "format": "date",
+                "default": "today()",
+                "isRequired": true
+            },
+            "postedDate": {
+                "description": "Posted date",
+                "type": "string",
+                "format": "date",
+                "isReadOnly": true
+            }
+        },
+        "overloads": {
+            "billEntity": {
+                "alias": "Customer",
+                "type": {
+                    "relation": "Customer",
+                    "properties": ["code", "description", "billTo",
+                        "currency", "terms", "taxType", "isActive"] 
+                },
+                "isRequired": true
+            },
+            "docDate": {
+                "alias": "invoiceDate"
+            },
+            "status": {
+                "description": "Invoice status",
+                "type": "string",
+                "default": "U",
+                "isReadOnly": true,
+                "format": "enum",
+                "dataList": [
+                    {
+                        "value": "U",
+                        "label": "Unposted"
+                    },
+                    {
+                        "value": "P",
+                        "label": "Posted"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "name": "InvoiceLine",
+        "module": "Receivables",
+        "description": "Invoice line",
+        "inherits": "OrderLine",
+        "properties": {
+            "parent": {
+              "description": "Parent invoice",
+              "type": {
+                    "relation": "Invoice",
+                    "childOf": "lines"
+                }
+            },
+            "billed": {
+                "description": "Quantity billed",
+                "type": "number"
             }
         }
     },

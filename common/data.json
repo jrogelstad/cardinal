@@ -198,14 +198,11 @@
         "isActive": true,
         "feather": "Terms",
         "valueProperty": "code",
-        "labelProperty": "description",
         "form": {
             "id": "drxve9irkxf"
         },
         "searchColumns": [{
                 "attr": "code"
-            }, {
-                "attr": "description"
             }, {
                 "attr": "policy"
             }

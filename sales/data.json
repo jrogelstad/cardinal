@@ -50,11 +50,9 @@
             }, {
                 "attr": "item.description"
             }, {
-                "attr": "ordered",
-                "label": "Ordered"
+                "attr": "ordered"
             }, {
-                "attr": "shipped",
-                "label": "Shipped"
+                "attr": "shipped"
             }, {
                 "attr": "status"
             }]

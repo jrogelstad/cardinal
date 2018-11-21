@@ -33,7 +33,19 @@
             "grid": 0,
             "unit": 2
         }, {
+            "attr": "currency",
+            "grid": 1,
+            "unit": 0
+        }, {
             "attr": "creditStatus",
+            "grid": 1,
+            "unit": 0
+        }, {
+            "attr": "terms",
+            "grid": 1,
+            "unit": 0
+        }, {
+            "attr": "taxType",
             "grid": 1,
             "unit": 0
         }, {
@@ -74,6 +86,103 @@
                 "attr": "billTo.city"
             }, {
                 "attr": "billTo.state"
+            }, {
+                "attr": "contact.fullName"
+            }
+        ]
+    }
+},
+{
+    "name": "Form",
+    "method": "POST",
+    "id": "f0qy22oqet16",
+    "data": {
+        "name": "Invoice",
+        "description": "Invoice form",
+        "module": "Receivables",
+        "feather": "Invoice",
+        "tabs": [{
+            "name": "Lines"
+        }, {
+            "name": "Audit"
+        }],
+        "attrs": [{
+            "attr": "number",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "docDate",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "dueDate",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "billEntity",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "terms",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "status",
+            "grid": 0,
+            "unit": 2
+        }, {
+            "attr": "billTo",
+            "grid": 0,
+            "unit": 2
+        }, {
+            "attr": "lines",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "number"
+            }, {
+                "attr": "item"
+            }, {
+                "attr": "item.description"
+            }, {
+                "attr": "ordered"
+            }, {
+                "attr": "billed"
+            }, {
+                "attr": "unitPrice",
+                "showCurrency": false
+            }, {
+                "attr": "item.unit.code"
+            }, {
+                "attr": "extended",
+                "showCurrency": false
+            }]
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "yld45y4gpmep",
+    "data": {
+        "name": "Invoice",
+        "description": "Invoice relation wdiget",
+        "isActive": true,
+        "feather": "Invoice",
+        "valueProperty": "number",
+        "form": {
+            "id": "f0qy22oqet16"
+        },
+        "searchColumns": [{
+                "attr": "number"
+            }, {
+                "attr": "billEntity.code"
+            }, {
+                "attr": "billEntity.description"
+            }, {
+                "attr": "status"
+            }, {
+                "attr": "dueDate"
             }, {
                 "attr": "contact.fullName"
             }

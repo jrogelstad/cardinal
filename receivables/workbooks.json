@@ -5,8 +5,37 @@
     "launchConfig": {
       "icon": "sign-in"
     },
-    "defaultConfig": [
-      {
+    "defaultConfig": [{
+        "name": "Invoices",
+        "feather": "Invoice",
+        "list": {
+          "columns": [{
+              "attr": "number"
+          }, {
+              "attr": "billEntity"
+          }, {
+              "attr": "billEntity.description"
+          }, {
+              "attr": "docDate"
+          }, {
+              "attr": "dueDate"
+          }, {
+              "attr": "postedDate"
+          }, {
+              "attr": "status"
+          }]
+        },
+        "filter": {
+            "sort": [{
+                "property": "status",
+                "order": "DESC"
+            }, {
+                "property": "number",
+                "order": "DESC"
+            }]
+        }
+    },
+    {
         "name": "Customers",
         "feather": "Customer",
         "list": {

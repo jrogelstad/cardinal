@@ -4,8 +4,11 @@
             "method": "POST",
             "id": "tip3j0u9g58l",
             "data": {
-                "code": "C00001",
+                "code": "WCBC",
                 "description": "West Chester Bicycle Company",
+                "currency": {
+                    "id": "4y9dtthuen7z"
+                },
                 "terms": {
                     "id": "xee4vnwrnv9k"
                 },
@@ -34,8 +37,11 @@
             "method": "POST",
             "id": "jfj635axkhbb",
             "data": {
-                "code": "C00002",
+                "code": "ENLCYC",
                 "description": "Enlightened Cycling",
+                "currency": {
+                    "id": "4y9dtthuen7z"
+                },
                 "terms": {
                     "id": "ldxrcle1vbki"
                 },
@@ -64,9 +70,12 @@
             "method": "POST",
             "id": "brwlmg5fnsl",
             "data": {
-                "code": "C00003",
+                "code": "DTCYC",
                 "description": "Downingtown Cycling",
                 "creditStatus": "W",
+                "currency": {
+                    "id": "4y9dtthuen7z"
+                },
                 "terms": {
                     "id": "a8nsiqa9fxp3"
                 },

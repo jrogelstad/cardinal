@@ -95,7 +95,8 @@
             "cost": {
                 "description": "Cost",
                 "type": "object",
-                "format": "money"
+                "format": "money",
+                "isRequired": true
             },
             "unit":  {
               "description": "Unit of measure",
@@ -291,14 +292,6 @@
         "description": "Billing entity",
         "inherits": "Kind",
         "properties": {
-            "terms": {
-                "description": "Payment terms",
-                "type": {
-                    "relation": "Terms",
-                    "properties": ["code", "policy", "net", "day", "discountDays", "discount",
-                        "isDepositRequired", "depositPercent", "depositAmount"]
-                }
-            },
             "billTo": {
                 "description": "Bill to Address",
                 "type": {
@@ -306,6 +299,11 @@
                     "properties": ["type", "street", "unit", "city",
                         "state", "postalCode", "country"]
                 }
+            },
+            "billToIsShipTo": {
+                "description": "Active status",
+                "type": "boolean",
+                "default": true
             },
             "shipTo": {
                 "description": "Ship to Address",
@@ -326,6 +324,30 @@
                 "description": "Active status",
                 "type": "boolean",
                 "default": true
+            },
+            "currency": {
+                "description": "Currency",
+                "default": "baseCurrency()",
+                "type": {
+                    "relation": "Currency",
+                    "properties": ["code", "description", "minorUnit"]
+                },
+                "isRequired": true
+            },
+            "terms": {
+                "description": "Payment terms",
+                "type": {
+                    "relation": "Terms",
+                    "properties": ["code", "policy", "net", "day", "discountDays", "discount",
+                        "isDepositRequired", "depositPercent", "depositAmount"]
+                }
+            },
+            "taxType": {
+                "description": "Tax type",
+                "type": {
+                    "relation": "TaxType",
+                    "properties": ["code", "description", "isActive"]
+                }
             }
         },
         "overloads": {
@@ -349,13 +371,14 @@
             "billEntity": {
                 "description": "Billing entity",
                 "type": {
-                    "relation": "Kind",
-                    "properties": ["code", "description"]
+                    "relation": "BillEntity",
+                    "properties": ["code", "description", "billTo", "billToIsShipTo",
+                        "shipTo", "currency", "terms", "taxType"]
                 },
                 "isRequired": true
             },
-            "orderDate": {
-                "description": "Order date",
+            "docDate": {
+                "description": "Document date",
                 "type": "string",
                 "format": "date",
                 "default": "today()",
@@ -382,6 +405,7 @@
             },
             "currency": {
                 "description": "Currency",
+                "default": "baseCurrency()",
                 "type": {
                     "relation": "Currency",
                     "properties": ["code", "description", "minorUnit"]
@@ -447,7 +471,8 @@
                 "description": "Item",
                 "type": {
                     "relation": "Item",
-                    "properties": ["code", "description", "unitPrice"]
+                    "properties": ["code", "description", "unit",
+                        "cost", "unitPrice"]
                 }
             },
             "ordered": {
@@ -479,22 +504,6 @@
                 "description": "Order remarks",
                 "type": "string",
                 "format": "textArea"
-            },
-            "status": {
-                "description": "Status",
-                "type": "string"
-            }
-        }
-    },
-    {
-        "name": "BillOrderLine",
-        "module": "Common",
-        "description": "Bill order line",
-        "inherits": "OrderLine",
-        "properties": {
-            "billed": {
-                "description": "Quantity billed",
-                "type": "number"
             }
         }
     },

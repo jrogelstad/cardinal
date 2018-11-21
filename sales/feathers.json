@@ -46,6 +46,7 @@
                 "type": "string",
                 "default": "O",
                 "isReadOnly": true,
+                "isRequired": true,
                 "format": "enum",
                 "dataList": [
                     {
@@ -58,7 +59,7 @@
                     },
                     {
                         "value": "P",
-                        "label": "Partial Ship"
+                        "label": "Partial"
                     },
                     {
                         "value": "C",
@@ -81,14 +82,46 @@
                     "childOf": "lines"
                 }
             },
+            "promiseDate": {
+                "description": "Promise date",
+                "type": "string",
+                "format": "date",
+                "isRequired": true
+            },
             "shipped": {
                 "description": "Quantity shipped",
-                "type": "number"
+                "type": "number",
+                "isReadOnly": true
             },
             "shipInstructions": {
                 "description": "Shipment Instructions",
                 "type": "string",
                 "format": "textArea"
+            },
+            "status": {
+                "description": "Status",
+                "type": "string",
+                "isRequired": true,
+                "isReadOnly": true,
+                "format": "enum",
+                "dataList": [
+                    {
+                        "value": "O",
+                        "label": "Open"
+                    },
+                    {
+                        "value": "S",
+                        "label": "Shipping"
+                    },
+                    {
+                        "value": "P",
+                        "label": "Partial"
+                    },
+                    {
+                        "value": "C",
+                        "label": "Closed"
+                    }
+                ]
             }
         }
     },
