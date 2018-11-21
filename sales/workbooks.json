@@ -16,7 +16,7 @@
           }, {
               "attr": "billEntity.description"
           }, {
-              "attr": "orderDate"
+              "attr": "docDate"
           }, {
               "attr": "promiseDate"
           }, {
@@ -67,8 +67,6 @@
               "attr": "code"
             }, {
               "attr": "description"
-            }, {
-              "attr": "isActive"
             }]
         },
         "filter": {

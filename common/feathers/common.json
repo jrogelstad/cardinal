@@ -340,7 +340,8 @@
                     "relation": "Terms",
                     "properties": ["code", "policy", "net", "day", "discountDays", "discount",
                         "isDepositRequired", "depositPercent", "depositAmount"]
-                }
+                },
+                "isRequired": true
             },
             "taxType": {
                 "description": "Tax type",
@@ -373,7 +374,7 @@
                 "type": {
                     "relation": "BillEntity",
                     "properties": ["code", "description", "billTo", "billToIsShipTo",
-                        "shipTo", "currency", "terms", "taxType"]
+                        "shipTo", "contact", "currency", "terms", "taxType"]
                 },
                 "isRequired": true
             },
@@ -418,7 +419,8 @@
                     "relation": "Terms",
                     "properties": ["code", "policy", "net", "day", "discountDays", "discount",
                         "isDepositRequired", "depositPercent", "depositAmount"]
-                }
+                },
+                "isRequired": true
             },
             "taxType": {
                 "description": "Tax type",
@@ -432,7 +434,8 @@
                 "type": "object",
                 "format": "money",
                 "isRequired": true,
-                "default": "money()"
+                "default": "money()",
+                "isReadOnly": true
             },
             "freight": {
                 "description": "Freight",
@@ -453,7 +456,8 @@
                 "type": "object",
                 "format": "money",
                 "isRequired": true,
-                "default": "money()"
+                "default": "money()",
+                "isReadOnly": true
             }
         }
     },

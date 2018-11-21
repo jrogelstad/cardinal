@@ -90,6 +90,26 @@
             }]
           }
         }
+      },
+      {
+        "name": "Tax Types",
+        "feather": "TaxType",
+        "list": {
+          "columns": [{
+              "attr": "code"
+            }, {
+              "attr": "description"
+            }],
+          "filter": {
+            "criteria": [{
+                "property": "isActive",
+                "value": true
+            }],
+            "sort": [{
+                "property": "code"
+            }]
+          }
+        }
       }
     ]
   }

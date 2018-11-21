@@ -23,10 +23,13 @@
         model = require("model"),
         list = require("list"),
         models = catalog.register("models"),
-        tFeather = catalog.getFeather("Terms"),
-        f = require("component-core");
+        f = require("component-core"),
+        boFeather = catalog.getFeather("BillOrder"),
+        tFeather = catalog.getFeather("Terms");
 
-    // Create terms model
+    /**
+        Terms model
+    */
     models.terms = function (data, feather) {
         feather = feather || tFeather;
         var that = model(data, feather),
@@ -117,7 +120,7 @@
                 d.isDepositRequired(false);
                 d.depositPercent(0);
             }
-            
+
             if (prop.newValue() === "N") {
                 d.net(30);
             }
@@ -142,5 +145,49 @@
     };
 
     models.terms.list = list("Terms");
+
+     /**
+        Bill order model
+    */
+    models.billOrder = function (data, feather) {
+        feather = feather || boFeather;
+        var that = model(data, feather),
+            d = that.data;
+
+        function handleLineNumber() {
+            var count = d.lines().length;
+
+            d.lines().some(function (line) {
+                if (!line.data.number()) {
+                    return line.data.number(count);
+                }
+            });
+        }
+
+        function handleBillEntity() {
+            var billEntity = d.billEntity();
+
+            if (billEntity) {
+                d.billTo(billEntity.data.billTo());
+                d.contact(billEntity.data.contact());
+                d.currency(billEntity.data.currency());
+                d.terms(billEntity.data.terms());
+                d.taxType(billEntity.data.taxType());
+            }
+        }
+
+        that.onChanged("lines", handleLineNumber);
+        that.onChanged("billEntity", handleBillEntity);
+
+        that.onValidate(function () {
+            if (!d.lines().length) {
+                throw "At least one line item is required";
+            }
+        });
+
+        return that;
+    };
+
+    models.billOrder.list = list("BillOrder");
 
 }());

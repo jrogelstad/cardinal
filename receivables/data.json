@@ -104,6 +104,8 @@
         "tabs": [{
             "name": "Lines"
         }, {
+            "name": "Credit"
+        }, {
             "name": "Audit"
         }],
         "attrs": [{
@@ -123,10 +125,6 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "terms",
-            "grid": 0,
-            "unit": 0
-        }, {
             "attr": "status",
             "grid": 0,
             "unit": 2
@@ -135,29 +133,68 @@
             "grid": 0,
             "unit": 2
         }, {
+            "attr": "contact",
+            "grid": 0,
+            "unit": 2
+        }, {
             "attr": "lines",
             "showLabel": false,
             "grid": 1,
             "unit": 0,
             "columns": [{
-                "attr": "number"
+                "attr": "number",
+                "label": "#",
+                "width": 20
             }, {
                 "attr": "item"
             }, {
                 "attr": "item.description"
             }, {
-                "attr": "ordered"
+                "attr": "ordered",
+                "width": 80
             }, {
-                "attr": "billed"
+                "attr": "billed",
+                "width": 80
             }, {
                 "attr": "unitPrice",
-                "showCurrency": false
+                "showCurrency": false,
+                "width": 80
             }, {
-                "attr": "item.unit.code"
+                "attr": "item.unit.code",
+                "label": "Unit",
+                "width": 80
             }, {
                 "attr": "extended",
                 "showCurrency": false
             }]
+        }, {
+            "attr": "currency",
+            "grid": 2,
+            "unit": 0
+        }, {
+            "attr": "terms",
+            "grid": 2,
+            "unit": 0
+        }, {
+            "attr": "taxType",
+            "grid": 2,
+            "unit": 0
+        }, {
+            "attr": "created",
+            "grid": 3,
+            "unit": 0
+        }, {
+            "attr": "createdBy",
+            "grid": 3,
+            "unit": 0
+        }, {
+            "attr": "updated",
+            "grid": 3,
+            "unit": 0
+        }, {
+            "attr": "updatedBy",
+            "grid": 3,
+            "unit": 0
         }]
     }
 }, {

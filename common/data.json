@@ -249,4 +249,45 @@
             }
         ]
     }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "cr203k24xuro",
+    "data": {
+        "name": "TaxType",
+        "description": "Tax type form",
+        "module": "Common",
+        "feather": "TaxType",
+        "attrs": [{
+            "attr": "code"
+        }, {
+            "attr": "description"
+        }, {
+            "attr": "isActive"
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "y2vy2gd7q1jc",
+    "data": {
+        "name": "TaxType",
+        "description": "Tax type relation wdiget",
+        "module": "Common",
+        "isActive": true,
+        "feather": "TaxType",
+        "valueProperty": "code",
+        "labelProperty": "description",
+        "form": {
+            "id": "cr203k24xuro"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }, {
+                "attr": "isActive"
+            }
+        ]
+    }
 }]
