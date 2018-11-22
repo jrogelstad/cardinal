@@ -99,7 +99,8 @@
             },
             "note": {
                 "description": "Note",
-                "type": "string"
+                "type": "string",
+                "format": "textArea"
             },
             "isPosted": {
                 "description": "Transaction is complete",

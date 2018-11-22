@@ -138,13 +138,13 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "note",
-            "grid": 0,
-            "unit": 0
-        }, {
             "attr": "isPosted",
             "grid": 0,
-            "unit": 0
+            "unit": 1
+        }, {
+            "attr": "note",
+            "grid": 0,
+            "unit": 1
         }, {
             "attr": "distributions",
             "showLabel": false,
