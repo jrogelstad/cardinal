@@ -42,6 +42,7 @@
             name: "TrialBalance",
             client: obj.client,
             data: {
+              code: account.code + " - " + period.name,
               kind: currency,
               parent: account,
               period: period,

@@ -136,6 +136,7 @@
                         client: obj.client,
                         callback: createTrialBalance,
                         data: {
+                            code: account.code + " - " + fiscalPeriod.name,
                             kind: currency,
                             parent: account,
                             period: fiscalPeriod,
