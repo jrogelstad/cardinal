@@ -160,16 +160,6 @@
                 : undefined;
         }
 
-        function calculateLineNumber() {
-            var count = d.lines().length;
-
-            d.lines().some(function (line) {
-                if (!line.data.number()) {
-                    return line.data.number(count);
-                }
-            });
-        }
-
         function calculateSubtotal(prop) {
             var result = f.money(0, currencyCode());
 
@@ -199,16 +189,36 @@
             d.total(result);
         }
 
-        function handleCustomer() {
-            var count = d.lines().reduce(function (total, item) {
-                if (item.state().current()[0] !== "/Delete") {
-                    return total + 1;
+        function handleLines() {
+            var count,
+                billEntity = d.billEntity();
+
+            // Can't change bill entity once lines created
+            if (billEntity) {
+                d.lines().canAdd(true);
+
+                count = d.lines().reduce(function (total, item) {
+                    if (item.state().current()[0] !== "/Delete") {
+                        return total + 1;
+                    }
+
+                    return total;
+                }, 0);
+
+                d.billEntity.isReadOnly(count);
+            } else {
+                d.lines().canAdd(false);
+                d.billEntity.isReadOnly(false);
+            }
+
+            // Set line number if applicable
+            count = d.lines().length;
+
+            d.lines().some(function (line) {
+                if (!line.data.number()) {
+                    return line.data.number(count);
                 }
-
-                return total;
-            }, 0);
-
-            d.billEntity.isReadOnly(count > 0);
+            });
         }
 
         function handleBillEntity() {
@@ -224,13 +234,12 @@
         }
 
         that.onChanged("billEntity", handleBillEntity);
-        that.onChanged("lines", handleCustomer);
-        that.onChanged("lines", calculateLineNumber);
+        that.onChanged("lines", handleLines);
         that.onChange("lines.extended", calculateSubtotal);
         that.onChanged("subtotal", calculateTotal);
         that.onChanged("freight", calculateTotal);
         that.onChanged("tax", calculateTotal);
-        that.state().resolve("/Ready/Fetched/Clean").enter(handleCustomer);
+        that.state().resolve("/Ready/Fetched/Clean").enter(handleLines);
 
         that.onValidate(function () {
             if (!d.lines().length) {
@@ -243,6 +252,9 @@
                 throw "Line quantities must be greater than zero.";
             }
         });
+
+        // Initialize
+        handleLines();
 
         return that;
     };
