@@ -144,25 +144,27 @@
             "columns": [{
                 "attr": "number",
                 "label": "#",
-                "width": 20
+                "width": "20px"
             }, {
-                "attr": "item"
+                "attr": "item",
+                "width": "200px"
             }, {
-                "attr": "item.description"
+                "attr": "item.description",
+                "width": "200px"
             }, {
                 "attr": "ordered",
-                "width": 80
+                "width": "80px"
             }, {
                 "attr": "billed",
-                "width": 80
+                "width": "80px"
             }, {
                 "attr": "unitPrice",
                 "showCurrency": false,
-                "width": 80
+                "width": "120px"
             }, {
                 "attr": "item.unit.code",
                 "label": "Unit",
-                "width": 80
+                "width": "80px"
             }, {
                 "attr": "extended",
                 "showCurrency": false

@@ -154,7 +154,13 @@
         var that = model(data, feather),
             d = that.data;
 
-        function handleLineNumber() {
+        function currencyCode() {
+            return d.currency()
+                ? d.currency().data.code()
+                : undefined;
+        }
+
+        function calculateLineNumber() {
             var count = d.lines().length;
 
             d.lines().some(function (line) {
@@ -162,6 +168,47 @@
                     return line.data.number(count);
                 }
             });
+        }
+
+        function calculateSubtotal(prop) {
+            var result = f.money(0, currencyCode());
+
+            result.amount = Math.subtract(
+                d.subtotal().amount,
+                prop.oldValue().amount
+            );
+
+            result.amount = Math.add(
+                d.subtotal().amount,
+                prop.newValue().amount
+            );
+
+            d.subtotal(result);
+        }
+
+        function calculateTotal() {
+            var amount,
+                result = f.money(0, currencyCode()),
+                subtotal = d.subtotal().amount(),
+                freight = d.freight().amount(),
+                tax = d.tax().amount;
+
+            amount = Math.add(subtotal, freight);
+            amount = Math.add(amount, tax);
+            result.amount = amount;
+            d.total(result);
+        }
+
+        function handleCustomer() {
+            var count = d.lines().reduce(function (total, item) {
+                if (item.state().current()[0] !== "/Delete") {
+                    return total + 1;
+                }
+
+                return total;
+            }, 0);
+
+            d.billEntity.isReadOnly(count > 0);
         }
 
         function handleBillEntity() {
@@ -176,12 +223,24 @@
             }
         }
 
-        that.onChanged("lines", handleLineNumber);
         that.onChanged("billEntity", handleBillEntity);
+        that.onChanged("lines", handleCustomer);
+        that.onChanged("lines", calculateLineNumber);
+        that.onChange("lines.extended", calculateSubtotal);
+        that.onChanged("subtotal", calculateTotal);
+        that.onChanged("freight", calculateTotal);
+        that.onChanged("tax", calculateTotal);
+        that.state().resolve("/Ready/Fetched/Clean").enter(handleCustomer);
 
         that.onValidate(function () {
             if (!d.lines().length) {
                 throw "At least one line item is required";
+            }
+
+            if (d.lines().some(function (line) {
+                return line.data.ordered.toJSON() <= 0;
+            })) {
+                throw "Line quantities must be greater than zero.";
             }
         });
 

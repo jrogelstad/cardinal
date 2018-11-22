@@ -44,7 +44,8 @@
             }, {
               "attr": "description"
             }, {
-              "attr": "amount"
+              "attr": "amount",
+              "width": "250px"
             }, {
               "attr": "dueDate"
             }, {

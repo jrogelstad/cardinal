@@ -469,7 +469,8 @@
             "number": {
                 "description": "Line number",
                 "isReadOnly": true,
-                "type": "integer"
+                "type": "integer",
+                "isRequired": true
             },
             "item": {
                 "description": "Item",
@@ -477,11 +478,13 @@
                     "relation": "Item",
                     "properties": ["code", "description", "unit",
                         "cost", "unitPrice"]
-                }
+                },
+                "isRequired": true
             },
             "ordered": {
                 "description": "Quantity ordered",
-                "type": "number"
+                "type": "number",
+                "isRequired": true
             },
             "unitPrice": {
                 "description": "Unit price",
@@ -495,7 +498,8 @@
                 "type": "object",
                 "format": "money",
                 "isRequired": true,
-                "default": "money()"
+                "default": "money()",
+                "isReadOnly": true
             },
             "taxType": {
                 "description": "Tax type",
