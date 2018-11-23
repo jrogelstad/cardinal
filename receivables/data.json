@@ -137,6 +137,22 @@
             "grid": 0,
             "unit": 2
         }, {
+            "attr": "subtotal",
+            "grid": 0,
+            "unit": 3
+        }, {
+            "attr": "tax",
+            "grid": 0,
+            "unit": 3
+        }, {
+            "attr": "freight",
+            "grid": 0,
+            "unit": 3
+        }, {
+            "attr": "total",
+            "grid": 0,
+            "unit": 3
+        }, {
             "attr": "lines",
             "showLabel": false,
             "grid": 1,

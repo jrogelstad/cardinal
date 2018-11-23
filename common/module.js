@@ -34,18 +34,9 @@
         var that = model(data, feather),
             d = that.data;
 
-        function handlePolicy() {
-            var policy = d.policy();
-
-            switch (policy) {
+        function handleReadOnly() {
+            switch (d.policy()) {
             case "P":
-                d.isDepositRequired(true);
-                d.depositPercent(100);
-                d.depositAmount().amount = 0;
-                d.net(0);
-                d.day(1);
-                d.discountDays(0);
-                d.discount(0);
                 d.net.isReadOnly(true);
                 d.day.isReadOnly(true);
                 d.discountDays.isReadOnly(true);
@@ -53,10 +44,6 @@
                 d.isDepositRequired.isReadOnly(true);
                 break;
             case "I":
-                d.net(0);
-                d.day(1);
-                d.discountDays(0);
-                d.discount(0);
                 d.net.isReadOnly(true);
                 d.day.isReadOnly(true);
                 d.discountDays.isReadOnly(true);
@@ -64,7 +51,6 @@
                 d.isDepositRequired.isReadOnly(false);
                 break;
             case "N":
-                d.day(1);
                 d.day.isReadOnly(true);
                 d.net.isReadOnly(false);
                 d.discountDays.isReadOnly(false);
@@ -72,9 +58,6 @@
                 d.isDepositRequired.isReadOnly(false);
                 break;
             case "D":
-                d.net(0);
-                d.discountDays(0);
-                d.discount(0);
                 d.discountDays.isReadOnly(true);
                 d.discount.isReadOnly(true);
                 d.day.isReadOnly(false);
@@ -84,9 +67,7 @@
             default:
                 throw new Error("Invalid terms policy.");
             }
-        }
 
-        function handleIsDepositRequired() {
             if (d.isDepositRequired()) {
                 if (d.policy() === "P") {
                     d.depositAmount.isReadOnly(true);
@@ -96,12 +77,6 @@
                     d.depositPercent.isReadOnly(false);
                 }
             } else {
-                if (d.depositAmount() && d.depositAmount.toJSON().amount) {
-                    d.depositAmount().amount = 0;
-                } else {
-                    d.depositAmount(f.money());
-                }
-                d.depositPercent(0);
                 d.depositAmount.isReadOnly(true);
                 d.depositPercent.isReadOnly(true);
             }
@@ -114,22 +89,57 @@
                 prop.newValue(31);
             }
         });
+
         that.onChange("policy", function (prop) {
             if (prop.oldValue() === "P") {
                 d.isDepositRequired(false);
                 d.depositPercent(0);
             }
 
-            if (prop.newValue() === "N") {
+            switch (prop.newValue()) {
+            case "P":
+                d.isDepositRequired(true);
+                d.depositPercent(100);
+                d.depositAmount().amount = 0;
+                d.net(0);
+                d.day(1);
+                d.discountDays(0);
+                d.discount(0);
+                break;
+            case "I":
+                d.net(0);
+                d.day(1);
+                d.discountDays(0);
+                d.discount(0);
+                break;
+            case "N":
                 d.net(30);
+                d.day(1);
+                break;
+            case "D":
+                d.net(0);
+                d.discountDays(0);
+                d.discount(0);
+                break;
+            default:
+                throw new Error("Invalid terms policy.");
             }
         });
-        that.onChanged("policy", handlePolicy);
-        that.onChanged("isDepositRequired", handleIsDepositRequired);
-        that.state().resolve("/Ready/Fetched/Clean").enter(function () {
-            handlePolicy();
-            handleIsDepositRequired();
+
+        that.onChanged("isDepositRequired", function () {
+            if (!d.isDepositRequired()) {
+                if (d.depositAmount() && d.depositAmount.toJSON().amount) {
+                    d.depositAmount().amount = 0;
+                } else {
+                    d.depositAmount(f.money());
+                }
+                d.depositPercent(0);
+            }
         });
+
+        that.onChanged("policy", handleReadOnly);
+        that.onChanged("isDepositRequired", handleReadOnly);
+        that.state().resolve("/Ready/Fetched/Clean").enter(handleReadOnly);
 
         that.onValidate(function () {
             if (d.isDepositRequired() && d.depositAmount.toJSON().amount === 0 && d.depositPercent.toJSON() === 0) {
@@ -137,8 +147,7 @@
             }
         });
 
-        handlePolicy();
-        handleIsDepositRequired();
+        handleReadOnly();
 
         return that;
     };
