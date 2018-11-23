@@ -127,31 +127,31 @@
         }, {
             "attr": "status",
             "grid": 0,
-            "unit": 2
+            "unit": 1
         }, {
             "attr": "billTo",
             "grid": 0,
-            "unit": 2
+            "unit": 1
         }, {
             "attr": "contact",
             "grid": 0,
-            "unit": 2
+            "unit": 1
         }, {
             "attr": "subtotal",
             "grid": 0,
-            "unit": 3
+            "unit": 2
         }, {
             "attr": "tax",
             "grid": 0,
-            "unit": 3
+            "unit": 2
         }, {
             "attr": "freight",
             "grid": 0,
-            "unit": 3
+            "unit": 2
         }, {
             "attr": "total",
             "grid": 0,
-            "unit": 3
+            "unit": 2
         }, {
             "attr": "lines",
             "showLabel": false,
