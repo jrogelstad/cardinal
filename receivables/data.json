@@ -174,7 +174,7 @@
                 "attr": "billed",
                 "width": "80px"
             }, {
-                "attr": "unitPrice",
+                "attr": "price",
                 "showCurrency": false,
                 "width": "120px"
             }, {
@@ -183,7 +183,8 @@
                 "width": "80px"
             }, {
                 "attr": "extended",
-                "showCurrency": false
+                "showCurrency": false,
+                "width": "120px"
             }]
         }, {
             "attr": "currency",

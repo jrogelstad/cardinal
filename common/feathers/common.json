@@ -92,12 +92,6 @@
                 "description": "Manufacturer",
                 "type": "string"
             },
-            "cost": {
-                "description": "Cost",
-                "type": "object",
-                "format": "money",
-                "isRequired": true
-            },
             "unit":  {
               "description": "Unit of measure",
               "type": {
@@ -105,7 +99,13 @@
                 "properties": ["code", "description"]
               }
             },
-            "unitPrice":  {
+            "cost": {
+                "description": "Cost",
+                "type": "object",
+                "format": "money",
+                "isRequired": true
+            },
+            "price":  {
               "description": "Unit price",
               "type": "object",
               "format": "money"
@@ -477,7 +477,7 @@
                 "type": {
                     "relation": "Item",
                     "properties": ["code", "description", "unit",
-                        "cost", "unitPrice"]
+                        "cost", "price"]
                 },
                 "isRequired": true
             },
@@ -486,7 +486,7 @@
                 "type": "number",
                 "isRequired": true
             },
-            "unitPrice": {
+            "price": {
                 "description": "Unit price",
                 "type": "object",
                 "format": "money",

@@ -21,11 +21,6 @@
             "productDescription": {
                 "description": "Published product description",
                 "type": "string"
-            },
-            "price": {
-                "description": "Selling price",
-                "type": "number",
-                "scale": 4
             }
         }
     },

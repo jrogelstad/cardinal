@@ -50,8 +50,14 @@
             "color": "Silver",
             "weight": 20,
             "size": 20,
-            "cost": 88.00,
-            "price": 158.0,
+            "cost": {
+                "amount": 88.0,
+                "currency": "USD"
+            },
+            "price": {
+                "amount": 158.0,
+                "currency": "USD"
+            },
             "sellerRank": 17648,
             "asin": "B00UQ7IMNY",
             "shippingWeight": 26,
@@ -73,8 +79,14 @@
             "color": "Black",
             "weight": 40,
             "size": 19,
-            "cost": 102.00,
-            "price": 204.99,
+            "cost": {
+                "amount": 102.00,
+                "currency": "USD"
+            },
+            "price": {
+                "amount": 204.99,
+                "currency": "USD"
+            },
             "sellerRank": 22183,
             "asin": "B00OW1PMTW",
             "shippingWeight": 45.3,
@@ -97,8 +109,14 @@
             "color": "Cream",
             "weight": 40,
             "size": 21,
-            "cost": 162.00,
-            "price": 299.99,
+            "cost": {
+                "amount": 162.00,
+                "currency": "USD"
+            },
+            "price": {
+                "amount": 299.99,
+                "currency": "USD"
+            },
             "sellerRank": 22183,
             "asin": "B00BMM0TGA",
             "shippingWeight": 45.3,
@@ -120,8 +138,14 @@
             "material": "Aluminum",
             "diameter": 26,
             "weight": 2.8,
-            "cost": 31.54,
-            "price": 44.00,
+            "cost": {
+                "amount": 31.54,
+                "currency": "USD"
+            },
+            "price": {
+                "amount": 44.0,
+                "currency": "USD"
+            },
             "sellerRank": 80278,
             "asin": "B00PCFCN1C",
             "shippingWeight": 3.8,
@@ -142,8 +166,14 @@
             "material": "Composite",
             "diameter": 26,
             "weight": 2.2,
-            "cost": 12.54,
-            "price": 28.96,
+            "cost": {
+                "amount": 12.54,
+                "currency": "USD"
+            },
+            "price": {
+                "amount": 28.96,
+                "currency": "USD"
+            },
             "sellerRank": 95001,
             "asin": "B004YJ2N0S",
             "shippingWeight": 2.2,
@@ -164,8 +194,14 @@
             "material": "Aluminum",
             "diameter": 24,
             "weight": 2.2,
-            "cost": 12.94,
-            "price": 32.99,
+            "cost": {
+                "amount": 12.94,
+                "currency": "USD"
+            },
+            "price": {
+                "amount": 32.99,
+                "currency": "USD"
+            },
             "sellerRank": 95001,
             "asin": "B004YJ2N0Z",
             "shippingWeight": 2.2,
@@ -190,8 +226,14 @@
             "fork": "FC-330 Cross carbon monocoque with tapered steerer and carbon dropout ",
             "seatPost": "31.6mm",
             "weight": 16.2,
-            "cost": 655.00,
-            "price": 990.00,
+            "cost": {
+                "amount": 655.0,
+                "currency": "USD"
+            },
+            "price": {
+                "amount": 990.0,
+                "currency": "USD"
+            },
             "sellerRank": 56101,
             "asin": "B004YOCNC12",
             "shippingWeight": 20,
@@ -216,8 +258,14 @@
             "fork": "Carbon fiber",
             "seatPost": "31.6mm",
             "weight": 18.2,
-            "cost": 780.00,
-            "price": 1500.00,
+            "cost": {
+                "amount": 780.0,
+                "currency": "USD"
+            },
+            "price": {
+                "amount": 1500.0,
+                "currency": "USD"
+            },
             "sellerRank": 56101,
             "asin": "B004Y9OR12",
             "shippingWeight": 19,
@@ -242,8 +290,14 @@
             "fork": "N/A",
             "seatPost": "31.6mm",
             "weight": 12.2,
-            "cost": 305.00,
-            "price": 499.00,
+            "cost": {
+                "amount": 305.0,
+                "currency": "USD"
+            },
+            "price": {
+                "amount": 499.0,
+                "currency": "USD"
+            },
             "sellerRank": 56744,
             "asin": "B004Y76U9A",
             "shippingWeight": 16,
