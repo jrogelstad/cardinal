@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 /*global datasource, require, Promise*/
-/*jslint white, this*/
+/*jslint white, this, es6*/
 (function (datasource) {
     "strict";
 
@@ -51,10 +51,7 @@
                         return;
                     }
 
-                    sumcheck = Math.subtract(
-                        sumcheck,
-                        dist.debit.amount
-                    );
+                    sumcheck = sumcheck.minus(dist.debit.amount);
                 }
 
                 if(dist.credit.amount) {
@@ -63,15 +60,12 @@
                         return;
                     }
 
-                    sumcheck = Math.add(
-                        sumcheck,
-                        dist.credit.amount
-                    );
+                    sumcheck = sumcheck.plus(dist.credit.amount);
                 }
             });
 
             // Check balance
-            if(sumcheck !== 0) {
+            if(!sumcheck === 0) {
                 reject("Distribution does not balance.");
                 return;
             }
@@ -89,7 +83,7 @@
             currency: data.currency.code
         };
         data.distributions.forEach(function (item) {
-            totalAmount.amount = Math.add(totalAmount.amount, item.debit.amount);
+            totalAmount.amount = totalAmount.amount.plus(item.debit.amount);
         });
         data.amount = totalAmount;
     }

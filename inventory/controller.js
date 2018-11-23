@@ -16,12 +16,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 /*global datasource, require, Promise*/
-/*jslint this*/
+/*jslint this, es6*/
 (function (datasource) {
     "strict";
 
-    var f = require("./common/core"),
-        jsonpatch = require("fast-json-patch");
+    const f = require("./common/core");
+    const jsonpatch = require("fast-json-patch");
 
     // Register database procedure on datasource
     var doAdjust = function (obj) {
@@ -200,7 +200,7 @@
 
                             if (resp.length) {
                                 parentBalance = resp[0];
-                                parentBalance.balance = Math.subtract(parentBalance.balance, quantity);
+                                parentBalance.balance = parentBalance.balance.minus(quantity);
                             } else {
                                 parentBalance = {
                                     id: f.createId(),
@@ -311,7 +311,7 @@
                 function callback(resp) {
                     if (resp.length) {
                         debitLocationBalance = resp[0];
-                        debitLocationBalance.balance = Math.subtract(debitLocationBalance.balance, quantity);
+                        debitLocationBalance.balance = debitLocationBalance.balance.minus(quantity);
                     } else {
                         debitLocationBalance = {
                             id: f.createId(),
@@ -349,7 +349,7 @@
                 function callback(resp) {
                     if (resp.length) {
                         creditLocationBalance = resp[0];
-                        creditLocationBalance.balance = Math.add(creditLocationBalance.balance, quantity);
+                        creditLocationBalance.balance = creditLocationBalance.balance.plus(quantity);
                     } else {
                         creditLocationBalance = {
                             id: f.createId(),

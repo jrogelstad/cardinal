@@ -16,12 +16,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 /*global datasource, require, Promise*/
-/*jslint this*/
+/*jslint this, es6*/
 (function (datasource) {
     "strict";
 
-    var f = require("./common/core"),
-        jsonpatch = require("fast-json-patch");
+    const f = require("./common/core");
+    const jsonpatch = require("fast-json-patch");
 
     /**
       Journal delete handler
@@ -63,9 +63,11 @@
 
             // Helper functions
             function compute(transDist, dist) {
-                var amount = Math.subtract(transDist.credit.amount, transDist.debit.amount);
-                amount = Math.add(amount, dist.credit.amount);
-                amount = Math.subtract(amount, dist.debit.amount);
+                var amount = transDist.credit.amount
+                    .minus(transDist.debit.amount)
+                    .plus(dist.credit.amount)
+                    .minus(dist.debit.amount);
+
                 if (amount > 0) {
                     transDist.credit.amount = amount;
                     transDist.debit.amount = 0;
@@ -394,10 +396,10 @@
                             type = dist.account.kind.type,
                             ids = getParents(dist.account.id),
                             debit = function (row) {
-                                row.balance.amount = Math.add(row.balance.amount, value);
+                                row.balance.amount = row.balance.amount.plus(value);
                             },
                             credit = function (row) {
-                                row.balance.amount = Math.subtract(row.balance.amount, value);
+                                row.balance.amount = row.balance.amount.minus(value);
                             };
 
                         // Iterate through trial balances for account and parents
@@ -414,13 +416,13 @@
                             if (type === 'Asset' || type === 'Expense') {
                                 value = dist.debit.amount || dist.credit.amount * -1;
 
-                                balances[0].debits.amount = Math.add(balances[0].debits.amount, value);
+                                balances[0].debits.amount = balances[0].debits.amount.plus(value);
 
                                 update = debit;
                             } else {
                                 value = dist.credit.amount || dist.debit.amount * -1;
 
-                                balances[0].credits.amount = Math.add(balances[0].credits.amount, dist.credit.amount);
+                                balances[0].credits.amount = balances[0].credits.amount.plus(dist.credit.amount);
 
                                 update = credit;
                             }

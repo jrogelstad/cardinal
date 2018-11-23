@@ -16,19 +16,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 /*global datasource, require, Promise*/
-/*jslint this*/
+/*jslint this, es6*/
 (function () {
     "use strict";
 
-    var catalog = require("catalog"),
-        model = require("model"),
-        list = require("list"),
-        dataSource = require("datasource"),
-        models = catalog.register("models"),
-        ltFeather = catalog.getFeather("LedgerTransaction"),
-        jdFeather = catalog.getFeather("LedgerDistribution"),
-        laFeather = catalog.getFeather("LedgerAccount"),
-        f = require("common-core");
+    const catalog = require("catalog");
+    const model = require("model");
+    const list = require("list");
+    const dataSource = require("datasource");
+    const models = catalog.register("models");
+    const f = require("common-core");
 
     models.fiscalPeriod.closeCheck = function (selections) {
         return selections.every(function (model) {
@@ -81,7 +78,7 @@
 
     // Create ledger transaction model
     models.ledgerTransaction = function (data, feather) {
-        feather = feather || ltFeather;
+        feather = feather || catalog.getFeather("LedgerTransaction");
         var that;
 
         // Set default currency attribute
@@ -94,7 +91,6 @@
             var value,
                 dist = that.data.distributions(),
                 code = that.data.currency().data.code(),
-                minorUnit = that.data.currency().data.minorUnit(),
                 total = that.data.amount();
 
             // Update distributions
@@ -121,8 +117,7 @@
             total.amount = 0;
             dist.forEach(function (item) {
                 if (item.state().current()[0] !== "/Delete") {
-                    total.amount = Math.add(total.amount,
-                            item.data.debit().amount, minorUnit);
+                    total.amount = total.amount.plus(item.data.debit().amount);
                 }
             });
 
@@ -147,15 +142,9 @@
 
         function sum(total, item) {
             if (item.debit.amount) {
-                return Math.subtract(
-                    total,
-                    item.debit.amount
-                );
+                return total.minus(item.debit.amount);
             } else {
-                return Math.add(
-                    total,
-                    item.credit.amount
-                );
+                return total.plus(item.credit.amount);
             }
         }
 
@@ -180,7 +169,7 @@
 
     // Create ledger distribution model
     models.ledgerDistribution = function (data, feather) {
-        feather = feather || jdFeather;
+        feather = feather || catalog.getFeather("LedgerDistribution");
         var that = model(data, feather);
 
         that.onChange("debit", function (prop) {
@@ -277,7 +266,7 @@
 
     // Create ledger account model
     models.ledgerAccount = function (data, feather) {
-        feather = feather || laFeather;
+        feather = feather || catalog.getFeather("LedgerAccount");
         var that = model(data, feather);
 
         that.onCanDelete(function () {

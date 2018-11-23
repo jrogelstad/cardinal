@@ -15,23 +15,22 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*global require */
+/*global require*/
+/*jslint es6*/
 (function () {
     "strict";
 
-    var catalog = require("catalog"),
-        model = require("model"),
-        list = require("list"),
-        models = catalog.register("models"),
-        f = require("component-core"),
-        boFeather = catalog.getFeather("BillOrder"),
-        tFeather = catalog.getFeather("Terms");
+    const catalog = require("catalog");
+    const model = require("model");
+    const list = require("list");
+    const models = catalog.register("models");
+    const f = require("component-core");
 
     /**
         Terms model
     */
     models.terms = function (data, feather) {
-        feather = feather || tFeather;
+        feather = feather || catalog.getFeather("Terms");
         var that = model(data, feather),
             d = that.data;
 
@@ -97,7 +96,7 @@
                     d.depositPercent.isReadOnly(false);
                 }
             } else {
-                if (d.depositAmount() && d.depositAmount().amount) {
+                if (d.depositAmount() && d.depositAmount.toJSON().amount) {
                     d.depositAmount().amount = 0;
                 } else {
                     d.depositAmount(f.money());
@@ -150,7 +149,7 @@
         Bill order model
     */
     models.billOrder = function (data, feather) {
-        feather = feather || boFeather;
+        feather = feather || catalog.getFeather("BillOrder");
         var that = model(data, feather),
             d = that.data;
 
@@ -163,15 +162,9 @@
         function calculateSubtotal(prop) {
             var result = f.money(0, currencyCode());
 
-            result.amount = Math.subtract(
-                d.subtotal().amount,
-                prop.oldValue().amount
-            );
-
-            result.amount = Math.add(
-                d.subtotal().amount,
-                prop.newValue().amount
-            );
+            result.amount = d.subtotal.toJSON().amount
+                .minus(prop.oldValue().amount)
+                .plus(prop.newValue().amount);
 
             d.subtotal(result);
         }
@@ -179,12 +172,11 @@
         function calculateTotal() {
             var amount,
                 result = f.money(0, currencyCode()),
-                subtotal = d.subtotal().amount(),
-                freight = d.freight().amount(),
-                tax = d.tax().amount;
+                subtotal = d.subtotal.toJSON().amount,
+                freight = d.freight.toJSON().amount,
+                tax = d.tax.toJSON().amount;
 
-            amount = Math.add(subtotal, freight);
-            amount = Math.add(amount, tax);
+            amount = subtotal.plus(freight).plus(tax);
             result.amount = amount;
             d.total(result);
         }
@@ -260,5 +252,45 @@
     };
 
     models.billOrder.list = list("BillOrder");
+
+     /**
+        Bill order model
+    */
+    models.orderLine = function (data, feather) {
+        feather = feather || catalog.getFeather("OrderLine");
+        var that = model(data, feather),
+            d = that.data;
+
+        function handleItem() {
+            var item = d.item();
+
+            if (item) {
+                d.unitPrice(item.data.unitPrice());
+            }
+        }
+
+        function handleBilled() {
+            var currencyCode = that.parent().data.currency().data.code(),
+                extended = d.billed.toJSON().times(d.unitPrice.toJSON().amount);
+
+            d.extended(f.money(extended, currencyCode));
+        }
+
+        function handleOrdered() {
+            var ordered = d.ordered.toJSON();
+
+            if (ordered > d.billed.toJSON()) {
+                d.billed(ordered);
+            }
+        }
+
+        that.onChanged("item", handleItem);
+        that.onChanged("ordered", handleOrdered);
+        that.onChanged("billed", handleBilled);
+
+        return that;
+    };
+
+    models.billOrder.list = list("OrderLine");
 
 }());
