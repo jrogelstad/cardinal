@@ -102,7 +102,7 @@
             "id": "3b5i7biisqbw"
         },
         "searchColumns": [{
-                "attr": "number"
+                "attr": "code"
             }, {
                 "attr": "description"
             }, {
