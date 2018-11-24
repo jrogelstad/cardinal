@@ -214,6 +214,32 @@
             }
         });
 
+        that.onChanged("currency", function () {
+            var money,
+                curr = currencyCode();
+
+            if (curr) {
+                money = [
+                    d.subtotal,
+                    d.freight,
+                    d.tax,
+                    d.total
+                ];
+
+                d.lines().forEach(function (line) {
+                    money.push(line.data.price);
+                    money.push(line.data.extended);
+                });
+
+                money.forEach(function (fn) {
+                    var ret = f.copy(fn());
+
+                    ret.currency = curr;
+                    fn(ret);
+                });
+            }
+        });
+
         that.onChanged("lines", function () {
             var count,
                 billEntity = d.billEntity();
@@ -237,8 +263,8 @@
             var result = f.money(0, currencyCode());
 
             result.amount = d.subtotal.toJSON().amount
-                .minus(prop.oldValue().amount)
-                .plus(prop.newValue().amount);
+                .minus(prop.oldValue.toJSON().amount)
+                .plus(prop.newValue.toJSON().amount);
 
             d.subtotal(result);
         });
@@ -295,7 +321,7 @@
 
         that.onChanged("billed", function () {
             var currencyCode = that.parent().data.currency().data.code(),
-                extended = d.billed.toJSON().times(d.price.toJSON().amount);
+                extended = d.billed.toJSON().amount.times(d.price.toJSON().amount);
 
             d.extended(f.money(extended, currencyCode));
         });
