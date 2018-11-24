@@ -321,7 +321,7 @@
 
         that.onChanged("billed", function () {
             var currencyCode = that.parent().data.currency().data.code(),
-                extended = d.billed.toJSON().amount.times(d.price.toJSON().amount);
+                extended = d.billed.toJSON().times(d.price.toJSON().amount);
 
             d.extended(f.money(extended, currencyCode));
         });
