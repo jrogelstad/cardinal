@@ -10,37 +10,37 @@
         "isEditModeEnabled": false,
         "feather": "Invoice",
         "list": {
-          "columns": [{
+            "columns": [{
               "attr": "number"
-          }, {
-              "attr": "billEntity"
-          }, {
-              "attr": "billEntity.description"
-          }, {
-              "attr": "total"
-          }, {
-              "attr": "docDate"
-          }, {
-              "attr": "dueDate"
-          }, {
-              "attr": "postedDate"
-          }, {
-              "attr": "status"
-          }]
-        },
-        "filter": {
-            "criteria": [{
-                "property": "status",
-                "operator": "!=",
-                "value": "C"
-            }],
-            "sort": [{
-                "property": "status",
-                "order": "DESC"
             }, {
-                "property": "number",
-                "order": "DESC"
-            }]
+              "attr": "billEntity"
+            }, {
+              "attr": "billEntity.description"
+            }, {
+              "attr": "total"
+            }, {
+              "attr": "docDate"
+            }, {
+              "attr": "dueDate"
+            }, {
+              "attr": "postedDate"
+            }, {
+              "attr": "status"
+            }],
+            "filter": {
+                "criteria": [{
+                    "property": "status",
+                    "operator": "!=",
+                    "value": "C"
+                }],
+                "sort": [{
+                    "property": "dueDate",
+                    "order": "ASC"
+                }, {
+                    "property": "number",
+                    "order": "ASC"
+                }]
+            }
         }
     },
     {
@@ -48,37 +48,37 @@
         "isEditModeEnabled": false,
         "feather": "CreditMemo",
         "list": {
-          "columns": [{
+            "columns": [{
               "attr": "number"
-          }, {
-              "attr": "billEntity"
-          }, {
-              "attr": "billEntity.description"
-          }, {
-              "attr": "total"
-          }, {
-              "attr": "docDate"
-          }, {
-              "attr": "dueDate"
-          }, {
-              "attr": "postedDate"
-          }, {
-              "attr": "status"
-          }]
-        },
-        "filter": {
-            "criteria": [{
-                "property": "status",
-                "operator": "!=",
-                "value": "C"
-            }],
-            "sort": [{
-                "property": "status",
-                "order": "DESC"
             }, {
-                "property": "number",
-                "order": "DESC"
-            }]
+              "attr": "billEntity"
+            }, {
+              "attr": "billEntity.description"
+            }, {
+              "attr": "total"
+            }, {
+              "attr": "docDate"
+            }, {
+              "attr": "dueDate"
+            }, {
+              "attr": "postedDate"
+            }, {
+              "attr": "status"
+            }],
+            "filter": {
+                "criteria": [{
+                    "property": "status",
+                    "operator": "!=",
+                    "value": "C"
+                }],
+                "sort": [{
+                    "property": "dueDate",
+                    "order": "ASC"
+                }, {
+                    "property": "number",
+                    "order": "ASC"
+                }]
+            }
         }
     },
     {

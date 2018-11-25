@@ -10,31 +10,34 @@
         "isEditModeEnabled": false,
         "feather": "SalesOrder",
         "list": {
-          "columns": [{
+            "columns": [{
               "attr": "number"
-          }, {
+            }, {
               "attr": "billEntity"
-          }, {
+            }, {
               "attr": "billEntity.description"
-          }, {
+            }, {
               "attr": "docDate"
-          }, {
+            }, {
               "attr": "promiseDate"
-          }, {
+            }, {
               "attr": "shipMethod"
-          }, {
+            }, {
               "attr": "status"
-          }]
-        },
-        "filter": {
-            "criteria": [{
-                "property": "status",
-                "value": "O"
             }],
-            "sort": [{
-                "property": "number",
-                "order": "DESC"
-            }]
+            "filter": {
+                "criteria": [{
+                    "property": "status",
+                    "value": "O"
+                }],
+                "sort": [{
+                    "property": "promiseDate",
+                    "order": "ASC"
+                }, {
+                    "property": "number",
+                    "order": "ASC"
+                }]
+            }
         }
     },
     {

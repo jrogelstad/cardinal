@@ -35,6 +35,14 @@
             mixinOrderHeader = catalog.store().mixins().orderHeader;
 
         mixinOrderHeader(that);
+        
+        that.onChanged("billEntity", function () {
+            var billEntity = d.billEntity();
+
+            if (billEntity) {
+                d.shipTo(billEntity.data.shipTo());
+            }
+        });
 
         that.onChanged("lines", function () {
             var count,
@@ -51,5 +59,25 @@
     };
 
     models.salesOrder.list = list("SalesOrder");
+
+     /**
+        Sales order line model
+    */
+    models.salesOrderLine = function (data, feather) {
+        feather = feather || catalog.getFeather("SalesOrderLine");
+        var that = model(data, feather),
+            d = that.data;
+
+        that.onChanged("ordered", function () {
+            var currency = that.parent().data.currency().data.code(),
+                amount = d.ordered.toJSON().times(d.price.toJSON().amount);
+
+            d.extended(f.money(amount, currency));
+        });
+
+        return that;
+    };
+
+    models.salesOrderLine.list = list("SalesOrderLine");
 
 }());
