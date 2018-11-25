@@ -1,0 +1,21 @@
+{
+    "name": "receivablesSettings",
+    "module": "Receivables",
+    "description": "Receivables settings",
+    "properties": {
+        "receivablesAccount": {
+            "description": "Default Receivables account",
+            "type": {
+                "relation": "LedgerAccount",
+                "properties": ["code", "description"]
+            }
+        },
+        "revenueAccount": {
+            "description": "Default Revenue account",
+            "type": {
+                "relation": "LedgerAccount",
+                "properties": ["code", "description"]
+            }
+        }
+    }
+}

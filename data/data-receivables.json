@@ -99,5 +99,24 @@
                     "country": "United States"
                 }
             }
+        }, {
+            "method": "PUT",
+            "name": "saveSettings",
+            "user": "postgres",
+            "data": {
+                "name": "receivablesSettings",
+                "data": {
+                    "receivablesAccount": {
+                        "id":"ehpdd4vim8kw",
+                        "code":"120",
+                        "description":"Accounts Recievable"
+                    },
+                    "revenueAccount": {
+                        "id":"sklbdyyrjpxk",
+                        "code":"320",
+                        "description":"Products Revenues"
+                    }
+                }
+            }
         }
     ]

@@ -18,6 +18,10 @@
         {
             "type": "batch",
             "path": "data.json"
+        },
+        {
+            "type": "settings",
+            "path": "settings.json"
         }
     ]
 }
