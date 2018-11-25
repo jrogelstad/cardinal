@@ -93,6 +93,41 @@
         }
     },
     {
+        "name": "CreditMemo",
+        "plural": "CreditMemos",
+        "module": "Receivables",
+        "inherits": "Receivable",
+        "description": "Credit memo",
+        "properties": {
+            "number": {
+                "description": "Credit memo number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "CM",
+                    "sequence": "credit_memo_seq_num",
+                    "length": 5
+                },
+                "isUnique": true,
+                "inheritedFrom": "BillOrder"
+            }
+        },
+        "overloads": {
+            "billEntity": {
+                "alias": "customer",
+                "type": {
+                    "relation": "Customer",
+                    "properties": ["code", "description", "billTo",
+                        "currency", "terms", "taxType", "isActive"] 
+                },
+                "isRequired": true
+            },
+            "docDate": {
+                "alias": "memoDate"
+            }
+        }
+    },
+    {
         "name": "AccountsReceivable",
         "plural": "AccountsReceivable",
         "module": "Receivables",

@@ -50,6 +50,6 @@
         return that;
     };
 
-    models.invoice.list = list("SalesOrder");
+    models.salesOrder.list = list("SalesOrder");
 
 }());

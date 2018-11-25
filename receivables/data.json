@@ -238,6 +238,165 @@
             }, {
                 "attr": "billEntity.description"
             }, {
+                "attr": "total"
+            }, {
+                "attr": "status"
+            }, {
+                "attr": "dueDate"
+            }, {
+                "attr": "contact.fullName"
+            }
+        ]
+    }
+},
+{
+    "name": "Form",
+    "method": "POST",
+    "id": "ou8n7jkilm",
+    "data": {
+        "name": "Credit Memo",
+        "description": "Credit memo form",
+        "module": "Receivables",
+        "feather": "CreditMemo",
+        "tabs": [{
+            "name": "Lines"
+        }, {
+            "name": "Credit"
+        }, {
+            "name": "Audit"
+        }],
+        "attrs": [{
+            "attr": "number",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "docDate",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "dueDate",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "billEntity",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "status",
+            "grid": 0,
+            "unit": 1
+        }, {
+            "attr": "billTo",
+            "grid": 0,
+            "unit": 1
+        }, {
+            "attr": "contact",
+            "grid": 0,
+            "unit": 1
+        }, {
+            "attr": "subtotal",
+            "grid": 0,
+            "unit": 2
+        }, {
+            "attr": "tax",
+            "grid": 0,
+            "unit": 2,
+            "disableCurrency": true
+        }, {
+            "attr": "freight",
+            "grid": 0,
+            "unit": 2,
+            "disableCurrency": true
+        }, {
+            "attr": "total",
+            "grid": 0,
+            "unit": 2
+        }, {
+            "attr": "lines",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "number",
+                "label": "#",
+                "width": "20px"
+            }, {
+                "attr": "item",
+                "width": "200px"
+            }, {
+                "attr": "item.description",
+                "width": "200px"
+            }, {
+                "attr": "ordered",
+                "width": "80px"
+            }, {
+                "attr": "billed",
+                "width": "80px"
+            }, {
+                "attr": "price",
+                "showCurrency": false,
+                "width": "120px"
+            }, {
+                "attr": "item.unit.code",
+                "label": "Unit",
+                "width": "80px"
+            }, {
+                "attr": "extended",
+                "showCurrency": false,
+                "width": "120px"
+            }]
+        }, {
+            "attr": "currency",
+            "grid": 2,
+            "unit": 0
+        }, {
+            "attr": "terms",
+            "grid": 2,
+            "unit": 0
+        }, {
+            "attr": "taxType",
+            "grid": 2,
+            "unit": 0
+        }, {
+            "attr": "created",
+            "grid": 3,
+            "unit": 0
+        }, {
+            "attr": "createdBy",
+            "grid": 3,
+            "unit": 0
+        }, {
+            "attr": "updated",
+            "grid": 3,
+            "unit": 0
+        }, {
+            "attr": "updatedBy",
+            "grid": 3,
+            "unit": 0
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "b32l4isyk2kh",
+    "data": {
+        "name": "Credit Memo",
+        "description": "Credit memo relation wdiget",
+        "isActive": true,
+        "feather": "CreditMemo",
+        "valueProperty": "number",
+        "form": {
+            "id": "ou8n7jkilm"
+        },
+        "searchColumns": [{
+                "attr": "number"
+            }, {
+                "attr": "billEntity.code"
+            }, {
+                "attr": "billEntity.description"
+            }, {
+                "attr": "total"
+            }, {
                 "attr": "status"
             }, {
                 "attr": "dueDate"

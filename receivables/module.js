@@ -76,6 +76,21 @@
     models.invoice.list = list("Invoice");
     
      /**
+        Credit memo model
+    */
+    models.creditMemo = function (data, feather) {
+        feather = feather || catalog.getFeather("CreditMemo");
+        var that = model(data, feather),
+            mixinOrderHeader = catalog.store().mixins().orderHeader;
+
+        mixinOrderHeader(that);
+
+        return that;
+    };
+
+    models.creditMemo.list = list("CreditMemo");
+    
+     /**
         Receivable line model
     */
     models.receivableLine = function (data, feather) {

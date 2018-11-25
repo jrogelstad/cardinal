@@ -33,7 +33,7 @@
         },
         "overloads": {
             "billEntity": {
-                "alias": "Customer",
+                "alias": "customer",
                 "type": {
                     "relation": "Customer",
                     "properties": ["code", "description", "terms",
@@ -42,7 +42,7 @@
                 "isRequired": true
             },
             "docDate": {
-                "alias": "Order Date"
+                "alias": "orderDate"
             },
             "status": {
                 "description": "Order status",

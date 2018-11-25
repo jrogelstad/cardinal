@@ -17,6 +17,8 @@
           }, {
               "attr": "billEntity.description"
           }, {
+              "attr": "total"
+          }, {
               "attr": "docDate"
           }, {
               "attr": "dueDate"
@@ -27,6 +29,49 @@
           }]
         },
         "filter": {
+            "criteria": [{
+                "property": "status",
+                "operator": "!=",
+                "value": "C"
+            }],
+            "sort": [{
+                "property": "status",
+                "order": "DESC"
+            }, {
+                "property": "number",
+                "order": "DESC"
+            }]
+        }
+    },
+    {
+        "name": "Credit Memos",
+        "isEditModeEnabled": false,
+        "feather": "CreditMemo",
+        "list": {
+          "columns": [{
+              "attr": "number"
+          }, {
+              "attr": "billEntity"
+          }, {
+              "attr": "billEntity.description"
+          }, {
+              "attr": "total"
+          }, {
+              "attr": "docDate"
+          }, {
+              "attr": "dueDate"
+          }, {
+              "attr": "postedDate"
+          }, {
+              "attr": "status"
+          }]
+        },
+        "filter": {
+            "criteria": [{
+                "property": "status",
+                "operator": "!=",
+                "value": "C"
+            }],
             "sort": [{
                 "property": "status",
                 "order": "DESC"
