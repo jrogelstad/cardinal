@@ -38,6 +38,26 @@
         "inherits": "BillSubledger"
     },
     {
+        "name": "ReceivableLine",
+        "module": "Receivables",
+        "description": "Receivable line",
+        "inherits": "OrderLine",
+        "properties": {
+            "parent": {
+              "description": "Parent receivable",
+              "type": {
+                    "relation": "Receivable",
+                    "childOf": "lines"
+                }
+            },
+            "billed": {
+                "description": "Quantity billed",
+                "type": "number",
+                "isRequired": true
+            }
+        }
+    },
+    {
         "name": "Invoice",
         "plural": "Invoices",
         "module": "Receivables",
@@ -69,25 +89,6 @@
             },
             "docDate": {
                 "alias": "invoiceDate"
-            }
-        }
-    },
-    {
-        "name": "InvoiceLine",
-        "module": "Receivables",
-        "description": "Invoice line",
-        "inherits": "OrderLine",
-        "properties": {
-            "parent": {
-              "description": "Parent invoice",
-              "type": {
-                    "relation": "Invoice",
-                    "childOf": "lines"
-                }
-            },
-            "billed": {
-                "description": "Quantity billed",
-                "type": "number"
             }
         }
     },

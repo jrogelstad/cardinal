@@ -580,10 +580,10 @@
     },
     {
         "name": "ShipOrder",
-        "plural": "SalesOrders",
+        "plural": "ShipOrders",
         "module": "Common",
         "inherits": "BillOrder",
-        "description": "Sales order",
+        "description": "Shippable order",
         "properties": {
             "shipTo": {
                 "description": "Ship to address",

@@ -10,6 +10,8 @@
         "tabs": [{
             "name": "Lines"
         }, {
+            "name": "Credit"
+        }, {
             "name": "Audit"
         }],
         "attrs": [{
@@ -21,23 +23,45 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "billEntity",
+            "attr": "requestDate",
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "shipMethod",
+            "attr": "promiseDate",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "billEntity",
             "grid": 0,
             "unit": 0
         }, {
             "attr": "status",
             "grid": 0,
-            "unit": 0
+            "unit": 1
         }, {
-            "attr": "billTo",
+            "attr": "shipTo",
+            "grid": 0,
+            "unit": 1
+        }, {
+            "attr": "contact",
+            "grid": 0,
+            "unit": 1
+        }, {
+            "attr": "subtotal",
             "grid": 0,
             "unit": 2
         }, {
-            "attr": "shipTo",
+            "attr": "tax",
+            "grid": 0,
+            "unit": 2,
+            "disableCurrency": true
+        }, {
+            "attr": "freight",
+            "grid": 0,
+            "unit": 2,
+            "disableCurrency": true
+        }, {
+            "attr": "total",
             "grid": 0,
             "unit": 2
         }, {
@@ -46,16 +70,68 @@
             "grid": 1,
             "unit": 0,
             "columns": [{
-                "attr": "item"
+                "attr": "number",
+                "label": "#",
+                "width": "20px"
             }, {
-                "attr": "item.description"
+                "attr": "item",
+                "width": "200px"
             }, {
-                "attr": "ordered"
+                "attr": "item.description",
+                "width": "200px"
             }, {
-                "attr": "shipped"
+                "attr": "ordered",
+                "width": "80px"
             }, {
-                "attr": "status"
+                "attr": "shipped",
+                "width": "80px"
+            }, {
+                "attr": "price",
+                "showCurrency": false,
+                "width": "120px"
+            }, {
+                "attr": "item.unit.code",
+                "label": "Unit",
+                "width": "80px"
+            }, {
+                "attr": "extended",
+                "showCurrency": false,
+                "width": "120px"
+            }, {
+                "attr": "promiseDate"
             }]
+        }, {
+            "attr": "currency",
+            "grid": 2,
+            "unit": 0
+        }, {
+            "attr": "terms",
+            "grid": 2,
+            "unit": 0
+        }, {
+            "attr": "taxType",
+            "grid": 2,
+            "unit": 0
+        }, {
+            "attr": "billTo",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "created",
+            "grid": 3,
+            "unit": 0
+        }, {
+            "attr": "createdBy",
+            "grid": 3,
+            "unit": 0
+        }, {
+            "attr": "updated",
+            "grid": 3,
+            "unit": 0
+        }, {
+            "attr": "updatedBy",
+            "grid": 3,
+            "unit": 0
         }]
     }
 }]

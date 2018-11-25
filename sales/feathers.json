@@ -41,6 +41,9 @@
                 },
                 "isRequired": true
             },
+            "docDate": {
+                "alias": "Order Date"
+            },
             "status": {
                 "description": "Order status",
                 "type": "string",
@@ -104,6 +107,7 @@
                 "isRequired": true,
                 "isReadOnly": true,
                 "format": "enum",
+                "default": "O",
                 "dataList": [
                     {
                         "value": "O",
