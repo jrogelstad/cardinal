@@ -31,10 +31,17 @@
         }
     },
     {
+        "name": "Receivable",
+        "plural": "Receivables",
+        "module": "Receivables",
+        "description": "Receivable subledger",
+        "inherits": "BillSubledger"
+    },
+    {
         "name": "Invoice",
         "plural": "Invoices",
         "module": "Receivables",
-        "inherits": "BillOrder",
+        "inherits": "Receivable",
         "description": "Invoice",
         "properties": {
             "number": {
@@ -48,19 +55,6 @@
                 },
                 "isUnique": true,
                 "inheritedFrom": "BillOrder"
-            },
-            "dueDate": {
-                "description": "Posted date",
-                "type": "string",
-                "format": "date",
-                "default": "today()",
-                "isRequired": true
-            },
-            "postedDate": {
-                "description": "Posted date",
-                "type": "string",
-                "format": "date",
-                "isReadOnly": true
             }
         },
         "overloads": {
@@ -75,23 +69,6 @@
             },
             "docDate": {
                 "alias": "invoiceDate"
-            },
-            "status": {
-                "description": "Invoice status",
-                "type": "string",
-                "default": "U",
-                "isReadOnly": true,
-                "format": "enum",
-                "dataList": [
-                    {
-                        "value": "U",
-                        "label": "Unposted"
-                    },
-                    {
-                        "value": "P",
-                        "label": "Posted"
-                    }
-                ]
             }
         }
     },

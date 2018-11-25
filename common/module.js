@@ -154,6 +154,12 @@
 
     models.terms.list = list("Terms");
 
+    function currencyCode(d) {
+        return d.currency()
+            ? d.currency().data.code()
+            : undefined;
+    }
+
     /**
         Bill order model
     */
@@ -162,15 +168,9 @@
         var that = model(data, feather),
             d = that.data;
 
-        function currencyCode() {
-            return d.currency()
-                ? d.currency().data.code()
-                : undefined;
-        }
-
         function calculateTotal() {
             var amount,
-                result = f.money(0, currencyCode()),
+                result = f.money(0, currencyCode(d)),
                 subtotal = d.subtotal.toJSON().amount,
                 freight = d.freight.toJSON().amount,
                 tax = d.tax.toJSON().amount;
@@ -178,28 +178,6 @@
             amount = subtotal.plus(freight).plus(tax);
             result.amount = amount;
             d.total(result);
-        }
-
-        function handleReadOnly() {
-            var count,
-                billEntity = d.billEntity();
-
-            // Can't change bill entity once lines created
-            if (billEntity) {
-                count = d.lines().reduce(function (total, item) {
-                    if (item.state().current()[0] !== "/Delete") {
-                        return total + 1;
-                    }
-
-                    return total;
-                }, 0);
-
-                d.lines().canAdd(true);
-                d.billEntity.isReadOnly(count > 0);
-            } else {
-                d.lines().canAdd(false);
-                d.billEntity.isReadOnly(false);
-            }
         }
 
         that.onChanged("billEntity", function () {
@@ -216,7 +194,7 @@
 
         that.onChanged("currency", function () {
             var money,
-                curr = currencyCode();
+                curr = currencyCode(d);
 
             if (curr) {
                 money = [
@@ -226,11 +204,6 @@
                     d.total
                 ];
 
-                d.lines().forEach(function (line) {
-                    money.push(line.data.price);
-                    money.push(line.data.extended);
-                });
-
                 money.forEach(function (fn) {
                     var ret = f.copy(fn());
 
@@ -238,35 +211,6 @@
                     fn(ret);
                 });
             }
-        });
-
-        that.onChanged("lines", function () {
-            var count,
-                billEntity = d.billEntity();
-
-            // Can't change bill entity once lines created
-            if (billEntity) {
-                d.lines().canAdd(true);
-            }
-
-            // Set line number if applicable
-            count = d.lines().length;
-
-            d.lines().some(function (line) {
-                if (!line.data.number()) {
-                    return line.data.number(count);
-                }
-            });
-        });
-
-        that.onChange("lines.extended", function (prop) {
-            var result = f.money(0, currencyCode());
-
-            result.amount = d.subtotal.toJSON().amount
-                .minus(prop.oldValue.toJSON().amount)
-                .plus(prop.newValue.toJSON().amount);
-
-            d.subtotal(result);
         });
 
         that.onChanged("terms", function (prop) {
@@ -294,28 +238,12 @@
         that.onChanged("subtotal", calculateTotal);
         that.onChanged("freight", calculateTotal);
         that.onChanged("tax", calculateTotal);
-        that.onChanged("billEntity", handleReadOnly);
-        that.state().resolve("/Ready/Fetched/Clean").enter(handleReadOnly);
-
-        that.onValidate(function () {
-            if (!d.lines().length) {
-                throw "At least one line item is required";
-            }
-
-            if (d.lines().some(function (line) {
-                return line.data.ordered.toJSON() <= 0;
-            })) {
-                throw "Line quantities must be greater than zero.";
-            }
-        });
-
-        // Initialize
-        handleReadOnly();
 
         return that;
     };
 
     models.billOrder.list = list("BillOrder");
+
 
      /**
         Order line model
@@ -342,15 +270,114 @@
         });
 
         that.onChanged("billed", function () {
-            var currencyCode = that.parent().data.currency().data.code(),
-                extended = d.billed.toJSON().times(d.price.toJSON().amount);
+            var currency = currencyCode(that.parent().data),
+                amount = d.billed.toJSON().times(d.price.toJSON().amount);
 
-            d.extended(f.money(extended, currencyCode));
+            d.extended(f.money(amount, currency));
         });
 
         return that;
     };
 
     models.billOrder.list = list("OrderLine");
+
+    /**
+        Order header mixin
+
+        Applies shared line item logic to orders
+
+        @param {Object} Order model instance
+        @returns {Object} order model instance
+    */
+    function orderHeader(model) {
+        var d = model.data;
+
+        function handleReadOnly() {
+            var count,
+                billEntity = d.billEntity();
+
+            // Can't change bill entity once lines created
+            if (billEntity) {
+                count = d.lines().reduce(function (total, item) {
+                    if (item.state().current()[0] !== "/Delete") {
+                        return total + 1;
+                    }
+
+                    return total;
+                }, 0);
+
+                d.lines().canAdd(true);
+                d.billEntity.isReadOnly(count > 0);
+            } else {
+                d.lines().canAdd(false);
+                d.billEntity.isReadOnly(false);
+            }
+        }
+
+        model.onChanged("currency", function () {
+            var money = [],
+                curr = currencyCode(d);
+
+            if (curr) {
+                d.lines().forEach(function (line) {
+                    money.push(line.data.price);
+                    money.push(line.data.extended);
+                });
+
+                money.forEach(function (fn) {
+                    var ret = f.copy(fn());
+
+                    ret.currency = curr;
+                    fn(ret);
+                });
+            }
+        });
+
+        model.onChanged("lines", function () {
+            var count;
+
+            // Set line number if applicable
+            count = d.lines().length;
+
+            d.lines().some(function (line) {
+                if (!line.data.number()) {
+                    return line.data.number(count);
+                }
+            });
+        });
+
+        model.onChange("lines.extended", function (prop) {
+            var result = f.money(0, currencyCode(d));
+
+            result.amount = d.subtotal.toJSON().amount
+                .minus(prop.oldValue.toJSON().amount)
+                .plus(prop.newValue.toJSON().amount);
+
+            d.subtotal(result);
+        });
+
+        model.onChanged("billEntity", handleReadOnly);
+        model.onChanged("lines", handleReadOnly);
+        model.state().resolve("/Ready/Fetched/Clean").enter(handleReadOnly);
+
+        model.onValidate(function () {
+            if (!d.lines().length) {
+                throw "At least one line item is required";
+            }
+
+            if (d.lines().some(function (line) {
+                return line.data.ordered.toJSON() <= 0;
+            })) {
+                throw "Line quantities must be greater than zero.";
+            }
+        });
+
+        // Initialize
+        handleReadOnly();
+
+        return model;
+    }
+
+    catalog.register("mixins", "orderHeader", orderHeader);
 
 }());
