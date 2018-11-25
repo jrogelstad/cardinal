@@ -269,6 +269,28 @@
             d.subtotal(result);
         });
 
+        that.onChanged("terms", function (prop) {
+            var dt,
+                terms = prop();
+
+            if (terms) {
+                dt = new Date(d.docDate());
+                switch (terms.data.policy()) {
+                case "N":
+                    dt.setDate(dt.getDate() + terms.data.net.toJSON());
+                    break;
+                case "D":
+                    dt.setMonth(dt.getMonth() + 2);
+                    dt.setDate(terms.data.day.toJSON());
+                    dt.setHours(0);
+                    dt.setMinutes(0);
+                    dt.setMilliseconds(0);
+                    break;
+                }
+                d.dueDate(dt);
+            }
+        });
+
         that.onChanged("subtotal", calculateTotal);
         that.onChanged("freight", calculateTotal);
         that.onChanged("tax", calculateTotal);
