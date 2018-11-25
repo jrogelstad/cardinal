@@ -43,13 +43,6 @@
         "description": "Receivable line",
         "inherits": "OrderLine",
         "properties": {
-            "parent": {
-              "description": "Parent receivable",
-              "type": {
-                    "relation": "Receivable",
-                    "childOf": "lines"
-                }
-            },
             "billed": {
                 "description": "Quantity billed",
                 "type": "number",
@@ -93,6 +86,21 @@
         }
     },
     {
+        "name": "InvoiceLine",
+        "module": "Receivables",
+        "description": "Invoice line",
+        "inherits": "ReceivableLine",
+        "properties": {
+            "parent": {
+              "description": "Parent invoice",
+              "type": {
+                    "relation": "Invoice",
+                    "childOf": "lines"
+                }
+            }
+        }
+    },
+    {
         "name": "CreditMemo",
         "plural": "CreditMemos",
         "module": "Receivables",
@@ -124,6 +132,26 @@
             },
             "docDate": {
                 "alias": "memoDate"
+            }
+        }
+    },
+    {
+        "name": "CreditMemoLine",
+        "module": "Receivables",
+        "description": "Receivable line",
+        "inherits": "ReceivableLine",
+        "properties": {
+            "parent": {
+              "description": "Parent credit memo",
+              "type": {
+                    "relation": "CreditMemo",
+                    "childOf": "lines"
+                }
+            }
+        },
+        "overloads": {
+            "billed": {
+                "alias": "credited"
             }
         }
     },
