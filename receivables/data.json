@@ -143,11 +143,13 @@
         }, {
             "attr": "tax",
             "grid": 0,
-            "unit": 2
+            "unit": 2,
+            "disableCurrency": true
         }, {
             "attr": "freight",
             "grid": 0,
-            "unit": 2
+            "unit": 2,
+            "disableCurrency": true
         }, {
             "attr": "total",
             "grid": 0,
