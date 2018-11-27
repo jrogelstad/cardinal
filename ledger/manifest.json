@@ -16,24 +16,24 @@
             "path": "module.js"
         },
         {
-            "type": "controller",
+            "type": "service",
             "name": "LedgerFiscalPeriod",
-            "path": "controllers/fiscal-period.js"
+            "path": "services/fiscal-period.js"
         },
         {
-            "type": "controller",
+            "type": "service",
             "name": "LedgerLedgerAccount",
-            "path": "controllers/ledger-account.js"
+            "path": "services/ledger-account.js"
         },
         {
-            "type": "controller",
+            "type": "service",
             "name": "LedgerJournal",
-            "path": "controllers/journal.js"
+            "path": "services/journal.js"
         },
         {
-            "type": "controller",
+            "type": "service",
             "name": "LedgerLedgerTransaction",
-            "path": "controllers/ledger-transaction.js"
+            "path": "services/ledger-transaction.js"
         },
         {
             "type": "route",

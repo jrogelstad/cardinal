@@ -321,7 +321,7 @@
                 "isReadOnly": true
             },
             "journal": {
-                "description": "Reference to journal"
+                "description": "Reference to journal",
                 "type": {
                     "relation": "Journal",
                     "properties": ["number", "reference", "isPosted"]

@@ -12,9 +12,9 @@
             "path": "module.js"
         },
         {
-            "type": "controller",
+            "type": "service",
             "name": "Inventory",
-            "path": "controller.js"
+            "path": "service.js"
         },
         {
             "type": "route",

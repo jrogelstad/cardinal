@@ -15,19 +15,19 @@
             "path": "module.js"
         },
         {
-            "type": "controller",
+            "type": "service",
             "name": "Action",
-            "path": "controllers/action.js"
+            "path": "services/action.js"
         },
         {
-            "type": "controller",
+            "type": "service",
             "name": "Period",
-            "path": "controllers/period.js"
+            "path": "services/period.js"
         },
         {
-            "type": "controller",
+            "type": "service",
             "name": "terms",
-            "path": "controllers/terms.js"
+            "path": "services/terms.js"
         },
         {
             "type": "workbook",
