@@ -23,7 +23,9 @@
     const catalog = require("catalog");
     const model = require("model");
     const list = require("list");
+    const f = require("component-core");
     const models = catalog.register("models");
+    const postMixin = catalog.store().mixins().post;
 
      /**
         Receivable model
@@ -45,10 +47,7 @@
                     break;
                 case "D":
                     dt.setMonth(dt.getMonth() + 2);
-                    dt.setDate(terms.data.day.toJSON());
-                    dt.setHours(0);
-                    dt.setMinutes(0);
-                    dt.setMilliseconds(0);
+                    dt.setDate(terms.data.day.toJSON()).toDate();
                     break;
                 }
                 d.dueDate(dt);
@@ -74,7 +73,7 @@
     };
 
     models.invoice.list = list("Invoice");
-    
+
      /**
         Credit memo model
     */
@@ -89,7 +88,7 @@
     };
 
     models.creditMemo.list = list("CreditMemo");
-    
+
      /**
         Receivable line model
     */
@@ -118,4 +117,6 @@
 
     models.receivableLine.list = list("ReceivableLine");
 
+    // Add static post functions to Invoice
+    postMixin("Invoice", "Receivables");
 }());

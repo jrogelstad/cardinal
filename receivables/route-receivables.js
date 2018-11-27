@@ -26,11 +26,9 @@
     var doRequest = datasource.postFunction,
         router = express.Router();
 
-    router.route("/post-journal").post(doRequest.bind("postJournal"));
-    router.route("/post-journals").post(doRequest.bind("postJournals"));
-    router.route("/close-fiscal-period").post(doRequest.bind("closeFiscalPeriod"));
-    router.route("/open-fiscal-period").post(doRequest.bind("openFiscalPeriod"));
+    router.route("/post-invoice").post(doRequest.bind("postInvoice"));
+    router.route("/post-invoices").post(doRequest.bind("postInvoices"));
 
-    app.use('/ledger', router);
+    app.use('/receivables', router);
 
 }(app, datasource));

@@ -462,69 +462,6 @@
         }
     },
     {
-        "name": "BillSubledger",
-        "plural": "BillSubledgers",
-        "module": "Common",
-        "inherits": "BillOrder",
-        "description": "Subledger for billing records",
-        "properties": {
-            "dueDate": {
-                "description": "Date payment is due",
-                "type": "string",
-                "format": "date",
-                "default": "today()",
-                "isRequired": true
-            },
-            "isPosted": {
-                "description": "Is posted flag",
-                "type": "boolean",
-                "isReadOnly": true,
-                "default": false
-            },
-            "postedDate": {
-                "description": "Posted date",
-                "type": "string",
-                "format": "date",
-                "isReadOnly": true
-            },
-            "paid": {
-                "description": "Amount currently paid",
-                "type": "object",
-                "format": "money",
-                "isReadOnly": true
-            },
-            "balance": {
-                "description": "Amount currently due",
-                "type": "object",
-                "format": "money",
-                "isReadOnly": true
-            }
-        },
-        "overloads": {
-            "status": {
-                "description": "Document status",
-                "type": "string",
-                "default": "U",
-                "isReadOnly": true,
-                "format": "enum",
-                "dataList": [
-                    {
-                        "value": "U",
-                        "label": "Unposted"
-                    },
-                    {
-                        "value": "O",
-                        "label": "Open"
-                    },
-                    {
-                        "value": "C",
-                        "label": "Closed"
-                    }
-                ]
-            }
-        }
-    },
-    {
         "name": "OrderLine",
         "module": "Common",
         "description": "Order line",

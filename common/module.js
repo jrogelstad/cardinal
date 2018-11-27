@@ -25,6 +25,7 @@
     const list = require("list");
     const models = catalog.register("models");
     const f = require("component-core");
+    const datasource = require("datasource");
 
     /**
         Terms model
@@ -342,5 +343,83 @@
     }
 
     catalog.register("mixins", "orderHeader", orderHeader);
+
+    /**
+        Post logic mixin
+
+        Applies posting static functions to model factory to be
+        triggered by action menus:
+
+            * Post: Post selected documents
+            * PostAll: Post all documents
+            * PostCheck: Check posting eligibility
+
+        @param {String} Feather class name
+        @param {String} Module name
+        @returns {Object} Model factory
+    */
+    function postMixin(type, module) {
+        module = module.toSnakeCase();
+
+        var factory = models[type.toCamelCase()],
+            feather = catalog.getFeather(type),
+            name = feather.plural;
+
+        // Private helper to consolidate logic
+        function post(ids, viewModel, message) {
+            var dialog = viewModel.confirmDialog(),
+                payload = {
+                    method: "POST",
+                    path: "/" + module + "/post-" + name.toSnakeCase(),
+                    data: {
+                        ids: ids
+                    }
+                },
+                error = function (err) {
+                    dialog.message(err.message);
+                    dialog.title("Error");
+                    dialog.icon("exclamation-triangle");
+                    dialog.onOk(undefined);
+                    dialog.show();
+                };
+
+            dialog.message(message);
+            dialog.icon("question-circle");
+            dialog.onOk(function () {
+                datasource.request(payload)
+                    .catch(error);
+            });
+            dialog.show();
+        }
+
+        // Static functions
+        factory.post = function (viewModel) {
+            var message = "Are you sure you want to post the selected " + name.toProperCase() + "?",
+                unposted = viewModel.tableWidget().selections().filter(function (model) {
+                    return !model.data.isPosted();
+                }),
+                ids = unposted.map(function (model) {
+                    return model.id();
+                });
+
+            if (!ids.length) {
+                return;
+            }
+
+            post(ids, viewModel, message);
+        };
+        factory.postAll = function (viewModel) {
+            var message = "Are you sure you want to post all unposted" + name.toProperCase() + "?";
+
+            post(null, viewModel, message);
+        };
+        factory.postCheck = function (selections) {
+            return selections.some(function (model) {
+                return !model.data.isPosted();
+            });
+        };
+    }
+
+    catalog.register("mixins", "post", postMixin);
 
 }());

@@ -10,6 +10,21 @@
         "name": "Invoices",
         "isEditModeEnabled": false,
         "feather": "Invoice",
+        "actions": [{
+          "name": "Post",
+          "title": "Post selected unposted invoices",
+          "icon": "thumbtack",
+          "method": "post",
+          "authorization": "PostInvoices",
+          "validator": "postCheck"
+        }, {
+          "name": "Post all",
+          "title": "Post all unposted invoices",
+          "icon": "thumbtack",
+          "method": "postAll",
+          "authorization": "PostInvoices",
+          "hasSeparator": true
+        }],
         "list": {
             "columns": [{
               "attr": "number"

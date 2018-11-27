@@ -26,6 +26,7 @@
     const dataSource = require("datasource");
     const models = catalog.register("models");
     const f = require("common-core");
+    const postMixin = catalog.store().mixins().post;
 
     models.fiscalPeriod.closeCheck = function (selections) {
         return selections.every(function (model) {
@@ -210,60 +211,6 @@
 
     models.ledgerDistribution.list = list("LedgerDistribution");
 
-    // Private helper to consolidate logic
-    function post(ids, viewModel, message) {
-        var dialog = viewModel.confirmDialog(),
-            payload = {
-                method: "POST",
-                path: "/ledger/post-journals",
-                data: {
-                    ids: ids
-                }
-            },
-            error = function (err) {
-                dialog.message(err.message);
-                dialog.title("Error");
-                dialog.icon("exclamation-triangle");
-                dialog.onOk(undefined);
-                dialog.show();
-            };
-
-        dialog.message(message);
-        dialog.icon("question-circle");
-        dialog.onOk(function () {
-            dataSource.request(payload)
-                .catch(error);
-        });
-        dialog.show();
-    }
-
-    // Static functions
-    models.journal.post = function (viewModel) {
-        var message = "Are you sure you want to post the selected journals?",
-            unposted = viewModel.tableWidget().selections().filter(function (model) {
-                return !model.data.isPosted();
-            }),
-            ids = unposted.map(function (model) {
-                return model.id();
-            });
-
-        if (!ids.length) {
-            return;
-        }
-
-        post(ids, viewModel, message);
-    };
-    models.journal.postAll = function (viewModel) {
-        var message = "Are you sure you want to post all unposted journals?";
-
-        post(null, viewModel, message);
-    };
-    models.journal.postCheck = function (selections) {
-        return selections.some(function (model) {
-            return !model.data.isPosted();
-        });
-    };
-
     // Create ledger account model
     models.ledgerAccount = function (data, feather) {
         feather = feather || catalog.getFeather("LedgerAccount");
@@ -286,5 +233,8 @@
     };
 
     models.ledgerAccount.list = list("LedgerAccount");
+
+    // Add static post functions to Journal
+    postMixin("Journal", "Ledger");
 
 }());
