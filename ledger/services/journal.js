@@ -172,8 +172,8 @@
                             var transDist,
                                 accountId = dist.account.id;
 
-                            if (dist.account.kind.type === "Revenue" ||
-                                    dist.account.kind.type === "Expense") {
+                            if (dist.account.type === "R" ||
+                                    dist.account.type === "E") {
                                 transDist = profitLossDist[accountId];
                                 if (transDist) {
                                     compute(transDist, dist);
@@ -274,8 +274,8 @@
                         if (parentId && ledgerAccountIds.indexOf(parentId) === -1) {
                             ledgerAccountIds.push(parentId);
                         }
-                        if (ledgerAccount.kind.type === "Revenue" ||
-                                ledgerAccount.kind.type === "Expense") {
+                        if (ledgerAccount.type === "R" ||
+                                ledgerAccount.type === "E") {
                             if (profitLossIds.indexOf(id) === -1) {
                                 profitLossIds.push(id);
                             }
@@ -325,7 +325,7 @@
                         client: obj.client,
                         filter: {
                             criteria: [{
-                                property: "kind",
+                                property: "currency",
                                 value: currency
                             }, {
                                 property: "parent.id",
@@ -393,7 +393,7 @@
                     // Post balance updates
                     distributions.forEach(function (dist) {
                         var value,
-                            type = dist.account.kind.type,
+                            type = dist.account.type,
                             ids = getParents(dist.account.id),
                             debit = function (row) {
                                 row.balance.amount = row.balance.amount.plus(value);
@@ -413,7 +413,7 @@
                                 throw new Error("No open trial balance for account " + dist.account.code + ".");
                             }
 
-                            if (type === 'Asset' || type === 'Expense') {
+                            if (type === "A" || type === "E") {
                                 value = dist.debit.amount || dist.credit.amount * -1;
 
                                 balances[0].debits.amount = balances[0].debits.amount.plus(value);

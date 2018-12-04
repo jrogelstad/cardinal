@@ -1,11 +1,4 @@
-[ 
-    {
-        "name": "LedgerAccountType",
-        "plural": "LedgerAccountsType",
-        "module": "Ledger",
-        "description": "Ledger account types",
-        "inherits": "Kind"
-    },
+[
     {
         "name": "LedgerAccount",
         "plural": "LedgerAccounts",
@@ -19,20 +12,78 @@
                 "isReadOnly": true,
                 "isRequired": true,
                 "default": false
+            },
+            "type": {
+                "description": "Account type",
+                "type": "string",
+                "isRequired": true,
+                "dataList": [{
+                    "value": "A",
+                    "label": "Asset"
+                }, {
+                    "value": "L",
+                    "label": "Liability"
+                }, {
+                    "value": "R",
+                    "label": "Revenue"
+                }, {
+                    "value": "E",
+                    "label": "Expense"
+                }, {
+                    "value": "Q",
+                    "label": "Equity"
+                }]
             }
         },
         "overloads": {
-            "kind": {
-                "type": {
-                    "relation": "LedgerAccountType",
-                    "properties": ["code", "description", "type"]
-                },
-                "alias": "type"
-            },
             "parent": {
                 "type": {
                     "relation": "LedgerAccount",
-                    "properties": ["code", "description", "kind", "isUsed"]
+                    "properties": ["code", "description", "isUsed"]
+                }
+            }
+        }
+    },
+    {
+        "name": "AccountMapType",
+        "plural": "AccountMapTypes",
+        "module": "Ledger",
+        "description": "Account map types for journal entries",
+        "inherits": "Kind",
+        "isReadOnly": true
+    },
+    {
+        "name": "AccountMap",
+        "plural": "AccountMaps",
+        "module": "Ledger",
+        "description": "General ledger account map for journals",
+        "properties": {
+            "type": {
+                "description": "Account map type",
+                "type": {
+                    "relation": "AccountMapType",
+                    "properties": ["code", "description"]
+                }
+            },
+            "account": {
+                "description": "Ledger account",
+                "type": {
+                    "relation": "LedgerAccount",
+                    "properties": ["code", "description"]
+                }
+            },
+            "category": {
+                "description": "category",
+                "type": {
+                    "relation": "ItemCategory",
+                    "properties": ["code", "description"]
+                }
+            },
+            "site": {
+                "description": "Physcal office, warehouse or plant",
+                "type": {
+                    "relation": "Site",
+                    "properties": ["code", "description"]
                 }
             }
         }
@@ -152,7 +203,7 @@
                 "description": "Ledger account",
                 "type": {
                     "relation": "LedgerAccount",
-                    "properties": ["code", "description", "kind"]
+                    "properties": ["code", "description", "type"]
                 },
                 "isRequired": true
             },
@@ -216,11 +267,25 @@
     {
         "name": "TrialBalance",
         "plural": "TrialBalances",
-        "inherits": "Node",
+        "inherits": "Container",
         "module": "Ledger",
         "description": "Amount of currency in ledger accounts per period",
         "isReadOnly": true,
         "properties": {
+            "parent": {
+                "description": "Ledger Account",
+                "type": {
+                    "relation": "LedgerAccount",
+                    "properties": ["code", "description", "type"],
+                    "isRequired": true
+                }
+            },
+            "currency": {
+                "type": {
+                    "relation": "Currency",
+                    "properties": ["code", "description"]
+                }
+            },
             "balance": {
                 "description": "Current amount",
                 "type": "object",
@@ -263,22 +328,6 @@
                     "relation": "NodePeriodBalance",
                     "properties": ["balance"]
                 }
-            }
-        },
-        "overloads": {
-            "kind": {
-                "type": {
-                    "relation": "Currency",
-                    "properties": ["code", "description", "type"]
-                },
-                "alias": "Currency"
-            },
-            "parent": {
-                "type": {
-                    "relation": "LedgerAccount",
-                    "properties": ["code", "description", "kind", "isUsed"]
-                },
-                "alias": "Account"
             }
         }
     },

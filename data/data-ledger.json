@@ -164,51 +164,6 @@
             "start": "2018-12-01",
             "end": "2018-12-31"
         }
-    }, {
-        "name": "LedgerAccountType",
-        "method": "POST",
-        "id": "4kxxfqwmocc6",
-        "data": {
-            "code": "Revenue",
-            "description": "Ledger revenue account",
-            "type": "Revenue"
-        }
-    }, {
-        "name": "LedgerAccountType",
-        "method": "POST",
-        "id": "a3c77kewproj",
-        "data": {
-            "code": "Expense",
-            "description": "Ledger expense account",
-            "type": "Expense"
-        }
-    }, {
-        "name": "LedgerAccountType",
-        "method": "POST",
-        "id": "qw7nu8ljza2o",
-        "data": {
-            "code": "Liability",
-            "description": "Ledger liability account",
-            "type": "liability"
-        }
-    }, {
-        "name": "LedgerAccountType",
-        "method": "POST",
-        "id": "oj7j21mxes06",
-        "data": {
-            "code": "Equity",
-            "description": "Ledger equity account",
-            "type": "Equity"
-        }
-    }, {
-        "name": "LedgerAccountType",
-        "method": "POST",
-        "id": "pnzo0mpf0bqs",
-        "data": {
-            "code": "Asset",
-            "description": "Ledger asset account",
-            "type": "Asset"
-        }
     },
     {
         "name": "LedgerAccount",
@@ -218,9 +173,7 @@
             "code": "10",
             "description": "Assets",
             "note": "Asset summary account",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -234,9 +187,7 @@
             "code": "101",
             "description": "Cash",
             "note": "Checking account balance (as shown in company records), currency, coins, checks received from customers but not yet deposited.",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -250,9 +201,7 @@
             "code": "120",
             "description": "Accounts Receivable",
             "note": "Amounts owed to the company for services performed or products sold not yet paid for.",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -266,9 +215,7 @@
             "code": "140",
             "description": "Merchandise Inventory",
             "note": "Cost of merchandise purchased but has not yet been sold",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -282,9 +229,7 @@
             "code": "150",
             "description": "Supplies",
             "note": "Cost of supplies that have not yet been used.",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -298,9 +243,7 @@
             "code": "160",
             "description": "Work in Process",
             "note": "Cost of accumulated on inventory being built but incomplete.",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -314,9 +257,7 @@
             "code": "170",
             "description": "Land",
             "note": "Cost to acquire and prepare land for use by the company.",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -330,9 +271,7 @@
             "code": "175",
             "description": "Buildings",
             "note": "Cost to purchase or construct buildings for use by the company.",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -346,9 +285,7 @@
             "code": "178",
             "description": "Accumulated Depreciation - Buildings",
             "note": "Amount of the building's cost that has been allocated to Depreciation Expense since the time the building was acquired.",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -362,9 +299,7 @@
             "code": "180",
             "description": "Equipment",
             "note": "Cost to acquire and prepare equipment for use by the company.",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -378,9 +313,7 @@
             "code": "188",
             "description": "Accumulated Depreciation - Equipment",
             "note": "Amount of the equipment's cost that has been allocated to Depreciation Expense since the time the equipment was acquired.",
-            "kind": {
-              "id": "pnzo0mpf0bqs"
-            }
+            "type": "A"
         }
     },
     {
@@ -391,9 +324,7 @@
             "code": "20",
             "description": "Liabilities",
             "note": "Liabilities summary account",
-            "kind": {
-              "id": "qw7nu8ljza2o"
-            }
+            "type": "L"
         }
     },
     {
@@ -407,9 +338,7 @@
             "code": "210",
             "description": "Notes Payable",
             "note": "The amount of principle due on a formal written promise to pay. Loans from banks are included in this account.",
-            "kind": {
-              "id": "qw7nu8ljza2o"
-            }
+            "type": "L"
         }
     },
     {
@@ -423,9 +352,7 @@
             "code": "215",
             "description": "Accounts Payable",
             "note": "Ammounts owned to suppliers who provided goods and services to the company but did not require immediate payment in cash.",
-            "kind": {
-              "id": "qw7nu8ljza2o"
-            }
+            "type": "L"
         }
     },
     {
@@ -439,9 +366,7 @@
             "code": "220",
             "description": "Wages Payable",
             "note": "Amounts owned to employees for hours worked but not yet paid.",
-            "kind": {
-              "id": "qw7nu8ljza2o"
-            }
+            "type": "L"
         }
     },
     {
@@ -455,9 +380,7 @@
             "code": "240",
             "description": "Unearned Revenues",
             "note": "Ammounts received in advance of delivering goods or providing services.",
-            "kind": {
-              "id": "qw7nu8ljza2o"
-            }
+            "type": "L"
         }
     },
     {
@@ -471,9 +394,7 @@
             "code": "250",
             "description": "Mortgage Loan Payable",
             "note": "A formal loan that involves a lien on real estate until the loan is repaid.",
-            "kind": {
-              "id": "qw7nu8ljza2o"
-            }
+            "type": "L"
         }
     },
     {
@@ -484,9 +405,7 @@
             "code": "29",
             "description": "Equity",
             "note": "Equity summary account.",
-            "kind": {
-              "id": "oj7j21mxes06"
-            }
+            "type": "Q"
         }
     },
     {
@@ -500,9 +419,7 @@
             "code": "290",
             "description": "Retained earnings",
             "note": "Net earnings not paid out as dividends, but retained by the company to be reinvested in its core business, or to pay debt.",
-            "kind": {
-              "id": "oj7j21mxes06"
-            }
+            "type": "Q"
         }
     },
     {
@@ -516,9 +433,7 @@
             "code": "291",
             "description": "Owner's Capital",
             "note": "Amount owner invested in the company (through cash or other assets) plus earnings of the company not withdrawn by the owner.",
-            "kind": {
-              "id": "oj7j21mxes06"
-            }
+            "type": "Q"
         }
     },
     {
@@ -529,9 +444,7 @@
             "code": "292",
             "description": "Owner's Drawing",
             "note": "Amount owner of he sole proprietership has withdrawn for personal use during the current accounting year. At the end of the year, the amount in this account will be transferred to Owner's Capital (290).",
-            "kind": {
-              "id": "oj7j21mxes06"
-            }
+            "type": "Q"
         }
     },
     {
@@ -542,9 +455,7 @@
             "code": "30",
             "description": "Revenue",
             "note": "Revenue summary account.",
-            "kind": {
-              "id": "4kxxfqwmocc6"
-            }
+            "type": "R"
         }
     },
     {
@@ -558,9 +469,7 @@
             "code": "310",
             "description": "Serivice Revenues",
             "note": "Amounts earned from providing services to clients, either for cash or credit.",
-            "kind": {
-              "id": "4kxxfqwmocc6"
-            }
+            "type": "R"
         }
     },
     {
@@ -574,9 +483,7 @@
             "code": "320",
             "description": "Products Revenues",
             "note": "Amounts earned from providing products to clients, either for cash or credit.",
-            "kind": {
-              "id": "4kxxfqwmocc6"
-            }
+            "type": "R"
         }
     },
     {
@@ -587,9 +494,7 @@
             "code": "50",
             "description": "Expenses",
             "note": "Expense summary account.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -603,9 +508,7 @@
             "code": "500",
             "description": "Salaries Expense",
             "note": "Expenses incurred for the work performed by salaried employees during the accounting period.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -619,9 +522,7 @@
             "code": "510",
             "description": "Wage Expense",
             "note": "Expenses incurred for the work performed by non-salaried employees during the accounting period.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -635,9 +536,7 @@
             "code": "520",
             "description": "Commissions Expense",
             "note": "Expenses incurred for the sales closed by commissioned employees during the accounting period.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -651,9 +550,7 @@
             "code": "540",
             "description": "Supplies Expense",
             "note": "Cost of supplies used up during the accounting period.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -667,9 +564,7 @@
             "code": "550",
             "description": "Cost of Sales",
             "note": "Cost of inventory used up during the accounting period.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -683,9 +578,7 @@
             "code": "560",
             "description": "Rent Expense",
             "note": "Cost of occupying rented facilities during the accounting period.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -699,9 +592,7 @@
             "code": "570",
             "description": "Utilities Expense",
             "note": "Costs for electricity, heat, water, and sewer that were used during the accounting period.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -715,9 +606,7 @@
             "code": "576",
             "description": "Telephone Expense",
             "note": "Costs of telephone used during the accounting period.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -731,9 +620,7 @@
             "code": "610",
             "description": "Advertising Expense",
             "note": "Costs incurred by the company during the accounting period for ads, promotions, and other selling expenses.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -747,9 +634,7 @@
             "code": "750",
             "description": "Depreciation Expense",
             "note": "Costs of long-term assets allocated to expenses during the accounting period.",
-            "kind": {
-              "id": "a3c77kewproj"
-            }
+            "type": "E"
         }
     },
     {
@@ -763,9 +648,7 @@
             "code": "810",
             "description": "Interest Revenues",
             "note": "Interest and dividents earned on bank accounts, investments, or notes receivable.",
-            "kind": {
-              "id": "4kxxfqwmocc6"
-            }
+            "type": "R"
         }
     },
     {
@@ -779,9 +662,7 @@
             "code": "910",
             "description": "Gain on Sale of Assets",
             "note": "Occurs when the company sells one of its assets (other than inventory) for more than the asset's book value.",
-            "kind": {
-              "id": "4kxxfqwmocc6"
-            }
+            "type": "R"
         }
     }, {
         "method": "PUT",

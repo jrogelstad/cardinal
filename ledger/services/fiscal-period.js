@@ -137,7 +137,7 @@
                         callback: createTrialBalance,
                         data: {
                             code: account.code + " - " + fiscalPeriod.name,
-                            kind: currency,
+                            currency: currency,
                             parent: account,
                             period: fiscalPeriod,
                             previous: prevPeriod,
@@ -247,9 +247,9 @@
                             client: obj.client,
                             filter: {
                                 criteria: [{
-                                    property: "kind.type",
+                                    property: "parent.type",
                                     operator: "IN",
-                                    value: ["Asset", "Liability", "Equity"]
+                                    value: ["A", "L", "Q"]
                                 }, {
                                     property: "period",
                                     value: prevPeriod

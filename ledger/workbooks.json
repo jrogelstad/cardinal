@@ -19,8 +19,7 @@
               "attr": "parent.description",
               "label": "Description"
             }, {
-              "attr": "parent.kind.type",
-              "label": "Type"
+              "attr": "parent.type"
             }, {
               "attr": "period.end",
               "label": "Period"

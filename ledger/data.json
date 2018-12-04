@@ -235,7 +235,7 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "kind",
+            "attr": "type",
             "grid": 0,
             "unit": 0
         }, {
@@ -363,46 +363,6 @@
         "description": "Ledger account relation wdiget",
         "isActive": true,
         "feather": "LedgerAccount",
-        "valueProperty": "code",
-        "labelProperty": "description",
-        "form": {
-            "id": "rbzal45p805f"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }, {
-                "attr": "note"
-            }
-        ]
-    }
-}, {
-    "name": "Form",
-    "method": "POST",
-    "id": "ledwnmetyqhv",
-    "data": {
-        "name": "LedgerAccountType",
-        "description": "Ledger account type form",
-        "feather": "LedgerAccountType",
-        "module": "Ledger",
-        "attrs": [{
-            "attr": "code"
-        }, {
-            "attr": "description"
-        }, {
-            "attr": "note"
-        }]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "1g1vyahbv2ue",
-    "data": {
-        "name": "LedgerAccountType",
-        "description": "Ledger account type relation wdiget",
-        "isActive": true,
-        "feather": "LedgerAccountType",
         "valueProperty": "code",
         "labelProperty": "description",
         "form": {

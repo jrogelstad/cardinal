@@ -26,15 +26,7 @@
                 "description": "Note",
                 "type": "string",
                 "format": "textArea"
-            },
-            "kind": {
-                "description": "Node kind",
-                "type": {
-                    "relation": "Kind",
-                    "properties": ["code", "description", "type"]
-                },
-                "isRequired": true
-            },            
+            },     
             "isUsed": {
                 "description": "Indicates node has transactions",
                 "type": "boolean",
@@ -55,7 +47,7 @@
                 "description": "Parent container",
                 "type": {
                     "relation": "Container",
-                    "properties": ["code", "description", "kind", "isUsed"],
+                    "properties": ["code", "description", "isUsed"],
                     "isRequired": true
                 }
             }
@@ -195,7 +187,7 @@
                 "description": "Object container",
                 "type": {
                     "relation": "Node",
-                    "properties": ["code", "description", "kind"]
+                    "properties": ["code", "description"]
                 }
             },
             "debit": {
@@ -275,7 +267,7 @@
                 "description": "From node",
                 "type": {
                     "relation": "Node",
-                    "properties": ["kind"]
+                    "properties": ["code"]
                 }
             },
             "fromQuantity": {
@@ -298,7 +290,7 @@
                 "description": "To node",
                 "type": {
                     "relation": "Node",
-                    "properties": ["kind"]
+                    "properties": ["code"]
                 }
             },
             "toQuantity": {

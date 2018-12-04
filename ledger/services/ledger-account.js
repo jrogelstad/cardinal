@@ -43,7 +43,7 @@
             client: obj.client,
             data: {
               code: account.code + " - " + period.name,
-              kind: currency,
+              currency: currency,
               parent: account,
               period: period,
               previous: prev,

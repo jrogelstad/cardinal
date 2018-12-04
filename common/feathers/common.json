@@ -67,6 +67,60 @@
         "inherits": "Activity"
     },
     {
+        "name": "Location",
+        "plural": "Locations",
+        "module": "Common",
+        "description": "Physical locations",
+        "inherits": "Node"
+    },
+    {
+        "name": "LocationBalance",
+        "plural": "LocationBalance",
+        "module": "Common",
+        "description": "Physical location balance",
+        "inherits": "NodeBalance"
+    },
+    {
+        "name": "Site",
+        "plural": "Sites",
+        "module": "Common",
+        "description": "Physical site",
+        "inherits": "Location",
+        "properties": {
+            "address": {
+                "description": "Physical address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["street", "unit", "city", "state", "postalCode", "country"]
+                }
+            }
+        }
+    },
+    {
+        "name": "ItemCategory",
+        "plural": "ItemCategories",
+        "module": "Common",
+        "description": "Item category",
+        "inherits": "Kind",
+        "properties": {
+            "parent": {
+                "description": "Parent category",
+                "type": {
+                    "relation": "Kind",
+                    "properties": ["code", "description"]
+                }
+            }
+        },
+        "overloads": {
+            "parent": {
+                "type": {
+                    "relation": "Category",
+                    "properties": ["code", "description"]
+                }
+            }
+        }
+    },
+    {
         "name": "Item",
         "plural": "Items",
         "module": "Common",

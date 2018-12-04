@@ -309,51 +309,12 @@
             }
         }
     }, {
-        "name": "Kind",
-        "method": "POST",
-        "id": "7unvw0ncdiw2",
-        "data": {
-            "code": "Warehouse",
-            "description": "Warehouse",
-            "type": "Asset"
-        }
-    }, {
-        "name": "Kind",
-        "method": "POST",
-        "id": "qhvr7j9d1yg2",
-        "data": {
-            "code": "Plant",
-            "description": "Manufacturing plant",
-            "type": "Asset"
-        }
-    }, {
-        "name": "Kind",
-        "method": "POST",
-        "id": "ijfyi1jqa2uv",
-        "data": {
-            "code": "Aisle",
-            "description": "Warehouse aisle",
-            "type": "Asset"
-        }
-    }, {
-        "name": "Kind",
-        "method": "POST",
-        "id": "6ouqn83hzef0",
-        "data": {
-            "code": "Adjustment",
-            "description": "Physical adjustment",
-            "type": "Expense"
-        }
-    }, {
         "name": "Site",
         "method": "POST",
         "id": "c0f47f26zb60",
         "data": {
             "code": "WH1",
-            "description": "Warehouse 1",
-            "kind": {
-                "id": "7unvw0ncdiw2"
-            }
+            "description": "Warehouse 1"
         }
     }, {
         "name": "Location",
@@ -362,9 +323,6 @@
         "data": {
             "code": "A1",
             "description": "Aisle 1",
-            "kind": {
-                "id": "ijfyi1jqa2uv"
-            },
             "parent": {
                 "id": "c0f47f26zb60"
             }
@@ -376,9 +334,6 @@
         "data": {
             "code": "A2",
             "description": "Aisle 2",
-            "kind": {
-                "id": "ijfyi1jqa2uv"
-            },
             "parent": {
                 "id": "c0f47f26zb60"
             }
@@ -390,9 +345,6 @@
         "data": {
             "code": "A3",
             "description": "Aisle 3",
-            "kind": {
-                "id": "ijfyi1jqa2uv"
-            },
             "parent": {
                 "id": "c0f47f26zb60"
             }
@@ -403,10 +355,7 @@
         "id": "u69aj7cgtkmf",
         "data": {
             "code": "Adjustment",
-            "description": "Adjustment",
-            "kind": {
-                "id": "6ouqn83hzef0"
-            }
+            "description": "Adjustment"
         }
     }, {
         "name": "Request",
@@ -465,9 +414,6 @@
         "method": "POST",
         "id": "odkyup9m3pc4",
         "data": {
-            "kind": {
-                "id": "y52uj6x49ham"
-            },
             "parent": {
                 "id": "u69aj7cgtkmf"
             },
@@ -481,9 +427,6 @@
         "method": "POST",
         "id": "83jx5dbj6n7e",
         "data": {
-            "kind": {
-                "id": "y52uj6x49ham"
-            },
             "parent": {
                 "id": "hhxvcdowwn38"
             },
@@ -497,9 +440,6 @@
         "method": "POST",
         "id": "u2zjx49ag4ew",
         "data": {
-            "kind": {
-                "id": "y52uj6x49ham"
-            },
             "parent": {
                 "id": "c0f47f26zb60"
             },

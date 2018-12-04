@@ -1,35 +1,5 @@
 [ 
     {
-        "name": "Location",
-        "plural": "Locations",
-        "module": "Inventory",
-        "description": "Physical locations",
-        "inherits": "Node"
-    },
-    {
-        "name": "LocationBalance",
-        "plural": "LocationBalance",
-        "module": "Inventory",
-        "description": "Physical location balance",
-        "inherits": "NodeBalance"
-    },
-    {
-        "name": "Site",
-        "plural": "Sites",
-        "module": "Inventory",
-        "description": "Physical site",
-        "inherits": "Location",
-        "properties": {
-            "address": {
-                "description": "Physical address",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["street", "unit", "city", "state", "postalCode", "country"]
-                }
-            }
-        }
-    },
-    {
         "name": "InventoryTransaction",
         "plural": "InventoryTransactions",
         "module": "Inventory",

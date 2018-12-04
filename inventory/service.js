@@ -204,7 +204,6 @@
                             } else {
                                 parentBalance = {
                                     id: f.createId(),
-                                    kind: args.item,
                                     node: parent,
                                     balance: quantity * -1
                                 };
@@ -232,9 +231,6 @@
                         client: obj.client,
                         filter: {
                             criteria: [{
-                                property: "kind",
-                                value: args.item
-                            }, {
                                 property: "parent",
                                 value: parent
                             }]
@@ -299,9 +295,6 @@
                     client: obj.client,
                     filter: {
                         criteria: [{
-                            property: "kind",
-                            value: args.item
-                        }, {
                             property: "parent",
                             value: args.debitLocation
                         }]
@@ -315,7 +308,6 @@
                     } else {
                         debitLocationBalance = {
                             id: f.createId(),
-                            kind: args.item,
                             node: args.debitLocation,
                             balance: quantity * -1
                         };
@@ -337,9 +329,6 @@
                     client: obj.client,
                     filter: {
                         criteria: [{
-                            property: "kind",
-                            value: args.item
-                        }, {
                             property: "parent",
                             value: args.creditLocation
                         }]
@@ -353,7 +342,6 @@
                     } else {
                         creditLocationBalance = {
                             id: f.createId(),
-                            kind: args.item,
                             parent: args.creditLocation,
                             balance: quantity
                         };
