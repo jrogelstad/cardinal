@@ -170,6 +170,9 @@
                 "attr": "item.description",
                 "width": "200px"
             }, {
+                "attr": "site",
+                "width": "80px"
+            }, {
                 "attr": "ordered",
                 "width": "80px"
             }, {

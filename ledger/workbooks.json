@@ -210,6 +210,46 @@
             ]
           }
         }
+      },
+      {
+        "name": "AccountMap",
+        "feather": "AccountMap",
+        "list": {
+          "columns": [{
+              "attr": "type"
+            }, {
+              "attr": "type.description"
+            }, {
+              "attr": "category"
+            }, {
+              "attr": "site"
+            }, {
+              "attr": "account"
+            }, {
+              "attr": "account.description"
+            }
+          ],
+          "filter": {
+            "sort": [
+                {
+                    "property": "type",
+                    "order": "ASC"
+                },
+                {
+                    "property": "category",
+                    "order": "ASC"
+                },
+                {
+                    "property": "site",
+                    "order": "ASC"
+                },
+                {
+                    "property": "account",
+                    "order": "ASC"
+                }
+            ]
+          }
+        }
       }
     ]
   }

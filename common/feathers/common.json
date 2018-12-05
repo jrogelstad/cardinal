@@ -114,7 +114,7 @@
         "overloads": {
             "parent": {
                 "type": {
-                    "relation": "Category",
+                    "relation": "ItemCategory",
                     "properties": ["code", "description"]
                 }
             }
@@ -458,6 +458,14 @@
                     "properties": ["fullName", "email", "phone", "address"]
                 }
             },
+            "site": {
+                "description": "Site",
+                "type": {
+                    "relation": "Site",
+                    "properties": ["code", "description"]
+                },
+                "isRequired": true
+            },
             "currency": {
                 "description": "Currency",
                 "default": "baseCurrency()",
@@ -532,6 +540,14 @@
                     "relation": "Item",
                     "properties": ["code", "description", "unit",
                         "cost", "price"]
+                },
+                "isRequired": true
+            },
+            "site": {
+                "description": "Site",
+                "type": {
+                    "relation": "Site",
+                    "properties": ["code", "description"]
                 },
                 "isRequired": true
             },

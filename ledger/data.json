@@ -377,4 +377,59 @@
             }
         ]
     }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "aby9n76g8dz9",
+    "data": {
+        "name": "AccountMapType",
+        "description": "Account map type form",
+        "module": "Ledger",
+        "feather": "AccountMapType",
+        "attrs": [{
+            "attr": "code"
+        }, {
+            "attr": "description"
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "10epni57qw3v",
+    "data": {
+        "name": "AccountMapType",
+        "description": "Account map type relation wdiget",
+        "isActive": true,
+        "feather": "AccountMapType",
+        "valueProperty": "code",
+        "labelProperty": "description",
+        "form": {
+            "id": "aby9n76g8dz9"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }
+        ]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "zb8xwdmqrs76",
+    "data": {
+        "name": "AccountMap",
+        "description": "Account map form",
+        "module": "Ledger",
+        "feather": "AccountMap",
+        "attrs": [{
+            "attr": "type"
+        }, {
+            "attr": "category"
+        }, {
+            "attr": "site"
+        }, {
+            "attr": "account"
+        }]
+    }
 }]

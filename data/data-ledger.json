@@ -1,4 +1,4 @@
-[
+[    
     {
         "name": "FiscalYear",
         "method": "POST",
@@ -467,7 +467,7 @@
                 "id": "sklbdyyrjpxk"
             },
             "code": "310",
-            "description": "Serivice Revenues",
+            "description": "Service Revenues",
             "note": "Amounts earned from providing services to clients, either for cash or credit.",
             "type": "R"
         }
@@ -676,6 +676,128 @@
                     "code":"290",
                     "description":"Retained earnings"
                 }
+            }
+        }
+    }, {
+        "name": "AccountMapType",
+        "method": "POST",
+        "id": "ar",
+        "data": {
+            "code": "AR",
+            "description": "Accounts Receivable"
+        }
+    },
+    {
+        "name": "AccountMapType",
+        "method": "POST",
+        "id": "ap",
+        "data": {
+            "code": "AP",
+            "description": "Accounts Payable"
+        }
+    },
+    {
+        "name": "AccountMapType",
+        "method": "POST",
+        "id": "cogs",
+        "data": {
+            "code": "COGS",
+            "description": "Cost of Goods Sold"
+        }
+    },
+    {
+        "name": "AccountMapType",
+        "method": "POST",
+        "id": "wip",
+        "data": {
+            "code": "WIP",
+            "description": "Work in Process"
+        }
+    },
+    {
+        "name": "AccountMapType",
+        "method": "POST",
+        "id": "inv",
+        "data": {
+            "code": "Inventory",
+            "description": "Inventory"
+        }
+    },
+    {
+        "name": "AccountMapType",
+        "method": "POST",
+        "id": "invvar",
+        "data": {
+            "code": "Variance",
+            "description": "Inventory Variance"
+        }
+    },
+    {
+        "name": "AccountMapType",
+        "method": "POST",
+        "id": "invadj",
+        "data": {
+            "code": "Adjustment",
+            "description": "Inventory Adjustment"
+        }
+    },
+    {
+        "name": "AccountMapType",
+        "method": "POST",
+        "id": "revenue",
+        "data": {
+            "code": "Revenue",
+            "description": "Revenue"
+        }
+    },
+    {
+        "name": "AccountMapType",
+        "method": "POST",
+        "id": "defrevenue",
+        "data": {
+            "code": "Deferred Revenue",
+            "description": "Deferred Revenue"
+        }
+    }, {
+        "name": "AccountMap",
+        "method": "POST",
+        "id": "luun7ae2vxny",
+        "data": {
+            "type": {
+                "id": "revenue"
+            },
+            "category": {
+                "id": "dp3ocpa066er"
+            },
+            "account": {
+                "id": "d7zf6nqrg9pr"
+            }
+        }
+    }, {
+        "name": "AccountMap",
+        "method": "POST",
+        "id": "8ona97bbbofh",
+        "data": {
+            "type": {
+                "id": "revenue"
+            },
+            "category": {
+                "id": "e0d206w76b71"
+            },
+            "account": {
+                "id": "bkxy7neljlp6"
+            }
+        }
+    }, {
+        "name": "AccountMap",
+        "method": "POST",
+        "id": "fnjibez8un3g",
+        "data": {
+            "type": {
+                "id": "ar"
+            },
+            "account": {
+                "id": "ehpdd4vim8kw"
             }
         }
     }, {
