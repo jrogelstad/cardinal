@@ -30,6 +30,11 @@
             "path": "services/terms.js"
         },
         {
+            "type": "service",
+            "name": "item",
+            "path": "services/item.js"
+        },
+        {
             "type": "workbook",
             "path": "workbooks.json"
         },

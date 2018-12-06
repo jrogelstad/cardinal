@@ -69,22 +69,44 @@
         "description": "Item form",
         "feather": "Item",
         "module": "Common",
+        "tabs": [{
+            "name": "Sites"
+        }, {
+            "name": "Audit"
+        }],
         "attrs": [{
             "attr": "code"
         }, {
             "attr": "description"
         }, {
+            "attr": "unit"
+        }, {
             "attr": "isActive"
         }, {
-            "attr": "isSold"
+            "attr": "isSold",
+            "unit": 1
         }, {
-            "attr": "barcode"
+            "attr": "barcode",
+            "unit": 1
         }, {
-            "attr": "manufacturer"
+            "attr": "manufacturer",
+            "unit": 1
         }, {
-            "attr": "cost"
+            "attr": "cost",
+            "unit": 1
         }, {
-            "attr": "unit"
+            "attr": "site",
+            "unit": 1
+        }, {
+            "attr": "sites",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "site"
+            }, {
+                "attr": "isPrimary"
+            }]
         }]
     }
 }, {

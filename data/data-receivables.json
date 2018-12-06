@@ -6,6 +6,9 @@
             "data": {
                 "code": "WCBC",
                 "description": "West Chester Bicycle Company",
+                "site": {
+                    "id": "c0f47f26zb60"
+                },
                 "currency": {
                     "id": "4y9dtthuen7z"
                 },
@@ -39,6 +42,9 @@
             "data": {
                 "code": "ENLCYC",
                 "description": "Enlightened Cycling",
+                "site": {
+                    "id": "c0f47f26zb60"
+                },
                 "currency": {
                     "id": "4y9dtthuen7z"
                 },
@@ -72,6 +78,9 @@
             "data": {
                 "code": "DTCYC",
                 "description": "Downingtown Cycling",
+                "site": {
+                    "id": "c0f47f26zb60"
+                },
                 "creditStatus": "W",
                 "currency": {
                     "id": "4y9dtthuen7z"

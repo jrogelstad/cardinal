@@ -1,4 +1,54 @@
-[ 
+[
+    {
+        "name": "Site",
+        "method": "POST",
+        "id": "c0f47f26zb60",
+        "data": {
+            "code": "WH",
+            "description": "Warehouse"
+        }
+    }, {
+        "name": "Location",
+        "method": "POST",
+        "id": "hhxvcdowwn38",
+        "data": {
+            "code": "A1",
+            "description": "Aisle 1",
+            "parent": {
+                "id": "c0f47f26zb60"
+            }
+        }
+    }, {
+        "name": "Location",
+        "method": "POST",
+        "id": "tllyrf7kheuw",
+        "data": {
+            "code": "A2",
+            "description": "Aisle 2",
+            "parent": {
+                "id": "c0f47f26zb60"
+            }
+        }
+    }, {
+        "name": "Location",
+        "method": "POST",
+        "id": "z2ydzqcc5hgj",
+        "data": {
+            "code": "A3",
+            "description": "Aisle 3",
+            "parent": {
+                "id": "c0f47f26zb60"
+            }
+        }
+    }, {
+        "name": "Location",
+        "method": "POST",
+        "id": "u69aj7cgtkmf",
+        "data": {
+            "code": "Adjustment",
+            "description": "Adjustment"
+        }
+    },
     {
         "name": "ItemCategory",
         "method": "POST",
@@ -120,6 +170,9 @@
             "manufacturer": "Road Master",
             "unit": {
                 "id": "each"
+            }, 
+            "site": {
+                "id": "c0f47f26zb60"
             }
         }
     }, {
@@ -150,6 +203,9 @@
             "manufacturer": "Thruster",
             "unit": {
                 "id": "each"
+            }, 
+            "site": {
+                "id": "c0f47f26zb60"
             }
         }
     }, {
@@ -180,6 +236,9 @@
             "manufacturer": "Thruster",
             "unit": {
                 "id": "each"
+            }, 
+            "site": {
+                "id": "c0f47f26zb60"
             }
         }
     }, {
@@ -208,6 +267,9 @@
             "manufacturer": "Diamondback",
             "unit": {
                 "id": "each"
+            }, 
+            "site": {
+                "id": "c0f47f26zb60"
             }
         }
     }, {
@@ -236,6 +298,9 @@
             "manufacturer": "Sta-true",
             "unit": {
                 "id": "each"
+            }, 
+            "site": {
+                "id": "c0f47f26zb60"
             }
         }
     }, {
@@ -264,6 +329,9 @@
             "manufacturer": "Avenir",
             "unit": {
                 "id": "each"
+            }, 
+            "site": {
+                "id": "c0f47f26zb60"
             }
         }
     }, {
@@ -296,6 +364,9 @@
             "manufacturer": "Fuji",
             "unit": {
                 "id": "each"
+            }, 
+            "site": {
+                "id": "c0f47f26zb60"
             }
         }
     }, {
@@ -328,6 +399,9 @@
             "manufacturer": "Ridley",
             "unit": {
                 "id": "each"
+            }, 
+            "site": {
+                "id": "c0f47f26zb60"
             }
         }
     }, {
@@ -360,56 +434,10 @@
             "manufacturer": "Ridley",
             "unit": {
                 "id": "each"
-            }
-        }
-    }, {
-        "name": "Site",
-        "method": "POST",
-        "id": "c0f47f26zb60",
-        "data": {
-            "code": "WH1",
-            "description": "Warehouse 1"
-        }
-    }, {
-        "name": "Location",
-        "method": "POST",
-        "id": "hhxvcdowwn38",
-        "data": {
-            "code": "A1",
-            "description": "Aisle 1",
-            "parent": {
+            }, 
+            "site": {
                 "id": "c0f47f26zb60"
             }
-        }
-    }, {
-        "name": "Location",
-        "method": "POST",
-        "id": "tllyrf7kheuw",
-        "data": {
-            "code": "A2",
-            "description": "Aisle 2",
-            "parent": {
-                "id": "c0f47f26zb60"
-            }
-        }
-    }, {
-        "name": "Location",
-        "method": "POST",
-        "id": "z2ydzqcc5hgj",
-        "data": {
-            "code": "A3",
-            "description": "Aisle 3",
-            "parent": {
-                "id": "c0f47f26zb60"
-            }
-        }
-    }, {
-        "name": "Location",
-        "method": "POST",
-        "id": "u69aj7cgtkmf",
-        "data": {
-            "code": "Adjustment",
-            "description": "Adjustment"
         }
     }, {
         "name": "Request",

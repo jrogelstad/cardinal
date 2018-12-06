@@ -182,10 +182,14 @@
         }
 
         that.onChanged("billEntity", function () {
-            var billEntity = d.billEntity();
+            var billTo,
+                billEntity = d.billEntity();
 
             if (billEntity) {
-                d.billTo(billEntity.data.billTo());
+                billTo = f.copy(billEntity.data.billTo.toJSON());
+                billTo.id = f.createId();
+                d.billTo(billTo);
+                d.site(billEntity.data.site());
                 d.contact(billEntity.data.contact());
                 d.currency(billEntity.data.currency());
                 d.terms(billEntity.data.terms());
@@ -233,10 +237,16 @@
             d = that.data;
 
         that.onChanged("item", function () {
-            var item = d.item();
+            var site,
+                item = d.item();
 
             if (item) {
                 d.price(item.data.price());
+                site = that.parent().data.site();
+                if (site) {
+                    d.site(site);
+                }
+                
             }
         });
 

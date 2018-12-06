@@ -163,6 +163,39 @@
               "description": "Unit price",
               "type": "object",
               "format": "money"
+            },
+            "site":  {
+              "description": "Primary site",
+              "type": {
+                "relation": "Site",
+                "properties": ["code", "description"]
+              }
+            }
+        }
+    },
+    {
+        "name": "ItemSite",
+        "plural": "ItemSites",
+        "module": "Common",
+        "description": "Allowed item site",
+        "properties": {
+            "parent": {
+                "description": "Parent item",
+                "type": {
+                    "relation": "Item",
+                    "childOf": "sites"
+                }
+            },
+            "site":  {
+              "description": "Site",
+              "type": {
+                "relation": "Site",
+                "properties": ["code", "description"]
+              }
+            },
+            "isPrimary": {
+                "description": "Flag whether primary site",
+                "type": "boolean"
             }
         }
     },
@@ -346,6 +379,13 @@
         "description": "Billing entity",
         "inherits": "Kind",
         "properties": {
+            "site": {
+                "description": "Default site",
+                "type": {
+                  "relation": "Site",
+                  "properties": ["code", "description"]
+                }
+            },
             "billTo": {
                 "description": "Bill to Address",
                 "type": {
@@ -428,7 +468,7 @@
                 "type": {
                     "relation": "BillEntity",
                     "properties": ["code", "description", "billTo", "billToIsShipTo",
-                        "shipTo", "contact", "currency", "terms", "taxType"]
+                        "shipTo", "contact", "currency", "terms", "taxType", "site"]
                 },
                 "isRequired": true
             },
@@ -463,8 +503,7 @@
                 "type": {
                     "relation": "Site",
                     "properties": ["code", "description"]
-                },
-                "isRequired": true
+                }
             },
             "currency": {
                 "description": "Currency",

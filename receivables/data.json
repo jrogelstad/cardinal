@@ -8,7 +8,7 @@
         "module": "Receivables",
         "feather": "Customer",
         "tabs": [{
-            "name": "Credit"
+            "name": "Defaults"
         }, {
             "name": "Audit"
         }],
@@ -19,6 +19,10 @@
         }, {
             "attr": "description",
             "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "site",
+            "grid": 2,
             "unit": 0
         }, {
             "attr": "contact",
@@ -168,10 +172,9 @@
                 "width": "200px"
             }, {
                 "attr": "item.description",
-                "width": "200px"
+                "width": "120px"
             }, {
-                "attr": "site",
-                "width": "80px"
+                "attr": "site"
             }, {
                 "attr": "ordered",
                 "width": "80px"
@@ -203,6 +206,10 @@
             "attr": "taxType",
             "grid": 2,
             "unit": 0
+        }, {
+            "attr": "site",
+            "grid": 2,
+            "unit": 1
         }, {
             "attr": "created",
             "grid": 3,
