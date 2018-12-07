@@ -35,10 +35,6 @@
                 ? newRec.sites
                 : [];
 
-            newRec.sites.forEach(function (row) {
-                row.isPrimary = false;
-            });
-
             if (oldRec && oldRec.site) {
                 oldSiteId = oldRec.site.id;
             }
@@ -48,18 +44,24 @@
             }
 
             if (!oldRec || oldSiteId !== newSiteId) {
-                found = newRec.sites.find((row) => row.site.id === newRec.site.id);
+                newRec.sites.forEach(function (row) {
+                    row.isPrimary = false;
+                });
 
-                if (found) {
-                    found.isPrimary = true;
-                } else {
-                    newRec.sites.push({
-                        id: f.createId(),
-                        site: {
-                            id: newRec.site.id
-                        },
-                        isPrimary: true
-                    });
+                if (newRec.site) {
+                    found = newRec.sites.find((row) => row.site.id === newRec.site.id);
+
+                    if (found) {
+                        found.isPrimary = true;
+                    } else {
+                        newRec.sites.push({
+                            id: f.createId(),
+                            site: {
+                                id: newRec.site.id
+                            },
+                            isPrimary: true
+                        });
+                    }
                 }
             }
 
