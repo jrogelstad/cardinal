@@ -1,4 +1,19 @@
-[ 
+[
+    {
+        "name": "CustomerCategory",
+        "plural": "CustomerCategories",
+        "module": "Common",
+        "description": "Customer category",
+        "inherits": "Category",
+        "overloads": {
+            "parent": {
+                "type": {
+                    "relation": "CustomerCategory",
+                    "properties": ["code", "description"]
+                }
+            }
+        }
+    },
     {
         "name": "Customer",
         "plural": "Customers",
@@ -27,6 +42,12 @@
         "overloads": {
             "description": {
                 "alias": "name"
+            },
+            "category": {
+                "description": "Customer category",
+                "type": {
+                    "relation": "CustomerCategory"
+                }
             }
         }
     },

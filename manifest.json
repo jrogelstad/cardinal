@@ -23,10 +23,6 @@
         },
         {
             "type": "configure",
-            "path": "amazon/manifest.json"
-        },
-        {
-            "type": "configure",
             "path": "payables/manifest.json"
         },
         {
@@ -36,6 +32,10 @@
         {
             "type": "configure",
             "path": "inventory/manifest.json"
+        },
+        {
+            "type": "configure",
+            "path": "amazon/manifest.json"
         }
     ]
 }

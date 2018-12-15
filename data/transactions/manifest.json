@@ -1,0 +1,14 @@
+{
+    "version": "0.0.1",
+    "files": [
+        {
+            "type": "batch",
+            "path": "trans-ledger.json"
+        },
+        {
+            "type": "batch",
+            "path": "trans-inventory.json"
+        }
+    ]
+}
+

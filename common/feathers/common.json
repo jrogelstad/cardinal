@@ -97,10 +97,10 @@
         }
     },
     {
-        "name": "ItemCategory",
-        "plural": "ItemCategories",
+        "name": "Category",
+        "plural": "Categories",
         "module": "Common",
-        "description": "Item category",
+        "description": "Category",
         "inherits": "Kind",
         "properties": {
             "parent": {
@@ -110,7 +110,14 @@
                     "properties": ["code", "description"]
                 }
             }
-        },
+        }
+    },
+    {
+        "name": "ItemCategory",
+        "plural": "ItemCategories",
+        "module": "Common",
+        "description": "Item category",
+        "inherits": "Category",
         "overloads": {
             "parent": {
                 "type": {
@@ -138,20 +145,20 @@
                 "type": "boolean",
                 "default": false
             },
-            "barcode": {
-                "description": "Bar code number",
-                "type": "string"
-            },
-            "manufacturer": {
-                "description": "Manufacturer",
-                "type": "string"
-            },
             "unit":  {
               "description": "Unit of measure",
               "type": {
                 "relation": "Unit",
                 "properties": ["code", "description"]
               }
+            },
+            "category": {
+                "description": "Item category",
+                "type": {
+                    "relation": "ItemCategory",
+                    "properties": ["code", "description"]
+                },
+                "isRequired": true
             },
             "cost": {
                 "description": "Cost",
@@ -268,11 +275,6 @@
                 "isRequired": true,
                 "isUnique": true
             },
-            "isActive": {
-                "description": "Active status",
-                "type": "boolean",
-                "default": true
-            },
             "policy": {
                 "description": "Date calculation policy",
                 "type": "string",
@@ -363,14 +365,7 @@
         "plural": "TaxTypes",
         "module": "Common",
         "inherits": "Kind",
-        "description": "Tax types",
-        "properties": {
-            "isActive": {
-                "description": "Active status",
-                "type": "boolean",
-                "default": true
-            }
-        }
+        "description": "Tax types"
     },
     {
         "name": "BillEntity",
@@ -395,7 +390,7 @@
                 }
             },
             "billToIsShipTo": {
-                "description": "Active status",
+                "description": "Whether to automatically use bill to as ship to address",
                 "type": "boolean",
                 "default": true
             },
@@ -441,8 +436,16 @@
                 "description": "Tax type",
                 "type": {
                     "relation": "TaxType",
-                    "properties": ["code", "description", "isActive"]
+                    "properties": ["code", "description"]
                 }
+            },
+            "category": {
+                "description": "Category",
+                "type": {
+                    "relation": "Category",
+                    "properties": ["code", "description"]
+                },
+                "isRequired": true
             }
         },
         "overloads": {
@@ -468,7 +471,8 @@
                 "type": {
                     "relation": "BillEntity",
                     "properties": ["code", "description", "billTo", "billToIsShipTo",
-                        "shipTo", "contact", "currency", "terms", "taxType", "site"]
+                        "shipTo", "contact", "currency", "terms", "taxType", "site",
+                        "category"]
                 },
                 "isRequired": true
             },
@@ -527,7 +531,7 @@
                 "description": "Tax type",
                 "type": {
                     "relation": "TaxType",
-                    "properties": ["code", "description", "isActive"]
+                    "properties": ["code", "description"]
                 }
             },
             "subtotal": {
@@ -614,7 +618,7 @@
                 "description": "Tax type",
                 "type": {
                     "relation": "TaxType",
-                    "properties": ["code", "description", "isActive"]
+                    "properties": ["code", "description"]
                 }
             },
             "remarks": {

@@ -678,14 +678,6 @@
                 }
             }
         }
-    }, {
-        "name": "AccountMapType",
-        "method": "POST",
-        "id": "ar",
-        "data": {
-            "code": "AR",
-            "description": "Accounts Receivable"
-        }
     },
     {
         "name": "AccountMapType",
@@ -694,15 +686,6 @@
         "data": {
             "code": "AP",
             "description": "Accounts Payable"
-        }
-    },
-    {
-        "name": "AccountMapType",
-        "method": "POST",
-        "id": "cogs",
-        "data": {
-            "code": "COGS",
-            "description": "Cost of Goods Sold"
         }
     },
     {
@@ -739,126 +722,6 @@
         "data": {
             "code": "Adjustment",
             "description": "Inventory Adjustment"
-        }
-    },
-    {
-        "name": "AccountMapType",
-        "method": "POST",
-        "id": "revenue",
-        "data": {
-            "code": "Revenue",
-            "description": "Revenue"
-        }
-    },
-    {
-        "name": "AccountMapType",
-        "method": "POST",
-        "id": "defrevenue",
-        "data": {
-            "code": "Deferred Revenue",
-            "description": "Deferred Revenue"
-        }
-    }, {
-        "name": "AccountMap",
-        "method": "POST",
-        "id": "luun7ae2vxny",
-        "data": {
-            "type": {
-                "id": "revenue"
-            },
-            "category": {
-                "id": "dp3ocpa066er"
-            },
-            "account": {
-                "id": "d7zf6nqrg9pr"
-            }
-        }
-    }, {
-        "name": "AccountMap",
-        "method": "POST",
-        "id": "8ona97bbbofh",
-        "data": {
-            "type": {
-                "id": "revenue"
-            },
-            "category": {
-                "id": "e0d206w76b71"
-            },
-            "account": {
-                "id": "bkxy7neljlp6"
-            }
-        }
-    }, {
-        "name": "AccountMap",
-        "method": "POST",
-        "id": "fnjibez8un3g",
-        "data": {
-            "type": {
-                "id": "ar"
-            },
-            "account": {
-                "id": "ehpdd4vim8kw"
-            }
-        }
-    }, {
-        "method": "POST",
-        "name": "GeneralJournal",
-        "id": "g6m2a2vajq5",
-        "data": {
-            "currency": {
-                "id": "4y9dtthuen7z"
-            },
-            "date": "2018-05-01",
-            "note": "Test Posting2",
-            "distributions": [
-            {
-                "account": {
-                    "id": "sv2c4nheni07"
-                },
-                "debit": {
-                  "amount": 100,
-                  "currency": "USD"
-                },
-                "credit": {
-                  "amount": 0,
-                  "currency": "USD"
-                }
-            },
-            {
-                "account": {
-                    "id": "bkxy7neljlp6"
-                },
-                "debit": {
-                  "amount": 0,
-                  "currency": "USD"
-                },
-                "credit": {
-                  "amount": 25,
-                  "currency": "USD"
-                }
-            },
-            {
-                "account": {
-                    "id": "d7zf6nqrg9pr"
-                },
-                "debit": {
-                  "amount": 0,
-                  "currency": "USD"
-                },
-                "credit": {
-                  "amount": 75,
-                  "currency": "USD"
-                }
-            }]
-        },
-        "user": "postgres"
-    }, {
-        "method": "POST",
-        "name": "postJournal",
-        "user": "postgres",
-        "data": {
-            "id": "g6m2a2vajq5",
-            "date": "2018-05-01"
         }
     }
 ]

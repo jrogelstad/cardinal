@@ -1,6 +1,47 @@
 [{
     "name": "Form",
     "method": "POST",
+    "id": "p4fycrkhbfmv",
+    "data": {
+        "name": "Customer Category",
+        "description": "Customer Category form",
+        "module": "Receivables",
+        "feather": "CustomerCategory",
+        "attrs": [{
+            "attr": "code",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "description",
+            "grid": 0,
+            "unit": 0
+        }]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "module": "Receivables",
+    "id": "jubpqd8we2xx",
+    "data": {
+        "name": "Customer Category",
+        "description": "Customer category relation wdiget",
+        "isActive": true,
+        "feather": "CustomerCategory",
+        "valueProperty": "code",
+        "form": {
+            "id": "p4fycrkhbfmv"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }
+        ]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "module": "Receivables",
     "id": "nkwmnrfy874f",
     "data": {
         "name": "Customer",
@@ -22,7 +63,7 @@
             "unit": 0
         }, {
             "attr": "site",
-            "grid": 2,
+            "grid": 0,
             "unit": 0
         }, {
             "attr": "contact",
@@ -53,6 +94,10 @@
             "grid": 1,
             "unit": 0
         }, {
+            "attr": "category",
+            "grid": 1,
+            "unit": 1
+        }, {
             "attr": "created",
             "grid": 2
         }, {
@@ -69,6 +114,7 @@
 }, {
     "name": "RelationWidget",
     "method": "POST",
+    "module": "Receivables",
     "id": "5za0lefbzqmc",
     "data": {
         "name": "Customer",
@@ -99,6 +145,7 @@
 {
     "name": "Form",
     "method": "POST",
+    "module": "Receivables",
     "id": "f0qy22oqet16",
     "data": {
         "name": "Invoice",
@@ -231,6 +278,7 @@
 }, {
     "name": "RelationWidget",
     "method": "POST",
+    "module": "Receivables",
     "id": "yld45y4gpmep",
     "data": {
         "name": "Invoice",
@@ -263,6 +311,7 @@
     "name": "Form",
     "method": "POST",
     "id": "ou8n7jkilm",
+    "module": "Receivables",
     "data": {
         "name": "Credit Memo",
         "description": "Credit memo form",
@@ -389,6 +438,7 @@
     "name": "RelationWidget",
     "method": "POST",
     "id": "b32l4isyk2kh",
+    "module": "Receivables",
     "data": {
         "name": "Credit Memo",
         "description": "Credit memo relation wdiget",
@@ -414,5 +464,29 @@
                 "attr": "contact.fullName"
             }
         ]
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "ar",
+    "data": {
+        "code": "AR",
+        "description": "Accounts Receivable"
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "revenue",
+    "data": {
+        "code": "Revenue",
+        "description": "Revenue"
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "defrevenue",
+    "data": {
+        "code": "Deferred Revenue",
+        "description": "Deferred Revenue"
     }
 }]

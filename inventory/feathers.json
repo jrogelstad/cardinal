@@ -1,4 +1,20 @@
-[ 
+[    {
+        "name": "Product",
+        "plural": "Products",
+        "module": "Common",
+        "description": "Physical products",
+        "inherits": "Item",
+        "properties": {
+            "barcode": {
+                "description": "Bar code number",
+                "type": "string"
+            },
+            "manufacturer": {
+                "description": "Manufacturer",
+                "type": "string"
+            }
+        }
+    }, 
     {
         "name": "InventoryTransaction",
         "plural": "InventoryTransactions",

@@ -1,0 +1,231 @@
+[
+    {
+        "name": "CustomerCategory",
+        "method": "POST",
+        "id": "4k94s9t5wxjv",
+        "data": {
+            "code": "All Customers",
+            "description": "All Customers"
+        }
+    },   
+    {
+        "name": "CustomerCategory",
+        "method": "POST",
+        "id": "q1qlzlmyo92j",
+        "data": {
+            "code": "Wholesale",
+            "description": "Wholesale distributor",
+            "parent": {
+                "id": "4k94s9t5wxjv"
+            }
+        }
+    },
+    {
+        "name": "CustomerCategory",
+        "method": "POST",
+        "id": "ebsz55h7wcn8",
+        "data": {
+            "code": "Retailer",
+            "description": "Retail outlet",
+            "parent": {
+                "id": "4k94s9t5wxjv"
+            }
+        }
+    },
+    {
+        "name": "CustomerCategory",
+        "method": "POST",
+        "id": "mybih1483dpl",
+        "data": {
+            "code": "Consumer",
+            "description": "Consumer",
+            "parent": {
+                "id": "4k94s9t5wxjv"
+            }
+        }
+    },
+    {
+        "name": "AccountMap",
+        "method": "POST",
+        "id": "luun7ae2vxny",
+        "data": {
+            "type": {
+                "id": "revenue"
+            },
+            "category": {
+                "id": "dp3ocpa066er"
+            },
+            "account": {
+                "id": "d7zf6nqrg9pr"
+            }
+        }
+    }, {
+        "name": "AccountMap",
+        "method": "POST",
+        "id": "8ona97bbbofh",
+        "data": {
+            "type": {
+                "id": "revenue"
+            },
+            "category": {
+                "id": "e0d206w76b71"
+            },
+            "account": {
+                "id": "bkxy7neljlp6"
+            }
+        }
+    }, {
+        "name": "AccountMap",
+        "method": "POST",
+        "id": "fnjibez8un3g",
+        "data": {
+            "type": {
+                "id": "ar"
+            },
+            "category": {
+                "id": "4k94s9t5wxjv"
+            },
+            "account": {
+                "id": "ehpdd4vim8kw"
+            }
+        }
+    },
+    {
+        "name": "Customer",
+        "method": "POST",
+        "id": "tip3j0u9g58l",
+        "data": {
+            "code": "WCBC",
+            "description": "West Chester Bicycle Company",
+            "site": {
+                "id": "c0f47f26zb60"
+            },
+            "currency": {
+                "id": "4y9dtthuen7z"
+            },
+            "terms": {
+                "id": "xee4vnwrnv9k"
+            },
+            "category": {
+                "id": "4k94s9t5wxjv"
+            },
+            "contact" : {
+                "id": "jdoe"
+            },
+            "billTo": {
+                "id": "C1A",
+                "street": "9801 Church Street",
+                "city": "West Chester",
+                "state": "PA",
+                "postalCode": "19380",
+                "country": "United States"
+            },
+            "shipTo": {
+                "id": "C1B",
+                "street": "9801 Church Street",
+                "city": "West Chester",
+                "state": "PA",
+                "postalCode": "19380",
+                "country": "United States"
+            }
+        }
+    }, {
+        "name": "Customer",
+        "method": "POST",
+        "id": "jfj635axkhbb",
+        "data": {
+            "code": "ENLCYC",
+            "description": "Enlightened Cycling",
+            "site": {
+                "id": "c0f47f26zb60"
+            },
+            "currency": {
+                "id": "4y9dtthuen7z"
+            },
+            "terms": {
+                "id": "ldxrcle1vbki"
+            },
+            "category": {
+                "id": "4k94s9t5wxjv"
+            },
+            "contact" : {
+                "id": "jsmith"
+            },
+            "billTo": {
+                "id": "C2A",
+                "street": "869 Urban Avenue",
+                "city": "Phoenixville",
+                "state": "PA",
+                "postalCode": "19460",
+                "country": "United States"
+            },
+            "shipTo": {
+                "id": "C2B",
+                "street": "432 Mall Blvd.",
+                "city": "Phoenixville",
+                "state": "PA",
+                "postalCode": "19460",
+                "country": "United States"
+            }
+        }
+    }, {
+        "name": "Customer",
+        "method": "POST",
+        "id": "brwlmg5fnsl",
+        "data": {
+            "code": "DTCYC",
+            "description": "Downingtown Cycling",
+            "site": {
+                "id": "c0f47f26zb60"
+            },
+            "creditStatus": "W",
+            "currency": {
+                "id": "4y9dtthuen7z"
+            },
+            "terms": {
+                "id": "a8nsiqa9fxp3"
+            },
+            "contact": {
+                "id": "ascarborough"
+            },
+            "category": {
+                "id": "4k94s9t5wxjv"
+            },
+            "billTo": {
+                "id": "C3A",
+                "street": "1076 Lancaster Ave.",
+                "city": "Downingtown",
+                "state": "PA",
+                "postalCode": "19335",
+                "country": "United States"
+            },
+            "shipTo": {
+                "id": "C3B",
+                "street": "1076 Lancaster Ave.",
+                "city": "Downingtown",
+                "state": "PA",
+                "postalCode": "19335",
+                "country": "United States"
+            }
+        }
+    }, {
+        "method": "PUT",
+        "name": "saveSettings",
+        "user": "postgres",
+        "data": {
+            "name": "receivablesSettings",
+            "data": {
+                "receivablesAccount": {
+                    "id":"ehpdd4vim8kw",
+                    "code":"120",
+                    "description":"Accounts Recievable"
+                },
+                "revenueAccount": {
+                    "id":"sklbdyyrjpxk",
+                    "code":"320",
+                    "description":"Products Revenues"
+                }
+            }
+        }
+    }
+]

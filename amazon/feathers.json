@@ -4,7 +4,7 @@
         "plural": "AmazonProducts",
         "module": "Amazon",
         "description": "Amazon products",
-        "inherits": "Item",
+        "inherits": "Product",
         "properties": {
             "asin": {
                 "description": "Material",

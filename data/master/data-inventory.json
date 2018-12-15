@@ -154,6 +154,9 @@
             "color": "Silver",
             "weight": 20,
             "size": 20,
+            "category": {
+                "id": "lvris76v5az6"
+            },
             "cost": {
                 "amount": 88.0,
                 "currency": "USD"
@@ -186,6 +189,9 @@
             "color": "Black",
             "weight": 40,
             "size": 19,
+            "category": {
+                "id": "lvris76v5az6"
+            },
             "cost": {
                 "amount": 102.00,
                 "currency": "USD"
@@ -219,6 +225,9 @@
             "color": "Cream",
             "weight": 40,
             "size": 21,
+            "category": {
+                "id": "lvris76v5az6"
+            },
             "cost": {
                 "amount": 162.00,
                 "currency": "USD"
@@ -251,6 +260,9 @@
             "material": "Aluminum",
             "diameter": 26,
             "weight": 2.8,
+            "category": {
+                "id": "m9v43hof6xv4"
+            },
             "cost": {
                 "amount": 31.54,
                 "currency": "USD"
@@ -282,6 +294,9 @@
             "material": "Composite",
             "diameter": 26,
             "weight": 2.2,
+            "category": {
+                "id": "m9v43hof6xv4"
+            },
             "cost": {
                 "amount": 12.54,
                 "currency": "USD"
@@ -313,6 +328,9 @@
             "material": "Aluminum",
             "diameter": 24,
             "weight": 2.2,
+            "category": {
+                "id": "m9v43hof6xv4"
+            },
             "cost": {
                 "amount": 12.94,
                 "currency": "USD"
@@ -348,6 +366,9 @@
             "fork": "FC-330 Cross carbon monocoque with tapered steerer and carbon dropout ",
             "seatPost": "31.6mm",
             "weight": 16.2,
+            "category": {
+                "id": "875k3wt3odah"
+            },
             "cost": {
                 "amount": 655.0,
                 "currency": "USD"
@@ -383,6 +404,9 @@
             "fork": "Carbon fiber",
             "seatPost": "31.6mm",
             "weight": 18.2,
+            "category": {
+                "id": "875k3wt3odah"
+            },
             "cost": {
                 "amount": 780.0,
                 "currency": "USD"
@@ -418,6 +442,9 @@
             "fork": "N/A",
             "seatPost": "31.6mm",
             "weight": 12.2,
+            "category": {
+                "id": "875k3wt3odah"
+            },
             "cost": {
                 "amount": 305.0,
                 "currency": "USD"
@@ -611,22 +638,6 @@
               "id": "4y9dtthuen7z"
             },
             "transact": "Auto"
-        }
-    }, {
-        "method": "POST",
-        "name": "adjust",
-        "user": "postgres",
-        "data": {
-            "specs": {
-                "item": {
-                    "id": "y52uj6x49ham"
-                },
-                "location": {
-                    "id": "hhxvcdowwn38"
-                },
-                "quantity": 15,
-                "comments": "Test API"
-            }
         }
     }
 ]

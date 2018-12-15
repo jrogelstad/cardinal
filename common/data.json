@@ -86,10 +86,7 @@
             "attr": "isSold",
             "unit": 1
         }, {
-            "attr": "barcode",
-            "unit": 1
-        }, {
-            "attr": "manufacturer",
+            "attr": "category",
             "unit": 1
         }, {
             "attr": "cost",
@@ -284,8 +281,6 @@
             "attr": "code"
         }, {
             "attr": "description"
-        }, {
-            "attr": "isActive"
         }]
     }
 }, {
@@ -307,8 +302,6 @@
                 "attr": "code"
             }, {
                 "attr": "description"
-            }, {
-                "attr": "isActive"
             }
         ]
     }
