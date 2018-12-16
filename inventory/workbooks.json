@@ -22,8 +22,6 @@
           }, {
               "attr": "objectType"
           }, {
-              "attr": "manufacturer"
-          }, {
               "attr": "cost"
           }, {
               "attr": "unit"

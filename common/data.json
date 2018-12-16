@@ -104,6 +104,18 @@
             }, {
                 "attr": "isPrimary"
             }]
+        }, {
+            "attr": "created",
+            "grid": 2
+        }, {
+            "attr": "createdBy",
+            "grid": 2
+        }, {
+            "attr": "updated",
+            "grid": 2
+        }, {
+            "attr": "updatedBy",
+            "grid": 2
         }]
     }
 }, {

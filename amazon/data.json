@@ -7,44 +7,101 @@
         "description": "Frame form",
         "feather": "Frame",
         "module": "Amazon",
+        "tabs": [{
+            "name": "Sites"
+        }, {
+            "name": "Specification"
+        }, {
+            "name": "Catalog"
+        }, {
+            "name": "Audit"
+        }],
         "attrs": [{
             "attr": "code"
         }, {
             "attr": "description"
         }, {
-            "attr": "isActive"
-        }, {
-            "attr": "isSold"
-        }, {
-            "attr": "barcode"
-        }, {
-            "attr": "manufacturer"
-        }, {
-            "attr": "cost"
-        }, {
             "attr": "unit"
         }, {
-            "attr": "asin"
+            "attr": "isActive"
         }, {
-            "attr": "sellerRank"
+            "attr": "isSold",
+            "unit": 1
         }, {
-            "attr": "shippingWeight"
+            "attr": "category",
+            "unit": 1
         }, {
-            "attr": "productDescription"
+            "attr": "cost",
+            "unit": 1
         }, {
-            "attr": "price"
+            "attr": "site",
+            "unit": 1
         }, {
-            "attr": "material"
+            "attr": "sites",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "site"
+            }, {
+                "attr": "isPrimary"
+            }]
         }, {
-            "attr": "bottomBracket"
+            "attr": "material",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "fork"
+            "attr": "bottomBracket",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "front"
+            "attr": "fork",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "seatPost"
+            "attr": "front",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "weight"
+            "attr": "seatPost",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "weight",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "asin",
+            "grid": 3
+        }, {
+            "attr": "sellerRank",
+            "grid": 3
+        }, {
+            "attr": "shippingWeight",
+            "grid": 3
+        }, {
+            "attr": "productDescription",
+            "grid": 3
+        }, {
+            "attr": "manufacturer",
+            "grid": 3,
+            "unit": 1
+        }, {
+            "attr": "price",
+            "grid": 3,
+            "unit": 1
+        }, {
+            "attr": "created",
+            "grid": 4
+        }, {
+            "attr": "createdBy",
+            "grid": 4
+        }, {
+            "attr": "updated",
+            "grid": 4
+        }, {
+            "attr": "updatedBy",
+            "grid": 4
         }]
     }
 }, {
@@ -56,44 +113,101 @@
         "description": "Wheel form",
         "feather": "Wheel",
         "module": "Amazon",
+        "tabs": [{
+            "name": "Sites"
+        }, {
+            "name": "Specification"
+        }, {
+            "name": "Catalog"
+        }, {
+            "name": "Audit"
+        }],
         "attrs": [{
             "attr": "code"
         }, {
             "attr": "description"
         }, {
-            "attr": "isActive"
-        }, {
-            "attr": "isSold"
-        }, {
-            "attr": "barcode"
-        }, {
-            "attr": "manufacturer"
-        }, {
-            "attr": "cost"
-        }, {
             "attr": "unit"
         }, {
-            "attr": "asin"
+            "attr": "isActive"
         }, {
-            "attr": "sellerRank"
+            "attr": "isSold",
+            "unit": 1
         }, {
-            "attr": "shippingWeight"
+            "attr": "category",
+            "unit": 1
         }, {
-            "attr": "productDescription"
+            "attr": "cost",
+            "unit": 1
         }, {
-            "attr": "price"
+            "attr": "site",
+            "unit": 1
         }, {
-            "attr": "material"
+            "attr": "sites",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "site"
+            }, {
+                "attr": "isPrimary"
+            }]
         }, {
-            "attr": "diameter"
+            "attr": "material",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "width"
+            "attr": "diameter",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "hub"
+            "attr": "width",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "style"
+            "attr": "hub",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "weight"
+            "attr": "style",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "weight",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "asin",
+            "grid": 3
+        }, {
+            "attr": "sellerRank",
+            "grid": 3
+        }, {
+            "attr": "shippingWeight",
+            "grid": 3
+        }, {
+            "attr": "productDescription",
+            "grid": 3
+        }, {
+            "attr": "manufacturer",
+            "grid": 3,
+            "unit": 1
+        }, {
+            "attr": "price",
+            "grid": 3,
+            "unit": 1
+        }, {
+            "attr": "created",
+            "grid": 4
+        }, {
+            "attr": "createdBy",
+            "grid": 4
+        }, {
+            "attr": "updated",
+            "grid": 4
+        }, {
+            "attr": "updatedBy",
+            "grid": 4
         }]
     }
 }, {
@@ -105,38 +219,89 @@
         "description": "Seat form",
         "feather": "Seat",
         "module": "Amazon",
+        "tabs": [{
+            "name": "Sites"
+        }, {
+            "name": "Specification"
+        }, {
+            "name": "Catalog"
+        }, {
+            "name": "Audit"
+        }],
         "attrs": [{
             "attr": "code"
         }, {
             "attr": "description"
         }, {
-            "attr": "isActive"
-        }, {
-            "attr": "isSold"
-        }, {
-            "attr": "barcode"
-        }, {
-            "attr": "manufacturer"
-        }, {
-            "attr": "cost"
-        }, {
             "attr": "unit"
         }, {
-            "attr": "asin"
+            "attr": "isActive"
         }, {
-            "attr": "sellerRank"
+            "attr": "isSold",
+            "unit": 1
         }, {
-            "attr": "shippingWeight"
+            "attr": "category",
+            "unit": 1
         }, {
-            "attr": "productDescription"
+            "attr": "cost",
+            "unit": 1
         }, {
-            "attr": "price"
+            "attr": "site",
+            "unit": 1
         }, {
-            "attr": "color"
+            "attr": "sites",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "site"
+            }, {
+                "attr": "isPrimary"
+            }]
         }, {
-            "attr": "style"
+            "attr": "color",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "weight"
+            "attr": "style",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "weight",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "asin",
+            "grid": 3
+        }, {
+            "attr": "sellerRank",
+            "grid": 3
+        }, {
+            "attr": "shippingWeight",
+            "grid": 3
+        }, {
+            "attr": "productDescription",
+            "grid": 3
+        }, {
+            "attr": "manufacturer",
+            "grid": 3,
+            "unit": 1
+        }, {
+            "attr": "price",
+            "grid": 3,
+            "unit": 1
+        }, {
+            "attr": "created",
+            "grid": 4
+        }, {
+            "attr": "createdBy",
+            "grid": 4
+        }, {
+            "attr": "updated",
+            "grid": 4
+        }, {
+            "attr": "updatedBy",
+            "grid": 4
         }]
     }
 }, {
@@ -148,46 +313,105 @@
         "description": "Bicycle form",
         "feather": "Bicycle",
         "module": "Amazon",
+        "tabs": [{
+            "name": "Sites"
+        }, {
+            "name": "Specification"
+        }, {
+            "name": "Catalog"
+        }, {
+            "name": "Audit"
+        }],
         "attrs": [{
             "attr": "code"
         }, {
             "attr": "description"
         }, {
-            "attr": "isActive"
-        }, {
-            "attr": "isSold"
-        }, {
-            "attr": "barcode"
-        }, {
-            "attr": "manufacturer"
-        }, {
-            "attr": "cost"
-        }, {
             "attr": "unit"
         }, {
-            "attr": "asin"
+            "attr": "isActive"
         }, {
-            "attr": "sellerRank"
+            "attr": "isSold",
+            "unit": 1
         }, {
-            "attr": "shippingWeight"
+            "attr": "category",
+            "unit": 1
         }, {
-            "attr": "productDescription"
+            "attr": "cost",
+            "unit": 1
         }, {
-            "attr": "price"
+            "attr": "site",
+            "unit": 1
         }, {
-            "attr": "frameMaterial"
+            "attr": "sites",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "site"
+            }, {
+                "attr": "isPrimary"
+            }]
         }, {
-            "attr": "color"
+            "attr": "frameMaterial",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "size"
+            "attr": "color",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "hub"
+            "attr": "size",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "gearSet"
+            "attr": "hub",
+            "grid": 2,
+            "unit": 0
         }, {
-            "attr": "style"
+            "attr": "gearSet",
+            "grid": 2,
+            "unit": 1
         }, {
-            "attr": "weight"
+            "attr": "style",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "weight",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "asin",
+            "grid": 3
+        }, {
+            "attr": "sellerRank",
+            "grid": 3
+        }, {
+            "attr": "shippingWeight",
+            "grid": 3
+        }, {
+            "attr": "productDescription",
+            "grid": 3
+        }, {
+            "attr": "manufacturer",
+            "grid": 3,
+            "unit": 1
+        }, {
+            "attr": "price",
+            "grid": 3,
+            "unit": 1
+        }, {
+            "attr": "created",
+            "grid": 4
+        }, {
+            "attr": "createdBy",
+            "grid": 4
+        }, {
+            "attr": "updated",
+            "grid": 4
+        }, {
+            "attr": "updatedBy",
+            "grid": 4
         }]
     }
 }, {
@@ -199,32 +423,79 @@
         "description": "Amazon Product form",
         "feather": "AmazonProduct",
         "module": "Amazon",
+        "tabs": [{
+            "name": "Sites"
+        }, {
+            "name": "Catalog"
+        }, {
+            "name": "Audit"
+        }],
         "attrs": [{
             "attr": "code"
         }, {
             "attr": "description"
         }, {
-            "attr": "isActive"
-        }, {
-            "attr": "isSold"
-        }, {
-            "attr": "barcode"
-        }, {
-            "attr": "manufacturer"
-        }, {
-            "attr": "cost"
-        }, {
             "attr": "unit"
         }, {
-            "attr": "asin"
+            "attr": "isActive"
         }, {
-            "attr": "sellerRank"
+            "attr": "isSold",
+            "unit": 1
         }, {
-            "attr": "shippingWeight"
+            "attr": "category",
+            "unit": 1
         }, {
-            "attr": "productDescription"
+            "attr": "cost",
+            "unit": 1
         }, {
-            "attr": "price"
+            "attr": "site",
+            "unit": 1
+        }, {
+            "attr": "sites",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "site"
+            }, {
+                "attr": "isPrimary"
+            }]
+        }, {
+            "attr": "asin",
+            "grid": 2
+        }, {
+            "attr": "sellerRank",
+            "grid": 2
+        }, {
+            "attr": "shippingWeight",
+            "grid": 2
+        }, {
+            "attr": "productDescription",
+            "grid": 2
+        }, {
+            "attr": "manufacturer",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "price",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "weight",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "created",
+            "grid": 3
+        }, {
+            "attr": "createdBy",
+            "grid": 3
+        }, {
+            "attr": "updated",
+            "grid": 3
+        }, {
+            "attr": "updatedBy",
+            "grid": 3
         }]
     }
 }]
