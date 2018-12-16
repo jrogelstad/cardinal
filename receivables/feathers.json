@@ -184,8 +184,8 @@
         "inherits": "Node"
     },
     {
-        "name": "AccountsReceivableJournal",
-        "plural": "AccountsReceivableJournal",
+        "name": "ReceivablesJournal",
+        "plural": "ReceivablesJournals",
         "module": "Receivables",
         "description": "Accounts receivable journal",
         "inherits": "Journal",
