@@ -89,6 +89,30 @@
                 "id": "ehpdd4vim8kw"
             }
         }
+    }, {
+        "name": "AccountMap",
+        "method": "POST",
+        "id": "gaex9qhbcqtp",
+        "data": {
+            "type": {
+                "id": "eidmzloahqol"
+            },
+            "account": {
+                "id": "f2a9vqsx0x30"
+            }
+        }
+    }, {
+        "name": "AccountMap",
+        "method": "POST",
+        "id": "9hdiof9wircq",
+        "data": {
+            "type": {
+                "id": "oj9vneq6bcfm"
+            },
+            "account": {
+                "id": "ufl2t2e9nohy"
+            }
+        }
     },
     {
         "name": "Customer",

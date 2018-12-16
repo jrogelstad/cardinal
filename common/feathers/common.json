@@ -157,8 +157,7 @@
                 "type": {
                     "relation": "ItemCategory",
                     "properties": ["code", "description"]
-                },
-                "isRequired": true
+                }
             },
             "cost": {
                 "description": "Cost",
@@ -444,8 +443,7 @@
                 "type": {
                     "relation": "Category",
                     "properties": ["code", "description"]
-                },
-                "isRequired": true
+                }
             }
         },
         "overloads": {

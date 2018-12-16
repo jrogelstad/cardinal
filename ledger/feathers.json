@@ -69,13 +69,13 @@
                 "description": "Ledger account",
                 "type": {
                     "relation": "LedgerAccount",
-                    "properties": ["code", "description"]
+                    "properties": ["code", "description", "isParent"]
                 }
             },
             "category": {
                 "description": "category",
                 "type": {
-                    "relation": "ItemCategory",
+                    "relation": "Category",
                     "properties": ["code", "description"]
                 }
             },

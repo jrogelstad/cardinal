@@ -489,6 +489,34 @@
     {
         "name": "LedgerAccount",
         "method": "POST",
+        "id": "f2a9vqsx0x30",
+        "data": {
+            "parent": {
+                "id": "sklbdyyrjpxk"
+            },
+            "code": "330",
+            "description": "Freight Revenues",
+            "note": "Amounts earned from charging for shipping and handling.",
+            "type": "R"
+        }
+    },
+    {
+        "name": "LedgerAccount",
+        "method": "POST",
+        "id": "ufl2t2e9nohy",
+        "data": {
+            "parent": {
+                "id": "sklbdyyrjpxk"
+            },
+            "code": "340",
+            "description": "Tax Revenues",
+            "note": "Amounts collected for tax.",
+            "type": "R"
+        }
+    },
+    {
+        "name": "LedgerAccount",
+        "method": "POST",
         "id": "kjgkwzxcls2f",
         "data": {
             "code": "50",
@@ -691,7 +719,7 @@
     {
         "name": "AccountMapType",
         "method": "POST",
-        "id": "wip",
+        "id": "jcsf9eid0yk",
         "data": {
             "code": "WIP",
             "description": "Work in Process"
@@ -700,7 +728,7 @@
     {
         "name": "AccountMapType",
         "method": "POST",
-        "id": "inv",
+        "id": "b0pidz12pe87",
         "data": {
             "code": "Inventory",
             "description": "Inventory"
@@ -709,7 +737,7 @@
     {
         "name": "AccountMapType",
         "method": "POST",
-        "id": "invvar",
+        "id": "az0d9jx7bsgf",
         "data": {
             "code": "Variance",
             "description": "Inventory Variance"
@@ -718,7 +746,7 @@
     {
         "name": "AccountMapType",
         "method": "POST",
-        "id": "invadj",
+        "id": "ydpmy6t5liex",
         "data": {
             "code": "Adjustment",
             "description": "Inventory Adjustment"
