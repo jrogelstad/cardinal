@@ -419,7 +419,7 @@
             post(ids, viewModel, message);
         };
         factory.postAll = function (viewModel) {
-            var message = "Are you sure you want to post all unposted" + name.toProperCase() + "?";
+            var message = "Are you sure you want to post all unposted " + name.toProperCase() + "?";
 
             post(null, viewModel, message);
         };

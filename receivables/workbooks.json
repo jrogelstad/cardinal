@@ -98,6 +98,31 @@
         }
     },
     {
+        "name": "Journals",
+        "feather": "ReceivablesJournal",
+        "list": {
+          "columns": [{
+              "attr": "number"
+            }, {
+              "attr": "date"
+            }, {
+              "attr": "amount"
+            }, {
+              "attr": "isPosted"
+            }
+          ],
+          "filter": {
+            "sort": [{
+                "property": "isPosted",
+                "order": "DESC"
+            }, {
+                "property": "number",
+                "order": "DESC"
+            }]
+          }
+        }
+      },
+    {
         "name": "Customers",
         "feather": "Customer",
         "list": {

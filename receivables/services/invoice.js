@@ -33,11 +33,11 @@
     */
     function doPostInvoices(obj) {
         return new Promise(function (resolve, reject) {
-            var baseCurrency, categories, accountMaps, invoices,
+            var baseCurrency, categories, accountMaps, invoices, ids,
                     getBaseCurrency, getIds, getCategories, getAccountMaps,
                     distributions = [],
                     journalId = f.createId();
-
+debugger;
             getBaseCurrency = new Promise(function (resolve, reject) {
                 var payload = {
                     method: "GET",
@@ -92,7 +92,8 @@
             getIds = new Promise(function (resolve, reject) {
                 // If ids were passed use those
                 if (Array.isArray(obj.data.ids)) {
-                    resolve(obj.data.ids);
+                    ids = obj.data.ids;
+                    resolve();
                     return;
                 }
 
@@ -111,7 +112,8 @@
                 };
 
                 function callback(resp) {
-                    resolve(resp.map((row) => row.id));
+                    ids = resp.map((row) => row.id);
+                    resolve();
                 }
 
                 datasource.request(payload, true)
@@ -189,7 +191,7 @@
                 throw new Error("Can not resolve account type " + type);
             }
 
-            function getInvoices(ids) {
+            function getInvoices() {
                 return new Promise(function (resolve, reject) {
                     var payload = {
                         method: "GET",
@@ -222,6 +224,7 @@
                         var payload = {
                             method: "GET",
                             name: "convertCurrency",
+                            client: obj.client,
                             data: {
                                 fromCurrency: currency.code,
                                 amount: money.amount,
@@ -283,6 +286,7 @@
                         var payload = {
                             method: "POST",
                             name: "ReceivablesJournal",
+                            client: obj.client,
                             data: {
                                 id: journalId,
                                 currency: baseCurrency,
@@ -290,6 +294,11 @@
                                 distributions: distributions
                             }
                         };
+
+                        if (!distributions.length) {
+                            resolve();
+                            return;
+                        }
 
                         datasource.request(payload, true)
                             .then(resolve)
@@ -302,10 +311,10 @@
                     // Distribute freight
                     requests.push(distribute(
                         "Receivables",
-                        invoice.customer.category,
+                        invoice.billEntity.category,
                         invoice.site,
                         "Freight",
-                        invoice.customer.category,
+                        invoice.billEntity.category,
                         invoice.site,
                         invoice.currency,
                         invoice.freight,
@@ -315,10 +324,10 @@
                     // Distribute tax
                     requests.push(distribute(
                         "Receivables",
-                        invoice.customer.category,
+                        invoice.billEntity.category,
                         invoice.site,
                         "Tax",
-                        invoice.customer.category,
+                        invoice.billEntity.category,
                         invoice.site,
                         invoice.currency,
                         invoice.tax,
@@ -329,7 +338,7 @@
                     invoice.lines.forEach(function (line) {
                         requests.push(distribute(
                             "Receivables",
-                            invoice.customer.category,
+                            invoice.billEntity.category,
                             invoice.site,
                             "Revenue",
                             line.item.category,

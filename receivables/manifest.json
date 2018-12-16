@@ -16,6 +16,16 @@
             "path": "workbooks.json"
         },
         {
+            "type": "service",
+            "name": "invoice",
+            "path": "services/invoice.js"
+        },
+        {
+            "type": "route",
+            "name": "receivables",
+            "path": "route-receivables.js"
+        },
+        {
             "type": "batch",
             "path": "data.json"
         }
