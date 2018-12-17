@@ -121,7 +121,7 @@ debugger;
                     .catch(reject);
             });
 
-            function resolveAccount(type, category, site) {
+            function resolveAccount(type, category, site, recursive) {
                 var found, currCategory;
 
                 if (!type) {
@@ -131,15 +131,19 @@ debugger;
                 if (site && category) {
                     found = accountMaps.find((map) =>
                             map.type.code === type &&
+                            map.type.category &&
                             map.type.category.id === category.id &&
+                            map.type.site &&
                             map.type.site.id === site.id);
                 } else if (site) {
                     found = accountMaps.find((map) =>
                             map.type.code === type &&
+                            map.type.site &&
                             map.type.site.id === site.id);
                 } else if (category) {
                     found = accountMaps.find((map) =>
                             map.type.code === type &&
+                            map.type.category &&
                             map.type.category.id === category.id);
                 } else {
                     found = accountMaps.find((map) =>
@@ -160,8 +164,8 @@ debugger;
                     currCategory = categories.find((cat) => cat.id === category.id);
 
                     if (currCategory.parent) {
-                        found = resolve(type, currCategory.parent, site);
-                    } else {
+                        found = resolveAccount(type, currCategory.parent, site, true);
+                    } else if (recursive) {
                         return;
                     }
 
@@ -170,7 +174,7 @@ debugger;
 
                     // No site and parent match, try category only
                     } else {
-                        return resolve(type, category);
+                        return resolveAccount(type, category);
                     }
                 }
 
@@ -179,11 +183,11 @@ debugger;
                     currCategory = categories.find((cat) => cat.id === category.id);
 
                     if (currCategory && currCategory.parent) {
-                        return resolve(type, currCategory.parent);
+                        return resolveAccount(type, currCategory.parent, undefined, true);
 
                     // No category or parent match, try default map
                     } else {
-                        return resolve(type);
+                        return resolveAccount(type);
                     }
                 }
 
@@ -253,7 +257,7 @@ debugger;
                                 distributions.push({
                                     account: debitAccount,
                                     debit: money,
-                                    credit: f.money(money.currency)
+                                    credit: f.money(0, money.currency)
                                 });
                             }
 
@@ -267,7 +271,7 @@ debugger;
                             } else {
                                 distributions.push({
                                     account: creditAccount,
-                                    debit: f.money(money.currency),
+                                    debit: f.money(0, money.currency),
                                     credit: money
                                 });
                             }
@@ -368,10 +372,13 @@ debugger;
                         };
 
                         invoice.isPosted = true;
-                        invoice.status = "P";
-                        invoice.journal = {
-                            id: journalId
-                        };
+                        invoice.status = "O";
+                        invoice.postedDate = f.today();
+                        if (distributions.length) {
+                            invoice.journal = {
+                                id: journalId
+                            };
+                        }
 
                         return datasource.request(payload, true);
                     });

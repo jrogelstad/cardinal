@@ -506,4 +506,79 @@
         "code": "Tax",
         "description": "Tax revenue"
     }
+}, {
+    "name": "Form",
+    "method": "POST",
+    "id": "wy0ad9x6l0rp",
+    "data": {
+        "name": "Receivables Journal",
+        "description": "Receivables Journal form",
+        "module": "Receivables",
+        "feather": "ReceivablesJournal",
+        "tabs": [{
+            "name": "Distribution"
+        }, {
+            "name": "Audit"
+        }],
+        "attrs": [{
+            "attr": "number",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "date",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "currency",
+            "grid": 0,
+            "unit": 0
+        }, {
+            "attr": "isPosted",
+            "grid": 0,
+            "unit": 1
+        }, {
+            "attr": "note",
+            "grid": 0,
+            "unit": 1
+        }, {
+            "attr": "distributions",
+            "showLabel": false,
+            "grid": 1,
+            "unit": 0,
+            "columns": [{
+                "attr": "account",
+                "filter": {
+                  "criteria": [{
+                    "property": "isParent",
+                    "value": false
+                  }]
+                }
+            }, {
+                "attr": "account.description",
+                "label": "Description"
+            }, {
+                "attr": "debit",
+                "showCurrency": false
+            }, {
+                "attr": "credit",
+                "showCurrency": false
+            }]
+        }, {
+            "attr": "created",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "createdBy",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "updated",
+            "grid": 2,
+            "unit": 1
+        }, {
+            "attr": "updatedBy",
+            "grid": 2,
+            "unit": 1
+        }]
+    }
 }]
