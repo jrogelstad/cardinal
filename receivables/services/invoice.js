@@ -374,6 +374,7 @@ debugger;
                         invoice.isPosted = true;
                         invoice.status = "O";
                         invoice.postedDate = f.today();
+                        invoice.balance = invoice.total;
                         if (distributions.length) {
                             invoice.journal = {
                                 id: journalId

@@ -355,7 +355,8 @@
                 "description": "Posted date",
                 "type": "string",
                 "format": "date",
-                "isReadOnly": true
+                "isReadOnly": true,
+                "default": null
             },
             "paid": {
                 "description": "Amount currently paid",
