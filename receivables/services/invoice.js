@@ -33,11 +33,12 @@
     */
     function doPostInvoices(obj) {
         return new Promise(function (resolve, reject) {
-            var baseCurrency, categories, accountMaps, invoices, ids,
+            var baseCurrency, categories, accountMaps, documents, ids,
                     getBaseCurrency, getIds, getCategories, getAccountMaps,
                     distributions = [],
-                    journalId = f.createId();
-debugger;
+                    journalId = f.createId(),
+                    postDate = obj.data.date || f.today();
+
             getBaseCurrency = new Promise(function (resolve, reject) {
                 var payload = {
                     method: "GET",
@@ -195,7 +196,7 @@ debugger;
                 throw new Error("Can not resolve account type " + type);
             }
 
-            function getInvoices() {
+            function getDocuments() {
                 return new Promise(function (resolve, reject) {
                     var payload = {
                         method: "GET",
@@ -217,179 +218,258 @@ debugger;
             }
 
             function createJournal(resp) {
-                var requests = [];
+                return new Promise(function (resolve, reject) {
+                    var requests = [];
 
-                invoices = resp;
+                    documents = resp;
 
-                function distribute(debitType, debitCategory, debitSite,
-                        creditType, creditCategory, creditSite,
-                        currency, money, docDate) {
-                    return new Promise(function (resolve, reject) {
-                        var payload = {
-                            method: "GET",
-                            name: "convertCurrency",
-                            client: obj.client,
-                            data: {
-                                fromCurrency: currency.code,
-                                amount: money.amount,
-                                effective: docDate
+                    function distribute(debitType, debitCategory, debitSite,
+                            creditType, creditCategory, creditSite,
+                            currency, money, effective) {
+                        return new Promise(function (resolve, reject) {
+                            var payload = {
+                                method: "GET",
+                                name: "convertCurrency",
+                                client: obj.client,
+                                data: {
+                                    fromCurrency: currency.code,
+                                    amount: money.amount,
+                                    effective: effective
+                                }
+                            };
+
+                            if (money.amount === 0) {
+                                resolve(money);
+                                return;
                             }
-                        };
 
-                        if (money.amount === 0) {
-                            resolve();
-                            return;
-                        }
+                            function callback(money) {
+                                var found,
+                                    debitAccount = resolveAccount(debitType, debitCategory, debitSite),
+                                    creditAccount = resolveAccount(creditType, creditCategory, creditSite);
 
-                        function callback(money) {
-                            var found,
-                                debitAccount = resolveAccount(debitType, debitCategory, debitSite),
-                                creditAccount = resolveAccount(creditType, creditCategory, creditSite);
+                                found = distributions.find((dist) =>
+                                        dist.account.id === debitAccount.id &&
+                                        dist.debit.amount > 0);
 
-                            found = distributions.find((dist) =>
-                                    dist.account.id === debitAccount.id &&
-                                    dist.debit.amount > 0);
+                                // Handle debit
+                                if (found) {
+                                    found.debit.amount = found.debit.amount.plus(money.amount);
+                                } else {
+                                    distributions.push({
+                                        account: debitAccount,
+                                        debit: f.copy(money),
+                                        credit: f.money(0, money.currency)
+                                    });
+                                }
 
-                            // Handle debit
-                            if (found) {
-                                found.debit.amount = found.debit.amount.plus(money.amount);
+                                // Handle credit
+                                found = distributions.find((dist) =>
+                                        dist.account.id === creditAccount.id &&
+                                        dist.credit.amount > 0);
+
+                                if (found) {
+                                    found.credit.amount = found.credit.amount.plus(money.amount);
+                                } else {
+                                    distributions.push({
+                                        account: creditAccount,
+                                        debit: f.money(0, money.currency),
+                                        credit: f.copy(money)
+                                    });
+                                }
+
+                                resolve(money);
+                            }
+
+                            if (currency.code !== baseCurrency.code) {
+                                datasource.request(payload, true)
+                                    .then(callback)
+                                    .catch(reject);
                             } else {
-                                distributions.push({
-                                    account: debitAccount,
-                                    debit: money,
-                                    credit: f.money(0, money.currency)
-                                });
+                                callback(money);
+                            }
+                        });
+                    }
+
+                    function postJournal() {
+                        return new Promise(function (resolve, reject) {
+                            var payload = {
+                                method: "POST",
+                                name: "ReceivablesJournal",
+                                client: obj.client,
+                                data: {
+                                    id: journalId,
+                                    currency: baseCurrency,
+                                    date: postDate,
+                                    distributions: distributions
+                                }
+                            };
+
+                            if (!distributions.length) {
+                                resolve();
+                                return;
                             }
 
-                            // Handle credit
-                            found = distributions.find((dist) =>
-                                    dist.account.id === creditAccount.id &&
-                                    dist.credit.amount > 0);
+                            datasource.request(payload, true)
+                                .then(resolve)
+                                .catch(reject);
+                        });
+                    }
 
-                            if (found) {
-                                found.credit.amount = found.credit.amount.plus(money.amount);
-                            } else {
-                                distributions.push({
-                                    account: creditAccount,
-                                    debit: f.money(0, money.currency),
-                                    credit: money
-                                });
-                            }
+                    // Create distributions for each document
+                    documents.forEach(function (doc) {
+                        var isNotBase = doc.currency.code !== baseCurrency.code;
 
-                            resolve();
+                        function updateFreight(money) {
+                            return new Promise(function (resolve) {
+                                if (isNotBase) {
+                                    doc.freight.effective = postDate;
+                                    doc.freight.baseAmount = money.amount;
+                                }
+                                resolve();
+                            });
                         }
 
-                        datasource.request(payload, true)
-                            .then(callback)
-                            .catch(reject);
-                    });
-                }
+                        function updateTax(money) {
+                            return new Promise(function (resolve) {
+                                if (isNotBase) {
+                                    doc.tax.effective = postDate;
+                                    doc.tax.baseAmount = money.amount;
+                                }
 
-                function postJournal() {
-                    return new Promise(function (resolve, reject) {
-                        var payload = {
-                            method: "POST",
-                            name: "ReceivablesJournal",
-                            client: obj.client,
-                            data: {
-                                id: journalId,
-                                currency: baseCurrency,
-                                date: obj.data.date,
-                                distributions: distributions
-                            }
-                        };
-
-                        if (!distributions.length) {
-                            resolve();
-                            return;
+                                resolve();
+                            });
                         }
 
-                        datasource.request(payload, true)
-                            .then(resolve)
-                            .catch(reject);
-                    });
-                }
+                        if (isNotBase) {
+                            doc.subtotal.effective = postDate;
+                            doc.subtotal.baseAmount = 0;
+                        }
 
-                // Create distributions for each document
-                invoices.forEach(function (invoice) {
-                    // Distribute freight
-                    requests.push(distribute(
-                        "Receivables",
-                        invoice.billEntity.category,
-                        invoice.site,
-                        "Freight",
-                        invoice.billEntity.category,
-                        invoice.site,
-                        invoice.currency,
-                        invoice.freight,
-                        invoice.docDate
-                    ));
-
-                    // Distribute tax
-                    requests.push(distribute(
-                        "Receivables",
-                        invoice.billEntity.category,
-                        invoice.site,
-                        "Tax",
-                        invoice.billEntity.category,
-                        invoice.site,
-                        invoice.currency,
-                        invoice.tax,
-                        invoice.docDate
-                    ));
-
-                    // Create distributions for each line
-                    invoice.lines.forEach(function (line) {
+                        // Distribute freight
                         requests.push(distribute(
                             "Receivables",
-                            invoice.billEntity.category,
-                            invoice.site,
-                            "Revenue",
-                            line.item.category,
-                            line.item.site,
-                            invoice.currency,
-                            line.extended,
-                            invoice.docDate
-                        ));
-                    });
-                });
+                            doc.billEntity.category,
+                            doc.site,
+                            "Freight",
+                            doc.billEntity.category,
+                            doc.site,
+                            doc.currency,
+                            doc.freight,
+                            postDate
+                        ).then(updateFreight));
 
-                Promise.all(requests)
-                    .then(postJournal)
-                    .then(resolve)
-                    .catch(reject);
+                        // Distribute tax
+                        requests.push(distribute(
+                            "Receivables",
+                            doc.billEntity.category,
+                            doc.site,
+                            "Tax",
+                            doc.billEntity.category,
+                            doc.site,
+                            doc.currency,
+                            doc.tax,
+                            postDate
+                        ).then(updateTax));
+
+                        // Create distributions for each line
+                        doc.lines.forEach(function (line) {
+                            function updateLine(money) {
+                                return new Promise(function (resolve) {
+                                    if (isNotBase) {
+                                        line.extended.effective = postDate;
+                                        line.extended.baseAmount = money.amount;
+                                        doc.subtotal.baseAmount = doc.subtotal.baseAmount.plus(money.amount);
+                                    }
+                                    resolve();
+                                });
+                            }
+
+                            function updatePrice() {
+                                return new Promise(function (resolve, reject) {
+                                    var payload = {
+                                        method: "GET",
+                                        name: "convertCurrency",
+                                        client: obj.client,
+                                        data: {
+                                            fromCurrency: doc.currency.code,
+                                            amount: line.price.amount,
+                                            effective: postDate
+                                        }
+                                    };
+
+                                    function callback(money) {
+                                        if (isNotBase) {
+                                            line.price.effective = postDate;
+                                            line.price.baseAmount = money.amount;
+                                        }
+                                        resolve();
+                                    }
+
+                                    datasource.request(payload, true)
+                                        .then(callback)
+                                        .catch(reject);
+                                });
+                            }
+
+                            requests.push(distribute(
+                                "Receivables",
+                                doc.billEntity.category,
+                                doc.site,
+                                "Revenue",
+                                line.item.category,
+                                line.item.site,
+                                doc.currency,
+                                line.extended,
+                                postDate
+                            )
+                                .then(updateLine)
+                                .then(updatePrice));
+                        });
+                    });
+
+                    Promise.all(requests)
+                        .then(postJournal)
+                        .then(resolve)
+                        .catch(reject);
+                });
             }
 
-            function updateInvoices() {
+            function updateDocuments() {
                 return new Promise(function (resolve, reject) {
-                    var requests = invoices.map(function (invoice) {
+                    var requests = documents.map(function (doc) {
                         var payload = {
                             method: "POST",
                             name: "Invoice",
                             client: obj.client,
-                            id: invoice.id,
-                            data: invoice
+                            id: doc.id,
+                            data: doc
                         };
 
-                        invoice.isPosted = true;
-                        invoice.status = "O";
-                        invoice.postedDate = f.today();
-                        invoice.balance = invoice.total;
                         if (distributions.length) {
-                            invoice.journal = {
+                            doc.journal = {
                                 id: journalId
                             };
                         }
 
+                        if (doc.currency.code !== baseCurrency.code) {
+                            doc.total.effective = postDate;
+                            doc.total.baseAmount = doc.subtotal.baseAmount
+                                .plus(doc.freight.baseAmount)
+                                .plus(doc.tax.baseAmount);
+                        }
+
+                        doc.isPosted = true;
+                        doc.status = "O";
+                        doc.postedDate = postDate;
+                        doc.balance = doc.total;
+                        doc.baseBalance = doc.total;
+
                         return datasource.request(payload, true);
                     });
 
-                    function callback() {
-                        resolve(true);
-                    }
-
                     Promise.all(requests)
-                        .then(callback)
+                        .then(resolve.bind(null, true))
                         .catch(reject);
                 });
             }
@@ -400,9 +480,9 @@ debugger;
                 getAccountMaps,
                 getIds
             ])
-                .then(getInvoices)
+                .then(getDocuments)
                 .then(createJournal)
-                .then(updateInvoices)
+                .then(updateDocuments)
                 .then(resolve)
                 .catch(reject);
         });

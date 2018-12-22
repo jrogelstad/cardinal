@@ -97,6 +97,13 @@
         var that = model(data, feather),
             d = that.data;
 
+        function calculateExtended() {
+            var currency = that.parent().data.currency().data.code(),
+                amount = d.billed.toJSON().times(d.price.toJSON().amount);
+
+            d.extended(f.money(amount, currency));
+        }
+
         that.onChanged("ordered", function () {
             var ordered = d.ordered.toJSON();
 
@@ -105,12 +112,8 @@
             }
         });
 
-        that.onChanged("billed", function () {
-            var currency = that.parent().data.currency().data.code(),
-                amount = d.billed.toJSON().times(d.price.toJSON().amount);
-
-            d.extended(f.money(amount, currency));
-        });
+        that.onChanged("billed", calculateExtended);
+        that.onChanged("price", calculateExtended);
 
         return that;
     };

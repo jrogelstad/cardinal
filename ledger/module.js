@@ -28,6 +28,22 @@
     const f = require("common-core");
     const postMixin = catalog.store().mixins().post;
 
+    // Create bill subledger model
+    models.billSubledger = function (data, feather) {
+        feather = feather || catalog.getFeather("BillSubledger");
+        var that = model(data, feather);
+
+        that.state().resolve("/Ready/Fetched/Clean").enter(function () {
+            if (that.data.isPosted()) {
+                this.goto("../ReadOnly");
+            }
+        });
+
+        return that;
+    };
+
+    models.billSubledger.list = list("BillSubledger");
+
     models.fiscalPeriod.closeCheck = function (selections) {
         return selections.every(function (model) {
             return model.data.status() !== "C" &&

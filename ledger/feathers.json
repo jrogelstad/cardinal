@@ -365,7 +365,13 @@
                 "isReadOnly": true
             },
             "balance": {
-                "description": "Amount currently due",
+                "description": "Amount currently due in document currency",
+                "type": "object",
+                "format": "money",
+                "isReadOnly": true
+            },
+            "baseBalance": {
+                "description": "Amount currently due in base currency",
                 "type": "object",
                 "format": "money",
                 "isReadOnly": true

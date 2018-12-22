@@ -246,7 +246,6 @@
                 if (site) {
                     d.site(site);
                 }
-                
             }
         });
 
