@@ -21,6 +21,11 @@
             "path": "services/invoice.js"
         },
         {
+            "type": "service",
+            "name": "receivables-journal",
+            "path": "services/receivables-journal.js"
+        },
+        {
             "type": "route",
             "name": "receivables",
             "path": "route-receivables.js"
