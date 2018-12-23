@@ -107,6 +107,7 @@
         }, {
             "name": "Audit"
         }],
+        "focus": "billEntity",
         "attrs": [{
             "attr": "number",
             "grid": 0,
@@ -240,6 +241,7 @@
         }, {
             "name": "Audit"
         }],
+        "focus": "billEntity",
         "attrs": [{
             "attr": "number",
             "grid": 0,
