@@ -15,14 +15,14 @@
           "title": "Post selected unposted invoices",
           "icon": "thumbtack",
           "method": "post",
-          "authorization": "PostInvoices",
+          "authorization": "PostReceivables",
           "validator": "postCheck"
         }, {
           "name": "Post all",
           "title": "Post all unposted invoices",
           "icon": "thumbtack",
           "method": "postAll",
-          "authorization": "PostInvoices",
+          "authorization": "PostReceivables",
           "hasSeparator": true
         }],
         "list": {
@@ -63,6 +63,21 @@
         "name": "Credit Memos",
         "isEditModeEnabled": false,
         "feather": "CreditMemo",
+        "actions": [{
+          "name": "Post",
+          "title": "Post selected unposted credit memos",
+          "icon": "thumbtack",
+          "method": "post",
+          "authorization": "PostReceivables",
+          "validator": "postCheck"
+        }, {
+          "name": "Post all",
+          "title": "Post all unposted credit memos",
+          "icon": "thumbtack",
+          "method": "postAll",
+          "authorization": "PostReceivables",
+          "hasSeparator": true
+        }],
         "list": {
             "columns": [{
               "attr": "number"
@@ -100,6 +115,21 @@
     {
         "name": "Journals",
         "feather": "ReceivablesJournal",
+        "actions": [{
+          "name": "Post",
+          "title": "Post selected unposted journals to the ledger",
+          "icon": "thumbtack",
+          "method": "post",
+          "authorization": "PostJournals",
+          "validator": "postCheck"
+        }, {
+          "name": "Post all",
+          "title": "Post all unposted journals to the ledger",
+          "icon": "thumbtack",
+          "method": "postAll",
+          "authorization": "PostJournals",
+          "hasSeparator": true
+        }],
         "list": {
           "columns": [{
               "attr": "number"

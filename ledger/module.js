@@ -251,6 +251,6 @@
     models.ledgerAccount.list = list("LedgerAccount");
 
     // Add static post functions to Journal
-    postMixin("Journal", "Ledger");
+    postMixin("GeneralJournal", "Ledger");
 
 }());

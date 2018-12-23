@@ -120,6 +120,9 @@
 
     models.receivableLine.list = list("ReceivableLine");
 
-    // Add static post functions to Invoice
+    // Add static post functions to models
     postMixin("Invoice", "Receivables");
+    postMixin("CreditMemo", "Receivables");
+    postMixin("ReceivablesJournal", "Receivables");
+
 }());

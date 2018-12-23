@@ -17,6 +17,11 @@
         },
         {
             "type": "service",
+            "name": "LedgerBillSubledger",
+            "path": "services/bill-subledger.js"
+        },
+        {
+            "type": "service",
             "name": "LedgerFiscalPeriod",
             "path": "services/fiscal-period.js"
         },
@@ -29,6 +34,11 @@
             "type": "service",
             "name": "LedgerJournal",
             "path": "services/journal.js"
+        },
+        {
+            "type": "service",
+            "name": "LedgerGeneralJournal",
+            "path": "services/general-journal.js"
         },
         {
             "type": "service",

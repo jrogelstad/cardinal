@@ -379,8 +379,9 @@
             var dialog = viewModel.confirmDialog(),
                 payload = {
                     method: "POST",
-                    path: "/" + module + "/post-" + name.toSnakeCase(),
+                    path: "/" + module + "/post/" + name.toSpinalCase(),
                     data: {
+                        feather: type,
                         ids: ids
                     }
                 },

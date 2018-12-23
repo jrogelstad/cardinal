@@ -15,22 +15,22 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*global app, datasource*/
-/*jslint es6, node*/
-(function (app, datasource) {
+/*global datasource, Promise*/
+/*jslint*/
+(function (datasource) {
     "strict";
 
-    const express = require("express");
+    var doBeforeDeleteBillSubledger = function (obj) {
+        return new Promise(function (resolve) {
+            if (obj.oldRec.isPosted) {
+                throw new Error("Can not delete a posted " + obj.oldRec.objectType);
+            }
 
-    // Register route to the public
-    var doRequest = datasource.postFunction,
-        router = express.Router();
+            resolve();
+        });
+    };
 
-    router.route("/post/general-journal").post(doRequest.bind("postGeneralJournal"));
-    router.route("/post/general-journals").post(doRequest.bind("postGeneralJournals"));
-    router.route("/close-fiscal-period").post(doRequest.bind("closeFiscalPeriod"));
-    router.route("/open-fiscal-period").post(doRequest.bind("openFiscalPeriod"));
+    datasource.registerFunction("DELETE", "BillSubledger",
+            doBeforeDeleteBillSubledger, datasource.TRIGGER_BEFORE);
 
-    app.use('/ledger', router);
-
-}(app, datasource));
+}(datasource));

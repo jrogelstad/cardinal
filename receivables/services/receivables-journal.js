@@ -116,4 +116,47 @@
     datasource.registerFunction("DELETE", "ReceivablesJournal", doBeforeDeleteReceivablesJournal,
             datasource.TRIGGER_BEFORE);
 
+    /**
+      Post a series of receivables journals and update trial balance.
+
+      @param {Object} [payload] Payload.
+      @param {Object} [payload.client] Database client.
+      @param {Object} [payload.data] Journal data
+      @param {Array} [payload.data.ids] Journal ids to post. Default = all.
+      @param {Object} [payload.data.date] Post date. Default today.
+    */
+    function doPostReceivablesJournals(obj) {
+        return new Promise(function (resolve, reject) {
+            obj.name = "postJournals";
+            obj.feather = "ReceivablesJournal";
+            datasource.request(obj, true)
+                .then(resolve)
+                .catch(reject);
+        });
+    }
+
+    datasource.registerFunction("POST", "postReceivablesJournals", doPostReceivablesJournals);
+
+    /**
+      Post a receivables journal and update trial balance.
+
+      @param {Object} [payload] Payload.
+      @param {Object} [payload.client] Database client.
+      @param {Function} [payload.callback] callback.
+      @param {Object} [payload.data] Journal data
+      @param {Object} [payload.data.id] Journal id to post. Required
+      @param {Object} [payload.data.date] Post date. Default today.
+    */
+    function doPostReceivablesJournal(obj) {
+        return new Promise(function (resolve, reject) {
+            obj.name = "postJournal";
+            obj.feather = "ReceivablesJournal";
+            datasource.request(obj, true)
+                .then(resolve)
+                .catch(reject);
+        });
+    }
+
+    datasource.registerFunction("POST", "postReceivablesJournal", doPostReceivablesJournal);
+
 }(datasource));
