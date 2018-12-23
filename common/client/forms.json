@@ -119,33 +119,6 @@
         }]
     }
 }, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "dd1lqqh9yw4m",
-    "data": {
-        "name": "Item",
-        "description": "Item relation wdiget",
-        "isActive": true,
-        "feather": "Item",
-        "valueProperty": "code",
-        "labelProperty": "description",
-        "form": {
-            "id": "3b5i7biisqbw"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }, {
-                "attr": "createdBy"
-            }, {
-                "attr": "updated"
-            }, {
-                "attr": "updatedBy"
-            }
-        ]
-    }
-}, {
     "name": "Form",
     "method": "POST",
     "id": "l353cu26nozk",
@@ -167,27 +140,6 @@
         }, {
             "attr": "updatedBy"
         }]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "el92ht8yp1x4",
-    "data": {
-        "name": "Kind",
-        "description": "Kind relation wdiget",
-        "isActive": true,
-        "feather": "Kind",
-        "valueProperty": "code",
-        "labelProperty": "description",
-        "form": {
-            "id": "l353cu26nozk"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }
-        ]
     }
 }, {
     "name": "Form",
@@ -219,27 +171,6 @@
         }]
     }
 }, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "inh1huvch0rf",
-    "data": {
-        "name": "Terms",
-        "description": "Terms relation wdiget",
-        "module": "Common",
-        "isActive": true,
-        "feather": "Terms",
-        "valueProperty": "code",
-        "form": {
-            "id": "drxve9irkxf"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "policy"
-            }
-        ]
-    }
-}, {
     "name": "Form",
     "method": "POST",
     "id": "v3iy247php6b",
@@ -257,30 +188,6 @@
         }]
     }
 }, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "9ocwxrthell3",
-    "data": {
-        "name": "ShipMethod",
-        "description": "Ship method relation wdiget",
-        "module": "Common",
-        "isActive": true,
-        "feather": "ShipMethod",
-        "valueProperty": "code",
-        "labelProperty": "description",
-        "form": {
-            "id": "v3iy247php6b"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }, {
-                "attr": "isActive"
-            }
-        ]
-    }
-}, {
     "name": "Form",
     "method": "POST",
     "id": "cr203k24xuro",
@@ -294,28 +201,6 @@
         }, {
             "attr": "description"
         }]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "y2vy2gd7q1jc",
-    "data": {
-        "name": "TaxType",
-        "description": "Tax type relation wdiget",
-        "module": "Common",
-        "isActive": true,
-        "feather": "TaxType",
-        "valueProperty": "code",
-        "labelProperty": "description",
-        "form": {
-            "id": "cr203k24xuro"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }
-        ]
     }
 }, {
     "name": "Form",
@@ -333,28 +218,6 @@
         }]
     }
 }, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "txawzrfryfmh",
-    "data": {
-        "name": "Site",
-        "description": "Site relation wdiget",
-        "module": "Common",
-        "isActive": true,
-        "feather": "Site",
-        "valueProperty": "code",
-        "labelProperty": "description",
-        "form": {
-            "id": "q4y81yzh7jjv"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }
-        ]
-    }
-}, {
     "name": "Form",
     "method": "POST",
     "id": "o3ngq14t4q35",
@@ -370,26 +233,5 @@
         }, {
             "attr": "parent"
         }]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "5cgzv6e7lf89",
-    "data": {
-        "name": "ItemCategory",
-        "description": "Item category relation wdiget",
-        "isActive": true,
-        "feather": "ItemCategory",
-        "valueProperty": "code",
-        "labelProperty": "description",
-        "form": {
-            "id": "o3ngq14t4q35"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }
-        ]
     }
 }]

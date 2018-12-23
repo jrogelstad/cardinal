@@ -4,59 +4,63 @@
     "dependencies": ["Common"],
     "files": [
         {
+            "type": "module",
+            "path": "client/models.js"
+        },
+        {
             "type": "feather",
-            "path": "feathers.json"
+            "path": "server/feathers.json"
         },
         {
             "type": "settings",
-            "path": "settings.json"
-        },
-        {
-            "type": "module",
-            "path": "module.js"
+            "path": "server/settings.json"
         },
         {
             "type": "service",
             "name": "LedgerBillSubledger",
-            "path": "services/bill-subledger.js"
+            "path": "server/services/bill-subledger.js"
         },
         {
             "type": "service",
             "name": "LedgerFiscalPeriod",
-            "path": "services/fiscal-period.js"
+            "path": "server/services/fiscal-period.js"
         },
         {
             "type": "service",
             "name": "LedgerLedgerAccount",
-            "path": "services/ledger-account.js"
+            "path": "server/services/ledger-account.js"
         },
         {
             "type": "service",
             "name": "LedgerJournal",
-            "path": "services/journal.js"
+            "path": "server/services/journal.js"
         },
         {
             "type": "service",
             "name": "LedgerGeneralJournal",
-            "path": "services/general-journal.js"
+            "path": "server/services/general-journal.js"
         },
         {
             "type": "service",
             "name": "LedgerLedgerTransaction",
-            "path": "services/ledger-transaction.js"
+            "path": "server/services/ledger-transaction.js"
         },
         {
             "type": "route",
             "name": "Ledger",
-            "path": "route-ledger.js"
-        },
-        {
-            "type": "workbook",
-            "path": "workbooks.json"
+            "path": "server/routes.js"
         },
         {
             "type": "batch",
-            "path": "data.json"
+            "path": "client/forms.json"
+        },
+        {
+            "type": "batch",
+            "path": "client/relations.json"
+        },
+        {
+            "type": "workbook",
+            "path": "client/workbooks.json"
         }
     ]
 }

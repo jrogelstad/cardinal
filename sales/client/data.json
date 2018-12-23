@@ -1,0 +1,9 @@
+[{
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "cogs",
+    "data": {
+        "code": "COGS",
+        "description": "Cost of Goods Sold"
+    }
+}]

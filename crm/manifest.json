@@ -4,20 +4,24 @@
     "dependencies": ["Common"],
     "files": [
         {
-            "type": "feather",
-            "path": "feathers.json"
-        },
-        {
             "type": "module",
-            "path": "module.js"
+            "path": "client/models.js"
         },
         {
-            "type": "workbook",
-            "path": "workbooks.json"
+            "type": "feather",
+            "path": "server/feathers.json"
         },
         {
             "type": "batch",
-            "path": "data.json"
+            "path": "client/forms.json"
+        },
+        {
+            "type": "batch",
+            "path": "client/relations.json"
+        },
+        {
+            "type": "workbook",
+            "path": "client/workbooks.json"
         }
     ]
 }

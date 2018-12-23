@@ -3,44 +3,48 @@
     "version": "0.0.1",
     "files": [
         {
-            "type": "feather",
-            "path": "feathers/node.json"
-        },
-        {
-            "type": "feather",
-            "path": "feathers/common.json"
-        },
-        {
             "type": "module",
-            "path": "module.js"
+            "path": "client/models.js"
+        },
+        {
+            "type": "feather",
+            "path": "server/feathers/node.json"
+        },
+        {
+            "type": "feather",
+            "path": "server/feathers/common.json"
         },
         {
             "type": "service",
             "name": "Action",
-            "path": "services/action.js"
+            "path": "server/services/action.js"
         },
         {
             "type": "service",
             "name": "Period",
-            "path": "services/period.js"
+            "path": "server/services/period.js"
         },
         {
             "type": "service",
             "name": "terms",
-            "path": "services/terms.js"
+            "path": "server/services/terms.js"
         },
         {
             "type": "service",
             "name": "item",
-            "path": "services/item.js"
-        },
-        {
-            "type": "workbook",
-            "path": "workbooks.json"
+            "path": "server/services/item.js"
         },
         {
             "type": "batch",
-            "path": "data.json"
+            "path": "client/forms.json"
+        },
+        {
+            "type": "batch",
+            "path": "client/relations.json"
+        },
+        {
+            "type": "workbook",
+            "path": "client/workbooks.json"
         }
     ]
 }

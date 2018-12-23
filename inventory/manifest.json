@@ -4,26 +4,26 @@
     "dependencis": ["Ledger"],
     "files": [
         {
-            "type": "feather",
-            "path": "feathers.json"
+            "type": "module",
+            "path": "client/models.js"
         },
         {
-            "type": "module",
-            "path": "module.js"
+            "type": "feather",
+            "path": "server/feathers.json"
         },
         {
             "type": "service",
             "name": "Inventory",
-            "path": "service.js"
+            "path": "server/services/adjust.js"
         },
         {
             "type": "route",
             "name": "Inventory",
-            "path": "routes.js"
+            "path": "server/routes.js"
         },
         {
             "type": "workbook",
-            "path": "workbooks.json"
+            "path": "client/workbooks.json"
         }
     ]
 }

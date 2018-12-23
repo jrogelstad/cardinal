@@ -1,0 +1,41 @@
+[{
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "ar",
+    "data": {
+        "code": "Receivables",
+        "description": "Accounts Receivable"
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "revenue",
+    "data": {
+        "code": "Revenue",
+        "description": "Revenue"
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "cwh2s9r5pm7j",
+    "data": {
+        "code": "Deferred Revenue",
+        "description": "Deferred Revenue"
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "eidmzloahqol",
+    "data": {
+        "code": "Freight",
+        "description": "Shipping and handling revenue"
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "oj9vneq6bcfm",
+    "data": {
+        "code": "Tax",
+        "description": "Tax revenue"
+    }
+}]
