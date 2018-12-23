@@ -13,8 +13,18 @@
         },
         {
             "type": "service",
+            "name": "receivables",
+            "path": "server/services/receivables.js"
+        },
+        {
+            "type": "service",
             "name": "invoice",
             "path": "server/services/invoice.js"
+        },
+        {
+            "type": "service",
+            "name": "credit-memo",
+            "path": "server/services/credit-memo.js"
         },
         {
             "type": "service",

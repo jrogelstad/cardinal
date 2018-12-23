@@ -22,11 +22,14 @@
 
     function doBeforeDeleteReceivablesJournal(obj) {
         return new Promise(function (resolve, reject) {
-            function getDocuments() {
+            var documents = [];
+
+
+            function getDocuments(name) {
                 return new Promise(function (resolve, reject) {
                     var payload = {
                         method: "GET",
-                        name: "Invoice",
+                        name: name,
                         client: obj.client,
                         filter: {
                             criteria: [{
@@ -37,13 +40,18 @@
                         }
                     };
 
+                    function callback(resp) {
+                        documents = documents.concat(resp);
+                        resolve();
+                    }
+
                     datasource.request(payload, true)
-                        .then(resolve)
+                        .then(callback)
                         .catch(reject);
                 });
             }
 
-            function updateDocuments(documents) {
+            function updateDocuments() {
                 return new Promise(function (resolve, reject) {
                     var requests = [];
 
@@ -87,7 +95,7 @@
                         requests.push(new Promise(function (resolve, reject) {
                             var payload = {
                                 method: "POST",
-                                name: "BillSubledger",
+                                name: doc.objectType,
                                 client: obj.client,
                                 id: doc.id,
                                 data: doc
@@ -105,8 +113,10 @@
                 });
             }
 
-            Promise.resolve()
-                .then(getDocuments)
+            Promise.all([
+                getDocuments("Invoice"),
+                getDocuments("CreditMemo")
+            ])
                 .then(updateDocuments)
                 .then(resolve)
                 .catch(reject);

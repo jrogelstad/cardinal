@@ -28,6 +28,8 @@
 
     router.route("/post/invoice").post(doRequest.bind("postInvoice"));
     router.route("/post/invoices").post(doRequest.bind("postInvoices"));
+    router.route("/post/credit-memo").post(doRequest.bind("postCreditMemo"));
+    router.route("/post/credit-memos").post(doRequest.bind("postCreditMemos"));
     router.route("/post/receivables-journal").post(doRequest.bind("postReceivablesJournal"));
     router.route("/post/receivables-journals").post(doRequest.bind("postReceivablesJournals"));
 

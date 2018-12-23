@@ -21,25 +21,25 @@
     "strict";
 
     /**
-      Post a series of invoices and create journals.
+      Post a series of credit memos and create journals.
 
       @param {Object} [payload] Payload.
       @param {Object} [payload.client] Database client.
-      @param {Object} [payload.data] Invoice data
-      @param {Array} [payload.data.ids] Invoice ids to post. Default = all.
+      @param {Object} [payload.data] Credit memo data
+      @param {Array} [payload.data.ids] Credit memo ids to post. Default = all.
       @param {Object} [payload.data.date] Post date. Default today.
     */
-    function doPostInvoices(obj) {
+    function doPostCreditMemos(obj) {
         return new Promise(function (resolve, reject) {
             obj.name = "postReceivables";
             obj.profile = {
-                feather: "Invoice",
-                freightDebitAccountType: "Receivables",
-                freightCreditAccountType: "Freight",
-                taxDebitAccountType: "Receivables",
-                taxCreditAccountType: "Tax",
-                itemDebitAccountType: "Receivables",
-                itemCreditAccountType: "Revenue"
+                feather: "CreditMemo",
+                freightDebitAccountType: "Freight",
+                freightCreditAccountType: "Receivables",
+                taxDebitAccountType: "Tax",
+                taxCreditAccountType: "Receivables",
+                itemDebitAccountType: "Revenue",
+                itemCreditAccountType: "Receivables"
             };
             datasource.request(obj, true)
                 .then(resolve)
@@ -47,27 +47,27 @@
         });
     }
 
-    datasource.registerFunction("POST", "postInvoices", doPostInvoices);
+    datasource.registerFunction("POST", "postCreditMemos", doPostCreditMemos);
 
     /**
-      Post an invoice and create journal.
+      Post a credit memo and create journal.
 
       @param {Object} [payload] Payload.
       @param {Object} [payload.client] Database client.
-      @param {Object} [payload.data] Invoice data
-      @param {Object} [payload.data.id] Invoice id to post. Required
+      @param {Object} [payload.data] Credit memo data
+      @param {Object} [payload.data.id] Credit memo id to post. Required
       @param {Object} [payload.data.date] Post date. Default today.
     */
-    function doPostInvoice(obj) {
+    function doPostCreditMemo(obj) {
         return new Promise(function (resolve, reject) {
             obj.name = "postReceivable";
-            obj.feather = "Invoice";
+            obj.feather = "CreditMemo";
             datasource.request(obj, true)
                 .then(resolve)
                 .catch(reject);
         });
     }
 
-    datasource.registerFunction("POST", "postInvoice", doPostInvoice);
+    datasource.registerFunction("POST", "postCreditMemo", doPostCreditMemo);
 
 }(datasource));
