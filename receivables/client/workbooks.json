@@ -187,46 +187,6 @@
             }]
           }
         }
-      },
-      {
-        "name": "Terms",
-        "feather": "Terms",
-        "list": {
-          "columns": [{
-              "attr": "code"
-            }, {
-              "attr": "policy"
-          }],
-          "filter": {
-            "criteria": [{
-                "property": "isActive",
-                "value": true
-            }],
-            "sort": [{
-                "property": "code"
-            }]
-          }
-        }
-      },
-      {
-        "name": "Tax Types",
-        "feather": "TaxType",
-        "list": {
-          "columns": [{
-              "attr": "code"
-            }, {
-              "attr": "description"
-            }],
-          "filter": {
-            "criteria": [{
-                "property": "isActive",
-                "value": true
-            }],
-            "sort": [{
-                "property": "code"
-            }]
-          }
-        }
       }
     ]
   }
