@@ -169,9 +169,9 @@
             }, {
               "attr": "contact.email"
             }, {
-              "attr": "billTo.city"
+              "attr": "remitTo.city"
             }, {
-              "attr": "billTo.state"
+              "attr": "remitTo.state"
             }
           ],
           "filter": {
