@@ -59,7 +59,7 @@
         }
     },
     {
-        "name": "Credit Memos",
+        "name": "CreditMemos",
         "isEditModeEnabled": false,
         "feather": "CreditMemo",
         "actions": [{

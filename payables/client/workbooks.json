@@ -59,7 +59,7 @@
         }
     },
     {
-        "name": "Debit Memos",
+        "name": "DebitMemos",
         "isEditModeEnabled": false,
         "feather": "DebitMemo",
         "actions": [{
