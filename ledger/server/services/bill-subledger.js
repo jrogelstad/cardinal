@@ -43,6 +43,7 @@
       @param {Object} [payload.data] Subledger data
       @param {Array} [payload.data.ids] Subledger ids to post. Default = all.
       @param {String} [payload.profile.feather] Subledger feather type.
+      @param {String} [payload.profile.billEntityAttr] Bill entity attribute.
       @param {String} [payload.profile.freghtDebitAccountType] Account map type for debiting freight
       @param {String} [payload.profile.freightCreditAccountType] Account map type for crediting freight
       @param {String} [payload.profile.taxDebitAccountType] Account map type for debiting tax
@@ -369,10 +370,10 @@
                         // Distribute freight
                         requests.push(distribute(
                             obj.profile.freightDebitAccountType,
-                            doc.billEntity.category,
+                            doc[obj.profile.billEntityAttr].category,
                             doc.site,
                             obj.profile.freightCreditAccountType,
-                            doc.billEntity.category,
+                            doc[obj.profile.billEntityAttr].category,
                             doc.site,
                             doc.currency,
                             doc.freight,
@@ -382,10 +383,10 @@
                         // Distribute tax
                         requests.push(distribute(
                             obj.profile.taxDebitAccountType,
-                            doc.billEntity.category,
+                            doc[obj.profile.billEntityAttr].category,
                             doc.site,
                             obj.profile.taxCreditAccountType,
-                            doc.billEntity.category,
+                            doc[obj.profile.billEntityAttr].category,
                             doc.site,
                             doc.currency,
                             doc.tax,
@@ -434,7 +435,7 @@
 
                             requests.push(distribute(
                                 obj.profile.itemDebitAccountType,
-                                doc.billEntity.category,
+                                doc[obj.profile.billEntityAttr].category,
                                 doc.site,
                                 obj.profile.itemCreditAccountType,
                                 line.item.category,

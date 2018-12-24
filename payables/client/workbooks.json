@@ -28,9 +28,9 @@
             "columns": [{
               "attr": "number"
             }, {
-              "attr": "billEntity"
+              "attr": "vendor"
             }, {
-              "attr": "billEntity.description"
+              "attr": "vendor.description"
             }, {
               "attr": "total"
             }, {
@@ -81,9 +81,9 @@
             "columns": [{
               "attr": "number"
             }, {
-              "attr": "billEntity"
+              "attr": "vendor"
             }, {
-              "attr": "billEntity.description"
+              "attr": "vendor.description"
             }, {
               "attr": "total"
             }, {

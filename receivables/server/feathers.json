@@ -21,6 +21,27 @@
         "description": "Customer",
         "inherits": "BillEntity",
         "properties": {
+            "billTo": {
+                "description": "Bill to Address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            },
+            "billToIsShipTo": {
+                "description": "Whether to automatically use bill to as ship to address",
+                "type": "boolean",
+                "default": true
+            },
+            "shipTo": {
+                "description": "Ship to Address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            },
             "creditStatus": {
                 "description": "creditStatus",
                 "type": "string",
@@ -56,6 +77,26 @@
         "plural": "Receivables",
         "module": "Receivables",
         "description": "Receivable subledger",
+        "properties": {
+            "customer": {
+                "description": "Customer",
+                "type": {
+                    "relation": "Customer",
+                    "properties": ["code", "description", "billTo", "billToIsShipTo",
+                        "shipTo", "contact", "currency", "terms", "taxType", "site",
+                        "category"]
+                },
+                "isRequired": true
+            },
+            "billTo": {
+                "description": "Bill to address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            }
+        },
         "inherits": "BillSubledger"
     },
     {
@@ -92,15 +133,6 @@
             }
         },
         "overloads": {
-            "billEntity": {
-                "alias": "Customer",
-                "type": {
-                    "relation": "Customer",
-                    "properties": ["code", "description", "billTo",
-                        "currency", "terms", "taxType", "isActive"] 
-                },
-                "isRequired": true
-            },
             "docDate": {
                 "alias": "invoiceDate"
             }
@@ -142,15 +174,6 @@
             }
         },
         "overloads": {
-            "billEntity": {
-                "alias": "customer",
-                "type": {
-                    "relation": "Customer",
-                    "properties": ["code", "description", "billTo",
-                        "currency", "terms", "taxType", "isActive"] 
-                },
-                "isRequired": true
-            },
             "docDate": {
                 "alias": "memoDate"
             }

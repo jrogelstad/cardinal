@@ -35,7 +35,7 @@
         var that = model(data, feather),
             mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-        mixinOrderHeader(that);
+        mixinOrderHeader(that, "customer");
 
         return that;
     };
@@ -50,12 +50,41 @@
         var that = model(data, feather),
             mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-        mixinOrderHeader(that);
+        mixinOrderHeader(that, "customer");
 
         return that;
     };
 
     models.creditMemo.list = list("CreditMemo");
+
+    /**
+        Receivable model
+    */
+    models.receivable = function (data, feather) {
+        feather = feather || catalog.getFeather("Receivable");
+        var that = model(data, feather),
+            d = that.data;
+
+        that.onChanged("customer", function () {
+            var billTo,
+                customer = d.customer();
+
+            if (customer) {
+                billTo = f.copy(customer.data.billTo.toJSON());
+                billTo.id = f.createId();
+                d.billTo(billTo);
+                d.site(customer.data.site());
+                d.contact(customer.data.contact());
+                d.currency(customer.data.currency());
+                d.terms(customer.data.terms());
+                d.taxType(customer.data.taxType());
+            }
+        });
+
+        return that;
+    };
+
+    models.receivable.list = list("Receivable");
 
      /**
         Receivable line model

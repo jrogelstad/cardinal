@@ -380,27 +380,6 @@
                   "properties": ["code", "description"]
                 }
             },
-            "billTo": {
-                "description": "Bill to Address",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["type", "street", "unit", "city",
-                        "state", "postalCode", "country"]
-                }
-            },
-            "billToIsShipTo": {
-                "description": "Whether to automatically use bill to as ship to address",
-                "type": "boolean",
-                "default": true
-            },
-            "shipTo": {
-                "description": "Ship to Address",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["type", "street", "unit", "city",
-                        "state", "postalCode", "country"]
-                }
-            },
             "contact": {
                 "description": "Contact",
                 "type": {
@@ -464,16 +443,6 @@
                 "type": "string",
                 "isUnique": true
             },
-            "billEntity": {
-                "description": "Billing entity",
-                "type": {
-                    "relation": "BillEntity",
-                    "properties": ["code", "description", "billTo", "billToIsShipTo",
-                        "shipTo", "contact", "currency", "terms", "taxType", "site",
-                        "category"]
-                },
-                "isRequired": true
-            },
             "docDate": {
                 "description": "Document date",
                 "type": "string",
@@ -484,14 +453,6 @@
             "status": {
                 "description": "Order status",
                 "type": "string"
-            },
-            "billTo": {
-                "description": "Bill to address",
-                "type": {
-                    "relation": "Address",
-                    "properties": ["type", "street", "unit", "city",
-                        "state", "postalCode", "country"]
-                }
             },
             "contact": {
                 "description": "Contact",

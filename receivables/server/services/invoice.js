@@ -34,6 +34,7 @@
             obj.name = "postBillSubledgers";
             obj.profile = {
                 feather: "Invoice",
+                billEntityAttr: "customer",
                 freightDebitAccountType: "Receivables",
                 freightCreditAccountType: "FreightOut",
                 taxDebitAccountType: "Receivables",

@@ -20,6 +20,16 @@
         "module": "Payables",
         "description": "Vendor",
         "inherits": "BillEntity",
+        "properties": {
+            "remitTo": {
+                "description": "Remit to Address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            }
+        },
         "overloads": {
             "description": {
                 "alias": "name"
@@ -37,7 +47,26 @@
         "plural": "Payables",
         "module": "Payables",
         "description": "Payable subledger",
-        "inherits": "BillSubledger"
+        "inherits": "BillSubledger",
+        "properties": {
+            "vendor": {
+                "description": "Vendor",
+                "type": {
+                    "relation": "Vendor",
+                    "properties": ["code", "description", "remitTo", "contact",
+                        "currency", "terms", "taxType", "site", "category"]
+                },
+                "isRequired": true
+            },
+            "remitTo": {
+                "description": "Remit to address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            }
+        }
     },
     {
         "name": "PayableLine",
@@ -77,15 +106,6 @@
             }
         },
         "overloads": {
-            "billEntity": {
-                "alias": "Vendor",
-                "type": {
-                    "relation": "Vendor",
-                    "properties": ["code", "description", "billTo",
-                        "currency", "terms", "taxType", "isActive"] 
-                },
-                "isRequired": true
-            },
             "docDate": {
                 "alias": "invoiceDate"
             }
@@ -124,18 +144,13 @@
                 },
                 "isUnique": true,
                 "inheritedFrom": "BillOrder"
+            },
+            "reference": {
+                "description": "Vendor's reference document number",
+                "type": "string"
             }
         },
         "overloads": {
-            "billEntity": {
-                "alias": "vendor",
-                "type": {
-                    "relation": "Vendor",
-                    "properties": ["code", "description", "billTo",
-                        "currency", "terms", "taxType", "isActive"] 
-                },
-                "isRequired": true
-            },
             "docDate": {
                 "alias": "memoDate"
             }

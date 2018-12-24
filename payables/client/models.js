@@ -35,7 +35,7 @@
         var that = model(data, feather),
             mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-        mixinOrderHeader(that);
+        mixinOrderHeader(that, "vendor");
 
         return that;
     };
@@ -50,12 +50,41 @@
         var that = model(data, feather),
             mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-        mixinOrderHeader(that);
+        mixinOrderHeader(that, "vendor");
 
         return that;
     };
 
     models.debitMemo.list = list("DebitMemo");
+
+    /**
+        Payable model
+    */
+    models.payable = function (data, feather) {
+        feather = feather || catalog.getFeather("Payable");
+        var that = model(data, feather),
+            d = that.data;
+
+        that.onChanged("vendor", function () {
+            var remitTo,
+                vendor = d.vendor();
+
+            if (vendor) {
+                remitTo = f.copy(vendor.data.remitTo.toJSON());
+                remitTo.id = f.createId();
+                d.remitTo(remitTo);
+                d.site(vendor.data.site());
+                d.contact(vendor.data.contact());
+                d.currency(vendor.data.currency());
+                d.terms(vendor.data.terms());
+                d.taxType(vendor.data.taxType());
+            }
+        });
+
+        return that;
+    };
+
+    models.payable.list = list("Payable");
 
      /**
         Payable line model

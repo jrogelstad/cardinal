@@ -49,11 +49,7 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "billTo",
-            "grid": 0,
-            "unit": 2
-        }, {
-            "attr": "shipTo",
+            "attr": "remitTo",
             "grid": 0,
             "unit": 2
         }, {
@@ -103,7 +99,7 @@
         }, {
             "name": "Audit"
         }],
-        "focus": "billEntity",
+        "focus": "vendor",
         "attrs": [{
             "attr": "number",
             "grid": 0,
@@ -117,15 +113,15 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "billEntity",
+            "attr": "vendor",
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "status",
+            "attr": "invoiceNumber",
             "grid": 0,
             "unit": 1
         }, {
-            "attr": "billTo",
+            "attr": "remitTo",
             "grid": 0,
             "unit": 1
         }, {
@@ -237,7 +233,7 @@
         }, {
             "name": "Audit"
         }],
-        "focus": "billEntity",
+        "focus": "vendor",
         "attrs": [{
             "attr": "number",
             "grid": 0,
@@ -251,15 +247,19 @@
             "grid": 0,
             "unit": 0
         }, {
-            "attr": "billEntity",
+            "attr": "vendor",
             "grid": 0,
             "unit": 0
+        }, {
+            "attr": "reference",
+            "grid": 0,
+            "unit": 1
         }, {
             "attr": "status",
             "grid": 0,
             "unit": 1
         }, {
-            "attr": "billTo",
+            "attr": "remitTo",
             "grid": 0,
             "unit": 1
         }, {

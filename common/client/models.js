@@ -181,22 +181,6 @@
             d.total(result);
         }
 
-        that.onChanged("billEntity", function () {
-            var billTo,
-                billEntity = d.billEntity();
-
-            if (billEntity) {
-                billTo = f.copy(billEntity.data.billTo.toJSON());
-                billTo.id = f.createId();
-                d.billTo(billTo);
-                d.site(billEntity.data.site());
-                d.contact(billEntity.data.contact());
-                d.currency(billEntity.data.currency());
-                d.terms(billEntity.data.terms());
-                d.taxType(billEntity.data.taxType());
-            }
-        });
-
         that.onChanged("currency", function () {
             var money,
                 curr = currencyCode(d);
@@ -226,7 +210,6 @@
     };
 
     models.billOrder.list = list("BillOrder");
-
 
      /**
         Order line model
@@ -260,14 +243,15 @@
         Applies shared line item logic to orders
 
         @param {Object} Order model instance
+        @param {String} Name of bill entity attribute
         @returns {Object} order model instance
     */
-    function orderHeader(model) {
+    function orderHeader(model, billEntityAttr) {
         var d = model.data;
 
         function handleReadOnly() {
             var count,
-                billEntity = d.billEntity();
+                billEntity = d[billEntityAttr]();
 
             // Can't change bill entity once lines created
             if (billEntity) {
@@ -280,10 +264,10 @@
                 }, 0);
 
                 d.lines().canAdd(true);
-                d.billEntity.isReadOnly(count > 0);
+                d[billEntityAttr].isReadOnly(count > 0);
             } else {
                 d.lines().canAdd(false);
-                d.billEntity.isReadOnly(false);
+                d[billEntityAttr].isReadOnly(false);
             }
         }
 
@@ -329,7 +313,7 @@
             d.subtotal(result);
         });
 
-        model.onChanged("billEntity", handleReadOnly);
+        model.onChanged(billEntityAttr, handleReadOnly);
         model.onChanged("lines", handleReadOnly);
         model.state().resolve("/Ready/Fetched/Clean").enter(handleReadOnly);
 
