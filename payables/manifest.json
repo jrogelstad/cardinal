@@ -10,6 +10,42 @@
         {
             "type": "feather",
             "path": "server/feathers.json"
+        },
+        {
+            "type": "service",
+            "name": "voucher",
+            "path": "server/services/voucher.js"
+        },
+        {
+            "type": "service",
+            "name": "debit-memo",
+            "path": "server/services/debit-memo.js"
+        },
+        {
+            "type": "service",
+            "name": "payables-journal",
+            "path": "server/services/payables-journal.js"
+        },
+        {
+            "type": "route",
+            "name": "payables",
+            "path": "server/routes.js"
+        },
+        {
+            "type": "batch",
+            "path": "client/forms.json"
+        },
+        {
+            "type": "batch",
+            "path": "client/relations.json"
+        },
+        {
+            "type": "workbook",
+            "path": "client/workbooks.json"
+        },
+        {
+            "type": "batch",
+            "path": "client/data.json"
         }
     ]
 }
