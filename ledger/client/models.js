@@ -46,7 +46,8 @@
                     break;
                 case "D":
                     dt.setMonth(dt.getMonth() + 2);
-                    dt.setDate(terms.data.day.toJSON()).toDate();
+                    dt.setDate(terms.data.day.toJSON());
+                    dt = dt.toDate();
                     break;
                 }
                 d.dueDate(dt);
