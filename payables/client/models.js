@@ -28,10 +28,10 @@
     const postMixin = catalog.store().mixins().post;
 
      /**
-        Invoice model
+        Voucher model
     */
-    models.invoice = function (data, feather) {
-        feather = feather || catalog.getFeather("Invoice");
+    models.voucher = function (data, feather) {
+        feather = feather || catalog.getFeather("Voucher");
         var that = model(data, feather),
             mixinOrderHeader = catalog.store().mixins().orderHeader;
 
@@ -40,7 +40,7 @@
         return that;
     };
 
-    models.invoice.list = list("Invoice");
+    models.voucher.list = list("Voucher");
 
      /**
         Debit memo model

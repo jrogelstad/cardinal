@@ -31,7 +31,7 @@
     */
     function doPostCreditMemos(obj) {
         return new Promise(function (resolve, reject) {
-            obj.name = "postReceivables";
+            obj.name = "postBillSubledgers";
             obj.profile = {
                 feather: "CreditMemo",
                 freightDebitAccountType: "FreightOut",
@@ -60,7 +60,7 @@
     */
     function doPostCreditMemo(obj) {
         return new Promise(function (resolve, reject) {
-            obj.name = "postReceivable";
+            obj.name = "postBillSubledger";
             obj.feather = "CreditMemo";
             datasource.request(obj, true)
                 .then(resolve)
