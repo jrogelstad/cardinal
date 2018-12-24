@@ -233,23 +233,54 @@
             }
         }
     }, {
-        "method": "PUT",
-        "name": "saveSettings",
-        "user": "postgres",
+        "name": "Invoice",
+        "method": "POST",
+        "id": "eufxano4dugv",
         "data": {
-            "name": "receivablesSettings",
-            "data": {
-                "receivablesAccount": {
-                    "id":"ehpdd4vim8kw",
-                    "code":"120",
-                    "description":"Accounts Recievable"
+            "customer": {
+                "id": "brwlmg5fnsl"
+            },
+            "site": {
+                "id": "c0f47f26zb60"
+            },
+            "currency": {
+                "id": "4y9dtthuen7z"
+            },
+            "terms": {
+                "id": "a8nsiqa9fxp3"
+            },
+            "contact": {
+                "id": "ascarborough"
+            },
+            "billTo": {
+                "id": "nepgtnsbboab",
+                "street": "1076 Lancaster Ave.",
+                "city": "Downingtown",
+                "state": "PA",
+                "postalCode": "19335",
+                "country": "United States"
+            },
+            "freight": {
+                "currency": "USD",
+                "amount": 125.00
+            },
+            "status": "U",
+            "lines": [{
+                "id": "wbe6fd7j9t9s",
+                "item": {
+                    "id": "rx5mzee83c5l"
                 },
-                "revenueAccount": {
-                    "id":"sklbdyyrjpxk",
-                    "code":"320",
-                    "description":"Products Revenues"
+                "site": {
+                    "id": "c0f47f26zb60"
+                },
+                "ordered": 5,
+                "billed": 5,
+                "price": {
+                    "currency": "USD",
+                    "amount": 158.00
                 }
-            }
+            
+            }]
         }
     }
 ]

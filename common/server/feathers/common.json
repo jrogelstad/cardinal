@@ -452,7 +452,8 @@
             },
             "status": {
                 "description": "Order status",
-                "type": "string"
+                "type": "string",
+                "isRequired": true
             },
             "contact": {
                 "description": "Contact",
@@ -498,29 +499,25 @@
                 "type": "object",
                 "format": "money",
                 "isRequired": true,
-                "default": "money()",
                 "isReadOnly": true
             },
             "freight": {
                 "description": "Freight",
                 "type": "object",
                 "format": "money",
-                "isRequired": true,
-                "default": "money()"
+                "isRequired": true
             },
             "tax": {
                 "description": "Tax",
                 "type": "object",
                 "format": "money",
-                "isRequired": true,
-                "default": "money()"
+                "isRequired": true
             },
             "total": {
                 "description": "Total",
                 "type": "object",
                 "format": "money",
                 "isRequired": true,
-                "default": "money()",
                 "isReadOnly": true
             }
         }
@@ -562,15 +559,13 @@
                 "description": "Unit price",
                 "type": "object",
                 "format": "money",
-                "isRequired": true,
-                "default": "money()"
+                "isRequired": true
             },
             "extended": {
                 "description": "Extended price",
                 "type": "object",
                 "format": "money",
                 "isRequired": true,
-                "default": "money()",
                 "isReadOnly": true
             },
             "taxType": {
