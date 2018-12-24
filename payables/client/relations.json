@@ -1,0 +1,114 @@
+[{
+    "name": "RelationWidget",
+    "method": "POST",
+    "module": "Payables",
+    "id": "xqpbe9minok4",
+    "data": {
+        "name": "Vendor Category",
+        "description": "Vendor category relation wdiget",
+        "isActive": true,
+        "feather": "VendorCategory",
+        "valueProperty": "code",
+        "form": {
+            "id": "v5yjeltye4wz"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }
+        ]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "module": "Payables",
+    "id": "rtzs1ss33xzf",
+    "data": {
+        "name": "Vendor",
+        "description": "Vendor relation wdiget",
+        "isActive": true,
+        "feather": "Vendor",
+        "valueProperty": "code",
+        "labelProperty": "description",
+        "form": {
+            "id": "oaoblluldcwz"
+        },
+        "searchColumns": [{
+                "attr": "code"
+            }, {
+                "attr": "description"
+            }, {
+                "attr": "isActive"
+            }, {
+                "attr": "billTo.city"
+            }, {
+                "attr": "billTo.state"
+            }, {
+                "attr": "contact.fullName"
+            }
+        ]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "module": "Payables",
+    "id": "hjc0avcxcoh9",
+    "data": {
+        "name": "Voucher",
+        "description": "Voucher relation wdiget",
+        "isActive": true,
+        "feather": "Voucher",
+        "valueProperty": "number",
+        "form": {
+            "id": "tj5ix5pqul7l"
+        },
+        "searchColumns": [{
+                "attr": "number"
+            }, {
+                "attr": "billEntity.code"
+            }, {
+                "attr": "billEntity.description"
+            }, {
+                "attr": "total"
+            }, {
+                "attr": "status"
+            }, {
+                "attr": "dueDate"
+            }, {
+                "attr": "contact.fullName"
+            }
+        ]
+    }
+}, {
+    "name": "RelationWidget",
+    "method": "POST",
+    "id": "b32l4isyk2kh",
+    "module": "Payables",
+    "data": {
+        "name": "Debit Memo",
+        "description": "Debit memo relation wdiget",
+        "isActive": true,
+        "feather": "DebitMemo",
+        "valueProperty": "number",
+        "form": {
+            "id": "8rqy78n6song"
+        },
+        "searchColumns": [{
+                "attr": "number"
+            }, {
+                "attr": "billEntity.code"
+            }, {
+                "attr": "billEntity.description"
+            }, {
+                "attr": "total"
+            }, {
+                "attr": "status"
+            }, {
+                "attr": "dueDate"
+            }, {
+                "attr": "contact.fullName"
+            }
+        ]
+    }
+}]

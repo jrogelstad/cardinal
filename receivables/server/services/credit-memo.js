@@ -34,9 +34,9 @@
             obj.name = "postReceivables";
             obj.profile = {
                 feather: "CreditMemo",
-                freightDebitAccountType: "Freight",
+                freightDebitAccountType: "FreightOut",
                 freightCreditAccountType: "Receivables",
-                taxDebitAccountType: "Tax",
+                taxDebitAccountType: "TaxOut",
                 taxCreditAccountType: "Receivables",
                 itemDebitAccountType: "Revenue",
                 itemCreditAccountType: "Receivables"

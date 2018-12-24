@@ -177,13 +177,6 @@
         }
     },
     {
-        "name": "AccountsReceivable",
-        "plural": "AccountsReceivable",
-        "module": "Receivables",
-        "description": "Accounts receivable balance",
-        "inherits": "Node"
-    },
-    {
         "name": "ReceivablesJournal",
         "plural": "ReceivablesJournals",
         "module": "Receivables",

@@ -16,51 +16,58 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 /*global datasource, require, Promise*/
-/*jslint*/
+/*jslint this, es6*/
 (function (datasource) {
     "strict";
 
     /**
-      Post a series of receivables journals and update trial balance.
+      Post a series of vouchers and create journals.
 
       @param {Object} [payload] Payload.
       @param {Object} [payload.client] Database client.
-      @param {Object} [payload.data] Journal data
-      @param {Array} [payload.data.ids] Journal ids to post. Default = all.
+      @param {Object} [payload.data] Voucher data
+      @param {Array} [payload.data.ids] Voucher ids to post. Default = all.
       @param {Object} [payload.data.date] Post date. Default today.
     */
-    function doPostReceivablesJournals(obj) {
+    function doPostVouchers(obj) {
         return new Promise(function (resolve, reject) {
-            obj.name = "postJournals";
-            obj.feather = "ReceivablesJournal";
+            obj.name = "postBillSubledgers";
+            obj.profile = {
+                feather: "Voucher",
+                freightDebitAccountType: "Payables",
+                freightCreditAccountType: "FreightIn",
+                taxDebitAccountType: "Payables",
+                taxCreditAccountType: "TaxIn",
+                itemDebitAccountType: "Payables",
+                itemCreditAccountType: "Expenses"
+            };
             datasource.request(obj, true)
                 .then(resolve)
                 .catch(reject);
         });
     }
 
-    datasource.registerFunction("POST", "postReceivablesJournals", doPostReceivablesJournals);
+    datasource.registerFunction("POST", "postVouchers", doPostVouchers);
 
     /**
-      Post a receivables journal and update trial balance.
+      Post a voucher and create journal.
 
       @param {Object} [payload] Payload.
       @param {Object} [payload.client] Database client.
-      @param {Function} [payload.callback] callback.
-      @param {Object} [payload.data] Journal data
-      @param {Object} [payload.data.id] Journal id to post. Required
+      @param {Object} [payload.data] Voucher data
+      @param {Object} [payload.data.id] Voucher id to post. Required
       @param {Object} [payload.data.date] Post date. Default today.
     */
-    function doPostReceivablesJournal(obj) {
+    function doPostVoucher(obj) {
         return new Promise(function (resolve, reject) {
-            obj.name = "postJournal";
-            obj.feather = "ReceivablesJournal";
+            obj.name = "postBillSubledger";
+            obj.feather = "Voucher";
             datasource.request(obj, true)
                 .then(resolve)
                 .catch(reject);
         });
     }
 
-    datasource.registerFunction("POST", "postReceivablesJournal", doPostReceivablesJournal);
+    datasource.registerFunction("POST", "postVoucher", doPostVoucher);
 
 }(datasource));

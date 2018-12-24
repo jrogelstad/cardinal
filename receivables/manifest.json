@@ -13,11 +13,6 @@
         },
         {
             "type": "service",
-            "name": "receivables",
-            "path": "server/services/receivables.js"
-        },
-        {
-            "type": "service",
             "name": "invoice",
             "path": "server/services/invoice.js"
         },

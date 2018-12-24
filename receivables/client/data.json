@@ -27,15 +27,15 @@
     "method": "POST",
     "id": "eidmzloahqol",
     "data": {
-        "code": "Freight",
-        "description": "Shipping and handling revenue"
+        "code": "FreightOut",
+        "description": "Shipping and handling revenue for outbound freight"
     }
 }, {
     "name": "AccountMapType",
     "method": "POST",
     "id": "oj9vneq6bcfm",
     "data": {
-        "code": "Tax",
-        "description": "Tax revenue"
+        "code": "TaxOut",
+        "description": "Tax revenue for outbound shipments"
     }
 }]

@@ -31,7 +31,27 @@
     // Create bill subledger model
     models.billSubledger = function (data, feather) {
         feather = feather || catalog.getFeather("BillSubledger");
-        var that = model(data, feather);
+        var that = model(data, feather),
+            d = that.data;
+
+        that.onChanged("terms", function (prop) {
+            var dt,
+                terms = prop();
+
+            if (terms) {
+                dt = new Date(d.docDate());
+                switch (terms.data.policy()) {
+                case "N":
+                    dt.setDate(dt.getDate() + terms.data.net.toJSON());
+                    break;
+                case "D":
+                    dt.setMonth(dt.getMonth() + 2);
+                    dt.setDate(terms.data.day.toJSON()).toDate();
+                    break;
+                }
+                d.dueDate(dt);
+            }
+        });
 
         that.state().resolve("/Ready/Fetched/Clean").enter(function () {
             if (that.data.isPosted()) {

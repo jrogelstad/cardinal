@@ -21,7 +21,7 @@
     "strict";
 
     /**
-      Post a series of receivables journals and update trial balance.
+      Post a series of payables journals and update trial balance.
 
       @param {Object} [payload] Payload.
       @param {Object} [payload.client] Database client.
@@ -29,17 +29,17 @@
       @param {Array} [payload.data.ids] Journal ids to post. Default = all.
       @param {Object} [payload.data.date] Post date. Default today.
     */
-    function doPostReceivablesJournals(obj) {
+    function doPostPayablesJournals(obj) {
         return new Promise(function (resolve, reject) {
             obj.name = "postJournals";
-            obj.feather = "ReceivablesJournal";
+            obj.feather = "PayablesJournal";
             datasource.request(obj, true)
                 .then(resolve)
                 .catch(reject);
         });
     }
 
-    datasource.registerFunction("POST", "postReceivablesJournals", doPostReceivablesJournals);
+    datasource.registerFunction("POST", "postPayablesJournals", doPostPayablesJournals);
 
     /**
       Post a receivables journal and update trial balance.
@@ -51,16 +51,16 @@
       @param {Object} [payload.data.id] Journal id to post. Required
       @param {Object} [payload.data.date] Post date. Default today.
     */
-    function doPostReceivablesJournal(obj) {
+    function doPostPayablesJournal(obj) {
         return new Promise(function (resolve, reject) {
             obj.name = "postJournal";
-            obj.feather = "ReceivablesJournal";
+            obj.feather = "PayablesJournal";
             datasource.request(obj, true)
                 .then(resolve)
                 .catch(reject);
         });
     }
 
-    datasource.registerFunction("POST", "postReceivablesJournal", doPostReceivablesJournal);
+    datasource.registerFunction("POST", "postPayablesJournal", doPostPayablesJournal);
 
 }(datasource));

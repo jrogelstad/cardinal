@@ -31,13 +31,13 @@
     */
     function doPostInvoices(obj) {
         return new Promise(function (resolve, reject) {
-            obj.name = "postReceivables";
+            obj.name = "postBillSubledgers";
             obj.profile = {
                 feather: "Invoice",
                 freightDebitAccountType: "Receivables",
-                freightCreditAccountType: "Freight",
+                freightCreditAccountType: "FreightOut",
                 taxDebitAccountType: "Receivables",
-                taxCreditAccountType: "Tax",
+                taxCreditAccountType: "TaxOut",
                 itemDebitAccountType: "Receivables",
                 itemCreditAccountType: "Revenue"
             };
@@ -60,7 +60,7 @@
     */
     function doPostInvoice(obj) {
         return new Promise(function (resolve, reject) {
-            obj.name = "postReceivable";
+            obj.name = "postBillSubledger";
             obj.feather = "Invoice";
             datasource.request(obj, true)
                 .then(resolve)

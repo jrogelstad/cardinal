@@ -16,51 +16,58 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 /*global datasource, require, Promise*/
-/*jslint*/
+/*jslint this, es6*/
 (function (datasource) {
     "strict";
 
     /**
-      Post a series of receivables journals and update trial balance.
+      Post a series of debit memos and create journals.
 
       @param {Object} [payload] Payload.
       @param {Object} [payload.client] Database client.
-      @param {Object} [payload.data] Journal data
-      @param {Array} [payload.data.ids] Journal ids to post. Default = all.
+      @param {Object} [payload.data] Debit memo data
+      @param {Array} [payload.data.ids] Debit memo ids to post. Default = all.
       @param {Object} [payload.data.date] Post date. Default today.
     */
-    function doPostReceivablesJournals(obj) {
+    function doPostDebitMemos(obj) {
         return new Promise(function (resolve, reject) {
-            obj.name = "postJournals";
-            obj.feather = "ReceivablesJournal";
+            obj.name = "postBillSubledgers";
+            obj.profile = {
+                feather: "DebitMemo",
+                freightDebitAccountType: "FreightIn",
+                freightCreditAccountType: "Payables",
+                taxDebitAccountType: "TaxIn",
+                taxCreditAccountType: "Payables",
+                itemDebitAccountType: "Expenses",
+                itemCreditAccountType: "Payables"
+            };
             datasource.request(obj, true)
                 .then(resolve)
                 .catch(reject);
         });
     }
 
-    datasource.registerFunction("POST", "postReceivablesJournals", doPostReceivablesJournals);
+    datasource.registerFunction("POST", "postDebitMemos", doPostDebitMemos);
 
     /**
-      Post a receivables journal and update trial balance.
+      Post a debit memo and create journal.
 
       @param {Object} [payload] Payload.
       @param {Object} [payload.client] Database client.
-      @param {Function} [payload.callback] callback.
-      @param {Object} [payload.data] Journal data
-      @param {Object} [payload.data.id] Journal id to post. Required
+      @param {Object} [payload.data] Debit memo data
+      @param {Object} [payload.data.id] Debit memo id to post. Required
       @param {Object} [payload.data.date] Post date. Default today.
     */
-    function doPostReceivablesJournal(obj) {
+    function doPostDebitMemo(obj) {
         return new Promise(function (resolve, reject) {
-            obj.name = "postJournal";
-            obj.feather = "ReceivablesJournal";
+            obj.name = "postBillSubledger";
+            obj.feather = "DebitMemo";
             datasource.request(obj, true)
                 .then(resolve)
                 .catch(reject);
         });
     }
 
-    datasource.registerFunction("POST", "postReceivablesJournal", doPostReceivablesJournal);
+    datasource.registerFunction("POST", "postDebitMemo", doPostDebitMemo);
 
 }(datasource));

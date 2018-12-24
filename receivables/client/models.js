@@ -28,38 +28,6 @@
     const postMixin = catalog.store().mixins().post;
 
      /**
-        Receivable model
-    */
-    models.receivable = function (data, feather) {
-        feather = feather || catalog.getFeather("Receivable");
-        var that = model(data, feather),
-            d = that.data;
-
-        that.onChanged("terms", function (prop) {
-            var dt,
-                terms = prop();
-
-            if (terms) {
-                dt = new Date(d.docDate());
-                switch (terms.data.policy()) {
-                case "N":
-                    dt.setDate(dt.getDate() + terms.data.net.toJSON());
-                    break;
-                case "D":
-                    dt.setMonth(dt.getMonth() + 2);
-                    dt.setDate(terms.data.day.toJSON()).toDate();
-                    break;
-                }
-                d.dueDate(dt);
-            }
-        });
-
-        return that;
-    };
-
-    models.receivable.list = list("Invoice");
-
-     /**
         Invoice model
     */
     models.invoice = function (data, feather) {

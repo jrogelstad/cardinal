@@ -1,0 +1,33 @@
+[{
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "xcnxc754n1bo",
+    "data": {
+        "code": "Payables",
+        "description": "Accounts Payable"
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "deab6flk128s",
+    "data": {
+        "code": "Expenses",
+        "description": "Expenses"
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "5n1wn3d4kg2t",
+    "data": {
+        "code": "FreightIn",
+        "description": "Shipping and handling revenue for inbound shipments"
+    }
+}, {
+    "name": "AccountMapType",
+    "method": "POST",
+    "id": "2mtp3pbgxu76",
+    "data": {
+        "code": "TaxIn",
+        "description": "Tax revenue for inbound shipments"
+    }
+}]

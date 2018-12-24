@@ -1,59 +1,169 @@
-[ 
+[
+    {
+        "name": "VendorCategory",
+        "plural": "VendorCategories",
+        "module": "Common",
+        "description": "Vendor category",
+        "inherits": "Category",
+        "overloads": {
+            "parent": {
+                "type": {
+                    "relation": "VendorCategory",
+                    "properties": ["code", "description"]
+                }
+            }
+        }
+    },
     {
         "name": "Vendor",
         "plural": "Vendors",
         "module": "Payables",
         "description": "Vendor",
-        "inherits": "Kind",
-        "properties": {
-            "code": {
-                "description": "Vendor code",
-                "isReadOnly": true,
-                "type": "string",
-                "autonumber": {
-                    "prefix": "V",
-                    "sequence": "vendor_seq_num",
-                    "length": 5
-                },
-                "isUnique": true,
-                "inheritedFrom": "Kind"
+        "inherits": "BillEntity",
+        "overloads": {
+            "description": {
+                "alias": "name"
             },
-            "name": {
-                "description": "Vendor name",
-                "type": "string"
-            },
-            "billToAddress": {
-                "description": "Bill to Address",
-                "type": "string"
-            },
-            "shipToAddress": {
-                "description": "Ship to Address",
-                "type": "string"
-            },
-            "contact": {
-                "description": "Contact",
+            "category": {
+                "description": "Vendor category",
                 "type": {
-                  "relation": "Contact",
-                  "properties": ["fullName", "email", "phone", "address"]
+                    "relation": "VendorCategory"
                 }
-            },
-            "isActive": {
-                "description": "Active status",
-                "type": "boolean",
-                "default": true
             }
         }
     },
     {
-        "name": "AccountsPayable",
-        "plural": "AccountsPayable",
+        "name": "Payable",
+        "plural": "Payables",
         "module": "Payables",
-        "description": "Accounts payable subledger",
-        "inherits": "Node"
+        "description": "Payable subledger",
+        "inherits": "BillSubledger"
     },
     {
-        "name": "AccountsPayableJournal",
-        "plural": "AccountsPayableJournal",
+        "name": "PayableLine",
+        "module": "Payables",
+        "description": "Payable line",
+        "inherits": "OrderLine",
+        "properties": {
+            "billed": {
+                "description": "Quantity billed",
+                "type": "number",
+                "isRequired": true
+            }
+        }
+    },
+    {
+        "name": "Voucher",
+        "plural": "Vouchers",
+        "module": "Payables",
+        "inherits": "Payable",
+        "description": "Documentation for vendor invoices that increase accounts payable",
+        "properties": {
+            "number": {
+                "description": "Voucher number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "VCH",
+                    "sequence": "voucher_seq_num",
+                    "length": 5
+                },
+                "isUnique": true,
+                "inheritedFrom": "BillOrder"
+            },
+            "invoiceNumber": {
+                "description": "Vendor's invoice number",
+                "type": "string"
+            }
+        },
+        "overloads": {
+            "billEntity": {
+                "alias": "Vendor",
+                "type": {
+                    "relation": "Vendor",
+                    "properties": ["code", "description", "billTo",
+                        "currency", "terms", "taxType", "isActive"] 
+                },
+                "isRequired": true
+            },
+            "docDate": {
+                "alias": "invoiceDate"
+            }
+        }
+    },
+    {
+        "name": "VoucherLine",
+        "module": "Payables",
+        "description": "Voucher line",
+        "inherits": "PayableLine",
+        "properties": {
+            "parent": {
+              "description": "Parent voucher",
+              "type": {
+                    "relation": "Voucher",
+                    "childOf": "lines"
+                }
+            }
+        }
+    },
+    {
+        "name": "DebitMemo",
+        "plural": "DebitMemos",
+        "module": "Paybles",
+        "inherits": "Payable",
+        "description": "Reduces accounts payable typically a refund for a return",
+        "properties": {
+            "number": {
+                "description": "Debit memo number",
+                "isReadOnly": true,
+                "type": "string",
+                "autonumber": {
+                    "prefix": "DM",
+                    "sequence": "debit_memo_seq_num",
+                    "length": 5
+                },
+                "isUnique": true,
+                "inheritedFrom": "BillOrder"
+            }
+        },
+        "overloads": {
+            "billEntity": {
+                "alias": "vendor",
+                "type": {
+                    "relation": "Vendor",
+                    "properties": ["code", "description", "billTo",
+                        "currency", "terms", "taxType", "isActive"] 
+                },
+                "isRequired": true
+            },
+            "docDate": {
+                "alias": "memoDate"
+            }
+        }
+    },
+    {
+        "name": "DebitMemoLine",
+        "module": "Payables",
+        "description": "Payable line",
+        "inherits": "PayableLine",
+        "properties": {
+            "parent": {
+              "description": "Parent debit memo",
+              "type": {
+                    "relation": "DebitMemo",
+                    "childOf": "lines"
+                }
+            }
+        },
+        "overloads": {
+            "billed": {
+                "alias": "credited"
+            }
+        }
+    },
+    {
+        "name": "PayablesJournal",
+        "plural": "PayablesJournals",
         "module": "Payables",
         "description": "Accounts payable journal",
         "inherits": "Journal",
