@@ -166,7 +166,7 @@
         "plural": "PayablesJournals",
         "module": "Payables",
         "description": "Accounts payable journal",
-        "inherits": "Journal",
+        "inherits": "BillSubledgerJournal",
         "properties": {
             "number": {
                 "description": "Journal number",

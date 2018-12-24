@@ -229,6 +229,13 @@
         "inherits": "LedgerTransaction"
     },
     {
+        "name": "BillSubledgerJournal",
+        "plural": "BillSubledgerJournals",
+        "module": "Ledger",
+        "description": "Journal entries generated from billing subledgers",
+        "inherits": "Journal"
+    },
+    {
         "name": "GeneralJournal",
         "plural": "GeneralJournals",
         "module": "Ledger",

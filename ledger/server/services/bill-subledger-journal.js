@@ -20,17 +20,17 @@
 (function (datasource) {
     "strict";
 
-    function doBeforeDeleteBillSublegderJournal(obj) {
+    function doBeforeDeleteBillSubledgerJournal(obj) {
         return new Promise(function (resolve, reject) {
             var documents = [];
 
-
-            function getDocuments(name) {
+            function getDocumentIds() {
                 return new Promise(function (resolve, reject) {
                     var payload = {
                         method: "GET",
-                        name: name,
+                        name: "BillSubledger",
                         client: obj.client,
+                        properties: ["id", "objectType"],
                         filter: {
                             criteria: [{
                                 property: "journal.id",
@@ -40,13 +40,39 @@
                         }
                     };
 
-                    function callback(resp) {
-                        documents = documents.concat(resp);
-                        resolve();
-                    }
-
                     datasource.request(payload, true)
-                        .then(callback)
+                        .then(resolve)
+                        .catch(reject);
+                });
+            }
+
+            function getDocuments(resp) {
+                return new Promise(function (resolve, reject) {
+                    var requests = [];
+
+                    // Have to get documents by their respective object type
+                    // because only those include line items
+                    resp.forEach(function (row) {
+                        var payload = {
+                            method: "GET",
+                            name: row.objectType,
+                            client: obj.client,
+                            id: row.id
+                        };
+
+                        function callback(resp) {
+                            return new Promise(function (resolve) {
+                                documents.push(resp);
+                                resolve();
+                            });
+                        }
+
+                        requests.push(datasource.request(payload, true)
+                            .then(callback));
+                    });
+
+                    Promise.all(requests)
+                        .then(resolve)
                         .catch(reject);
                 });
             }
@@ -113,10 +139,9 @@
                 });
             }
 
-            Promise.all([
-                getDocuments("Invoice"),
-                getDocuments("CreditMemo")
-            ])
+            Promise.resolve()
+                .then(getDocumentIds)
+                .then(getDocuments)
                 .then(updateDocuments)
                 .then(resolve)
                 .catch(reject);

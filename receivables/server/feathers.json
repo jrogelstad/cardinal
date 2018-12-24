@@ -181,7 +181,7 @@
         "plural": "ReceivablesJournals",
         "module": "Receivables",
         "description": "Accounts receivable journal",
-        "inherits": "Journal",
+        "inherits": "BillSubledgerJournal",
         "properties": {
             "number": {
                 "description": "Journal number",
