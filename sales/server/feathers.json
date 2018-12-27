@@ -6,6 +6,24 @@
         "inherits": "ShipOrder",
         "description": "Sales order",
         "properties": {
+            "customer": {
+                "description": "Customer",
+                "type": {
+                    "relation": "Customer",
+                    "properties": ["code", "description", "billTo", "billToIsShipTo",
+                        "shipTo", "contact", "currency", "terms", "taxType", "site",
+                        "category"]
+                },
+                "isRequired": true
+            },
+            "billTo": {
+                "description": "Bill to address",
+                "type": {
+                    "relation": "Address",
+                    "properties": ["type", "street", "unit", "city",
+                        "state", "postalCode", "country"]
+                }
+            },
             "number": {
                 "description": "Sales order number",
                 "isReadOnly": true,
@@ -32,15 +50,6 @@
             }
         },
         "overloads": {
-            "billEntity": {
-                "alias": "customer",
-                "type": {
-                    "relation": "Customer",
-                    "properties": ["code", "description", "terms",
-                        "billTo", "shipTo", "isActive"] 
-                },
-                "isRequired": true
-            },
             "docDate": {
                 "alias": "orderDate"
             },

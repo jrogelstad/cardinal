@@ -13,9 +13,9 @@
             "columns": [{
               "attr": "number"
             }, {
-              "attr": "billEntity"
+              "attr": "customer"
             }, {
-              "attr": "billEntity.description"
+              "attr": "customer.description"
             }, {
               "attr": "docDate"
             }, {
