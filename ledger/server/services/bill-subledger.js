@@ -22,7 +22,119 @@
 
     const f = require("./common/core");
 
-    var doBeforeDeleteBillSubledger = function (obj) {
+    function calculateTotals(obj) {
+        return new Promise(function (resolve, reject) {
+            var data = obj.newRec;
+
+            if (!data.currency) {
+                throw "Currency is required for subledger";
+            }
+
+            function getCurrency() {
+                return new Promise(function (resolve, reject) {
+                    var payload = {
+                        method: "GET",
+                        name: "Currency",
+                        id: data.currency.id,
+                        client: obj.client
+                    };
+
+                    datasource.request(payload, true)
+                        .then(resolve)
+                        .catch(reject);
+                });
+            }
+
+            function calculate(currency) {
+                var lines;
+
+                if (!currency) {
+                    throw "Currency not found";
+                }
+
+                data.subtotal = {
+                    amount: 0,
+                    currency: currency.code
+                };
+
+                data.total = {
+                    amount: 0,
+                    currency: currency.code
+                };
+
+                if (!data.freight) {
+                    data.freight = {
+                        amount: 0,
+                        currency: currency.code
+                    };
+                }
+
+                if (!data.tax) {
+                    data.tax = {
+                        amount: 0,
+                        currency: currency.code
+                    };
+                }
+
+                // Exclude deleted
+                lines = data.lines.filter((line) => line !== undefined);
+                lines.forEach(function (line) {
+                    if (line.billed === undefined) {
+                        throw "Billed quantity is required.";
+                    }
+
+                    if (!line.price) {
+                        line.price = {
+                            amount: 0,
+                            currency: currency.code
+                        };
+                    }
+
+                    line.extended = {
+                        amount: 0,
+                        currency: currency.code
+                    };
+
+                    line.extended.amount = line.billed
+                        .times(line.price.amount)
+                        .round(data.currency.minorUnit);
+
+                    data.subtotal.amount = data.subtotal.amount
+                        .plus(line.extended.amount);
+                });
+
+                data.total.amount = data.freight.amount
+                    .plus(data.tax.amount)
+                    .plus(data.subtotal.amount);
+
+                resolve();
+            }
+
+            getCurrency()
+                .then(calculate)
+                .catch(reject);
+        });
+    }
+
+    datasource.registerFunction("POST", "BillSubledger", calculateTotals,
+            datasource.TRIGGER_BEFORE);
+
+    function doUpdateBillSubledeger(obj) {
+        return new Promise(function (resolve, reject) {
+            if (obj.oldRec.isPosted) {
+                throw new Error("Posted subledger may not be edited.");
+            }
+
+            calculateTotals(obj)
+                .then(resolve)
+                .catch(reject);
+        });
+    }
+
+    datasource.registerFunction("PATCH", "BillSubledger", doUpdateBillSubledeger,
+            datasource.TRIGGER_BEFORE);
+
+    function doBeforeDeleteBillSubledger(obj) {
         return new Promise(function (resolve) {
             if (obj.oldRec.isPosted) {
                 throw new Error("Can not delete a posted " + obj.oldRec.objectType);
@@ -30,7 +142,7 @@
 
             resolve();
         });
-    };
+    }
 
     datasource.registerFunction("DELETE", "BillSubledger",
             doBeforeDeleteBillSubledger, datasource.TRIGGER_BEFORE);
