@@ -12,14 +12,14 @@
         "actions": [{
           "name": "Post",
           "title": "Post selected unposted vouchers",
-          "icon": "thumbtack",
+          "icon": "thumb-tack",
           "method": "post",
           "authorization": "PostPayables",
           "validator": "postCheck"
         }, {
           "name": "Post all",
           "title": "Post all unposted vouchers",
-          "icon": "thumbtack",
+          "icon": "thumb-tack",
           "method": "postAll",
           "authorization": "PostPayables",
           "hasSeparator": true
