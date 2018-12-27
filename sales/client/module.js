@@ -34,13 +34,13 @@
             d = that.data,
             mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-        mixinOrderHeader(that);
+        mixinOrderHeader(that, "customer");
         
-        that.onChanged("billEntity", function () {
-            var billEntity = d.billEntity();
+        that.onChanged("customer", function () {
+            var customer = d.customer();
 
-            if (billEntity) {
-                d.shipTo(billEntity.data.shipTo());
+            if (customer) {
+                d.shipTo(customer.data.shipTo());
             }
         });
 
