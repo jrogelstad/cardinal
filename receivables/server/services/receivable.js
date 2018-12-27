@@ -44,6 +44,8 @@
             }
 
             function calculate(currency) {
+                var lines;
+
                 if (!currency) {
                     throw "Currency not found";
                 }
@@ -72,7 +74,9 @@
                     };
                 }
 
-                data.lines.forEach(function (line) {
+                // Exclude deleted
+                lines = data.lines.filter((line) => line !== undefined);
+                lines.forEach(function (line) {
                     if (line.billed === undefined) {
                         throw "Billed quantity is required.";
                     }
