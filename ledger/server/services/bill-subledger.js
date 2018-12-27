@@ -392,7 +392,10 @@
                                     distributions.push({
                                         account: debitAccount,
                                         debit: f.copy(money),
-                                        credit: f.money(0, money.currency)
+                                        credit: {
+                                            amount: 0,
+                                            currency: money.currency
+                                        }
                                     });
                                 }
 
@@ -406,7 +409,10 @@
                                 } else {
                                     distributions.push({
                                         account: creditAccount,
-                                        debit: f.money(0, money.currency),
+                                        debit: {
+                                            amount: 0,
+                                            currency: money.currency
+                                        },
                                         credit: f.copy(money)
                                     });
                                 }
