@@ -1,11 +1,11 @@
 {
     "module": "Inventory",
     "version": "0.0.1",
-    "dependencis": ["Ledger"],
+    "dependencies": ["Ledger"],
     "files": [
         {
             "type": "module",
-            "path": "client/models.js"
+            "path": "client/module.js"
         },
         {
             "type": "feather",

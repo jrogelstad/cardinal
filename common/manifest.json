@@ -1,10 +1,11 @@
 {
     "module": "Common",
     "version": "0.0.1",
+    "dependencies": ["Core"],
     "files": [
         {
             "type": "module",
-            "path": "client/models.js"
+            "path": "client/module.js"
         },
         {
             "type": "feather",

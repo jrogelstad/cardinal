@@ -5,7 +5,7 @@
     "files": [
         {
             "type": "module",
-            "path": "client/models.js"
+            "path": "client/module.js"
         }
     ]
 }
