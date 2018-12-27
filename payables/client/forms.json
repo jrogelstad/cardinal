@@ -154,7 +154,7 @@
             "columns": [{
                 "attr": "number",
                 "label": "#",
-                "width": "20px"
+                "width": "40px"
             }, {
                 "attr": "item",
                 "width": "200px"
@@ -292,7 +292,7 @@
             "columns": [{
                 "attr": "number",
                 "label": "#",
-                "width": "20px"
+                "width": "40px"
             }, {
                 "attr": "item",
                 "width": "200px"
