@@ -22,6 +22,11 @@
         },
         {
             "type": "service",
+            "name": "BillOrder",
+            "path": "server/services/bill-order.js"
+        },
+        {
+            "type": "service",
             "name": "Period",
             "path": "server/services/period.js"
         },
