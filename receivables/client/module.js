@@ -1,6 +1,6 @@
 /**
     Framework for building object relational database apps
-    Copyright (C) 2018  John Rogelstad
+    Copyright (C) 2019  John Rogelstad
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -15,111 +15,116 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*global require */
-/*jslint es6*/
-(function () {
-    "strict";
+/*jslint browser, this*/
+/*global f*/
 
-    const catalog = require("catalog");
-    const model = require("model");
-    const list = require("list");
-    const f = require("component-core");
-    const models = catalog.register("models");
-    const postMixin = catalog.store().mixins().post;
+const catalog = f.catalog();
+const store = catalog.store();
+const model = store.factories().model;
+const list = store.factories().list;
+const models = store.models();
+const postMixin = store.mixins().post;
 
-     /**
-        Invoice model
-    */
-    models.invoice = function (data, feather) {
-        feather = feather || catalog.getFeather("Invoice");
-        var that = model(data, feather),
-            mixinOrderHeader = catalog.store().mixins().orderHeader;
+ /**
+    Invoice model
+*/
+models.invoice = function (data, feather) {
+    "use strict";
 
-        mixinOrderHeader(that, "customer");
+    feather = feather || catalog.getFeather("Invoice");
+    let that = model(data, feather);
+    let mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-        return that;
-    };
+    mixinOrderHeader(that, "customer");
 
-    models.invoice.list = list("Invoice");
+    return that;
+};
 
-     /**
-        Credit memo model
-    */
-    models.creditMemo = function (data, feather) {
-        feather = feather || catalog.getFeather("CreditMemo");
-        var that = model(data, feather),
-            mixinOrderHeader = catalog.store().mixins().orderHeader;
+models.invoice.list = list("Invoice");
 
-        mixinOrderHeader(that, "customer");
+ /**
+    Credit memo model
+*/
+models.creditMemo = function (data, feather) {
+    "use strict";
 
-        return that;
-    };
+    feather = feather || catalog.getFeather("CreditMemo");
+    let that = model(data, feather);
+    let mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-    models.creditMemo.list = list("CreditMemo");
+    mixinOrderHeader(that, "customer");
 
-    /**
-        Receivable model
-    */
-    models.receivable = function (data, feather) {
-        feather = feather || catalog.getFeather("Receivable");
-        var that = model(data, feather),
-            d = that.data;
+    return that;
+};
 
-        that.onChanged("customer", function () {
-            var billTo,
-                customer = d.customer();
+models.creditMemo.list = list("CreditMemo");
 
-            if (customer) {
-                billTo = f.copy(customer.data.billTo.toJSON());
-                billTo.id = f.createId();
-                d.billTo(billTo);
-                d.site(customer.data.site());
-                d.contact(customer.data.contact());
-                d.currency(customer.data.currency());
-                d.terms(customer.data.terms());
-                d.taxType(customer.data.taxType());
-            }
-        });
+/**
+    Receivable model
+*/
+models.receivable = function (data, feather) {
+    "use strict";
 
-        return that;
-    };
+    feather = feather || catalog.getFeather("Receivable");
+    let that = model(data, feather);
+    let d = that.data;
 
-    models.receivable.list = list("Receivable");
+    that.onChanged("customer", function () {
+        let billTo;
+        let customer = d.customer();
 
-     /**
-        Receivable line model
-    */
-    models.receivableLine = function (data, feather) {
-        feather = feather || catalog.getFeather("ReceivableLine");
-        var that = model(data, feather),
-            d = that.data;
-
-        function calculateExtended() {
-            var currency = that.parent().data.currency().data.code(),
-                amount = d.billed.toJSON().times(d.price.toJSON().amount);
-
-            d.extended(f.money(amount, currency));
+        if (customer) {
+            billTo = f.copy(customer.data.billTo.toJSON());
+            billTo.id = f.createId();
+            d.billTo(billTo);
+            d.site(customer.data.site());
+            d.contact(customer.data.contact());
+            d.currency(customer.data.currency());
+            d.terms(customer.data.terms());
+            d.taxType(customer.data.taxType());
         }
+    });
 
-        that.onChanged("ordered", function () {
-            var ordered = d.ordered.toJSON();
+    return that;
+};
 
-            if (ordered > d.billed.toJSON()) {
-                d.billed(ordered);
-            }
-        });
+models.receivable.list = list("Receivable");
 
-        that.onChanged("billed", calculateExtended);
-        that.onChanged("price", calculateExtended);
+ /**
+    Receivable line model
+*/
+models.receivableLine = function (data, feather) {
+    "use strict";
 
-        return that;
-    };
+    feather = feather || catalog.getFeather("ReceivableLine");
+    let that = model(data, feather);
+    let d = that.data;
 
-    models.receivableLine.list = list("ReceivableLine");
+    function calculateExtended() {
+        let currency = that.parent().data.currency().data.code();
+        let amount = d.billed.toJSON().times(d.price.toJSON().amount);
 
-    // Add static post functions to models
-    postMixin("Invoice", "Receivables");
-    postMixin("CreditMemo", "Receivables");
-    postMixin("ReceivablesJournal", "Receivables");
+        d.extended(f.money(amount, currency));
+    }
 
-}());
+    that.onChanged("ordered", function () {
+        let ordered = d.ordered.toJSON();
+
+        if (ordered > d.billed.toJSON()) {
+            d.billed(ordered);
+        }
+    });
+
+    that.onChanged("billed", calculateExtended);
+    that.onChanged("price", calculateExtended);
+
+    return that;
+};
+
+models.receivableLine.list = list("ReceivableLine");
+
+// Add static post functions to models
+postMixin("Invoice", "Receivables");
+postMixin("CreditMemo", "Receivables");
+postMixin("ReceivablesJournal", "Receivables");
+

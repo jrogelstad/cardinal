@@ -463,7 +463,7 @@
                         };
 
                         function callback(resp) {
-                            jsonpatch.apply(transaction, resp);
+                            jsonpatch.applyPatch(transaction, resp);
                             resolve();
                         }
 

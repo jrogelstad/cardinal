@@ -148,7 +148,7 @@
                         };
 
                         function callback(resp) {
-                            jsonpatch.apply(resp, transaction);
+                            jsonpatch.applyPatch(resp, transaction);
                             resolve();
                         }
 

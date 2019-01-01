@@ -1,6 +1,6 @@
 /**
     Framework for building object relational database apps
-    Copyright (C) 2018  John Rogelstad
+    Copyright (C) 2019  John Rogelstad
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -15,111 +15,116 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*global require */
-/*jslint es6*/
-(function () {
-    "strict";
+/*jslint browser, this*/
+/*global f*/
 
-    const catalog = require("catalog");
-    const model = require("model");
-    const list = require("list");
-    const f = require("component-core");
-    const models = catalog.register("models");
-    const postMixin = catalog.store().mixins().post;
+const catalog = f.catalog();
+const store = catalog.store();
+const model = store.factories().model;
+const list = store.factories().list;
+const models = store.models();
+const postMixin = store.mixins().post;
 
-     /**
-        Voucher model
-    */
-    models.voucher = function (data, feather) {
-        feather = feather || catalog.getFeather("Voucher");
-        var that = model(data, feather),
-            mixinOrderHeader = catalog.store().mixins().orderHeader;
+ /**
+    Voucher model
+*/
+models.voucher = function (data, feather) {
+    "use strict";
 
-        mixinOrderHeader(that, "vendor");
+    feather = feather || catalog.getFeather("Voucher");
+    let that = model(data, feather);
+    let mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-        return that;
-    };
+    mixinOrderHeader(that, "vendor");
 
-    models.voucher.list = list("Voucher");
+    return that;
+};
 
-     /**
-        Debit memo model
-    */
-    models.debitMemo = function (data, feather) {
-        feather = feather || catalog.getFeather("CreditMemo");
-        var that = model(data, feather),
-            mixinOrderHeader = catalog.store().mixins().orderHeader;
+models.voucher.list = list("Voucher");
 
-        mixinOrderHeader(that, "vendor");
+ /**
+    Debit memo model
+*/
+models.debitMemo = function (data, feather) {
+    "use strict";
 
-        return that;
-    };
+    feather = feather || catalog.getFeather("CreditMemo");
+    let that = model(data, feather);
+    let mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-    models.debitMemo.list = list("DebitMemo");
+    mixinOrderHeader(that, "vendor");
 
-    /**
-        Payable model
-    */
-    models.payable = function (data, feather) {
-        feather = feather || catalog.getFeather("Payable");
-        var that = model(data, feather),
-            d = that.data;
+    return that;
+};
 
-        that.onChanged("vendor", function () {
-            var remitTo,
-                vendor = d.vendor();
+models.debitMemo.list = list("DebitMemo");
 
-            if (vendor) {
-                remitTo = f.copy(vendor.data.remitTo.toJSON());
-                remitTo.id = f.createId();
-                d.remitTo(remitTo);
-                d.site(vendor.data.site());
-                d.contact(vendor.data.contact());
-                d.currency(vendor.data.currency());
-                d.terms(vendor.data.terms());
-                d.taxType(vendor.data.taxType());
-            }
-        });
+/**
+    Payable model
+*/
+models.payable = function (data, feather) {
+    "use strict";
 
-        return that;
-    };
+    feather = feather || catalog.getFeather("Payable");
+    let that = model(data, feather);
+    let d = that.data;
 
-    models.payable.list = list("Payable");
+    that.onChanged("vendor", function () {
+        let remitTo;
+        let vendor = d.vendor();
 
-     /**
-        Payable line model
-    */
-    models.payableLine = function (data, feather) {
-        feather = feather || catalog.getFeather("PayableLine");
-        var that = model(data, feather),
-            d = that.data;
-
-        function calculateExtended() {
-            var currency = that.parent().data.currency().data.code(),
-                amount = d.billed.toJSON().times(d.price.toJSON().amount);
-
-            d.extended(f.money(amount, currency));
+        if (vendor) {
+            remitTo = f.copy(vendor.data.remitTo.toJSON());
+            remitTo.id = f.createId();
+            d.remitTo(remitTo);
+            d.site(vendor.data.site());
+            d.contact(vendor.data.contact());
+            d.currency(vendor.data.currency());
+            d.terms(vendor.data.terms());
+            d.taxType(vendor.data.taxType());
         }
+    });
 
-        that.onChanged("ordered", function () {
-            var ordered = d.ordered.toJSON();
+    return that;
+};
 
-            if (ordered > d.billed.toJSON()) {
-                d.billed(ordered);
-            }
-        });
+models.payable.list = list("Payable");
 
-        that.onChanged("billed", calculateExtended);
-        that.onChanged("price", calculateExtended);
+ /**
+    Payable line model
+*/
+models.payableLine = function (data, feather) {
+    "use strict";
 
-        return that;
-    };
+    feather = feather || catalog.getFeather("PayableLine");
+    let that = model(data, feather);
+    let d = that.data;
 
-    models.payableLine.list = list("PayableLine");
+    function calculateExtended() {
+        let currency = that.parent().data.currency().data.code();
+        let amount = d.billed.toJSON().times(d.price.toJSON().amount);
 
-    // Add static post functions to models
-    postMixin("Voucher", "Payables");
-    postMixin("DebitMemo", "Payables");
-    postMixin("PayablesJournal", "Payables");
+        d.extended(f.money(amount, currency));
+    }
 
-}());
+    that.onChanged("ordered", function () {
+        let ordered = d.ordered.toJSON();
+
+        if (ordered > d.billed.toJSON()) {
+            d.billed(ordered);
+        }
+    });
+
+    that.onChanged("billed", calculateExtended);
+    that.onChanged("price", calculateExtended);
+
+    return that;
+};
+
+models.payableLine.list = list("PayableLine");
+
+// Add static post functions to models
+postMixin("Voucher", "Payables");
+postMixin("DebitMemo", "Payables");
+postMixin("PayablesJournal", "Payables");
+

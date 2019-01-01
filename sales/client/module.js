@@ -1,6 +1,6 @@
 /**
     Framework for building object relational database apps
-    Copyright (C) 2018  John Rogelstad
+    Copyright (C) 2019  John Rogelstad
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -15,69 +15,70 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*global require */
-/*jslint es6*/
-(function () {
-    "strict";
+/*jslint browser, this*/
+/*global f*/
 
-    const catalog = require("catalog");
-    const model = require("model");
-    const list = require("list");
-    const models = catalog.register("models");
+const catalog = f.catalog();
+const store = catalog.store();
+const model = store.factories().model;
+const list = store.factories().list;
+const models = store.models();
 
-     /**
-        Sales order model
-    */
-    models.salesOrder = function (data, feather) {
-        feather = feather || catalog.getFeather("SalesOrder");
-        var that = model(data, feather),
-            d = that.data,
-            mixinOrderHeader = catalog.store().mixins().orderHeader;
+ /**
+    Sales order model
+*/
+models.salesOrder = function (data, feather) {
+    "use strict";
 
-        mixinOrderHeader(that, "customer");
-        
-        that.onChanged("customer", function () {
-            var customer = d.customer();
+    feather = feather || catalog.getFeather("SalesOrder");
+    let that = model(data, feather);
+    let d = that.data;
+    let mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-            if (customer) {
-                d.shipTo(customer.data.shipTo());
+    mixinOrderHeader(that, "customer");
+
+    that.onChanged("customer", function () {
+        let customer = d.customer();
+
+        if (customer) {
+            d.shipTo(customer.data.shipTo());
+        }
+    });
+
+    that.onChanged("lines", function () {
+        let promiseDate = d.promiseDate();
+
+        d.lines().some(function (line) {
+            if (!line.data.promiseDate()) {
+                return line.data.promiseDate(promiseDate);
             }
         });
+    });
 
-        that.onChanged("lines", function () {
-            var count,
-                promiseDate = d.promiseDate();
+    return that;
+};
 
-            d.lines().some(function (line) {
-                if (!line.data.promiseDate()) {
-                    return line.data.promiseDate(promiseDate);
-                }
-            });
-        });
+models.salesOrder.list = list("SalesOrder");
 
-        return that;
-    };
+ /**
+    Sales order line model
+*/
+models.salesOrderLine = function (data, feather) {
+    "use strict";
 
-    models.salesOrder.list = list("SalesOrder");
+    feather = feather || catalog.getFeather("SalesOrderLine");
+    let that = model(data, feather);
+    let d = that.data;
 
-     /**
-        Sales order line model
-    */
-    models.salesOrderLine = function (data, feather) {
-        feather = feather || catalog.getFeather("SalesOrderLine");
-        var that = model(data, feather),
-            d = that.data;
+    that.onChanged("ordered", function () {
+        let currency = that.parent().data.currency().data.code();
+        let amount = d.ordered.toJSON().times(d.price.toJSON().amount);
 
-        that.onChanged("ordered", function () {
-            var currency = that.parent().data.currency().data.code(),
-                amount = d.ordered.toJSON().times(d.price.toJSON().amount);
+        d.extended(f.money(amount, currency));
+    });
 
-            d.extended(f.money(amount, currency));
-        });
+    return that;
+};
 
-        return that;
-    };
+models.salesOrderLine.list = list("SalesOrderLine");
 
-    models.salesOrderLine.list = list("SalesOrderLine");
-
-}());
