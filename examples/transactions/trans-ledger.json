@@ -7,7 +7,7 @@
             "currency": {
                 "id": "4y9dtthuen7z"
             },
-            "date": "2018-05-01",
+            "date": "2019-05-01",
             "note": "Test Posting2",
             "distributions": [
             {
@@ -57,7 +57,7 @@
         "user": "postgres",
         "data": {
             "id": "g6m2a2vajq5",
-            "date": "2018-05-01"
+            "date": "2019-05-01"
         }
     }
 ]
