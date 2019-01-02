@@ -16,7 +16,7 @@
                     "suffix": "SFX"
                 },
                 "isReadOnly": true,
-                "isUnique": true
+                "isNaturalKey": true
             },
             "amount": {
                 "description": "Estimated sales amount",

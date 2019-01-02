@@ -15,12 +15,13 @@
             "code": {
                 "description": "Natural key",
                 "type": "string",
-                "isUnique": true,
+                "isNaturalKey": true,
                 "isRequired": true
             },
             "description": {
                 "description": "Description",
-                "type": "string"
+                "type": "string",
+                "isLabelKey": true
             },
             "note": {
                 "description": "Note",
@@ -230,7 +231,7 @@
             "number": {
               "description": "Transaction number",
               "type": "string",
-              "isUnique": true,
+              "isNaturalKey": true,
               "isRequired": true
             },
             "parent": {

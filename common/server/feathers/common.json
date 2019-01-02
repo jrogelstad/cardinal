@@ -13,7 +13,8 @@
             },
             "description": {
                 "description": "Description",
-                "type": "string"
+                "type": "string",
+                "isLabelKey": true
             },
             "startDate": {
                 "description": "Start date",
@@ -272,7 +273,7 @@
                 "description": "Code",
                 "type": "string",
                 "isRequired": true,
-                "isUnique": true
+                "isNaturalKey": true
             },
             "policy": {
                 "description": "Date calculation policy",
@@ -346,11 +347,12 @@
                 "description": "Code",
                 "type": "string",
                 "isRequired": true,
-                "isUnique": true
+                "isNaturalKey": true
             },
             "description": {
                 "description": "Description",
-                "type": "string"
+                "type": "string",
+                "isLabelKey": true
             },
             "isActive": {
                 "description": "Active status",
@@ -441,7 +443,7 @@
             "number": {
                 "description": "Order number",
                 "type": "string",
-                "isUnique": true
+                "isNaturalKey": true
             },
             "docDate": {
                 "description": "Document date",

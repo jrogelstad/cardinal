@@ -128,7 +128,7 @@
                     "sequence": "invoice_seq_num",
                     "length": 5
                 },
-                "isUnique": true,
+                "isNaturalKey": true,
                 "inheritedFrom": "BillOrder"
             }
         },
@@ -169,7 +169,7 @@
                     "sequence": "credit_memo_seq_num",
                     "length": 5
                 },
-                "isUnique": true,
+                "isNaturalKey": true,
                 "inheritedFrom": "BillOrder"
             }
         },
@@ -215,7 +215,7 @@
                     "sequence": "ar_seq_num",
                     "length": 5
                 },
-                "isUnique": true,
+                "isNaturalKey": true,
                 "inheritedFrom": "Journal"
             }
         }

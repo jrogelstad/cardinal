@@ -30,7 +30,7 @@
                     "sequence": "invtrans_seq_num",
                     "length": 5
                 },
-                "isUnique": true,
+                "isNaturalKey": true,
                 "inheritedFrom": "Transaction"
             }
         }
@@ -51,7 +51,7 @@
                     "sequence": "in_seq_num",
                     "length": 5
                 },
-                "isUnique": true,
+                "isNaturalKey": true,
                 "inheritedFrom": "Journal"
             }
         }

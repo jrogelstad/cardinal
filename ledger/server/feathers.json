@@ -168,7 +168,7 @@
                     "sequence": "gj_seq_num",
                     "length": 5
                 },
-                "isUnique": true
+                "isNaturalKey": true
             },
             "reference": {
                 "description": "Reference to source document",
@@ -259,7 +259,7 @@
                     "sequence": "gl_seq_num",
                     "length": 5
                 },
-                "isUnique": true,
+                "isNaturalKey": true,
                 "inheritedFrom": "Transaction"
             },
             "parent": {
