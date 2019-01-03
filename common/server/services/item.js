@@ -1,6 +1,6 @@
 /**
     Framework for building object relational database apps
-    Copyright (C) 2018  John Rogelstad
+    Copyright (C) 2019  John Rogelstad
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -15,64 +15,74 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*global datasource, require, Promise*/
-/*jslint es6*/
-(function (datasource) {
-    "strict";
+/*jslint browser*/
+/*global f*/
 
-    const f = require("./common/core");
+/**
+  Item handler
+*/
+function doHandleItem(obj) {
+    "use strict";
 
-    /**
-      Item handler
-    */
-    function doHandleItem(obj) {
-        return new Promise(function (resolve) {
-            var found, oldSiteId, newSiteId,
-                    newRec = obj.newRec,
-                    oldRec = obj.oldRec;
+    return new Promise(function (resolve) {
+        let found;
+        let oldSiteId;
+        let newSiteId;
+        let newRec = obj.newRec;
+        let oldRec = obj.oldRec;
 
-            newRec.sites = Array.isArray(newRec.sites)
-                ? newRec.sites
-                : [];
+        newRec.sites = (
+            Array.isArray(newRec.sites)
+            ? newRec.sites
+            : []
+        );
 
-            if (oldRec && oldRec.site) {
-                oldSiteId = oldRec.site.id;
-            }
+        if (oldRec && oldRec.site) {
+            oldSiteId = oldRec.site.id;
+        }
 
-            if (newRec && newRec.site.id) {
-                newSiteId = newRec.site.id;
-            }
+        if (newRec && newRec.site.id) {
+            newSiteId = newRec.site.id;
+        }
 
-            if (!oldRec || oldSiteId !== newSiteId) {
-                newRec.sites.forEach(function (row) {
-                    row.isPrimary = false;
-                });
+        if (!oldRec || oldSiteId !== newSiteId) {
+            newRec.sites.forEach(function (row) {
+                row.isPrimary = false;
+            });
 
-                if (newRec.site) {
-                    found = newRec.sites.find((row) => row.site.id === newRec.site.id);
+            if (newRec.site) {
+                found = newRec.sites.find(
+                    (row) => row.site.id === newRec.site.id
+                );
 
-                    if (found) {
-                        found.isPrimary = true;
-                    } else {
-                        newRec.sites.push({
-                            id: f.createId(),
-                            site: {
-                                id: newRec.site.id
-                            },
-                            isPrimary: true
-                        });
-                    }
+                if (found) {
+                    found.isPrimary = true;
+                } else {
+                    newRec.sites.push({
+                        id: f.createId(),
+                        site: {
+                            id: newRec.site.id
+                        },
+                        isPrimary: true
+                    });
                 }
             }
+        }
 
-            resolve();
-        });
-    }
+        resolve();
+    });
+}
 
-    datasource.registerFunction("POST", "Item", doHandleItem,
-            datasource.TRIGGER_BEFORE);
+f.datasource.registerFunction(
+    "POST",
+    "Item",
+    doHandleItem,
+    f.datasource.TRIGGER_BEFORE
+);
 
-    datasource.registerFunction("PATCH", "Item", doHandleItem,
-            datasource.TRIGGER_BEFORE);
-
-}(datasource));
+f.datasource.registerFunction(
+    "PATCH",
+    "Item",
+    doHandleItem,
+    f.datasource.TRIGGER_BEFORE
+);

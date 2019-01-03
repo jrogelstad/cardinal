@@ -1,6 +1,6 @@
 /**
     Framework for building object relational database apps
-    Copyright (C) 2018  John Rogelstad
+    Copyright (C) 2019  John Rogelstad
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -15,140 +15,154 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*global datasource, require, Promise*/
-/*jslint*/
-(function (datasource) {
-    "strict";
+/*jslint browser*/
+/*global f*/
 
-    function doBeforeDeleteBillSubledgerJournal(obj) {
-        return new Promise(function (resolve, reject) {
-            var documents = [];
+function doBeforeDeleteBillSubledgerJournal(obj) {
+    "use strict";
 
-            function getDocumentIds() {
-                return new Promise(function (resolve, reject) {
-                    var payload = {
+    return new Promise(function (resolve, reject) {
+        let documents = [];
+
+        function getDocumentIds() {
+            return new Promise(function (resolve, reject) {
+                let payload = {
+                    method: "GET",
+                    name: "BillSubledger",
+                    client: obj.client,
+                    properties: ["id", "objectType"],
+                    filter: {
+                        criteria: [{
+                            property: "journal.id",
+                            operator: "=",
+                            value: obj.id
+                        }]
+                    }
+                };
+
+                f.datasource.request(payload, true).then(
+                    resolve
+                ).catch(
+                    reject
+                );
+            });
+        }
+
+        function getDocuments(resp) {
+            return new Promise(function (resolve, reject) {
+                let requests = [];
+
+                // Have to get documents by their respective object type
+                // because only those include line items
+                resp.forEach(function (row) {
+                    let payload = {
                         method: "GET",
-                        name: "BillSubledger",
+                        name: row.objectType,
                         client: obj.client,
-                        properties: ["id", "objectType"],
-                        filter: {
-                            criteria: [{
-                                property: "journal.id",
-                                operator: "=",
-                                value: obj.id
-                            }]
-                        }
+                        id: row.id
                     };
 
-                    datasource.request(payload, true)
-                        .then(resolve)
-                        .catch(reject);
+                    function callback(resp) {
+                        return new Promise(function (resolve) {
+                            documents.push(resp);
+                            resolve();
+                        });
+                    }
+
+                    requests.push(f.datasource.request(payload, true).then(
+                        callback
+                    ));
                 });
-            }
 
-            function getDocuments(resp) {
-                return new Promise(function (resolve, reject) {
-                    var requests = [];
+                Promise.all(requests).then(resolve).catch(reject);
+            });
+        }
 
-                    // Have to get documents by their respective object type
-                    // because only those include line items
-                    resp.forEach(function (row) {
-                        var payload = {
-                            method: "GET",
-                            name: row.objectType,
+        function updateDocuments() {
+            return new Promise(function (resolve, reject) {
+                let requests = [];
+
+                // Update all documents to pre-posted state
+                documents.forEach(function (doc) {
+                    if (doc.status === "C") {
+                        throw (
+                            "Journal can not be deleted because related " +
+                            "document" + doc.number + " is closed."
+                        );
+                    }
+
+                    if (doc.balance.amount !== doc.total.amount) {
+                        throw (
+                            "Journal can not be deleted because related " +
+                            "document" + doc.number + " has payment history."
+                        );
+                    }
+
+                    doc.status = "U";
+                    doc.isPosted = false;
+                    doc.postedDate = null;
+                    doc.balance.amount = 0;
+                    doc.balance.baseAmount = null;
+                    doc.balance.effective = null;
+                    doc.baseBalance.amount = 0;
+                    doc.baseBalance.baseAmount = null;
+                    doc.baseBalance.effective = null;
+                    doc.freight.baseAmount = null;
+                    doc.freight.effective = null;
+                    doc.tax.baseAmount = null;
+                    doc.tax.effective = null;
+                    doc.subtotal.baseAmount = null;
+                    doc.subtotal.effective = null;
+                    doc.total.baseAmount = null;
+                    doc.total.effective = null;
+                    doc.journal = null;
+
+                    doc.lines.forEach(function (line) {
+                        line.price.baseAmount = null;
+                        line.price.effective = null;
+                        line.extended.baseAmount = null;
+                        line.extended.effective = null;
+                    });
+
+                    // Request update of document
+                    requests.push(new Promise(function (resolve, reject) {
+                        let payload = {
+                            method: "POST",
+                            name: doc.objectType,
                             client: obj.client,
-                            id: row.id
+                            id: doc.id,
+                            data: doc
                         };
 
-                        function callback(resp) {
-                            return new Promise(function (resolve) {
-                                documents.push(resp);
-                                resolve();
-                            });
-                        }
-
-                        requests.push(datasource.request(payload, true)
-                            .then(callback));
-                    });
-
-                    Promise.all(requests)
-                        .then(resolve)
-                        .catch(reject);
+                        f.datasource.request(payload, true).then(
+                            resolve
+                        ).catch(
+                            reject
+                        );
+                    }));
                 });
-            }
 
-            function updateDocuments() {
-                return new Promise(function (resolve, reject) {
-                    var requests = [];
+                Promise.all(requests).then(resolve).catch(reject);
+            });
+        }
 
-                    // Update all documents to pre-posted state
-                    documents.forEach(function (doc) {
-                        if (doc.status === "C") {
-                            throw "Journal can not be deleted because related document" + doc.number + " is closed.";
-                        }
+        Promise.resolve().then(
+            getDocumentIds
+        ).then(
+            getDocuments
+        ).then(
+            updateDocuments
+        ).then(
+            resolve
+        ).catch(
+            reject
+        );
+    });
+}
 
-                        if (doc.balance.amount !== doc.total.amount) {
-                            throw "Journal can not be deleted because related document" + doc.number + " has payment history.";
-                        }
-
-                        doc.status = "U";
-                        doc.isPosted = false;
-                        doc.postedDate = null;
-                        doc.balance.amount = 0;
-                        doc.balance.baseAmount = null;
-                        doc.balance.effective = null;
-                        doc.baseBalance.amount = 0;
-                        doc.baseBalance.baseAmount = null;
-                        doc.baseBalance.effective = null;
-                        doc.freight.baseAmount = null;
-                        doc.freight.effective = null;
-                        doc.tax.baseAmount = null;
-                        doc.tax.effective = null;
-                        doc.subtotal.baseAmount = null;
-                        doc.subtotal.effective = null;
-                        doc.total.baseAmount = null;
-                        doc.total.effective = null;
-                        doc.journal = null;
-
-                        doc.lines.forEach(function (line) {
-                            line.price.baseAmount = null;
-                            line.price.effective = null;
-                            line.extended.baseAmount = null;
-                            line.extended.effective = null;
-                        });
-
-                        // Request update of document
-                        requests.push(new Promise(function (resolve, reject) {
-                            var payload = {
-                                method: "POST",
-                                name: doc.objectType,
-                                client: obj.client,
-                                id: doc.id,
-                                data: doc
-                            };
-
-                            datasource.request(payload, true)
-                                .then(resolve)
-                                .catch(reject);
-                        }));
-                    });
-
-                    Promise.all(requests)
-                        .then(resolve)
-                        .catch(reject);
-                });
-            }
-
-            Promise.resolve()
-                .then(getDocumentIds)
-                .then(getDocuments)
-                .then(updateDocuments)
-                .then(resolve)
-                .catch(reject);
-        });
-    }
-
-    datasource.registerFunction("DELETE", "BillSubledgerJournal", doBeforeDeleteBillSubledgerJournal,
-            datasource.TRIGGER_BEFORE);
-
-}(datasource));
+f.datasource.registerFunction(
+    "DELETE",
+    "BillSubledgerJournal",
+    doBeforeDeleteBillSubledgerJournal,
+    f.datasource.TRIGGER_BEFORE
+);

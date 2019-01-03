@@ -1,6 +1,6 @@
 /**
     Framework for building object relational database apps
-    Copyright (C) 2018  John Rogelstad
+    Copyright (C) 2019  John Rogelstad
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -15,71 +15,83 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*global datasource, require, Promise*/
-/*jslint*/
-(function (datasource) {
-    "strict";
+/*jslint browser*/
+/*global f*/
 
-    /**
-      Terms handler
-    */
-    function doHandleTerms(obj) {
-        return new Promise(function (resolve) {
-            var newRec = obj.newRec;
+/**
+  Terms handler
+*/
+function doHandleTerms(obj) {
+    "use strict";
 
-            if (!newRec.depositAmount) {
-                throw new Error("Deposit money object is required on terms.");
+    return new Promise(function (resolve) {
+        let newRec = obj.newRec;
+
+        if (!newRec.depositAmount) {
+            throw new Error("Deposit money object is required on terms.");
+        }
+
+        if (!newRec.day > 31) {
+            throw new Error("Day can not be greater than 31.");
+        }
+
+        switch (newRec.policy) {
+        case "P":
+            newRec.net = 0;
+            newRec.day = 1;
+            newRec.discountDays = 0;
+            newRec.discount = 0;
+            newRec.isDepositRequired = true;
+            newRec.depositPercent = 100;
+            newRec.depositAmount.amount = 0;
+            break;
+        case "I":
+            newRec.net = 0;
+            newRec.day = 1;
+            newRec.discountDays = 0;
+            newRec.discount = 0;
+            break;
+        case "N":
+            newRec.day = 1;
+            break;
+        case "D":
+            newRec.net = 0;
+            newRec.discountDays = 0;
+            newRec.discount = 0;
+            break;
+        default:
+            throw new Error("Invalid terms policy.");
+        }
+
+        if (newRec.isDepositRequired) {
+            if (
+                newRec.depositPercent === 0 &&
+                newRec.depositAmount.amount === 0
+            ) {
+                throw new Error(
+                    "Deposit percent or amount must be positive when " +
+                    "deposit required."
+                );
             }
+        } else {
+            newRec.depositPercent = 0;
+            newRec.depositAmount.amount = 0;
+        }
 
-            if (!newRec.day > 31) {
-                throw new Error("Day can not be greater than 31.");
-            }
+        resolve();
+    });
+}
 
-            switch (newRec.policy) {
-            case "P":
-                newRec.net = 0;
-                newRec.day = 1;
-                newRec.discountDays = 0;
-                newRec.discount = 0;
-                newRec.isDepositRequired = true;
-                newRec.depositPercent = 100;
-                newRec.depositAmount.amount = 0;
-                break;
-            case "I":
-                newRec.net = 0;
-                newRec.day = 1;
-                newRec.discountDays = 0;
-                newRec.discount = 0;
-                break;
-            case "N":
-                newRec.day = 1;
-                break;
-            case "D":
-                newRec.net = 0;
-                newRec.discountDays = 0;
-                newRec.discount = 0;
-                break;
-            default:
-                throw new Error("Invalid terms policy.");
-            }
+f.datasource.registerFunction(
+    "POST",
+    "Terms",
+    doHandleTerms,
+    f.datasource.TRIGGER_BEFORE
+);
 
-            if (newRec.isDepositRequired) {
-                if (newRec.depositPercent === 0 && newRec.depositAmount.amount === 0) {
-                    throw new Error("Deposit percent or amount must be positive when deposit required.");
-                }
-            } else {
-                newRec.depositPercent = 0;
-                newRec.depositAmount.amount = 0;
-            }
-
-            resolve();
-        });
-    }
-
-    datasource.registerFunction("POST", "Terms", doHandleTerms,
-            datasource.TRIGGER_BEFORE);
-
-    datasource.registerFunction("PATCH", "Terms", doHandleTerms,
-            datasource.TRIGGER_BEFORE);
-
-}(datasource));
+f.datasource.registerFunction(
+    "PATCH",
+    "Terms",
+    doHandleTerms,
+    f.datasource.TRIGGER_BEFORE
+);
