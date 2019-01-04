@@ -1,6 +1,6 @@
 /**
     Framework for building object relational database apps
-    Copyright (C) 2018  John Rogelstad
+    Copyright (C) 2019  John Rogelstad
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -15,332 +15,384 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*global datasource, Promise*/
-/*jslint white*/
-(function (datasource) {
-  "strict";
+/*jslint browser*/
+/*global f*/
 
-  var doAfterInsertLedgerAccount = function (obj) {
-    return new Promise (function (resolve, reject) {
-      var periods, prev, currency,
-        account = obj.newRec,
-        period = null;
+function doAfterInsertLedgerAccount(obj) {
+    "use strict";
 
-      function createTrialBalance () {
-        return new Promise (function (resolve, reject) {
-          var payload;
+    return new Promise(function (resolve, reject) {
+        let periods;
+        let prev;
+        let currency;
+        let account = obj.newRec;
+        let period = null;
 
-          if (!periods.length) {
-            resolve();
-            return;
-          }
+        function createTrialBalance() {
+            return new Promise(function (resolve, reject) {
+                let payload;
 
-          prev = period;
-          period = periods.shift();
-          payload = {
-            method: "POST",
-            name: "TrialBalance",
-            client: obj.client,
-            data: {
-              code: account.code + " - " + period.name,
-              currency: currency,
-              parent: account,
-              period: period,
-              previous: prev,
-              balance: {
-                  currency: currency.code,
-                  amount: 0
-              },
-              debits: {
-                  currency: currency.code,
-                  amount: 0
-              },
-              credits: {
-                  currency: currency.code,
-                  amount: 0
-              }
-            }     
-          };
-
-          Promise.resolve()
-            .then(datasource.request.bind(null, payload, true))
-            .then(createTrialBalance)
-            .then(resolve)
-            .catch(reject);
-        });
-      }
-
-      var getCurrency = new Promise (function (resolve, reject) {
-        var payload = {
-            method: "GET",
-            name: "Currency",
-            client: obj.client,
-            filter: {
-              criteria: [{
-                property: "isBase",
-                value: true
-              }]
-            }
-          };
-
-        function callback (resp) {
-          if (!resp.length) {
-            reject("No base currency found");
-            return;
-          }
-
-          currency = resp[0];
-          resolve();
-        }
-
-        datasource.request(payload, true)
-          .then(callback)
-          .catch(reject);
-      });
-
-      var getFiscalPeriod = new Promise (function (resolve, reject) {
-        var payload = {
-            method: "GET",
-            name: "FiscalPeriod",
-            client: obj.client,
-            filter: {
-              order: [{property: "start"}]
-            }
-          };
-
-        function callback (resp) {
-          periods = resp;
-          resolve();
-        }
-
-        datasource.request(payload, true)
-          .then(callback)
-          .catch(reject);
-      });
-
-      function updateParent (parent) {
-        return new Promise (function (resolve, reject) {
-          if (!parent) {
-            reject("Parent not found.");
-            return;
-          }
-
-          if (parent.isUsed) {
-            reject("Account used in transactions may not become a parent.");
-            return;
-          }
-
-          var payload = {
-            method: "POST",
-            name: "LedgerAccount",
-            client: obj.client,
-            id: parent.id,
-            data: parent  
-          };
-
-          if (!parent.isParent) {
-            parent.isParent = true;
-
-            datasource.request(payload, true)
-              .then(resolve)
-              .catch(reject);
-
-            return;
-          }
-
-          resolve();
-        });
-      }
-
-      function getParent () {
-        return new Promise (function (resolve, reject) {
-          if (account.parent &&
-              account.parent.id !== undefined && 
-              account.parent.id !== null) {
-            var payload = {
-                method: "GET",
-                name: "LedgerAccount",
-                client: obj.client,
-                id: account.parent.id
-              };
-
-            datasource.request(payload, true)
-              .then(updateParent)
-              .then(resolve)
-              .catch(reject);
-
-            return;
-          }
-
-          resolve();
-        });
-      }
-
-      Promise.all([
-          getCurrency,
-          getFiscalPeriod
-        ])
-        .then(createTrialBalance)
-        .then(getParent)
-        .then(resolve)
-        .catch(reject);
-    });
-  };
-
-  datasource.registerFunction("POST", "LedgerAccount",
-    doAfterInsertLedgerAccount, datasource.TRIGGER_AFTER);
-
-  var doBeforeDeleteLedgerAccount = function (obj) {
-    return new Promise (function (resolve, reject) {
-      var parentId;
-
-      function checkAccount () {
-        return new Promise (function (resolve) {
-            if (obj.oldRec.isParent) {
-              throw new Error("Can not delete a parent account.");
-            }
-
-            if (obj.oldRec.isUsed) {
-              throw new Error("Can not delete a ledger account that has been used.");
-            }
-
-            if (obj.oldRec.parent !== null) {
-              parentId = obj.oldRec.parent.id;
-            }
-
-            resolve();
-        });
-      }
-
-      function getChildren () {
-        return new Promise (function (resolve, reject) {
-          if (parentId) {
-            var payload = {
-                method: "GET",
-                name: "LedgerAccount",
-                client: obj.client,
-                properties: ["id"],
-                filter: {
-                  criteria: [{
-                    property: "parent.id",
-                    value: parentId
-                  },
-                  {
-                    property: "id",
-                    operator: "!=",
-                    value: obj.id
-                  }]
+                if (!periods.length) {
+                    resolve();
+                    return;
                 }
-              };
 
-            datasource.request(payload, true)
-              .then(resolve)
-              .catch(reject);
+                prev = period;
+                period = periods.shift();
+                payload = {
+                    method: "POST",
+                    name: "TrialBalance",
+                    client: obj.client,
+                    data: {
+                        code: account.code + " - " + period.name,
+                        currency: currency,
+                        parent: account,
+                        period: period,
+                        previous: prev,
+                        balance: {
+                            currency: currency.code,
+                            amount: 0
+                        },
+                        debits: {
+                            currency: currency.code,
+                            amount: 0
+                        },
+                        credits: {
+                            currency: currency.code,
+                            amount: 0
+                        }
+                    }
+                };
 
-            return;
-          }
+                Promise.resolve().then(
+                    f.datasource.request.bind(null, payload, true)
+                ).then(
+                    createTrialBalance
+                ).then(
+                    resolve
+                ).catch(
+                    reject
+                );
+            });
+        }
 
-          resolve();
-        });
-      }
-
-      function getParent (children) {
-        return new Promise (function (resolve, reject) {
-          if (!children.length) {
-            var payload = {
+        let getCurrency = new Promise(function (resolve, reject) {
+            let payload = {
                 method: "GET",
-                name: "LedgerAccount",
+                name: "Currency",
                 client: obj.client,
-                id: parentId
-              };
-
-            datasource.request(payload, true)
-              .then(resolve)
-              .catch(reject);
-
-            return;
-          }
-
-          resolve();
-        });
-      }
-
-      function updateParent (parent) {
-        return new Promise (function (resolve, reject) {
-          if (!parent) {
-            resolve();
-            return;
-          }
-
-          var payload = {
-            method: "POST",
-            name: "LedgerAccount",
-            client: obj.client,
-            id: parentId,
-            data: parent  
-          };
-
-          parent.isParent = false;
-
-          datasource.request(payload, true)
-            .then(resolve)
-            .catch(reject);
-        });
-      }
-
-      function getTrialBalance () {
-        return new Promise (function (resolve, reject) {
-          var payload = {
-              method: "GET",
-              name: "TrialBalance",
-              client: obj.client,
-              properties: ["id"],
-              filter: {
-                criteria: [{
-                  property: "parent.id",
-                  value: obj.id
-                }]
-              }  
+                filter: {
+                    criteria: [{
+                        property: "isBase",
+                        value: true
+                    }]
+                }
             };
 
-          datasource.request(payload, true)
-            .then(resolve)
-            .catch(reject);
-        });
-      }
+            function callback(resp) {
+                if (!resp.length) {
+                    reject("No base currency found");
+                    return;
+                }
 
-      function deleteTrialBalance (trialBalances) {
-        return new Promise (function (resolve, reject) {
-          var requests = trialBalances.map(function (balance) {
-            var payload = {
-              method: "DELETE",
-              name: "TrialBalance",
-              client: obj.client,
-              id: balance.id  
+                currency = resp[0];
+                resolve();
+            }
+
+            f.datasource.request(payload, true).then(
+                callback
+            ).catch(
+                reject
+            );
+        });
+
+        let getFiscalPeriod = new Promise(function (resolve, reject) {
+            let payload = {
+                method: "GET",
+                name: "FiscalPeriod",
+                client: obj.client,
+                filter: {
+                    order: [{
+                        property: "start"
+                    }]
+                }
             };
 
-            return datasource.request(payload, true);
-          });
+            function callback(resp) {
+                periods = resp;
+                resolve();
+            }
 
-          Promise.all(requests)
-            .then(resolve)
-            .catch(reject);
+            f.datasource.request(payload, true).then(
+                callback
+            ).catch(
+                reject
+            );
         });
-      }
 
-      Promise.resolve()
-        .then(checkAccount)
-        .then(getChildren)
-        .then(getParent)
-        .then(updateParent)
-        .then(getTrialBalance)
-        .then(deleteTrialBalance)
-        .then(resolve)
-        .catch(reject);
+        function updateParent(parent) {
+            return new Promise(function (resolve, reject) {
+                if (!parent) {
+                    reject("Parent not found.");
+                    return;
+                }
+
+                if (parent.isUsed) {
+                    reject(
+                        "Account used in transactions may not become a parent."
+                    );
+                    return;
+                }
+
+                let payload = {
+                    method: "POST",
+                    name: "LedgerAccount",
+                    client: obj.client,
+                    id: parent.id,
+                    data: parent
+                };
+
+                if (!parent.isParent) {
+                    parent.isParent = true;
+
+                    f.datasource.request(payload, true).then(
+                        resolve
+                    ).catch(
+                        reject
+                    );
+
+                    return;
+                }
+
+                resolve();
+            });
+        }
+
+        function getParent() {
+            return new Promise(function (resolve, reject) {
+                if (
+                    account.parent &&
+                    account.parent.id !== undefined &&
+                    account.parent.id !== null
+                ) {
+                    let payload = {
+                        method: "GET",
+                        name: "LedgerAccount",
+                        client: obj.client,
+                        id: account.parent.id
+                    };
+
+                    f.datasource.request(payload, true).then(
+                        updateParent
+                    ).then(
+                        resolve
+                    ).catch(
+                        reject
+                    );
+
+                    return;
+                }
+
+                resolve();
+            });
+        }
+
+        Promise.all([
+            getCurrency,
+            getFiscalPeriod
+        ]).then(
+            createTrialBalance
+        ).then(
+            getParent
+        ).then(
+            resolve
+        ).catch(
+            reject
+        );
     });
-  };
+}
 
-  datasource.registerFunction("DELETE", "LedgerAccount",
-    doBeforeDeleteLedgerAccount, datasource.TRIGGER_BEFORE);
+f.datasource.registerFunction(
+    "POST",
+    "LedgerAccount",
+    doAfterInsertLedgerAccount,
+    f.datasource.TRIGGER_AFTER
+);
 
-}(datasource));
+function doBeforeDeleteLedgerAccount(obj) {
+    "use strict";
+
+    return new Promise(function (resolve, reject) {
+        let parentId;
+
+        function checkAccount() {
+            return new Promise(function (resolve) {
+                if (obj.oldRec.isParent) {
+                    throw new Error("Can not delete a parent account.");
+                }
+
+                if (obj.oldRec.isUsed) {
+                    throw new Error(
+                        "Can not delete a ledger account that has been used."
+                    );
+                }
+
+                if (obj.oldRec.parent !== null) {
+                    parentId = obj.oldRec.parent.id;
+                }
+
+                resolve();
+            });
+        }
+
+        function getChildren() {
+            return new Promise(function (resolve, reject) {
+                if (parentId) {
+                    let payload = {
+                        method: "GET",
+                        name: "LedgerAccount",
+                        client: obj.client,
+                        properties: ["id"],
+                        filter: {
+                            criteria: [
+                                {
+                                    property: "parent.id",
+                                    value: parentId
+                                },
+                                {
+                                    property: "id",
+                                    operator: "!=",
+                                    value: obj.id
+                                }
+                            ]
+                        }
+                    };
+
+                    f.datasource.request(payload, true).then(
+                        resolve
+                    ).catch(
+                        reject
+                    );
+
+                    return;
+                }
+
+                resolve();
+            });
+        }
+
+        function getParent(children) {
+            return new Promise(function (resolve, reject) {
+                if (!children.length) {
+                    let payload = {
+                        method: "GET",
+                        name: "LedgerAccount",
+                        client: obj.client,
+                        id: parentId
+                    };
+
+                    f.datasource.request(payload, true).then(
+                        resolve
+                    ).catch(
+                        reject
+                    );
+
+                    return;
+                }
+
+                resolve();
+            });
+        }
+
+        function updateParent(parent) {
+            return new Promise(function (resolve, reject) {
+                if (!parent) {
+                    resolve();
+                    return;
+                }
+
+                let payload = {
+                    method: "POST",
+                    name: "LedgerAccount",
+                    client: obj.client,
+                    id: parentId,
+                    data: parent
+                };
+
+                parent.isParent = false;
+
+                f.datasource.request(payload, true).then(
+                    resolve
+                ).catch(
+                    reject
+                );
+            });
+        }
+
+        function getTrialBalance() {
+            return new Promise(function (resolve, reject) {
+                let payload = {
+                    method: "GET",
+                    name: "TrialBalance",
+                    client: obj.client,
+                    properties: ["id"],
+                    filter: {
+                        criteria: [{
+                            property: "parent.id",
+                            value: obj.id
+                        }]
+                    }
+                };
+
+                f.datasource.request(payload, true).then(
+                    resolve
+                ).catch(
+                    reject
+                );
+            });
+        }
+
+        function deleteTrialBalance(trialBalances) {
+            return new Promise(function (resolve, reject) {
+                let requests = trialBalances.map(function (balance) {
+                    let payload = {
+                        method: "DELETE",
+                        name: "TrialBalance",
+                        client: obj.client,
+                        id: balance.id
+                    };
+
+                    return f.datasource.request(payload, true);
+                });
+
+                Promise.all(requests).then(resolve).catch(reject);
+            });
+        }
+
+        Promise.resolve().then(
+            checkAccount
+        ).then(
+            getChildren
+        ).then(
+            getParent
+        ).then(
+            updateParent
+        ).then(
+            getTrialBalance
+        ).then(
+            deleteTrialBalance
+        ).then(
+            resolve
+        ).catch(
+            reject
+        );
+    });
+}
+
+f.datasource.registerFunction(
+    "DELETE",
+    "LedgerAccount",
+    doBeforeDeleteLedgerAccount,
+    f.datasource.TRIGGER_BEFORE
+);
+
