@@ -132,6 +132,7 @@
         "name": "LedgerTransaction",
         "plural": "LedgerTransactions",
         "module": "Ledger",
+        "inherits": "Document",
         "description": "Abstract ledger transactions",
         "properties": {
             "currency": {
