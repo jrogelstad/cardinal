@@ -16,9 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 /*jslint browser*/
-/*global f, require*/
-
-const jsonpatch = require("fast-json-patch");
+/*global f*/
 
 /**
   Journal delete handler
@@ -519,7 +517,7 @@ function doPostJournals(obj) {
                     };
 
                     function callback(resp) {
-                        jsonpatch.applyPatch(transaction, resp);
+                        f.jsonpatch.applyPatch(transaction, resp);
                         resolve();
                     }
 

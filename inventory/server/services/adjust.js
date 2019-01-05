@@ -16,9 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 /*jslint browser, this*/
-/*global f, require*/
-
-const jsonpatch = require("fast-json-patch");
+/*global f*/
 
 // Register database procedure on f.datasource
 let doAdjust = function (obj) {
@@ -155,7 +153,7 @@ let doAdjust = function (obj) {
                     };
 
                     function callback(resp) {
-                        jsonpatch.applyPatch(resp, transaction);
+                        f.jsonpatch.applyPatch(resp, transaction);
                         resolve();
                     }
 

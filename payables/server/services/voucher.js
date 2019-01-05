@@ -42,11 +42,11 @@ function doPostVouchers(obj) {
             itemDebitAccountType: "Payables",
             itemCreditAccountType: "Expenses"
         };
-        datasource.request(obj, true).then(resolve).catch(reject);
+        f.datasource.request(obj, true).then(resolve).catch(reject);
     });
 }
 
-datasource.registerFunction("POST", "postVouchers", doPostVouchers);
+f.datasource.registerFunction("POST", "postVouchers", doPostVouchers);
 
 /**
   Post a voucher and create journal.
@@ -63,8 +63,8 @@ function doPostVoucher(obj) {
     return new Promise(function (resolve, reject) {
         obj.name = "postBillSubledger";
         obj.feather = "Voucher";
-        datasource.request(obj, true).then(resolve).catch(reject);
+        f.datasource.request(obj, true).then(resolve).catch(reject);
     });
 }
 
-datasource.registerFunction("POST", "postVoucher", doPostVoucher);
+f.datasource.registerFunction("POST", "postVoucher", doPostVoucher);

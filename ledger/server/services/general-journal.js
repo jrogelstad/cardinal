@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 /*jslint browser*/
-/*global f, require*/
+/*global f*/
 
 /**
   Post a series of journals and update trial balance.
