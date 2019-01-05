@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "65zqg8dj3dxq",
+        "data": {
+            "module": "payables",
+            "path": "/post/voucher",
+            "function": "postVoucher"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "hx2cpham96jj",
+        "data": {
+            "module": "payables",
+            "path": "/post/vouchers",
+            "function": "postVouchers"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "qm051n3hhsba",
+        "data": {
+            "module": "payables",
+            "path": "/post/debit-memo",
+            "function": "postDebitMemo"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "befax4dy3m24",
+        "data": {
+            "module": "payables",
+            "path": "/post/debit-memos",
+            "function": "postDebitMemos"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "51i6svdbvyy0",
+        "data": {
+            "module": "payables",
+            "path": "/post/payables-journal",
+            "function": "postPayablesJournal"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "eoajz52r5z2f",
+        "data": {
+            "module": "payables",
+            "path": "/post/payables-journals",
+            "function": "postPayablesJournals"
+        }
+    }
+]

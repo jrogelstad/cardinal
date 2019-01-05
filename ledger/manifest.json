@@ -51,9 +51,8 @@
             "path": "server/services/ledger-transaction.js"
         },
         {
-            "type": "route",
-            "name": "Ledger",
-            "path": "server/routes.js"
+            "type": "batch",
+            "path": "server/routes.json"
         },
         {
             "type": "batch",

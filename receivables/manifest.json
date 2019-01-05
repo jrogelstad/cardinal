@@ -27,9 +27,8 @@
             "path": "server/services/receivables-journal.js"
         },
         {
-            "type": "route",
-            "name": "receivables",
-            "path": "server/routes.js"
+            "type": "batch",
+            "path": "server/routes.json"
         },
         {
             "type": "batch",

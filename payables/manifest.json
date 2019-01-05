@@ -27,9 +27,8 @@
             "path": "server/services/payables-journal.js"
         },
         {
-            "type": "route",
-            "name": "payables",
-            "path": "server/routes.js"
+            "type": "batch",
+            "path": "server/routes.json"
         },
         {
             "type": "batch",

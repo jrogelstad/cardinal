@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "e0hu0y9u44xb",
+        "data": {
+            "module": "ledger",
+            "path": "/post/general-journal",
+            "function": "postGeneralJournal"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "dchfnrtplptf",
+        "data": {
+            "module": "ledger",
+            "path": "/post/general-journals",
+            "function": "postGeneralJournals"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "ytqn7hwnj23c",
+        "data": {
+            "module": "ledger",
+            "path": "/close-fiscal-period",
+            "function": "closeFiscalPeriod"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "h76lekk46ugj",
+        "data": {
+            "module": "ledger",
+            "path": "/open-fiscal-period",
+            "function": "openFiscalPeriod"
+        }
+    }
+]

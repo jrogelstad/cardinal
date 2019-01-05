@@ -17,9 +17,8 @@
             "path": "server/services/adjust.js"
         },
         {
-            "type": "route",
-            "name": "Inventory",
-            "path": "server/routes.js"
+            "type": "batch",
+            "path": "server/routes.json"
         },
         {
             "type": "workbook",

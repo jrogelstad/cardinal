@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "hpuyz2sbmztc",
+        "data": {
+            "module": "inventory",
+            "path": "/adjust",
+            "function": "doAdjust"
+        }
+    }
+]

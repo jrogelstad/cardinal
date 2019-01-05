@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "dndamgng90c0",
+        "data": {
+            "module": "receivables",
+            "path": "/post/invoice",
+            "function": "postInvoice"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "emscfa80azo6",
+        "data": {
+            "module": "receivables",
+            "path": "/post/invoices",
+            "function": "postInvoices"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "s78l8bhqf0p7",
+        "data": {
+            "module": "receivables",
+            "path": "/post/credit-memo",
+            "function": "postCreditMemo"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "cb0bgfxs172x",
+        "data": {
+            "module": "receivables",
+            "path": "/post/credit-memos",
+            "function": "postCreditMemos"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "ga7so23fplmp",
+        "data": {
+            "module": "receivables",
+            "path": "/post/receivables-journal",
+            "function": "postReceivablesJournal"
+        }
+    },
+    {
+        "name": "Route",
+        "method": "POST",
+        "id": "cxr09kl1a3td",
+        "data": {
+            "module": "receivables",
+            "path": "/post/receivables-journals",
+            "function": "postReceivablesJournals"
+        }
+    }
+]
