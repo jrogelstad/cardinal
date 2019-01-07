@@ -3,7 +3,7 @@
     "name": "Pipeline",
     "module": "CRM",
     "launchConfig": {
-      "icon": "line-chart"
+      "icon": "chart-line"
     },
     "defaultConfig": [
     {

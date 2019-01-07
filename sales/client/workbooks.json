@@ -3,7 +3,7 @@
     "name": "Sell",
     "module": "Sales",
     "launchConfig": {
-      "icon": "dollar"
+      "icon": "dollar-sign"
     },
     "defaultConfig": [{
         "name": "Orders",

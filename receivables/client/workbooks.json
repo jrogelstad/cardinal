@@ -3,7 +3,7 @@
     "name": "Collect",
     "module": "Receivables",
     "launchConfig": {
-      "icon": "sign-in"
+      "icon": "sign-in-alt"
     },
     "defaultConfig": [{
         "name": "Invoices",
