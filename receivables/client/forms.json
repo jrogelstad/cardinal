@@ -227,6 +227,32 @@
 }, {
     "name": "Form",
     "method": "POST",
+    "id": "puqoqyhmb3y5",
+    "module": "Receivables",
+    "data": {
+        "name": "Invoice Line",
+        "description": "Invoice line form",
+        "module": "Receivables",
+        "feather": "InvoiceLine",
+        "attrs": [{
+            "attr": "number"
+        }, {
+            "attr": "item"
+        }, {
+            "attr": "site"
+        }, {
+            "attr": "ordered"
+        }, {
+            "attr": "billed"
+        }, {
+            "attr": "price"
+        }, {
+            "attr": "extended"
+        }]
+    }
+}, {
+    "name": "Form",
+    "method": "POST",
     "id": "ou8n7jkilm",
     "module": "Receivables",
     "data": {
