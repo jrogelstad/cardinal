@@ -45,10 +45,6 @@
             "path": "client/forms.json"
         },
         {
-            "type": "batch",
-            "path": "client/relations.json"
-        },
-        {
             "type": "workbook",
             "path": "client/workbooks.json"
         }

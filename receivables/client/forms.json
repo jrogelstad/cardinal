@@ -1,25 +1,6 @@
 [{
     "name": "Form",
     "method": "POST",
-    "id": "p4fycrkhbfmv",
-    "data": {
-        "name": "Customer Category",
-        "description": "Customer Category form",
-        "module": "Receivables",
-        "feather": "CustomerCategory",
-        "attrs": [{
-            "attr": "code",
-            "grid": 0,
-            "unit": 0
-        }, {
-            "attr": "description",
-            "grid": 0,
-            "unit": 0
-        }]
-    }
-}, {
-    "name": "Form",
-    "method": "POST",
     "module": "Receivables",
     "id": "nkwmnrfy874f",
     "data": {

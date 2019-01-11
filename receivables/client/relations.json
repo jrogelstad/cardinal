@@ -2,27 +2,6 @@
     "name": "RelationWidget",
     "method": "POST",
     "module": "Receivables",
-    "id": "jubpqd8we2xx",
-    "data": {
-        "name": "Customer Category",
-        "description": "Customer category relation wdiget",
-        "isActive": true,
-        "feather": "CustomerCategory",
-        "valueProperty": "code",
-        "form": {
-            "id": "p4fycrkhbfmv"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }
-        ]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "module": "Receivables",
     "id": "5za0lefbzqmc",
     "data": {
         "name": "Customer",

@@ -2,27 +2,6 @@
     "name": "RelationWidget",
     "method": "POST",
     "module": "Payables",
-    "id": "xqpbe9minok4",
-    "data": {
-        "name": "Vendor Category",
-        "description": "Vendor category relation wdiget",
-        "isActive": true,
-        "feather": "VendorCategory",
-        "valueProperty": "code",
-        "form": {
-            "id": "v5yjeltye4wz"
-        },
-        "searchColumns": [{
-                "attr": "code"
-            }, {
-                "attr": "description"
-            }
-        ]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "module": "Payables",
     "id": "rtzs1ss33xzf",
     "data": {
         "name": "Vendor",

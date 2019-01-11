@@ -87,7 +87,8 @@
             "name": {
                 "description": "Name",
                 "type": "string",
-                "isRequired": true
+                "isRequired": true,
+                "isNaturalKey": true
             },
             "start": {
                 "description": "Start date",

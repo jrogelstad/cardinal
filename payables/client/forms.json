@@ -1,25 +1,6 @@
 [{
     "name": "Form",
     "method": "POST",
-    "id": "v5yjeltye4wz",
-    "data": {
-        "name": "Vendor Category",
-        "description": "Vendor Category form",
-        "module": "Payables",
-        "feather": "VendorCategory",
-        "attrs": [{
-            "attr": "code",
-            "grid": 0,
-            "unit": 0
-        }, {
-            "attr": "description",
-            "grid": 0,
-            "unit": 0
-        }]
-    }
-}, {
-    "name": "Form",
-    "method": "POST",
     "module": "Payables",
     "id": "oaoblluldcwz",
     "data": {
