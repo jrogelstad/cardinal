@@ -4,15 +4,12 @@
     "module": "Receivables",
     "id": "5za0lefbzqmc",
     "data": {
-        "name": "Customer",
+        "name": "CustomerRelation",
         "description": "Customer relation wdiget",
         "isActive": true,
         "feather": "Customer",
         "valueProperty": "code",
         "labelProperty": "description",
-        "form": {
-            "id": "nkwmnrfy874f"
-        },
         "searchColumns": [{
                 "attr": "code"
             }, {
@@ -23,68 +20,6 @@
                 "attr": "billTo.city"
             }, {
                 "attr": "billTo.state"
-            }, {
-                "attr": "contact.fullName"
-            }
-        ]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "module": "Receivables",
-    "id": "yld45y4gpmep",
-    "data": {
-        "name": "Invoice",
-        "description": "Invoice relation wdiget",
-        "isActive": true,
-        "feather": "Invoice",
-        "valueProperty": "number",
-        "form": {
-            "id": "f0qy22oqet16"
-        },
-        "searchColumns": [{
-                "attr": "number"
-            }, {
-                "attr": "billEntity.code"
-            }, {
-                "attr": "billEntity.description"
-            }, {
-                "attr": "total"
-            }, {
-                "attr": "status"
-            }, {
-                "attr": "dueDate"
-            }, {
-                "attr": "contact.fullName"
-            }
-        ]
-    }
-}, {
-    "name": "RelationWidget",
-    "method": "POST",
-    "id": "b32l4isyk2kh",
-    "module": "Receivables",
-    "data": {
-        "name": "Credit Memo",
-        "description": "Credit memo relation wdiget",
-        "isActive": true,
-        "feather": "CreditMemo",
-        "valueProperty": "number",
-        "form": {
-            "id": "ou8n7jkilm"
-        },
-        "searchColumns": [{
-                "attr": "number"
-            }, {
-                "attr": "billEntity.code"
-            }, {
-                "attr": "billEntity.description"
-            }, {
-                "attr": "total"
-            }, {
-                "attr": "status"
-            }, {
-                "attr": "dueDate"
             }, {
                 "attr": "contact.fullName"
             }

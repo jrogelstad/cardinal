@@ -96,7 +96,10 @@
         }, {
             "attr": "vendor",
             "grid": 0,
-            "unit": 0
+            "unit": 0,
+            "relationWidget": {
+                "id": "rtzs1ss33xzf"
+            }
         }, {
             "attr": "invoiceNumber",
             "grid": 0,
@@ -230,7 +233,10 @@
         }, {
             "attr": "vendor",
             "grid": 0,
-            "unit": 0
+            "unit": 0,
+            "relationWidget": {
+                "id": "rtzs1ss33xzf"
+            }
         }, {
             "attr": "reference",
             "grid": 0,

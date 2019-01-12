@@ -33,7 +33,10 @@
         }, {
             "attr": "customer",
             "grid": 0,
-            "unit": 0
+            "unit": 0,
+            "relationWidget": {
+                "id": "5za0lefbzqmc"
+            }
         }, {
             "attr": "status",
             "grid": 0,

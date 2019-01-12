@@ -32,11 +32,11 @@
         },
         {
             "type": "batch",
-            "path": "client/forms.json"
+            "path": "client/relations.json"
         },
         {
             "type": "batch",
-            "path": "client/relations.json"
+            "path": "client/forms.json"
         },
         {
             "type": "workbook",
