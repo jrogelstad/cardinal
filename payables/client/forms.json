@@ -138,33 +138,33 @@
             "columns": [{
                 "attr": "number",
                 "label": "#",
-                "width": "40px"
+                "width" : 40
             }, {
                 "attr": "item",
-                "width": "200px"
+                "width" : 200
             }, {
                 "attr": "item.description",
-                "width": "120px"
+                "width" : 120
             }, {
                 "attr": "site"
             }, {
                 "attr": "ordered",
-                "width": "80px"
+                "width" : 80
             }, {
                 "attr": "billed",
-                "width": "80px"
+                "width" : 80
             }, {
                 "attr": "price",
                 "showCurrency": false,
-                "width": "120px"
+                "width" : 120
             }, {
                 "attr": "item.unit.code",
                 "label": "Unit",
-                "width": "80px"
+                "width" : 80
             }, {
                 "attr": "extended",
                 "showCurrency": false,
-                "width": "120px"
+                "width" : 120
             }]
         }, {
             "attr": "currency",
@@ -279,31 +279,31 @@
             "columns": [{
                 "attr": "number",
                 "label": "#",
-                "width": "40px"
+                "width" : 40
             }, {
                 "attr": "item",
-                "width": "200px"
+                "width" : 200
             }, {
                 "attr": "item.description",
-                "width": "200px"
+                "width" : 200
             }, {
                 "attr": "ordered",
-                "width": "80px"
+                "width" : 80
             }, {
                 "attr": "billed",
-                "width": "80px"
+                "width" : 80
             }, {
                 "attr": "price",
                 "showCurrency": false,
-                "width": "120px"
+                "width" : 120
             }, {
                 "attr": "item.unit.code",
                 "label": "Unit",
-                "width": "80px"
+                "width" : 80
             }, {
                 "attr": "extended",
                 "showCurrency": false,
-                "width": "120px"
+                "width" : 120
             }]
         }, {
             "attr": "currency",
