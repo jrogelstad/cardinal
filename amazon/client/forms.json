@@ -481,7 +481,7 @@
             "grid": 2,
             "unit": 1
         }, {
-            "attr": "weight",
+            "attr": "shippingWeight",
             "grid": 2,
             "unit": 1
         }, {
