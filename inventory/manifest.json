@@ -13,7 +13,7 @@
         },
         {
             "type": "service",
-            "name": "Inventory",
+            "name": "Adjustment",
             "path": "server/services/adjust.js"
         },
         {
