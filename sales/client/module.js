@@ -19,12 +19,11 @@ const catalog = f.catalog();
 const store = catalog.store();
 const model = store.factories().model;
 const list = store.factories().list;
-const models = store.models();
 
  /**
     Sales order model
 */
-models.salesOrder = function (data, feather) {
+function salesOrder(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("SalesOrder");
@@ -53,14 +52,14 @@ models.salesOrder = function (data, feather) {
     });
 
     return that;
-};
+}
 
-models.salesOrder.list = list("SalesOrder");
+catalog.registerModel("SalesOrder", salesOrder, true);
 
  /**
     Sales order line model
 */
-models.salesOrderLine = function (data, feather) {
+function salesOrderLine(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("SalesOrderLine");
@@ -75,7 +74,6 @@ models.salesOrderLine = function (data, feather) {
     });
 
     return that;
-};
+}
 
-models.salesOrderLine.list = list("SalesOrderLine");
-
+catalog.registerModel("SalesOrderLine", salesOrderLine);

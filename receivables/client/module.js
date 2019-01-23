@@ -19,13 +19,12 @@ const catalog = f.catalog();
 const store = catalog.store();
 const model = store.factories().model;
 const list = store.factories().list;
-const models = store.models();
 const postMixin = store.mixins().post;
 
  /**
     Invoice model
 */
-models.invoice = function (data, feather) {
+function invoice(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("Invoice");
@@ -35,14 +34,14 @@ models.invoice = function (data, feather) {
     mixinOrderHeader(that, "customer");
 
     return that;
-};
+}
 
-models.invoice.list = list("Invoice");
+catalog.registerModel("Invoice", invoice, true);
 
  /**
     Credit memo model
 */
-models.creditMemo = function (data, feather) {
+function creditMemo(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("CreditMemo");
@@ -52,14 +51,14 @@ models.creditMemo = function (data, feather) {
     mixinOrderHeader(that, "customer");
 
     return that;
-};
+}
 
-models.creditMemo.list = list("CreditMemo");
+catalog.registerModel("CreditMemo", creditMemo, true);
 
 /**
     Receivable model
 */
-models.receivable = function (data, feather) {
+function receivable(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("Receivable");
@@ -83,14 +82,14 @@ models.receivable = function (data, feather) {
     });
 
     return that;
-};
+}
 
-models.receivable.list = list("Receivable");
+catalog.registerModel("Receivable", receivable, true);
 
  /**
     Receivable line model
 */
-models.receivableLine = function (data, feather) {
+function receivableLine(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("ReceivableLine");
@@ -116,9 +115,9 @@ models.receivableLine = function (data, feather) {
     that.onChanged("price", calculateExtended);
 
     return that;
-};
+}
 
-models.receivableLine.list = list("ReceivableLine");
+catalog.registerModel("ReceivableLine", receivableLine, true);
 
 // Add static post functions to models
 postMixin("Invoice", "Receivables");

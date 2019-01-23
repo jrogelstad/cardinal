@@ -25,7 +25,7 @@ const datasource = f.datasource();
 const postMixin = store.mixins().post;
 
 // Create bill subledger model
-models.billSubledger = function (data, feather) {
+function billSubledger(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("BillSubledger");
@@ -59,11 +59,11 @@ models.billSubledger = function (data, feather) {
     });
 
     return that;
-};
+}
 
-models.billSubledger.list = list("BillSubledger");
+catalog.registerModel("BillSubledger", billSubledger, true);
 
-models.fiscalPeriod.closeCheck = function (selections) {
+models.fiscalPeriod.static().closeCheck = function (selections) {
     "use strict";
 
     return selections.every(function (model) {
@@ -76,7 +76,7 @@ models.fiscalPeriod.closeCheck = function (selections) {
     });
 };
 
-models.fiscalPeriod.openCheck = function (selections) {
+models.fiscalPeriod.static().openCheck = function (selections) {
     "use strict";
 
     return selections.every(function (model) {
@@ -118,20 +118,20 @@ function changePeriodStatus(viewModel, action) {
     datasource.request(payload).then(callback).catch(error);
 }
 
-models.fiscalPeriod.close = function (viewModel) {
+models.fiscalPeriod.static().close = function (viewModel) {
     "use strict";
 
     changePeriodStatus(viewModel, "close-fiscal-period");
 };
 
-models.fiscalPeriod.open = function (viewModel) {
+models.fiscalPeriod.static().open = function (viewModel) {
     "use strict";
 
     changePeriodStatus(viewModel, "open-fiscal-period");
 };
 
 // Create ledger transaction model
-models.ledgerTransaction = function (data, feather) {
+function ledgerTransaction(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("LedgerTransaction");
@@ -219,12 +219,12 @@ models.ledgerTransaction = function (data, feather) {
 
     // Return instantiated model
     return that;
-};
+}
 
-models.ledgerTransaction.list = list("LedgerTransaction");
+catalog.registerModel("LedgerTransaction", ledgerTransaction, true);
 
 // Create ledger distribution model
-models.ledgerDistribution = function (data, feather) {
+function ledgerDistribution(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("LedgerDistribution");
@@ -266,12 +266,12 @@ models.ledgerDistribution = function (data, feather) {
     });
 
     return that;
-};
+}
 
-models.ledgerDistribution.list = list("LedgerDistribution");
+catalog.registerModel("LedgerDistribution", ledgerDistribution);
 
 // Create ledger account model
-models.ledgerAccount = function (data, feather) {
+function ledgerAccount(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("LedgerAccount");
@@ -291,9 +291,9 @@ models.ledgerAccount = function (data, feather) {
 
     // Return instantiated model
     return that;
-};
+}
 
-models.ledgerAccount.list = list("LedgerAccount");
+catalog.registerModel("LedgerAccount", ledgerAccount, true);
 
 // Add static post functions to Journal
 postMixin("GeneralJournal", "Ledger");

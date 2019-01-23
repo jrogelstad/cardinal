@@ -25,7 +25,7 @@ const datasource = f.datasource();
 /**
     Terms model
 */
-models.terms = function (data, feather) {
+function terms(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("Terms");
@@ -155,9 +155,9 @@ models.terms = function (data, feather) {
     handleReadOnly();
 
     return that;
-};
+}
 
-models.terms.list = list("Terms");
+catalog.registerModel("Terms", terms, true);
 
 function currencyCode(d) {
     "use strict";
@@ -172,7 +172,7 @@ function currencyCode(d) {
 /**
     Bill order model
 */
-models.billOrder = function (data, feather) {
+function billOrder(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("BillOrder");
@@ -217,14 +217,14 @@ models.billOrder = function (data, feather) {
     that.onChanged("tax", calculateTotal);
 
     return that;
-};
+}
 
-models.billOrder.list = list("BillOrder");
+catalog.registerModel("BillOrder", billOrder, true);
 
  /**
     Order line model
 */
-models.orderLine = function (data, feather) {
+function orderLine(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("OrderLine");
@@ -245,9 +245,9 @@ models.orderLine = function (data, feather) {
     });
 
     return that;
-};
+}
 
-models.orderLine.list = list("OrderLine");
+catalog.registerModel("OrderLine", orderLine);
 
 /**
     Order header mixin
@@ -404,7 +404,7 @@ function postMixin(type, module) {
     }
 
     // Static functions
-    factory.post = function (viewModel) {
+    factory.static().post = function (viewModel) {
         let message = (
             "Are you sure you want to post the selected " +
             name.toProperCase() + "?"
@@ -424,7 +424,7 @@ function postMixin(type, module) {
 
         post(ids, viewModel, message);
     };
-    factory.postAll = function (viewModel) {
+    factory.static().postAll = function (viewModel) {
         let message = (
             "Are you sure you want to post all unposted " +
             name.toProperCase() + "?"
@@ -432,7 +432,7 @@ function postMixin(type, module) {
 
         post(null, viewModel, message);
     };
-    factory.postCheck = function (selections) {
+    factory.static().postCheck = function (selections) {
         return selections.some(function (model) {
             return !model.data.isPosted();
         });

@@ -15,20 +15,16 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-/*jslint browser, this*/
-/*global f*/
-
 const catalog = f.catalog();
 const store = catalog.store();
 const model = store.factories().model;
 const list = store.factories().list;
-const models = store.models();
 const postMixin = store.mixins().post;
 
  /**
     Voucher model
 */
-models.voucher = function (data, feather) {
+function voucher(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("Voucher");
@@ -38,14 +34,14 @@ models.voucher = function (data, feather) {
     mixinOrderHeader(that, "vendor");
 
     return that;
-};
+}
 
-models.voucher.list = list("Voucher");
+catalog.registerModel("Voucher", voucher, true);
 
  /**
     Debit memo model
 */
-models.debitMemo = function (data, feather) {
+function debitMemo(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("CreditMemo");
@@ -55,14 +51,14 @@ models.debitMemo = function (data, feather) {
     mixinOrderHeader(that, "vendor");
 
     return that;
-};
+}
 
-models.debitMemo.list = list("DebitMemo");
+catalog.registerModel("DebitMemo", debitMemo, true);
 
 /**
     Payable model
 */
-models.payable = function (data, feather) {
+function payable(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("Payable");
@@ -86,14 +82,14 @@ models.payable = function (data, feather) {
     });
 
     return that;
-};
+}
 
-models.payable.list = list("Payable");
+catalog.registerModel("Payable", payable, true);
 
  /**
     Payable line model
 */
-models.payableLine = function (data, feather) {
+function payableLine(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("PayableLine");
@@ -119,9 +115,9 @@ models.payableLine = function (data, feather) {
     that.onChanged("price", calculateExtended);
 
     return that;
-};
+}
 
-models.payableLine.list = list("PayableLine");
+catalog.registerModel("PayableLine", payableLine);
 
 // Add static post functions to models
 postMixin("Voucher", "Payables");
