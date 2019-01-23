@@ -40,7 +40,7 @@ function doPostGeneralJournals(obj) {
 f.datasource.registerFunction(
     "POST",
     "postGeneralJournals",
-    f.doPostGeneralJournals
+    doPostGeneralJournals
 );
 
 /**
@@ -66,5 +66,5 @@ function doPostGeneralJournal(obj) {
 f.datasource.registerFunction(
     "POST",
     "postGeneralJournal",
-    f.doPostGeneralJournal
+    doPostGeneralJournal
 );
