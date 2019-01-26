@@ -12,14 +12,14 @@
         "actions": [{
           "name": "Post",
           "title": "Post selected unposted invoices",
-          "icon": "thumb-tack",
+          "icon": "thumbtack",
           "method": "post",
           "authorization": "PostReceivables",
           "validator": "postCheck"
         }, {
           "name": "Post all",
           "title": "Post all unposted invoices",
-          "icon": "thumb-tack",
+          "icon": "thumbtack",
           "method": "postAll",
           "authorization": "PostReceivables",
           "hasSeparator": true
