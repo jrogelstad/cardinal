@@ -1,69 +1,97 @@
-[
-  {
-    "name": "Pipeline",
-    "module": "CRM",
-    "launchConfig": {
-      "icon": "chart-line"
-    },
-    "defaultConfig": [
-    {
-        "name": "Leads",
-        "feather": "Lead",
-        "form": "pgz21vbdunsy",
-        "list": {
-          "columns": [{
-              "attr": "company"
-            }, {
-              "attr": "firstName"
-            }, {
-              "attr": "lastName"
-            }, {
-              "attr": "isActive"
-            }, {
-              "attr": "email"
-            }, {
-              "attr": "phone"
-            }, {
-              "attr": "opportunity"
-            }, {
-              "attr": "annualIncome"
-            }, {
-              "attr": "probability"
-            }, {
-              "attr": "creditScore"
-            }
-          ]
-        }
-      }, {
-        "name": "Opportunities",
-        "feather": "Opportunity",
-        "form": "syva8q1zh98d",
-        "list": {
-          "columns": [{
-              "attr": "name"
-            }, {
-              "attr": "description"
-            }, {
-              "attr": "amount",
-              "width": "250px"
-            }, {
-              "attr": "dueDate"
-            }, {
-              "attr": "isCompleted"
-            }, {
-              "attr": "stage"
-            }, {
-             "attr": "created"
-            }, {
-             "attr": "createdBy"
-            }, {
-             "attr": "updated"
-            }, {
-             "attr": "updatedBy"
-            }
-          ]
-        }
-      }
-    ]
-  }
-]
+[{
+	"name": "Pipeline",
+	"module": "CRM",
+	"launchConfig": {
+		"icon": "chart-line"
+	},
+	"defaultConfig": [{
+		"name": "Leads",
+		"feather": "Lead",
+		"form": "pgz21vbdunsy",
+		"actions": [{
+			"name": "Flag follow up",
+			"title": "Flag lead for followup",
+			"icon": "toggle-on",
+			"method": "flagFollowUp",
+			"authorization": "FlagLeads",
+			"validator": "flagFollowUpCheck"
+		}, {
+			"name": "Unflag follow up",
+			"title": "unflag lead for followup",
+			"icon": "toggle-off",
+			"method": "unflagFollowUp",
+			"authorization": "FlagLeads",
+			"validator": "unflagFollowUpCheck"
+		}],
+		"list": {
+			"columns": [{
+				"attr": "company"
+			}, {
+				"attr": "firstName"
+			}, {
+				"attr": "lastName"
+			}, {
+				"attr": "followUpIcon",
+				"width": 24
+			}, {
+				"attr": "isActive"
+			}, {
+				"attr": "email"
+			}, {
+				"attr": "phone"
+			}, {
+				"attr": "opportunity"
+			}, {
+				"attr": "annualIncome"
+			}, {
+				"attr": "probability"
+			}, {
+				"attr": "creditScore"
+			}],
+			"filter": {
+				"criteria": [{
+					"property": "isActive",
+					"value": true
+				}],
+				"sort": [{
+					"property": "followUp",
+                    "order": "DESC"
+				}, {
+					"property": "company"
+				}, {
+					"property": "lastName"
+				}, {
+					"property": "firstName"
+				}]
+			}
+		}
+	}, {
+		"name": "Opportunities",
+		"feather": "Opportunity",
+		"form": "syva8q1zh98d",
+		"list": {
+			"columns": [{
+				"attr": "name"
+			}, {
+				"attr": "description"
+			}, {
+				"attr": "amount",
+				"width": "250px"
+			}, {
+				"attr": "dueDate"
+			}, {
+				"attr": "isCompleted"
+			}, {
+				"attr": "stage"
+			}, {
+				"attr": "created"
+			}, {
+				"attr": "createdBy"
+			}, {
+				"attr": "updated"
+			}, {
+				"attr": "updatedBy"
+			}]
+		}
+	}]
+}]

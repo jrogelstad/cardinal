@@ -150,7 +150,7 @@
             }]
           }
         }
-      },
+    },
     {
         "name": "Customers",
         "feather": "Customer",

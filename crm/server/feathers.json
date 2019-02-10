@@ -102,6 +102,11 @@
                     "relation": "Role",
                     "properties": ["name", "description"]
                 }
+            },
+            "followUp": {
+                "description": "Follow up flag",
+                "type": "boolean",
+                "default": false
             }
         }
     }
