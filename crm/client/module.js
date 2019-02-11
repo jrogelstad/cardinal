@@ -23,6 +23,7 @@ function lead(data, feather) {
         description: "Flagged for follow up",
         type: "string",
         format: "icon",
+        style: "HIGH",
         function: followUpIcon
     });
 

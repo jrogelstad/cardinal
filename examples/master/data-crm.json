@@ -22,13 +22,14 @@
         }
     },
     {
-        "name": "Contact",
+        "name": "Lead",
         "method": "POST",
         "id": "jsmith",
         "data": {
             "email": "jn89911@gmail.com",
             "firstName": "Jane",
-            "lastName": "Smith"
+            "lastName": "Smith",
+            "company": "Exton Exercise Company"
         }
     },
     {
@@ -42,13 +43,14 @@
         }
     },
     {
-        "name": "Contact",
+        "name": "Lead",
         "method": "POST",
         "id": "ascarborough",
         "data": {
             "email": "scarface@gmail.com",
             "firstName": "Antoin",
-            "lastName": "Scarborough"
+            "lastName": "Scarborough",
+            "company": "Recycled Cycle"
         }
     },
     {
@@ -58,7 +60,9 @@
         "data": {
             "email": "ag8912@gmail.com",
             "firstName": "Armin",
-            "lastName": "Ghia"
+            "lastName": "Ghia",
+            "company": "Super Cycles",
+            "followUp": true
         }
     },
     {
