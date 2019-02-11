@@ -36,7 +36,6 @@ lead.static = f.prop({
 
         viewModel.tableWidget().selections().forEach(
             function (model) {
-                debugger
                 model.data.followUp(true);
                 model.save();
             }
