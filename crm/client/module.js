@@ -66,6 +66,7 @@ lead.static = f.prop({
 lead.calculated = f.prop({
     followUpIcon: {
         type: "string",
+        description: "Flagged for follow up",
         format: "icon"
     }
 });
