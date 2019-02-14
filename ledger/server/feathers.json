@@ -16,6 +16,7 @@
             "type": {
                 "description": "Account type",
                 "type": "string",
+                "format": "enum",
                 "isRequired": true,
                 "dataList": [{
                     "value": "A",
