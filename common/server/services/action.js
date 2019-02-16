@@ -137,63 +137,6 @@ f.datasource.registerFunction(
     f.datasource.TRIGGER_AFTER
 );
 
-function doCacheAction(obj) {
-    "use strict";
-
-    return new Promise(function (resolve, reject) {
-        function getAction() {
-            return new Promise(function (resolve, reject) {
-                let payload = {
-                    method: "GET",
-                    name: "Action",
-                    id: obj.id,
-                    client: obj.client
-                };
-
-                f.datasource.request(
-                    payload,
-                    true
-                ).then(
-                    resolve
-                ).catch(
-                    reject
-                );
-            });
-        }
-
-        function cacheAction(action) {
-            return new Promise(function (resolve) {
-                obj.cache = action;
-                resolve();
-            });
-        }
-
-        Promise.resolve().then(
-            getAction
-        ).then(
-            cacheAction
-        ).then(
-            resolve
-        ).catch(
-            reject
-        );
-    });
-}
-
-f.datasource.registerFunction(
-    "PATCH",
-    "Action",
-    doCacheAction,
-    f.datasource.TRIGGER_BEFORE
-);
-
-f.datasource.registerFunction(
-    "DELETE",
-    "Action",
-    doCacheAction,
-    f.datasource.TRIGGER_BEFORE
-);
-
 function doAfterUpdateAction(obj) {
     "use strict";
 
@@ -245,7 +188,7 @@ function doAfterUpdateAction(obj) {
                         idx = item.path.slice(15, 16);
                         dist = {
                             node: {
-                                id: obj.cache.distributions[idx].node.id
+                                id: obj.oldRec.distributions[idx].node.id
                             }
                         };
                         action.distributions.push(dist);
@@ -282,10 +225,8 @@ function doAfterDeleteAction(obj) {
     "use strict";
 
     return new Promise(function (resolve, reject) {
-        let action = obj.cache;
-
         Promise.resolve().then(
-            getNodes.bind(obj, action)
+            getNodes.bind(obj, obj.oldRec)
         ).then(
             updateNodes.bind(obj)
         ).then(

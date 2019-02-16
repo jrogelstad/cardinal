@@ -18,6 +18,98 @@
 /*jslint browser*/
 /*global f*/
 
+// Fetch ledger accounts refereced by action distribution
+function getLedgerAccounts(obj, transaction) {
+    "use strict";
+
+    return new Promise(function (resolve, reject) {
+        let payload;
+        let ids;
+
+        ids = transaction.distributions.map(function (dist) {
+            return dist.account.id;
+        });
+
+        if (ids.length) {
+            payload = {
+                method: "GET",
+                name: "LedgerAccount",
+                client: obj.client,
+                filter: {
+                    criteria: [{
+                        property: "id",
+                        operator: "IN",
+                        value: ids
+                    }]
+                }
+            };
+
+            f.datasource.request(payload, true).then(resolve).catch(reject);
+
+            return;
+        }
+
+        resolve([]);
+    });
+}
+
+// Update ledger accounts whether used or not depending on
+// transaction history
+function updateLedgerAccounts(obj, accounts) {
+    "use strict";
+
+    return new Promise(function (resolve, reject) {
+        let requests = accounts.map(function (account) {
+            let payload = {
+                method: "GET",
+                name: "LedgerDistribution",
+                properties: ["id"],
+                client: obj.client,
+                filter: {
+                    criteria: [{
+                        property: "account.id",
+                        operator: "=",
+                        value: account.id
+                    }],
+                    limit: 1
+                }
+            };
+
+            function callback(resp) {
+                return new Promise(function (resolve, reject) {
+                    let payload2 = {
+                        method: "POST",
+                        name: "LedgerAccount",
+                        id: account.id,
+                        client: obj.client,
+                        data: account
+                    };
+
+                    if (!resp.length) {
+                        account.isUsed = false;
+                    } else {
+                        account.isUsed = true;
+                    }
+
+                    f.datasource.request(payload2, true).then(
+                        resolve
+                    ).catch(
+                        reject
+                    );
+                });
+            }
+
+            return f.datasource.request(payload, true).then(
+                callback
+            ).catch(
+                reject
+            );
+        });
+
+        Promise.all(requests).then(resolve).catch(reject);
+    });
+}
+
 /**
   Check whether a passed ledger transaction is valid or not.
   Raises error if not.
@@ -135,6 +227,112 @@ f.datasource.registerFunction(
     f.datasource.TRIGGER_BEFORE
 );
 
+function doAfterInsertLedgerTransaction(obj) {
+    "use strict";
+
+    return new Promise(function (resolve, reject) {
+        Promise.resolve().then(
+            getLedgerAccounts.bind(null, obj, obj.data)
+        ).then(
+            updateLedgerAccounts.bind(null, obj)
+        ).then(
+            resolve
+        ).catch(
+            reject
+        );
+    });
+}
+
+f.datasource.registerFunction(
+    "POST",
+    "LedgerTransaction",
+    doAfterInsertLedgerTransaction,
+    f.datasource.TRIGGER_AFTER
+);
+
+function doAfterUpdateLedgerTransaction(obj) {
+    "use strict";
+
+    return new Promise(function (resolve, reject) {
+
+        function processPatch() {
+            return new Promise(function (resolve) {
+                let filtered;
+                let idx;
+                let transaction = {
+                    distributions: []
+                };
+
+                filtered = obj.data.filter(function (item) {
+                    if (item.path.search("^/distributions") > -1) {
+                        return (
+                            (item.op === "add") || (
+                                item.op === "replace" &&
+                                (
+                                    item.value === undefined ||
+                                    item.path.search("account/id$") > -1
+                                )
+                            )
+                        );
+                    }
+
+                    return false;
+                });
+
+                filtered.forEach(function (item) {
+                    let dist = {
+                        account: {}
+                    };
+
+                    // New distribution
+                    if (item.op === "add") {
+                        dist.account.id = item.value.account.id;
+                        transaction.distributions.push(dist);
+                    } else {
+
+                        // Distribution account changed
+                        if (item.op === "replace" && item.value) {
+                            // New ledger account
+                            dist.account.id = item.value;
+                            transaction.distributions.push(dist);
+                        }
+
+                        // Old account (changed or deleted)
+                        idx = item.path.slice(15, 16);
+                        dist = {
+                            account: {
+                                id: obj.oldRec.distributions[idx].account.id
+                            }
+                        };
+                        transaction.distributions.push(dist);
+                    }
+                });
+
+                resolve(transaction);
+            });
+        }
+
+        Promise.resolve().then(
+            processPatch
+        ).then(
+            getLedgerAccounts.bind(null, obj)
+        ).then(
+            updateLedgerAccounts.bind(null, obj)
+        ).then(
+            resolve
+        ).catch(
+            reject
+        );
+    });
+}
+
+f.datasource.registerFunction(
+    "PATCH",
+    "LedgerTransaction",
+    doAfterUpdateLedgerTransaction,
+    f.datasource.TRIGGER_AFTER
+);
+
 function doUpdateLedgerTransaction(obj) {
     "use strict";
 
@@ -155,4 +353,27 @@ f.datasource.registerFunction(
     "LedgerTransaction",
     doUpdateLedgerTransaction,
     f.datasource.TRIGGER_BEFORE
+);
+
+function doAfterDeleteLedgerTransaction(obj) {
+    "use strict";
+
+    return new Promise(function (resolve, reject) {
+        Promise.resolve().then(
+            getLedgerAccounts.bind(null, obj, obj.oldRec)
+        ).then(
+            updateLedgerAccounts.bind(null, obj)
+        ).then(
+            resolve
+        ).catch(
+            reject
+        );
+    });
+}
+
+f.datasource.registerFunction(
+    "DELETE",
+    "LedgerTransaction",
+    doAfterDeleteLedgerTransaction,
+    f.datasource.TRIGGER_AFTER
 );
