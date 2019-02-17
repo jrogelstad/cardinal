@@ -74,8 +74,8 @@
             "unit": 0,
             "columns": [{
                 "attr": "number",
-                "label": "#",
-                "width": 40
+                "label": "Line #",
+                "width": 60
             }, {
                 "attr": "item",
                 "width": 200
