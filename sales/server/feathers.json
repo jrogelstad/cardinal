@@ -55,11 +55,7 @@
             },
             "status": {
                 "description": "Order status",
-                "type": "string",
                 "default": "O",
-                "isReadOnly": true,
-                "isRequired": true,
-                "format": "enum",
                 "dataList": [
                     {
                         "value": "O",

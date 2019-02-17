@@ -8,8 +8,7 @@
         "overloads": {
             "parent": {
                 "type": {
-                    "relation": "CustomerCategory",
-                    "properties": ["code", "description"]
+                    "relation": "CustomerCategory"
                 }
             }
         }

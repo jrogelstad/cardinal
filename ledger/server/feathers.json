@@ -39,8 +39,7 @@
         "overloads": {
             "parent": {
                 "type": {
-                    "relation": "LedgerAccount",
-                    "properties": ["code", "description", "isUsed"]
+                    "relation": "LedgerAccount"
                 }
             }
         }
@@ -397,10 +396,7 @@
         "overloads": {
             "status": {
                 "description": "Document status",
-                "type": "string",
                 "default": "U",
-                "isReadOnly": true,
-                "format": "enum",
                 "dataList": [
                     {
                         "value": "U",
