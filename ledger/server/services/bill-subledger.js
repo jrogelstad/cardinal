@@ -77,7 +77,7 @@ function calculateTotals(obj) {
             }
 
             // Exclude deleted
-            lines = data.lines.filter((line) => line !== undefined);
+            lines = data.lines.filter((line) => line !== null);
             lines.forEach(function (line) {
                 if (line.billed === undefined) {
                     throw "Billed quantity is required.";
