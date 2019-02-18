@@ -454,6 +454,15 @@
             "status": {
                 "description": "Order status",
                 "type": "string",
+                "format": "enum",
+                "dataList": [{
+                    "value": "O",
+                    "label": "Open"
+                }, {
+                    "value": "C",
+                    "label": "Closed"                
+                }],
+                "default": "O",
                 "isRequired": true
             },
             "contact": {
