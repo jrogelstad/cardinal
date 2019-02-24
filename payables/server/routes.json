@@ -4,7 +4,7 @@
         "method": "POST",
         "id": "65zqg8dj3dxq",
         "data": {
-            "module": "payables",
+            "module": "Payables",
             "path": "/post/voucher",
             "function": "postVoucher"
         }
@@ -14,7 +14,7 @@
         "method": "POST",
         "id": "hx2cpham96jj",
         "data": {
-            "module": "payables",
+            "module": "Payables",
             "path": "/post/vouchers",
             "function": "postVouchers"
         }
@@ -24,7 +24,7 @@
         "method": "POST",
         "id": "qm051n3hhsba",
         "data": {
-            "module": "payables",
+            "module": "Payables",
             "path": "/post/debit-memo",
             "function": "postDebitMemo"
         }
@@ -34,7 +34,7 @@
         "method": "POST",
         "id": "befax4dy3m24",
         "data": {
-            "module": "payables",
+            "module": "Payables",
             "path": "/post/debit-memos",
             "function": "postDebitMemos"
         }
@@ -44,8 +44,8 @@
         "method": "POST",
         "id": "51i6svdbvyy0",
         "data": {
-            "module": "payables",
-            "path": "/post/payables-journal",
+            "module": "Payables",
+            "path": "/post/Payables-journal",
             "function": "postPayablesJournal"
         }
     },
@@ -54,8 +54,8 @@
         "method": "POST",
         "id": "eoajz52r5z2f",
         "data": {
-            "module": "payables",
-            "path": "/post/payables-journals",
+            "module": "Payables",
+            "path": "/post/Payables-journals",
             "function": "postPayablesJournals"
         }
     }

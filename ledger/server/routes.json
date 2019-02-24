@@ -4,7 +4,7 @@
         "method": "POST",
         "id": "e0hu0y9u44xb",
         "data": {
-            "module": "ledger",
+            "module": "Ledger",
             "path": "/post/general-journal",
             "function": "postGeneralJournal"
         }
@@ -14,7 +14,7 @@
         "method": "POST",
         "id": "dchfnrtplptf",
         "data": {
-            "module": "ledger",
+            "module": "Ledger",
             "path": "/post/general-journals",
             "function": "postGeneralJournals"
         }
@@ -24,7 +24,7 @@
         "method": "POST",
         "id": "ytqn7hwnj23c",
         "data": {
-            "module": "ledger",
+            "module": "Ledger",
             "path": "/close-fiscal-period",
             "function": "closeFiscalPeriod"
         }
@@ -34,7 +34,7 @@
         "method": "POST",
         "id": "h76lekk46ugj",
         "data": {
-            "module": "ledger",
+            "module": "Ledger",
             "path": "/open-fiscal-period",
             "function": "openFiscalPeriod"
         }

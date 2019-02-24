@@ -4,7 +4,7 @@
         "method": "POST",
         "id": "dndamgng90c0",
         "data": {
-            "module": "receivables",
+            "module": "Receivables",
             "path": "/post/invoice",
             "function": "postInvoice"
         }
@@ -14,7 +14,7 @@
         "method": "POST",
         "id": "emscfa80azo6",
         "data": {
-            "module": "receivables",
+            "module": "Receivables",
             "path": "/post/invoices",
             "function": "postInvoices"
         }
@@ -24,7 +24,7 @@
         "method": "POST",
         "id": "s78l8bhqf0p7",
         "data": {
-            "module": "receivables",
+            "module": "Receivables",
             "path": "/post/credit-memo",
             "function": "postCreditMemo"
         }
@@ -34,7 +34,7 @@
         "method": "POST",
         "id": "cb0bgfxs172x",
         "data": {
-            "module": "receivables",
+            "module": "Receivables",
             "path": "/post/credit-memos",
             "function": "postCreditMemos"
         }
@@ -44,8 +44,8 @@
         "method": "POST",
         "id": "ga7so23fplmp",
         "data": {
-            "module": "receivables",
-            "path": "/post/receivables-journal",
+            "module": "Receivables",
+            "path": "/post/Receivables-journal",
             "function": "postReceivablesJournal"
         }
     },
@@ -54,8 +54,8 @@
         "method": "POST",
         "id": "cxr09kl1a3td",
         "data": {
-            "module": "receivables",
-            "path": "/post/receivables-journals",
+            "module": "Receivables",
+            "path": "/post/Receivables-journals",
             "function": "postReceivablesJournals"
         }
     }

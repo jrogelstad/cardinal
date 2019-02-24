@@ -4,7 +4,7 @@
         "method": "POST",
         "id": "hpuyz2sbmztc",
         "data": {
-            "module": "inventory",
+            "module": "Inventory",
             "path": "/adjust",
             "function": "doAdjust"
         }
