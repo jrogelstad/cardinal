@@ -5,10 +5,7 @@
         "Amazon",
         "CRM",
         "Inventory",
-        "Ledger",
-        "Payables",
         "Purchasing",
-        "Receivables",
         "Sales"
     ],
     "files": [
