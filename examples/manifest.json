@@ -1,12 +1,12 @@
 {
-    "version": "0.0.1",
+    "version": "0.1.0",
     "files": [
         {
-            "type": "configure",
+            "type": "install",
             "path": "master/manifest.json"
         },
         {
-            "type": "configure",
+            "type": "install",
             "path": "transactions/manifest.json"
         }
     ]
