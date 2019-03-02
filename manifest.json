@@ -1,6 +1,21 @@
 {
-    "notes": "This manifest is not a module, but installs all modules at once.",
+    "module": "Cardinal",
+    "version": "0.1.0",
+    "dependencies": [
+        "Amazon",
+        "CRM",
+        "Inventory",
+        "Ledger",
+        "Payables",
+        "Purchasing",
+        "Receivables",
+        "Sales"
+    ],
     "files": [
+        {
+            "type": "module",
+            "path": "module.js"
+        },
         {
             "type": "install",
             "path": "common/manifest.json"
