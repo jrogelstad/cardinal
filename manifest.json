@@ -10,10 +10,6 @@
     ],
     "files": [
         {
-            "type": "module",
-            "path": "module.js"
-        },
-        {
             "type": "install",
             "path": "common/manifest.json"
         },
@@ -48,6 +44,10 @@
         {
             "type": "install",
             "path": "amazon/manifest.json"
+        },
+        {
+            "type": "module",
+            "path": "module.js"
         }
     ]
 }
