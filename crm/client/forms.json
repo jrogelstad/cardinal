@@ -79,7 +79,7 @@
     "data": {
         "name": "Opportunity",
         "description": "Opportunity form",
-        "module": "Cardinal",
+        "module": "CRM",
         "feather": "Opportunity",
         "tabs": [{
             "name": "Tasks"
