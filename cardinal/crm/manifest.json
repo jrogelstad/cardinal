@@ -5,19 +5,19 @@
     "files": [
         {
             "type": "module",
-            "path": "client/module.js"
+            "path": "module.js"
         },
         {
             "type": "feather",
-            "path": "server/feathers.json"
+            "path": "feathers.json"
         },
         {
             "type": "batch",
-            "path": "client/forms.json"
+            "path": "forms.json"
         },
         {
             "type": "workbook",
-            "path": "client/workbooks.json"
+            "path": "workbooks.json"
         }
     ]
 }

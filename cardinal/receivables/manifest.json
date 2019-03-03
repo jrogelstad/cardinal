@@ -1,50 +1,50 @@
 {
-    "module": "Payables",
+    "module": "Receivables",
     "version": "0.1.0",
     "dependencies": ["Ledger"],
     "files": [
         {
             "type": "module",
-            "path": "client/module.js"
+            "path": "module.js"
         },
         {
             "type": "feather",
-            "path": "server/feathers.json"
+            "path": "feathers.json"
         },
         {
             "type": "service",
-            "name": "voucher",
-            "path": "server/services/voucher.js"
+            "name": "invoice",
+            "path": "invoice.js"
         },
         {
             "type": "service",
-            "name": "debit-memo",
-            "path": "server/services/debit-memo.js"
+            "name": "credit-memo",
+            "path": "credit-memo.js"
         },
         {
             "type": "service",
-            "name": "payables-journal",
-            "path": "server/services/payables-journal.js"
+            "name": "receivables-journal",
+            "path": "receivables-journal.js"
         },
         {
             "type": "batch",
-            "path": "server/routes.json"
+            "path": "routes.json"
         },
         {
             "type": "batch",
-            "path": "client/relations.json"
+            "path": "relations.json"
         },
         {
             "type": "batch",
-            "path": "client/forms.json"
+            "path": "forms.json"
         },
         {
             "type": "workbook",
-            "path": "client/workbooks.json"
+            "path": "workbooks.json"
         },
         {
             "type": "batch",
-            "path": "client/data.json"
+            "path": "data.json"
         }
     ]
 }

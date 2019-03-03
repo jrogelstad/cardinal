@@ -5,48 +5,48 @@
     "files": [
         {
             "type": "module",
-            "path": "client/module.js"
+            "path": "module.js"
         },
         {
             "type": "feather",
-            "path": "server/feathers/node.json"
+            "path": "node.json"
         },
         {
             "type": "feather",
-            "path": "server/feathers/common.json"
+            "path": "common.json"
         },
         {
             "type": "service",
             "name": "Action",
-            "path": "server/services/action.js"
+            "path": "action.js"
         },
         {
             "type": "service",
             "name": "BillOrder",
-            "path": "server/services/bill-order.js"
+            "path": "bill-order.js"
         },
         {
             "type": "service",
             "name": "Period",
-            "path": "server/services/period.js"
+            "path": "period.js"
         },
         {
             "type": "service",
             "name": "terms",
-            "path": "server/services/terms.js"
+            "path": "terms.js"
         },
         {
             "type": "service",
             "name": "item",
-            "path": "server/services/item.js"
+            "path": "item.js"
         },
         {
             "type": "batch",
-            "path": "client/forms.json"
+            "path": "forms.json"
         },
         {
             "type": "workbook",
-            "path": "client/workbooks.json"
+            "path": "workbooks.json"
         }
     ]
 }
