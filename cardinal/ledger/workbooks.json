@@ -2,8 +2,8 @@
   {
     "name": "Balance",
     "module": "Ledger",
+    "icon": "balance-scale",
     "launchConfig": {
-      "icon": "balance-scale",
       "settings": "ledgerSettings"
     },
     "defaultConfig": [

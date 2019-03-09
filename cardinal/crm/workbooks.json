@@ -1,9 +1,7 @@
 [{
 	"name": "Pipeline",
 	"module": "CRM",
-	"launchConfig": {
-		"icon": "chart-line"
-	},
+	"icon": "chart-line",
 	"defaultConfig": [{
 		"name": "Leads",
 		"feather": "Lead",

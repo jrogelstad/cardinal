@@ -2,9 +2,7 @@
   {
     "name": "Catalog",
     "module": "Amazon",
-    "launchConfig": {
-      "icon": "book"
-    },
+    "icon": "book",
     "defaultConfig": [
       {
         "name": "Products",

@@ -2,11 +2,7 @@
   {
     "name": "Manage",
     "module": "Common",
-    "launchConfig": {
-      "icon": "check",
-      "color": "white",
-      "backgroundColor": "darkblue"
-    },
+    "icon": "check",
     "defaultConfig": [
       {
         "name": "Activities",

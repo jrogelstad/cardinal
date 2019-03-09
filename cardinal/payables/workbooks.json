@@ -2,9 +2,7 @@
   {
     "name": "Pay",
     "module": "Payables",
-    "launchConfig": {
-      "icon": "sign-out-alt"
-    },
+    "icon": "sign-out-alt",
     "defaultConfig": [{
         "name": "Vouchers",
         "isEditModeEnabled": false,
