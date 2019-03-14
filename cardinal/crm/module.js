@@ -34,7 +34,7 @@ lead.static = f.prop({
     flagFollowUp: function (viewModel) {
         "use strict";
 
-        viewModel.tableWidget().selections().forEach(
+        viewModel.selections().forEach(
             function (model) {
                 model.data.followUp(true);
                 model.save();
@@ -49,7 +49,7 @@ lead.static = f.prop({
     unflagFollowUp: function (viewModel) {
         "use strict";
 
-        viewModel.tableWidget().selections().forEach(
+        viewModel.selections().forEach(
             function (model) {
                 model.data.followUp(false);
                 model.save();

@@ -409,7 +409,7 @@ function postMixin(type, module) {
             "Are you sure you want to post the selected " +
             name.toProperCase() + "?"
         );
-        let unposted = viewModel.tableWidget().selections().filter(
+        let unposted = viewModel.selections().filter(
             function (model) {
                 return !model.data.isPosted();
             }

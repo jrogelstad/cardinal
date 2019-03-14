@@ -88,8 +88,7 @@
           "title": "Post all unposted journals to the ledger",
           "icon": "thumbtack",
           "method": "postAll",
-          "authorization": "PostJournals",
-          "hasSeparator": true
+          "authorization": "PostJournals"
         }],
         "list": {
           "columns": [{

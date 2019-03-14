@@ -19,8 +19,7 @@
           "title": "Post all unposted invoices",
           "icon": "thumbtack",
           "method": "postAll",
-          "authorization": "PostReceivables",
-          "hasSeparator": true
+          "authorization": "PostReceivables"
         }],
         "list": {
             "columns": [{
@@ -72,8 +71,7 @@
           "title": "Post all unposted credit memos",
           "icon": "thumbtack",
           "method": "postAll",
-          "authorization": "PostReceivables",
-          "hasSeparator": true
+          "authorization": "PostReceivables"
         }],
         "list": {
             "columns": [{
@@ -124,8 +122,7 @@
           "title": "Post all unposted journals to the ledger",
           "icon": "thumbtack",
           "method": "postAll",
-          "authorization": "PostJournals",
-          "hasSeparator": true
+          "authorization": "PostJournals"
         }],
         "list": {
           "columns": [{

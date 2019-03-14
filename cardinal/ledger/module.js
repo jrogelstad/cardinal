@@ -93,7 +93,7 @@ function changePeriodStatus(viewModel, action) {
     "use strict";
 
     let dialog = viewModel.confirmDialog();
-    let selected = viewModel.tableWidget().selections()[0];
+    let selected = viewModel.selections()[0];
     let payload = {
         method: "POST",
         path: "/ledger/" + action,
@@ -103,7 +103,7 @@ function changePeriodStatus(viewModel, action) {
     };
 
     function callback() {
-        viewModel.tableWidget().refresh();
+        viewModel.refresh();
     }
 
     function error(err) {
