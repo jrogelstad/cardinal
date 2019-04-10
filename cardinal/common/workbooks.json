@@ -3,8 +3,43 @@
     "name": "Manage",
     "module": "Common",
     "icon": "check",
-    "defaultConfig": [
-      {
+    "defaultConfig": [{
+        "name": "Contacts",
+        "feather": "Contact",
+        "list": {
+            "columns": [{
+                "attr": "lastName",
+                "label": "Last"
+            }, {
+                "attr": "firstName",
+                "label": "First"
+            }, {
+                "attr": "phone"
+            }, {
+                "attr": "email"
+            }, {
+                "attr": "address.city",
+                "label": "City"
+            }, {
+                "attr": "address.state",
+                "label": "State"
+            }, {
+                "attr": "address.country",
+                "label": "Country"
+            }],
+            "filter": {
+                "sort": [{
+                        "property": "lastName",
+                        "order": "ASC"
+                    },
+                    {
+                        "property": "firstName",
+                        "order": "ASC"
+                    }
+                ]
+            }
+        }
+    }, {
         "name": "Activities",
         "feather": "Activity",
         "form": {

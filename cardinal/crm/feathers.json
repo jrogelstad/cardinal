@@ -100,7 +100,7 @@
                 "description": "Role",
                 "type": {
                     "relation": "Role",
-                    "properties": ["name", "description"]
+                    "properties": ["name"]
                 }
             },
             "followUp": {
