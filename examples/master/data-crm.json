@@ -71,8 +71,6 @@
         "data": {
           "members": [{
             "member": "postgres"
-          }, {
-            "member": "wren"
           }]
         }
     },
