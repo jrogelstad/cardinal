@@ -4,9 +4,19 @@
         "method": "POST",
         "id": "czleu2a8a5qq",
         "data": {
-            "name": "sales",
+            "name": "sales"
+        }
+    },
+    {
+        "name": "Role",
+        "method": "POST",
+        "id": "e54y397l4arw",
+        "data": {
+            "name": "postgres",
             "membership": [{
                 "role": "everyone"
+            },{
+                "role": "sales"
             }]
         }
     },
