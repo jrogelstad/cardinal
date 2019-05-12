@@ -2,11 +2,11 @@
     {
         "name": "Role",
         "method": "POST",
-        "id": "sales",
+        "id": "czleu2a8a5qq",
         "data": {
-            "name": "Sales",
-            "members": [{
-                "member": "postgres"
+            "name": "sales",
+            "membership": [{
+                "role": "everyone"
             }]
         }
     },
@@ -65,21 +65,12 @@
         }
     },
     {
-        "name": "Role",
-        "method": "POST",
-        "id": "everyone",
-        "data": {
-          "members": [{
-            "member": "postgres"
-          }]
-        }
-    },
-    {
         "method": "PUT",
         "name": "saveAuthorization",
         "data": {
             "id": "jdoe",
             "role": "everyone",
+            "isMember": true,
             "actions": {
                 "canCreate": false,
                 "canRead": false,
