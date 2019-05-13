@@ -206,66 +206,10 @@
         }
     },
     {
-        "name": "TestTypes",
-        "module": "Common",
-        "description": "Test all types and formats",
-        "properties": {
-            "integer": {
-                "description": "Integer",
-                "type": "integer"
-            },
-            "number": {
-                "description": "Number",
-                "type": "number"
-            },
-            "date": {
-                "description": "Date",
-                "type": "string",
-                "format": "date",
-                "default": "now()"
-            },
-            "dateTime": {
-                "description": "Timestamp with timezone",
-                "type": "string",
-                "format": "dateTime",
-                "default": "now()"
-            },
-            "password": {
-                "description": "Text",
-                "type": "string",
-                "format": "password"
-            },
-            "tel": {
-                "description": "Phone",
-                "type": "string",
-                "format": "tel"
-            },
-            "url": {
-                "description": "Hyperlink",
-                "type": "string",
-                "format": "url"
-            },
-            "textArea": {
-                "description": "Large text area",
-                "type": "string",
-                "format": "textArea"
-            },
-            "color": {
-                "description": "Color picker",
-                "type": "string",
-                "format": "color"
-            },
-            "money": {
-                "description": "Money object",
-                "type": "object",
-                "format": "money"
-            }
-        }
-    },
-    {
         "name": "Terms",
         "plural": "Termses",
         "module": "Common",
+        "inherits": "Document",
         "description": "Payment terms",
         "properties": {
             "code": {
@@ -340,6 +284,7 @@
         "name": "ShipMethod",
         "plural": "ShipMethods",
         "module": "Common",
+        "inherits": "Document",
         "description": "Shipping methods",
         "properties": {
             "code": {

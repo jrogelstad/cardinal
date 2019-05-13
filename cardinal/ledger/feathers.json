@@ -48,6 +48,7 @@
         "name": "AccountMapType",
         "plural": "AccountMapTypes",
         "module": "Ledger",
+        "inherits": "Document",
         "description": "Account map types for journal entries",
         "inherits": "Kind",
         "isReadOnly": true
@@ -56,6 +57,7 @@
         "name": "AccountMap",
         "plural": "AccountMaps",
         "module": "Ledger",
+        "inherits": "Document",
         "description": "General ledger account map for journals",
         "properties": {
             "type": {
