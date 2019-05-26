@@ -1,0 +1,12 @@
+[{
+    "name": "Style",
+    "method": "POST",
+    "id": "v3v4pvouv03d",
+    "data": {
+        "name": "HIGH",
+        "description": "High priority",
+        "module": "CRM",
+        "hasColor": true,
+        "color": "#FF0000"
+    }
+}]
