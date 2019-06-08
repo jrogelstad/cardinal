@@ -128,7 +128,7 @@
     {
         "name": "DebitMemo",
         "plural": "DebitMemos",
-        "module": "Paybles",
+        "module": "Payables",
         "inherits": "Payable",
         "description": "Reduces accounts payable typically a refund for a return",
         "properties": {
