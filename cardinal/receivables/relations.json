@@ -5,6 +5,7 @@
     "id": "5za0lefbzqmc",
     "data": {
         "name": "CustomerRelation",
+        "module": "Receivables",
         "description": "Customer relation wdiget",
         "isActive": true,
         "feather": "Customer",

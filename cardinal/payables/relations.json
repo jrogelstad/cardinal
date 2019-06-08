@@ -6,6 +6,7 @@
     "data": {
         "name": "VendorRelation",
         "description": "Vendor relation wdiget",
+        "module": "Payables",
         "isActive": true,
         "feather": "Vendor",
         "valueProperty": "code",
