@@ -192,7 +192,7 @@
     {
         "name": "LedgerDistribution",
         "plural": "LedgerDistributions",
-        "module": "Common",
+        "module": "Ledger",
         "description": "Ledger distribution",
         "properties": {
             "parent": {
@@ -345,7 +345,7 @@
     {
         "name": "BillSubledger",
         "plural": "BillSubledgers",
-        "module": "Common",
+        "module": "Ledger",
         "inherits": "BillOrder",
         "description": "Subledger for billing records",
         "properties": {
