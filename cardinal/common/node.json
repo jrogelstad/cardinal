@@ -126,7 +126,7 @@
     },
     {
         "name": "NodePeriodBalance",
-        "plural": "NodePeriodBalance",
+        "plural": "NodePeriodBalances",
         "module": "Common",
         "inherits": "NodeBalance",
         "description": "Quantity of objects in node per period",
