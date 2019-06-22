@@ -87,4 +87,4 @@ lead.calculated = f.prop({
     }
 });
 
-catalog.registerModel("Lead", lead, true);
+catalog.registerModel("Lead", lead);

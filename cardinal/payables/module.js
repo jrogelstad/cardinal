@@ -34,7 +34,7 @@ function voucher(data, feather) {
     return model;
 }
 
-catalog.registerModel("Voucher", voucher, true);
+catalog.registerModel("Voucher", voucher);
 
  /**
     Debit memo model
@@ -51,7 +51,7 @@ function debitMemo(data, feather) {
     return model;
 }
 
-catalog.registerModel("DebitMemo", debitMemo, true);
+catalog.registerModel("DebitMemo", debitMemo);
 
 /**
     Payable model
@@ -82,7 +82,7 @@ function payable(data, feather) {
     return model;
 }
 
-catalog.registerModel("Payable", payable, true);
+catalog.registerModel("Payable", payable);
 
  /**
     Payable line model

@@ -155,7 +155,7 @@ function terms(data, feather) {
     return model;
 }
 
-catalog.registerModel("Terms", terms, true);
+catalog.registerModel("Terms", terms);
 
 function currencyCode(d) {
     "use strict";
@@ -217,7 +217,7 @@ function billOrder(data, feather) {
     return model;
 }
 
-catalog.registerModel("BillOrder", billOrder, true);
+catalog.registerModel("BillOrder", billOrder);
 
  /**
     Order line model

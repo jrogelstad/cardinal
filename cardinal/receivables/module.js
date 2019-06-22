@@ -34,7 +34,7 @@ function invoice(data, feather) {
     return model;
 }
 
-catalog.registerModel("Invoice", invoice, true);
+catalog.registerModel("Invoice", invoice);
 
  /**
     Credit memo model
@@ -51,7 +51,7 @@ function creditMemo(data, feather) {
     return model;
 }
 
-catalog.registerModel("CreditMemo", creditMemo, true);
+catalog.registerModel("CreditMemo", creditMemo);
 
 /**
     Receivable model
@@ -82,7 +82,7 @@ function receivable(data, feather) {
     return model;
 }
 
-catalog.registerModel("Receivable", receivable, true);
+catalog.registerModel("Receivable", receivable);
 
  /**
     Receivable line model

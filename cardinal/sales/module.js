@@ -52,7 +52,7 @@ function salesOrder(data, feather) {
     return model;
 }
 
-catalog.registerModel("SalesOrder", salesOrder, true);
+catalog.registerModel("SalesOrder", salesOrder);
 
  /**
     Sales order line model

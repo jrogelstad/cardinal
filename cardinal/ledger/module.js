@@ -59,7 +59,7 @@ function billSubledger(data, feather) {
     return model;
 }
 
-catalog.registerModel("BillSubledger", billSubledger, true);
+catalog.registerModel("BillSubledger", billSubledger);
 
 models.fiscalPeriod.static().closeCheck = function (selections) {
     "use strict";
@@ -219,7 +219,7 @@ function ledgerTransaction(data, feather) {
     return model;
 }
 
-catalog.registerModel("LedgerTransaction", ledgerTransaction, true);
+catalog.registerModel("LedgerTransaction", ledgerTransaction);
 
 // Create ledger distribution model
 function ledgerDistribution(data, feather) {
@@ -291,7 +291,7 @@ function ledgerAccount(data, feather) {
     return model;
 }
 
-catalog.registerModel("LedgerAccount", ledgerAccount, true);
+catalog.registerModel("LedgerAccount", ledgerAccount);
 
 // Add static post functions to Journal
 postMixin("GeneralJournal", "Ledger");
