@@ -1,4 +1,4 @@
-/**
+/*
     Framework for building object relational database apps
     Copyright (C) 2019  John Rogelstad
 
@@ -14,11 +14,9 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-**/
+*/
 const catalog = f.catalog();
 const store = catalog.store();
-const model = store.factories().model;
-const list = store.factories().list;
 
  /**
     Sales order model
@@ -27,13 +25,13 @@ function salesOrder(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("SalesOrder");
-    let that = model(data, feather);
-    let d = that.data;
+    let model = f.createModel(data, feather);
+    let d = model.data;
     let mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-    mixinOrderHeader(that, "customer");
+    mixinOrderHeader(model, "customer");
 
-    that.onChanged("customer", function () {
+    model.onChanged("customer", function () {
         let customer = d.customer();
 
         if (customer) {
@@ -41,7 +39,7 @@ function salesOrder(data, feather) {
         }
     });
 
-    that.onChanged("lines", function () {
+    model.onChanged("lines", function () {
         let promiseDate = d.promiseDate();
 
         d.lines().some(function (line) {
@@ -51,7 +49,7 @@ function salesOrder(data, feather) {
         });
     });
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("SalesOrder", salesOrder, true);
@@ -63,17 +61,17 @@ function salesOrderLine(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("SalesOrderLine");
-    let that = model(data, feather);
-    let d = that.data;
+    let model = f.createModel(data, feather);
+    let d = model.data;
 
-    that.onChanged("ordered", function () {
-        let currency = that.parent().data.currency().data.code();
+    model.onChanged("ordered", function () {
+        let currency = model.parent().data.currency().data.code();
         let amount = d.ordered.toJSON().times(d.price.toJSON().amount);
 
         d.extended(f.money(amount, currency));
     });
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("SalesOrderLine", salesOrderLine);

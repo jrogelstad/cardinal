@@ -1,4 +1,4 @@
-/**
+/*
     Framework for building object relational database apps
     Copyright (C) 2019  John Rogelstad
 
@@ -14,11 +14,9 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-**/
+*/
 const catalog = f.catalog();
 const store = catalog.store();
-const model = store.factories().model;
-const list = store.factories().list;
 const models = store.models();
 const datasource = f.datasource();
 
@@ -29,8 +27,8 @@ function terms(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("Terms");
-    let that = model(data, feather);
-    let d = that.data;
+    let model = f.createModel(data, feather);
+    let d = model.data;
 
     function handleReadOnly() {
         switch (d.policy()) {
@@ -80,7 +78,7 @@ function terms(data, feather) {
         }
     }
 
-    that.onChange("day", function (prop) {
+    model.onChange("day", function (prop) {
         if (prop.newValue() < 1) {
             prop.newValue(1);
         } else if (prop.newValue() > 31) {
@@ -88,7 +86,7 @@ function terms(data, feather) {
         }
     });
 
-    that.onChange("policy", function (prop) {
+    model.onChange("policy", function (prop) {
         if (prop.oldValue() === "P") {
             d.isDepositRequired(false);
             d.depositPercent(0);
@@ -124,7 +122,7 @@ function terms(data, feather) {
         }
     });
 
-    that.onChanged("isDepositRequired", function () {
+    model.onChanged("isDepositRequired", function () {
         if (!d.isDepositRequired()) {
             if (d.depositAmount() && d.depositAmount.toJSON().amount) {
                 d.depositAmount().amount = 0;
@@ -135,11 +133,11 @@ function terms(data, feather) {
         }
     });
 
-    that.onChanged("policy", handleReadOnly);
-    that.onChanged("isDepositRequired", handleReadOnly);
-    that.state().resolve("/Ready/Fetched/Clean").enter(handleReadOnly);
+    model.onChanged("policy", handleReadOnly);
+    model.onChanged("isDepositRequired", handleReadOnly);
+    model.state().resolve("/Ready/Fetched/Clean").enter(handleReadOnly);
 
-    that.onValidate(function () {
+    model.onValidate(function () {
         if (
             d.isDepositRequired() &&
             d.depositAmount.toJSON().amount === 0 &&
@@ -154,7 +152,7 @@ function terms(data, feather) {
 
     handleReadOnly();
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("Terms", terms, true);
@@ -176,8 +174,8 @@ function billOrder(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("BillOrder");
-    let that = model(data, feather);
-    let d = that.data;
+    let model = f.createModel(data, feather);
+    let d = model.data;
 
     function calculateTotal() {
         let amount;
@@ -191,7 +189,7 @@ function billOrder(data, feather) {
         d.total(result);
     }
 
-    that.onChanged("currency", function () {
+    model.onChanged("currency", function () {
         let money;
         let curr = currencyCode(d);
 
@@ -212,11 +210,11 @@ function billOrder(data, feather) {
         }
     });
 
-    that.onChanged("subtotal", calculateTotal);
-    that.onChanged("freight", calculateTotal);
-    that.onChanged("tax", calculateTotal);
+    model.onChanged("subtotal", calculateTotal);
+    model.onChanged("freight", calculateTotal);
+    model.onChanged("tax", calculateTotal);
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("BillOrder", billOrder, true);
@@ -228,23 +226,23 @@ function orderLine(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("OrderLine");
-    let that = model(data, feather);
-    let d = that.data;
+    let model = f.createModel(data, feather);
+    let d = model.data;
 
-    that.onChanged("item", function () {
+    model.onChanged("item", function () {
         let site;
         let item = d.item();
 
         if (item) {
             d.price(item.data.price());
-            site = that.parent().data.site();
+            site = model.parent().data.site();
             if (site) {
                 d.site(site);
             }
         }
     });
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("OrderLine", orderLine);

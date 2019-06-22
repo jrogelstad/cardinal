@@ -1,4 +1,4 @@
-/**
+/*
     Framework for building object relational database apps
     Copyright (C) 2019  John Rogelstad
 
@@ -14,11 +14,9 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-**/
+*/
 const catalog = f.catalog();
 const store = catalog.store();
-const model = store.factories().model;
-const list = store.factories().list;
 const postMixin = store.mixins().post;
 
  /**
@@ -28,12 +26,12 @@ function voucher(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("Voucher");
-    let that = model(data, feather);
+    let model = f.createModel(data, feather);
     let mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-    mixinOrderHeader(that, "vendor");
+    mixinOrderHeader(model, "vendor");
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("Voucher", voucher, true);
@@ -45,12 +43,12 @@ function debitMemo(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("CreditMemo");
-    let that = model(data, feather);
+    let model = f.createModel(data, feather);
     let mixinOrderHeader = catalog.store().mixins().orderHeader;
 
-    mixinOrderHeader(that, "vendor");
+    mixinOrderHeader(model, "vendor");
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("DebitMemo", debitMemo, true);
@@ -62,10 +60,10 @@ function payable(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("Payable");
-    let that = model(data, feather);
-    let d = that.data;
+    let model = f.createModel(data, feather);
+    let d = model.data;
 
-    that.onChanged("vendor", function () {
+    model.onChanged("vendor", function () {
         let remitTo;
         let vendor = d.vendor();
 
@@ -81,7 +79,7 @@ function payable(data, feather) {
         }
     });
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("Payable", payable, true);
@@ -93,17 +91,17 @@ function payableLine(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("PayableLine");
-    let that = model(data, feather);
-    let d = that.data;
+    let model = f.createModel(data, feather);
+    let d = model.data;
 
     function calculateExtended() {
-        let currency = that.parent().data.currency().data.code();
+        let currency = model.parent().data.currency().data.code();
         let amount = d.billed.toJSON().times(d.price.toJSON().amount);
 
         d.extended(f.money(amount, currency));
     }
 
-    that.onChanged("ordered", function () {
+    model.onChanged("ordered", function () {
         let ordered = d.ordered.toJSON();
 
         if (ordered > d.billed.toJSON()) {
@@ -111,10 +109,10 @@ function payableLine(data, feather) {
         }
     });
 
-    that.onChanged("billed", calculateExtended);
-    that.onChanged("price", calculateExtended);
+    model.onChanged("billed", calculateExtended);
+    model.onChanged("price", calculateExtended);
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("PayableLine", payableLine);

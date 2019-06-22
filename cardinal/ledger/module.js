@@ -1,4 +1,4 @@
-/**
+/*
     Framework for building object relational database apps
     Copyright (C) 2019  John Rogelstad
 
@@ -14,12 +14,10 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-**/
+*/
 /*jslint this*/
 const catalog = f.catalog();
 const store = catalog.store();
-const model = store.factories().model;
-const list = store.factories().list;
 const models = store.models();
 const datasource = f.datasource();
 const postMixin = store.mixins().post;
@@ -29,10 +27,10 @@ function billSubledger(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("BillSubledger");
-    let that = model(data, feather);
-    let d = that.data;
+    let model = f.createModel(data, feather);
+    let d = model.data;
 
-    that.onChanged("terms", function (prop) {
+    model.onChanged("terms", function (prop) {
         let dt;
         let terms = prop();
 
@@ -52,13 +50,13 @@ function billSubledger(data, feather) {
         }
     });
 
-    that.state().resolve("/Ready/Fetched/Clean").enter(function () {
-        if (that.data.isPosted()) {
+    model.state().resolve("/Ready/Fetched/Clean").enter(function () {
+        if (model.data.isPosted()) {
             this.goto("../ReadOnly");
         }
     });
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("BillSubledger", billSubledger, true);
@@ -135,22 +133,22 @@ function ledgerTransaction(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("LedgerTransaction");
-    let that;
+    let model;
 
     // Set default currency attribute
     feather.properties.currency.default = f.baseCurrency;
 
-    that = model(data, feather);
+    model = f.createModel(data, feather);
 
     // Sync currency
     function update() {
         let value;
-        let dist = that.data.distributions();
-        let code = that.data.currency().data.code();
-        let total = that.data.amount();
+        let dist = model.data.distributions();
+        let code = model.data.currency().data.code();
+        let total = model.data.amount();
 
         // Update distributions
-        code = that.data.currency().data.code();
+        code = model.data.currency().data.code();
 
         dist.forEach(function (item) {
             if (item.data.debit().currency !== code) {
@@ -177,23 +175,23 @@ function ledgerTransaction(data, feather) {
             }
         });
 
-        that.data.amount(total);
+        model.data.amount(total);
     }
 
-    that.onChanged("currency", update);
-    that.onChanged("distributions", update);
-    that.onChanged("distributions.debit", update);
-    that.onChanged("distributions.credit", update);
-    that.state().resolve("/Ready/Fetched/Clean").enter(function () {
-        if (that.data.isPosted()) {
-            that.isReadOnly(true);
-            that.state().goto("/Ready/Fetched/ReadOnly");
+    model.onChanged("currency", update);
+    model.onChanged("distributions", update);
+    model.onChanged("distributions.debit", update);
+    model.onChanged("distributions.credit", update);
+    model.state().resolve("/Ready/Fetched/Clean").enter(function () {
+        if (model.data.isPosted()) {
+            model.isReadOnly(true);
+            model.state().goto("/Ready/Fetched/ReadOnly");
         }
     });
 
     // Can't delete posted journals
-    that.onCanDelete(function () {
-        return !that.data.isPosted();
+    model.onCanDelete(function () {
+        return !model.data.isPosted();
     });
 
     function sum(total, item) {
@@ -204,8 +202,8 @@ function ledgerTransaction(data, feather) {
         }
     }
 
-    that.onValidate(function () {
-        let dist = that.data.distributions().toJSON();
+    model.onValidate(function () {
+        let dist = model.data.distributions().toJSON();
 
         if (!dist.length) {
             throw "There are no distributions.";
@@ -218,7 +216,7 @@ function ledgerTransaction(data, feather) {
     });
 
     // Return instantiated model
-    return that;
+    return model;
 }
 
 catalog.registerModel("LedgerTransaction", ledgerTransaction, true);
@@ -228,44 +226,44 @@ function ledgerDistribution(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("LedgerDistribution");
-    let that = model(data, feather);
+    let model = f.createModel(data, feather);
 
-    that.onChange("debit", function (prop) {
+    model.onChange("debit", function (prop) {
         let debit = prop.newValue.toJSON();
-        let credit = that.data.credit.toJSON();
+        let credit = model.data.credit.toJSON();
 
         if (debit.amount < 0) {
             debit.amount = 0;
             prop(f.copy(debit));
         } else if (debit.amount && credit.amount) {
             credit.amount = 0;
-            that.data.credit(f.copy(credit));
+            model.data.credit(f.copy(credit));
         }
     });
 
-    that.onChange("credit", function (prop) {
+    model.onChange("credit", function (prop) {
         let credit = prop.newValue.toJSON();
-        let debit = that.data.debit.toJSON();
+        let debit = model.data.debit.toJSON();
 
         if (credit.amount < 0) {
             credit.amount = 0;
             prop(f.copy(credit));
         } else if (credit.amount && debit.amount) {
             debit.amount = 0;
-            that.data.debit(f.copy(debit));
+            model.data.debit(f.copy(debit));
         }
     });
 
-    that.onValidate(function () {
+    model.onValidate(function () {
         if (
-            that.data.debit().amount - 0 === 0 &&
-            that.data.credit().amount - 0 === 0
+            model.data.debit().amount - 0 === 0 &&
+            model.data.credit().amount - 0 === 0
         ) {
             throw "Debit or credit must be positive on every distribution.";
         }
     });
 
-    return that;
+    return model;
 }
 
 catalog.registerModel("LedgerDistribution", ledgerDistribution);
@@ -275,14 +273,14 @@ function ledgerAccount(data, feather) {
     "use strict";
 
     feather = feather || catalog.getFeather("LedgerAccount");
-    let that = model(data, feather);
+    let model = f.createModel(data, feather);
 
-    that.onCanDelete(function () {
-        return !that.data.isUsed() && !that.data.isParent();
+    model.onCanDelete(function () {
+        return !model.data.isUsed() && !model.data.isParent();
     });
 
-    that.onValidate(function () {
-        let parent = that.data.parent();
+    model.onValidate(function () {
+        let parent = model.data.parent();
 
         if (parent && parent.data.isUsed()) {
             throw "Account used in transactions may not become a parent.";
@@ -290,7 +288,7 @@ function ledgerAccount(data, feather) {
     });
 
     // Return instantiated model
-    return that;
+    return model;
 }
 
 catalog.registerModel("LedgerAccount", ledgerAccount, true);
