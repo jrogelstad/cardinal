@@ -69,7 +69,9 @@ function receivable(data, feather) {
 
         if (customer) {
             billTo = f.copy(customer.data.billTo.toJSON());
-            billTo.id = f.createId();
+            if (billTo) {
+                billTo.id = f.createId();
+            }
             d.billTo(billTo);
             d.site(customer.data.site());
             d.contact(customer.data.contact());
