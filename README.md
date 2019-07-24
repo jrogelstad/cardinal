@@ -10,8 +10,8 @@ A sample module for the featherbone application framework.
 Clone this repository adjacent to your featherbone repository and from the featherbone directory:
 
 ```text
-$ node install ..\cardinal\cardinal
-$ node install ..\cardinal\examples
+$ node install --dir ..\cardinal\cardinal
+$ node install --dir ..\cardinal\examples
 $ node server
 ```
 

@@ -2,7 +2,7 @@
     {
         "method": "POST",
         "name": "adjust",
-        "user": "postgres",
+        "user": "admin",
         "data": {
             "specs": {
                 "item": {

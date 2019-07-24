@@ -12,7 +12,7 @@
         "method": "POST",
         "id": "e54y397l4arw",
         "data": {
-            "name": "postgres",
+            "name": "admin",
             "membership": [{
                 "role": "everyone"
             },{

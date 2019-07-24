@@ -50,11 +50,11 @@
                 }
             }]
         },
-        "user": "postgres"
+        "user": "admin"
     }, {
         "method": "POST",
         "name": "postJournal",
-        "user": "postgres",
+        "user": "admin",
         "data": {
             "id": "g6m2a2vajq5",
             "date": "2019-05-01"

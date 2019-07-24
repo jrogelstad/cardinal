@@ -695,7 +695,7 @@
     }, {
         "method": "PUT",
         "name": "saveSettings",
-        "user": "postgres",
+        "user": "admin",
         "data": {
             "name": "ledgerSettings",
             "data": {
