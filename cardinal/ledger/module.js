@@ -95,7 +95,7 @@ function changePeriodStatus(viewModel, action) {
     let payload = {
         method: "POST",
         path: "/ledger/" + action,
-        data: {
+        body: {
             id: selected.id()
         }
     };

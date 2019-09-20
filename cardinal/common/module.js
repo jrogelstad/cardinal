@@ -380,7 +380,7 @@ function postMixin(type, module) {
         let payload = {
             method: "POST",
             path: "/" + module + "/post/" + name.toSpinalCase(),
-            data: {
+            body: {
                 feather: type,
                 ids: ids
             }
